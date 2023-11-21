@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="question_choice">
+    <question_choice action="INSERT_OR_UPDATE">
+        <inactive>false</inactive>
+        <order>300</order>
+        <published_ref/>
+        <question display_value="To which environment you need access?">99a56705942631107f44a101401430c7</question>
+        <sys_class_name>question_choice</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-15 10:14:04</sys_created_on>
+        <sys_id>71662345942631107f44a1014014308e</sys_id>
+        <sys_name>PROD</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>question_choice_71662345942631107f44a1014014308e</sys_update_name>
+        <text>PROD</text>
+        <value>prod</value>
+    </question_choice>
+    <fx_price action="delete_multiple" query="id=71662345942631107f44a1014014308e"/>
+</record_update>

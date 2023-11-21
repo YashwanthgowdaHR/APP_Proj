@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_ux_screen">
+    <sys_ux_screen action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <app_config display_value="AccessProvider Config">e64f70b6dca231107f44c19e673262fc</app_config>
+        <description/>
+        <event_mappings>[ ]</event_mappings>
+        <macroponent display_value="Activity">b24fb0b673a23110da604c3003d64627</macroponent>
+        <macroponent_config>{
+  "table" : "@context.props.table",
+  "sysId" : "@context.props.sysId",
+  "label" : "",
+  "bare" : true,
+  "scrollable" : "none",
+  "headerLevel" : "1",
+  "interceptNotifications" : false,
+  "propagateNotifications" : false
+}</macroponent_config>
+        <name>Activity Default</name>
+        <order>0</order>
+        <parent_macroponent display_value="Record Page(request)">7e4fb0b660a231108ff82839aea84330</parent_macroponent>
+        <required_translations>[]</required_translations>
+        <rollback_screen/>
+        <screen_condition/>
+        <screen_type display_value="Activity">f24fb0b62aa2311033f59bacd9c81a31</screen_type>
+        <sys_class_name>sys_ux_screen</sys_class_name>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2023-11-20 08:33:27</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>fa4fb0b6b3a231109e0efe11a451e825</sys_id>
+        <sys_name>Activity Default</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sys_ux_screen_fa4fb0b6b3a231109e0efe11a451e825</sys_update_name>
+    </sys_ux_screen>
+    <sys_translated_text action="delete_multiple" query="documentkey=fa4fb0b6b3a231109e0efe11a451e825"/>
+</record_update>

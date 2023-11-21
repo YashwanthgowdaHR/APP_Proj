@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_composite_data_m2m_predicate_bundle">
+    <sys_ux_composite_data_m2m_predicate_bundle action="INSERT_OR_UPDATE">
+        <dataset display_value="Custom Portal Landing - My Requests Dataset">364fb0b6c8a231109c2d5939ebf4952c</dataset>
+        <order/>
+        <predicate_bundle display_value="My request - task bundle">324fb0b65aa23110f69937f71f22e22b</predicate_bundle>
+        <sys_class_name>sys_ux_composite_data_m2m_predicate_bundle</sys_class_name>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2023-11-20 08:33:29</sys_created_on>
+        <sys_id>3e4fb0b677a23110d4e1c0a0e25e7a2a</sys_id>
+        <sys_name/>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sys_ux_composite_data_m2m_predicate_bundle_3e4fb0b677a23110d4e1c0a0e25e7a2a</sys_update_name>
+    </sys_ux_composite_data_m2m_predicate_bundle>
+</record_update>

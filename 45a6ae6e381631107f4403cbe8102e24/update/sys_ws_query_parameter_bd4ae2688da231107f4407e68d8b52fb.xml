@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_query_parameter">
+    <sys_ws_query_parameter action="INSERT_OR_UPDATE">
+        <example_value>20</example_value>
+        <name>age</name>
+        <required>false</required>
+        <short_description>age of the user</short_description>
+        <sys_class_name>sys_ws_query_parameter</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-13 16:34:36</sys_created_on>
+        <sys_id>bd4ae2688da231107f4407e68d8b52fb</sys_id>
+        <sys_name>age</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sys_ws_query_parameter_bd4ae2688da231107f4407e68d8b52fb</sys_update_name>
+        <web_service_definition display_value="Random Users List">2ec24a648d2231107f4407e68d8b5296</web_service_definition>
+    </sys_ws_query_parameter>
+</record_update>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="769d23870c1231107f44cb9d57f9b16a" extends="sys_import_set_row" label="rest_api_record" max_length="40" name="x_snc_accessprov_0_temp_get_users_list" type="collection">
+        <element attributes="edge_encryption_enabled=true,import_attribute_name=avatar" label="avatar" max_length="40" name="u_avatar" type="string"/>
+        <element attributes="edge_encryption_enabled=true,import_attribute_name=email" label="email" max_length="40" name="u_email" type="string"/>
+        <element attributes="edge_encryption_enabled=true,import_attribute_name=first_name" label="first_name" max_length="40" name="u_first_name" type="string"/>
+        <element attributes="edge_encryption_enabled=true,import_attribute_name=id" label="id" max_length="40" name="u_id" type="string"/>
+        <element attributes="edge_encryption_enabled=true,import_attribute_name=last_name" label="last_name" max_length="40" name="u_last_name" type="string"/>
+    </element>
+</database>

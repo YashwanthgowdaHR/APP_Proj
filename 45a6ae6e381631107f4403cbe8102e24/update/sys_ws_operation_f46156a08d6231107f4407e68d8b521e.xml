@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl>cf9d01d3e73003009d6247e603f6a990</enforce_acl>
+        <http_method>GET</http_method>
+        <name>Get User by ID</name>
+        <operation_script><![CDATA[(function process(/*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+
+    var answer = [];
+	var id = request.pathParams.id;
+	if (!id){
+		response.setError((new sn_ws_err.NotFoundError('ID not provided')));
+		response.setStatus(404);
+		return;
+	}
+	
+	var usersTable = 'x_snc_accessprov_0_randomuserslist';
+	var usersGr = new GlideRecord(usersTable);
+	usersGr.addQuery('id',id);
+	usersGr.query();
+	
+	if (!usersGr.hasNext()){
+		response.setError((new sn_ws_err.NotFoundError('No User Found')));
+		response.setStatus(404);
+		return;
+	}
+	
+	while(usersGr.next()){
+		var obj = {
+			"Name": usersGr.getValue("name"),
+			"Age": usersGr.getValue("age"),
+			"Gender": usersGr.getValue("gender"),
+			"Email": usersGr.getValue("email"),
+			"Address": usersGr.getValue("address"),
+			"Country": usersGr.getValue("country"),
+		};
+		answer.push(obj);
+	}
+	
+	response.setBody(answer);
+
+})(request, response);]]></operation_script>
+        <operation_uri>/api/x_snc_accessprov_0/random_users_list/users/{id}</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/users/{id}</relative_path>
+        <request_example/>
+        <requires_acl_authorization>true</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <requires_snc_internal_role>true</requires_snc_internal_role>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-13 14:47:55</sys_created_on>
+        <sys_id>f46156a08d6231107f4407e68d8b521e</sys_id>
+        <sys_name>Get User by ID</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sys_ws_operation_f46156a08d6231107f4407e68d8b521e</sys_update_name>
+        <web_service_definition display_value="Random Users List">2ec24a648d2231107f4407e68d8b5296</web_service_definition>
+        <web_service_version/>
+    </sys_ws_operation>
+</record_update>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="ee7b1f7ec0d231107f448f8fed58165c" label="Get all the users" max_length="40" name="x_snc_accessprov_0_get_all_the_users" type="collection">
+        <element label="avatar" max_length="100" name="avatar" type="string"/>
+        <element label="email" max_length="1000" name="email" type="string"/>
+        <element label="first_name" max_length="40" name="first_name" type="string"/>
+        <element label="id" max_length="255" name="id" type="string"/>
+        <element display="true" label="last_name" max_length="40" name="last_name" type="string"/>
+        <element default="javascript:current.getTableName();" label="Class" max_length="80" name="sys_class_name" type="sys_class_name"/>
+        <index name="index">
+            <element name="id"/>
+        </index>
+        <index name="index2">
+            <element name="sys_class_name"/>
+        </index>
+    </element>
+</database>

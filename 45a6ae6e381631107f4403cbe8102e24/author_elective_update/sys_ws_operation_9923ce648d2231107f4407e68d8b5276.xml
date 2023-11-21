@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_operation">
+    <sys_ws_operation action="DELETE">
+        <active>true</active>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl>cf9d01d3e73003009d6247e603f6a990</enforce_acl>
+        <http_method>GET</http_method>
+        <name>Get User</name>
+        <operation_script><![CDATA[(function process(/*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+
+    var answer = [];
+	var id = request.pathParams.id;
+	if (!vin){
+		response.setError((new sn_ws_err.NotFoundError('ID not provided')));
+		response.setStatus(404);
+		return;
+	}
+	
+	var usersTable = 'x_snc_accessprov_0_randomuserslist_list';
+	var usersGr = new GlideRecord(usersTable);
+	usersGr.addQuery('id',id);
+	usersGr.query();
+	
+	if (!usersGr.hasNext()){
+		response.setError((new sn_ws_err.NotFoundError('No User Found')));
+		response.setStatus(404);
+		return;
+	}
+	
+	while(usersGr.next()){
+		var obj = {
+			"Name": usersGr.getValue("name"),
+			"Address": usersGr.getValue("address"),
+			"Age": usersGr.getValue("age"),
+			"Country": usersGr.getValue("country"),
+			"Email": usersGr.getValue("email"),
+			"Gender": usersGr.getValue("gender")
+		};
+		answer.push(obj);
+	}
+	
+	response.setBody(answer);
+
+})(request, response);]]></operation_script>
+        <operation_uri>/api/x_snc_accessprov_0/random_users_list/user/{id}</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/user/{id}</relative_path>
+        <request_example/>
+        <requires_acl_authorization>true</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <requires_snc_internal_role>true</requires_snc_internal_role>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-13 14:09:53</sys_created_on>
+        <sys_id>9923ce648d2231107f4407e68d8b5276</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>Get User</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sys_ws_operation_9923ce648d2231107f4407e68d8b5276</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-11-13 14:11:51</sys_updated_on>
+        <web_service_definition display_value="Random Users List">2ec24a648d2231107f4407e68d8b5296</web_service_definition>
+        <web_service_version/>
+    </sys_ws_operation>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</application>
+        <file_path/>
+        <instance_id>026a35cac35271d0e1c44dadc0013152</instance_id>
+        <instance_name>nowlearning-nlinst01219194-0001</instance_name>
+        <name>sys_ws_operation_9923ce648d2231107f4407e68d8b5276</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sys_ws_operation"&gt;&lt;sys_ws_operation action="INSERT_OR_UPDATE"&gt;&lt;active&gt;true&lt;/active&gt;&lt;consumes&gt;application/json,application/xml,text/xml&lt;/consumes&gt;&lt;consumes_customized&gt;false&lt;/consumes_customized&gt;&lt;default_operation_uri/&gt;&lt;enforce_acl&gt;cf9d01d3e73003009d6247e603f6a990&lt;/enforce_acl&gt;&lt;http_method&gt;GET&lt;/http_method&gt;&lt;name&gt;Get User&lt;/name&gt;&lt;operation_script&gt;&lt;![CDATA[(function process(/*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+
+    var answer = [];
+	var id = request.pathParams.id;
+	if (!vin){
+		response.setError((new sn_ws_err.NotFoundError('ID not provided')));
+		response.setStatus(404);
+		return;
+	}
+	
+	var usersTable = 'x_snc_accessprov_0_randomuserslist_list';
+	var usersGr = new GlideRecord(usersTable);
+	usersGr.addQuery('id',id);
+	usersGr.query();
+	
+	if (!usersGr.hasNext()){
+		response.setError((new sn_ws_err.NotFoundError('No User Found')));
+		response.setStatus(404);
+		return;
+	}
+	
+	while(usersGr.next()){
+		var obj = {
+			"Name": usersGr.getValue("name"),
+			"Address": usersGr.getValue("address"),
+			"Age": usersGr.getValue("age"),
+			"Country": usersGr.getValue("country"),
+			"Email": usersGr.getValue("email"),
+			"Gender": usersGr.getValue("gender")
+		};
+		answer.push(obj);
+	}
+	
+	response.setBody(answer);
+
+})(request, response);]]&gt;&lt;/operation_script&gt;&lt;operation_uri&gt;/api/x_snc_accessprov_0/random_users_list/user/{id}&lt;/operation_uri&gt;&lt;produces&gt;application/json,application/xml,text/xml&lt;/produces&gt;&lt;produces_customized&gt;false&lt;/produces_customized&gt;&lt;relative_path&gt;/user/{id}&lt;/relative_path&gt;&lt;request_example/&gt;&lt;requires_acl_authorization&gt;true&lt;/requires_acl_authorization&gt;&lt;requires_authentication&gt;true&lt;/requires_authentication&gt;&lt;requires_snc_internal_role&gt;true&lt;/requires_snc_internal_role&gt;&lt;short_description/&gt;&lt;sys_class_name&gt;sys_ws_operation&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2023-11-13 14:09:53&lt;/sys_created_on&gt;&lt;sys_id&gt;9923ce648d2231107f4407e68d8b5276&lt;/sys_id&gt;&lt;sys_mod_count&gt;1&lt;/sys_mod_count&gt;&lt;sys_name&gt;Get User&lt;/sys_name&gt;&lt;sys_package display_value="AccessProvider" source="x_snc_accessprov_0"&gt;45a6ae6e381631107f4403cbe8102e24&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="AccessProvider"&gt;45a6ae6e381631107f4403cbe8102e24&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_ws_operation_9923ce648d2231107f4407e68d8b5276&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2023-11-13 14:11:51&lt;/sys_updated_on&gt;&lt;web_service_definition display_value="Random Users List"&gt;2ec24a648d2231107f4407e68d8b5296&lt;/web_service_definition&gt;&lt;web_service_version/&gt;&lt;/sys_ws_operation&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>791287528</payload_hash>
+        <record_name>Get User</record_name>
+        <reverted_from/>
+        <source>85a6ae6e381631107f4403cbe8102e26</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-13 14:11:51</sys_created_on>
+        <sys_id>55a98ee88d2231107f4407e68d8b52b4</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>18bc9063f0c0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-11-13 14:11:51</sys_updated_on>
+        <type>Scripted REST Resource</type>
+        <update_guid>9da98ee805223110bb93b64fc9ca2db3</update_guid>
+        <update_guid_history>9da98ee805223110bb93b64fc9ca2db3:791287528,6c390ea872223110fb8ac8520196fda4:1371288161</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-13 14:45:30</sys_created_on>
+        <sys_db_object display_value="" name="sys_ws_operation">sys_ws_operation</sys_db_object>
+        <sys_id>28fd3de579f94e11a4f9845777a28d91</sys_id>
+        <sys_metadata>9923ce648d2231107f4407e68d8b5276</sys_metadata>
+        <sys_name>Get User</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_scope_delete display_value="">048d5f0e899f424a8270d790e19b3744</sys_scope_delete>
+        <sys_update_name>sys_ws_operation_9923ce648d2231107f4407e68d8b5276</sys_update_name>
+        <sys_update_version display_value="sys_ws_operation_9923ce648d2231107f4407e68d8b5276">55a98ee88d2231107f4407e68d8b52b4</sys_update_version>
+    </sys_metadata_delete>
+</record_update>

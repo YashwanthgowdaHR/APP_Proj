@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_query_parameter_map">
+    <sys_ws_query_parameter_map action="INSERT_OR_UPDATE">
+        <sys_class_name>sys_ws_query_parameter_map</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-13 16:38:43</sys_created_on>
+        <sys_id>b63b6aa88da231107f4407e68d8b5228</sys_id>
+        <sys_name>206ae2688da231107f4407e68d8b52ff</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sys_ws_query_parameter_map_b63b6aa88da231107f4407e68d8b5228</sys_update_name>
+        <web_service_operation display_value="Get Users">e3e8d6a48d6231107f4407e68d8b528d</web_service_operation>
+        <web_service_query_parameter display_value="email">206ae2688da231107f4407e68d8b52ff</web_service_query_parameter>
+    </sys_ws_query_parameter_map>
+</record_update>

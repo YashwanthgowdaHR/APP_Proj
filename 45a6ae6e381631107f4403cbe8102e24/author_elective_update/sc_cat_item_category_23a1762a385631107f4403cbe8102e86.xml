@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_category">
+    <sc_cat_item_category action="DELETE">
+        <sc_cat_item display_value="Requests the access">5b3fae66385631107f4403cbe8102ed5</sc_cat_item>
+        <sc_category display_value="Application and Account Access">22555319db0150104327198d1396195c</sc_category>
+        <sys_class_name>sc_cat_item_category</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-07 11:58:55</sys_created_on>
+        <sys_id>23a1762a385631107f4403cbe8102e86</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Application and Account Access.Requests the access</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sc_cat_item_category_23a1762a385631107f4403cbe8102e86</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-11-07 11:58:55</sys_updated_on>
+    </sc_cat_item_category>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</application>
+        <file_path/>
+        <instance_id>026a35cac35271d0e1c44dadc0013152</instance_id>
+        <instance_name>nowlearning-nlinst01219194-0001</instance_name>
+        <name>sc_cat_item_category_23a1762a385631107f4403cbe8102e86</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_category"><sc_cat_item_category action="INSERT_OR_UPDATE"><sc_cat_item display_value="Requests the access">5b3fae66385631107f4403cbe8102ed5</sc_cat_item><sc_category display_value="Application and Account Access">22555319db0150104327198d1396195c</sc_category><sys_class_name>sc_cat_item_category</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2023-11-07 11:58:55</sys_created_on><sys_id>23a1762a385631107f4403cbe8102e86</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Application and Account Access.Requests the access</sys_name><sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package><sys_policy/><sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope><sys_update_name>sc_cat_item_category_23a1762a385631107f4403cbe8102e86</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2023-11-07 11:58:55</sys_updated_on></sc_cat_item_category></record_update>]]></payload>
+        <payload_hash>-494266128</payload_hash>
+        <record_name>Application and Account Access.Requests the access</record_name>
+        <reverted_from/>
+        <source>85a6ae6e381631107f4403cbe8102e26</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-07 11:58:55</sys_created_on>
+        <sys_id>bba1762a385631107f4403cbe8102e89</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>18ba9a6625c0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-11-07 11:58:55</sys_updated_on>
+        <type>Catalog Item Category</type>
+        <update_guid>33a1762af7563110162e22fd315e0e89</update_guid>
+        <update_guid_history>33a1762af7563110162e22fd315e0e89:-494266128</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Application and Account Access.Requests the access">03037a6a385631107f4403cbe8102e3e</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-07 12:04:53</sys_created_on>
+        <sys_db_object display_value="" name="sc_cat_item_category">sc_cat_item_category</sys_db_object>
+        <sys_id>12736fed6eaf44c7962dcb28e9c3c801</sys_id>
+        <sys_metadata>23a1762a385631107f4403cbe8102e86</sys_metadata>
+        <sys_name>Application and Account Access.Requests the access</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_scope_delete display_value="">048d5f0e899f424a8270d790e19b3744</sys_scope_delete>
+        <sys_update_name>sc_cat_item_category_23a1762a385631107f4403cbe8102e86</sys_update_name>
+        <sys_update_version display_value="sc_cat_item_category_23a1762a385631107f4403cbe8102e86">bba1762a385631107f4403cbe8102e89</sys_update_version>
+    </sys_metadata_delete>
+</record_update>

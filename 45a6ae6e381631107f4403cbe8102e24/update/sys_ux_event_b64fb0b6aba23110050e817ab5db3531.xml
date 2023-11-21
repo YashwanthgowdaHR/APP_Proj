@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_event">
+    <sys_ux_event action="INSERT_OR_UPDATE">
+        <description/>
+        <event_name>MY_TASKS_REJECT</event_name>
+        <interfaces/>
+        <label>My tasks reject</label>
+        <props>[{"name":"sysId","fieldType":"string","label":"Sys ID","interfaceApiName":"","typeMetadata":null,"mandatory":false,"readOnly":false},{"name":"table","fieldType":"string","label":"Table","interfaceApiName":"","typeMetadata":null,"mandatory":false,"readOnly":false}]</props>
+        <required_translations/>
+        <schema_version>1.0.0</schema_version>
+        <sys_class_name>sys_ux_event</sys_class_name>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2023-11-20 08:33:30</sys_created_on>
+        <sys_id>b64fb0b6aba23110050e817ab5db3531</sys_id>
+        <sys_name>My tasks reject</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sys_ux_event_b64fb0b6aba23110050e817ab5db3531</sys_update_name>
+    </sys_ux_event>
+    <sys_translated_text action="delete_multiple" query="documentkey=b64fb0b6aba23110050e817ab5db3531"/>
+</record_update>

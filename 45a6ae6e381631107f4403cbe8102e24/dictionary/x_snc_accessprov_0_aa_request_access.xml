@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="ad2d3a8d946231107f44a1014014305e" label="AA Request Access" max_length="40" name="x_snc_accessprov_0_aa_request_access" type="collection">
+        <element label="Automation Name" mandatory="true" max_length="40" name="automation_name" type="string"/>
+        <element label="Email ID" mandatory="true" max_length="100" name="email_id" type="string"/>
+        <element choice="3" default="dev" label="Environment" mandatory="true" max_length="40" name="environment" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="DEV" sequence="0" value="dev"/>
+                <element inactive_on_update="false" label="UAT" sequence="1" value="uat"/>
+                <element inactive_on_update="false" label="PROD" sequence="2" value="prod"/>
+            </choice>
+        </element>
+        <element label="First Name" mandatory="true" max_length="40" name="first_name" type="string"/>
+        <element label="Last Name" mandatory="true" max_length="40" name="last_name" type="string"/>
+        <element display="true" label="X / M-UID" mandatory="true" max_length="40" name="x_m_uid" type="string"/>
+    </element>
+</database>

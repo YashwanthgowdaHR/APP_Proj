@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_app_route">
+    <sys_ux_app_route action="INSERT_OR_UPDATE">
+        <app_config display_value="AccessProvider Config">e64f70b6dca231107f44c19e673262fc</app_config>
+        <description/>
+        <extension_point/>
+        <fields/>
+        <icon/>
+        <name>Attachments</name>
+        <optional_parameters/>
+        <order>300</order>
+        <parent_macroponent display_value="Record Page(task)">7e4fb0b60ea231108b83839b7242d531</parent_macroponent>
+        <parent_macroponent_composition_element_id>tab_set_1</parent_macroponent_composition_element_id>
+        <route_type>rec_task_attachment</route_type>
+        <screen_type display_value="Attachments">3a4fb0b6b7a23110ddd75b25263cc431</screen_type>
+        <sys_class_name>sys_ux_app_route</sys_class_name>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2023-11-20 08:33:30</sys_created_on>
+        <sys_id>7a4fb0b6afa23110657cc984d247fd31</sys_id>
+        <sys_name>Attachments</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sys_ux_app_route_7a4fb0b6afa23110657cc984d247fd31</sys_update_name>
+    </sys_ux_app_route>
+    <sys_translated_text action="delete_multiple" query="documentkey=7a4fb0b6afa23110657cc984d247fd31"/>
+</record_update>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_catalog">
+    <sc_cat_item_catalog action="DELETE">
+        <sc_cat_item display_value="Requests the access">5b3fae66385631107f4403cbe8102ed5</sc_cat_item>
+        <sc_catalog display_value="Service Catalog">e0d08b13c3330100c8b837659bba8fb4</sc_catalog>
+        <sys_class_name>sc_cat_item_catalog</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-07 11:57:05</sys_created_on>
+        <sys_id>7c41bee6385631107f4403cbe8102e51</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Service Catalog.Requests the access</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sc_cat_item_catalog_7c41bee6385631107f4403cbe8102e51</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-11-07 11:57:05</sys_updated_on>
+    </sc_cat_item_catalog>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</application>
+        <file_path/>
+        <instance_id>026a35cac35271d0e1c44dadc0013152</instance_id>
+        <instance_name>nowlearning-nlinst01219194-0001</instance_name>
+        <name>sc_cat_item_catalog_7c41bee6385631107f4403cbe8102e51</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_catalog"><sc_cat_item_catalog action="INSERT_OR_UPDATE"><sc_cat_item display_value="Requests the access">5b3fae66385631107f4403cbe8102ed5</sc_cat_item><sc_catalog display_value="Service Catalog">e0d08b13c3330100c8b837659bba8fb4</sc_catalog><sys_class_name>sc_cat_item_catalog</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2023-11-07 11:57:05</sys_created_on><sys_id>7c41bee6385631107f4403cbe8102e51</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Service Catalog.Requests the access</sys_name><sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package><sys_policy/><sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope><sys_update_name>sc_cat_item_catalog_7c41bee6385631107f4403cbe8102e51</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2023-11-07 11:57:05</sys_updated_on></sc_cat_item_catalog></record_update>]]></payload>
+        <payload_hash>-196943070</payload_hash>
+        <record_name>Service Catalog.Requests the access</record_name>
+        <reverted_from/>
+        <source>85a6ae6e381631107f4403cbe8102e26</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-07 11:57:05</sys_created_on>
+        <sys_id>b841bee6385631107f4403cbe8102e54</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>18ba9a4b3670000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-11-07 11:57:05</sys_updated_on>
+        <type>Catalog Items Catalog</type>
+        <update_guid>3041bee64c5631103d0e297d340cfa54</update_guid>
+        <update_guid_history>3041bee64c5631103d0e297d340cfa54:-196943070</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Service Catalog.Requests the access">cf41fee6385631107f4403cbe8102e8b</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-07 11:57:14</sys_created_on>
+        <sys_db_object display_value="" name="sc_cat_item_catalog">sc_cat_item_catalog</sys_db_object>
+        <sys_id>4fdb7a0419c146c0b7ca148b6fc2b224</sys_id>
+        <sys_metadata>7c41bee6385631107f4403cbe8102e51</sys_metadata>
+        <sys_name>Service Catalog.Requests the access</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_parent display_value="">5b3fae66385631107f4403cbe8102ed5</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_scope_delete display_value="">048d5f0e899f424a8270d790e19b3744</sys_scope_delete>
+        <sys_update_name>sc_cat_item_catalog_7c41bee6385631107f4403cbe8102e51</sys_update_name>
+        <sys_update_version display_value="sc_cat_item_catalog_7c41bee6385631107f4403cbe8102e51">b841bee6385631107f4403cbe8102e54</sys_update_version>
+    </sys_metadata_delete>
+</record_update>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_predicate_m2m_action_assignment">
+    <sys_ux_predicate_m2m_action_assignment action="INSERT_OR_UPDATE">
+        <declarative_action_assignment display_value="approve">fe4fb0b613a23110ceaeb42d7c3dfc36</declarative_action_assignment>
+        <predicate display_value="My tasks requested item">b64fb0b6f9a23110fb95e444f5cff729</predicate>
+        <sys_class_name>sys_ux_predicate_m2m_action_assignment</sys_class_name>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2023-11-20 08:33:29</sys_created_on>
+        <sys_id>324fb0b6b8a23110c17df6b533f6b326</sys_id>
+        <sys_name/>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sys_ux_predicate_m2m_action_assignment_324fb0b6b8a23110c17df6b533f6b326</sys_update_name>
+    </sys_ux_predicate_m2m_action_assignment>
+</record_update>

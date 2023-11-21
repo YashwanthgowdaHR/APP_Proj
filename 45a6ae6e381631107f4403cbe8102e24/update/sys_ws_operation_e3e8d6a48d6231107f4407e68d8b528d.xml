@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl>cf9d01d3e73003009d6247e603f6a990</enforce_acl>
+        <http_method>GET</http_method>
+        <name>Get Users</name>
+        <operation_script><![CDATA[(function process( /*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+    //declared empty array for the answer
+    var result = [];
+
+    //Get values from the respective query paramters
+    var name = request.queryParams.name;
+    var email = request.queryParams.email;
+    var country = request.queryParams.country;
+	var gender = request.queryParams.gender;
+	var age = request.queryParams.age;
+
+    if (!name && !country && !email && !age && !gender) {
+        response.setError(new sn_ws_err.NotFoundError('No query paramters defined.'));
+        response.setStatus(404);
+        return;
+    }
+
+	//query the RandomUsersList table using these parameters
+    var usersTable = 'x_snc_accessprov_0_randomuserslist';
+    var usersGr = new GlideRecord(usersTable);
+	if (name) {usersGr.addQuery('name',name);}
+	if (email) {usersGr.addQuery('email',email);}
+	if (country) {usersGr.addQuery('country',country);}
+	if (gender) {usersGr.addQuery('gender',gender);}
+	if (age) {usersGr.addQuery('age',age);}
+	usersGr.query();
+	
+	
+    if (!usersGr.hasNext()) {
+        response.setError((new sn_ws_err.NotFoundError('No User Found')));
+        response.setStatus(404);
+        return;
+    }
+
+    while (usersGr.next()) {
+        var obj = {
+            "Name": usersGr.getValue("name"),
+            "Age": usersGr.getValue("age"),
+            "Gender": usersGr.getValue("gender"),
+            "Email": usersGr.getValue("email"),
+            "Address": usersGr.getValue("address"),
+            "Country": usersGr.getValue("country"),
+        };
+        result.push(obj);
+    }
+
+    response.setBody(result);
+
+
+})(request, response);]]></operation_script>
+        <operation_uri>/api/x_snc_accessprov_0/random_users_list/users</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/users</relative_path>
+        <request_example/>
+        <requires_acl_authorization>true</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <requires_snc_internal_role>true</requires_snc_internal_role>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-13 16:06:42</sys_created_on>
+        <sys_id>e3e8d6a48d6231107f4407e68d8b528d</sys_id>
+        <sys_name>Get Users</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sys_ws_operation_e3e8d6a48d6231107f4407e68d8b528d</sys_update_name>
+        <web_service_definition display_value="Random Users List">2ec24a648d2231107f4407e68d8b5296</web_service_definition>
+        <web_service_version/>
+    </sys_ws_operation>
+</record_update>

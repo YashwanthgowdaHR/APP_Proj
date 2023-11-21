@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_rest_message_headers">
+    <sys_rest_message_headers action="DELETE">
+        <name>job</name>
+        <rest_message display_value="">ecbf7d63481631107f4472345ad9caf1</rest_message>
+        <sys_class_name>sys_rest_message_headers</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-10 10:57:05</sys_created_on>
+        <sys_id>16effd63481631107f4472345ad9ca4c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>job</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sys_rest_message_headers_16effd63481631107f4472345ad9ca4c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-11-10 10:57:05</sys_updated_on>
+        <value>TestJob</value>
+    </sys_rest_message_headers>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</application>
+        <file_path/>
+        <instance_id>026a35cac35271d0e1c44dadc0013152</instance_id>
+        <instance_name>nowlearning-nlinst01219194-0001</instance_name>
+        <name>sys_rest_message_headers_16effd63481631107f4472345ad9ca4c</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_rest_message_headers"><sys_rest_message_headers action="INSERT_OR_UPDATE"><name>job</name><rest_message display_value="">ecbf7d63481631107f4472345ad9caf1</rest_message><sys_class_name>sys_rest_message_headers</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2023-11-10 10:57:05</sys_created_on><sys_id>16effd63481631107f4472345ad9ca4c</sys_id><sys_mod_count>0</sys_mod_count><sys_name>job</sys_name><sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package><sys_policy/><sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope><sys_update_name>sys_rest_message_headers_16effd63481631107f4472345ad9ca4c</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2023-11-10 10:57:05</sys_updated_on><value>TestJob</value></sys_rest_message_headers></record_update>]]></payload>
+        <payload_hash>2004925794</payload_hash>
+        <record_name>job</record_name>
+        <reverted_from/>
+        <source>85a6ae6e381631107f4403cbe8102e26</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-10 10:57:06</sys_created_on>
+        <sys_id>d74002a3481631107f4472345ad9ca30</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>18bb8e0dbd70000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-11-10 10:57:06</sys_updated_on>
+        <type>HTTP Headers</type>
+        <update_guid>134002a3ec163110e29c840006b10830</update_guid>
+        <update_guid_history>134002a3ec163110e29c840006b10830:2004925794</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-10 10:58:02</sys_created_on>
+        <sys_db_object display_value="" name="sys_rest_message_headers">sys_rest_message_headers</sys_db_object>
+        <sys_id>1a79f43fd0ad49f29139631d62411c81</sys_id>
+        <sys_metadata>16effd63481631107f4472345ad9ca4c</sys_metadata>
+        <sys_name>job</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_parent display_value="Test">ecbf7d63481631107f4472345ad9caf1</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_scope_delete display_value="">048d5f0e899f424a8270d790e19b3744</sys_scope_delete>
+        <sys_update_name>sys_rest_message_headers_16effd63481631107f4472345ad9ca4c</sys_update_name>
+        <sys_update_version display_value="sys_rest_message_headers_16effd63481631107f4472345ad9ca4c">d74002a3481631107f4472345ad9ca30</sys_update_version>
+    </sys_metadata_delete>
+</record_update>

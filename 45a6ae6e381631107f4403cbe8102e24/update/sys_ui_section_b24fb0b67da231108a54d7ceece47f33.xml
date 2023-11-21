@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section caption="" section_id="b24fb0b67da231108a54d7ceece47f33" sys_domain="global" table="sysapproval_approver" version="3" view="custom_portal_approval_x_snc_accessprov_0">
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>comments</element>
+            <position>0</position>
+            <sys_created_by>system</sys_created_by>
+            <sys_created_on>2023-11-20 08:33:25</sys_created_on>
+            <sys_id>be4fb0b675a231105a3d16e613f6af32</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="sysapproval_approver" sys_domain="global" view="3e4fb0b6b3a231105c1369d3b9c5fc32">b24fb0b67da231108a54d7ceece47f33</sys_ui_section>
+            <sys_updated_by>system</sys_updated_by>
+            <sys_updated_on>2023-11-20 08:33:25</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>sysapproval</element>
+            <position>1</position>
+            <sys_created_by>system</sys_created_by>
+            <sys_created_on>2023-11-20 08:33:25</sys_created_on>
+            <sys_id>324fb0b6e6a2311025b7770826507433</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="sysapproval_approver" sys_domain="global" view="3e4fb0b6b3a231105c1369d3b9c5fc32">b24fb0b67da231108a54d7ceece47f33</sys_ui_section>
+            <sys_updated_by>system</sys_updated_by>
+            <sys_updated_on>2023-11-20 08:33:25</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption/>
+            <header>false</header>
+            <name>sysapproval_approver</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>system</sys_created_by>
+            <sys_created_on>2023-11-20 08:33:25</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>b24fb0b67da231108a54d7ceece47f33</sys_id>
+            <sys_name>sysapproval_approver</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+            <sys_update_name>sys_ui_section_b24fb0b67da231108a54d7ceece47f33</sys_update_name>
+            <sys_user/>
+            <title>false</title>
+            <view display_value="Custom portal (x_snc_accessprov_0)" name="custom_portal_approval_x_snc_accessprov_0">3e4fb0b6b3a231105c1369d3b9c5fc32</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_composite_data_template_predicate_bundle">
+    <sys_ux_composite_data_template_predicate_bundle action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <name>My Tasks - Task bundle</name>
+        <sys_class_name>sys_ux_composite_data_template_predicate_bundle</sys_class_name>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2023-11-20 08:33:30</sys_created_on>
+        <sys_id>f64fb0b6c6a231107c07152d9ee2aa2a</sys_id>
+        <sys_name>My Tasks - Task bundle</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sys_ux_composite_data_template_predicate_bundle_f64fb0b6c6a231107c07152d9ee2aa2a</sys_update_name>
+    </sys_ux_composite_data_template_predicate_bundle>
+</record_update>

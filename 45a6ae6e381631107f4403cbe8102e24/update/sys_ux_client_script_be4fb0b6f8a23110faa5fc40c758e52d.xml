@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <includes/>
+        <macroponent display_value="Search Page">f64fb0b67da23110d3bd6c9d88a3212e</macroponent>
+        <name>set_loading</name>
+        <preset/>
+        <required_translations>[ ]</required_translations>
+        <script><![CDATA[function handler({api, event, imports}) {
+	// Called on successful retrieval of search data
+    api.setState('loading', false);
+}]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2023-11-20 08:33:27</sys_created_on>
+        <sys_id>be4fb0b6f8a23110faa5fc40c758e52d</sys_id>
+        <sys_name>set_loading</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sys_ux_client_script_be4fb0b6f8a23110faa5fc40c758e52d</sys_update_name>
+        <target/>
+        <type/>
+    </sys_ux_client_script>
+</record_update>

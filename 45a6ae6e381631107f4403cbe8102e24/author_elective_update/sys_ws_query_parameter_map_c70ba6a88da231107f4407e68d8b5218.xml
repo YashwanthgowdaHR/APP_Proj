@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_query_parameter_map">
+    <sys_ws_query_parameter_map action="DELETE">
+        <sys_class_name>sys_ws_query_parameter_map</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-13 16:38:02</sys_created_on>
+        <sys_id>c70ba6a88da231107f4407e68d8b5218</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>bd4ae2688da231107f4407e68d8b52fb</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sys_ws_query_parameter_map_c70ba6a88da231107f4407e68d8b5218</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-11-13 16:38:02</sys_updated_on>
+        <web_service_operation display_value="Get Users">e3e8d6a48d6231107f4407e68d8b528d</web_service_operation>
+        <web_service_query_parameter display_value="age">bd4ae2688da231107f4407e68d8b52fb</web_service_query_parameter>
+    </sys_ws_query_parameter_map>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</application>
+        <file_path/>
+        <instance_id>026a35cac35271d0e1c44dadc0013152</instance_id>
+        <instance_name>nowlearning-nlinst01219194-0001</instance_name>
+        <name>sys_ws_query_parameter_map_c70ba6a88da231107f4407e68d8b5218</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_query_parameter_map"><sys_ws_query_parameter_map action="INSERT_OR_UPDATE"><sys_class_name>sys_ws_query_parameter_map</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2023-11-13 16:38:02</sys_created_on><sys_id>c70ba6a88da231107f4407e68d8b5218</sys_id><sys_mod_count>0</sys_mod_count><sys_name>bd4ae2688da231107f4407e68d8b52fb</sys_name><sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package><sys_policy/><sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope><sys_update_name>sys_ws_query_parameter_map_c70ba6a88da231107f4407e68d8b5218</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2023-11-13 16:38:02</sys_updated_on><web_service_operation display_value="Get Users">e3e8d6a48d6231107f4407e68d8b528d</web_service_operation><web_service_query_parameter display_value="age">bd4ae2688da231107f4407e68d8b52fb</web_service_query_parameter></sys_ws_query_parameter_map></record_update>]]></payload>
+        <payload_hash>-1901377052</payload_hash>
+        <record_name>bd4ae2688da231107f4407e68d8b52fb</record_name>
+        <reverted_from/>
+        <source>85a6ae6e381631107f4403cbe8102e26</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-13 16:38:02</sys_created_on>
+        <sys_id>a21b2e688da231107f4407e68d8b5200</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>18bc98c12e50000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-11-13 16:38:02</sys_updated_on>
+        <type>Scripted REST Query Parameter Associatio</type>
+        <update_guid>ea1bea6811a23110eb9bccbc9bd532ff</update_guid>
+        <update_guid_history>ea1bea6811a23110eb9bccbc9bd532ff:-1901377052</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-13 16:46:13</sys_created_on>
+        <sys_db_object display_value="" name="sys_ws_query_parameter_map">sys_ws_query_parameter_map</sys_db_object>
+        <sys_id>391b5c78f16c4bc49f03a664fcfd7a04</sys_id>
+        <sys_metadata>c70ba6a88da231107f4407e68d8b5218</sys_metadata>
+        <sys_name>bd4ae2688da231107f4407e68d8b52fb</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_scope_delete display_value="">048d5f0e899f424a8270d790e19b3744</sys_scope_delete>
+        <sys_update_name>sys_ws_query_parameter_map_c70ba6a88da231107f4407e68d8b5218</sys_update_name>
+        <sys_update_version display_value="sys_ws_query_parameter_map_c70ba6a88da231107f4407e68d8b5218">a21b2e688da231107f4407e68d8b5200</sys_update_version>
+    </sys_metadata_delete>
+</record_update>
