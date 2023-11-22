@@ -6,12 +6,12 @@
         <audit>false</audit>
         <calculation/>
         <choice>3</choice>
-        <choice_field/>
-        <choice_table/>
+        <choice_field>name</choice_field>
+        <choice_table>x_snc_accessprov_0_environment</choice_table>
         <column_label>Environment</column_label>
         <comments/>
         <create_roles/>
-        <default_value>dev</default_value>
+        <default_value/>
         <defaultsort/>
         <delete_roles/>
         <dependent/>
@@ -29,7 +29,7 @@
         <function_field>false</function_field>
         <internal_type display_value="Choice">choice</internal_type>
         <mandatory>true</mandatory>
-        <max_length>40</max_length>
+        <max_length>32</max_length>
         <name>x_snc_accessprov_0_aa_request_access</name>
         <next_element/>
         <primary>false</primary>

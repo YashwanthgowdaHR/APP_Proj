@@ -42,7 +42,7 @@
 <p>You have subscribed to Servicenow.</p>
 <p>Here are the details:</p>
 <p>Automation Name: ${automation_name}</p>
-<p>Environment: ${environment}\</p>
+<p>Environment: ${environment}</p>
 <p>X / M-UID: ${x_m_uid}</p>
 <p>&nbsp;</p>
 <p>Thanks and Regards,</p>

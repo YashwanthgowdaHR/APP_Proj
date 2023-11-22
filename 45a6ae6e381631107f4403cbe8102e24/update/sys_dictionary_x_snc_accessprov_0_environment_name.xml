@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update>
-    <sys_dictionary action="INSERT_OR_UPDATE" element="x_m_uid" table="x_snc_accessprov_0_aa_request_access">
+    <sys_dictionary action="INSERT_OR_UPDATE" element="name" table="x_snc_accessprov_0_environment">
         <active>true</active>
         <array>false</array>
         <attributes/>
         <audit>false</audit>
         <calculation/>
-        <choice>0</choice>
+        <choice>3</choice>
         <choice_field/>
         <choice_table/>
-        <column_label>M / X - UID</column_label>
+        <column_label>Name</column_label>
         <comments/>
         <create_roles/>
         <default_value/>
@@ -21,16 +21,16 @@
         <dynamic_creation_script/>
         <dynamic_default_value/>
         <dynamic_ref_qual/>
-        <element>x_m_uid</element>
+        <element>name</element>
         <element_reference>false</element_reference>
         <foreign_database/>
         <formula/>
         <function_definition/>
         <function_field>false</function_field>
-        <internal_type display_value="String">string</internal_type>
-        <mandatory>true</mandatory>
+        <internal_type display_value="Choice">choice</internal_type>
+        <mandatory>false</mandatory>
         <max_length>40</max_length>
-        <name>x_snc_accessprov_0_aa_request_access</name>
+        <name>x_snc_accessprov_0_environment</name>
         <next_element/>
         <primary>false</primary>
         <read_only>false</read_only>
@@ -46,12 +46,12 @@
         <staged>false</staged>
         <sys_class_name>sys_dictionary</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2023-11-15 07:29:11</sys_created_on>
-        <sys_name>M / X - UID</sys_name>
+        <sys_created_on>2023-11-22 07:12:09</sys_created_on>
+        <sys_name>Name</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
-        <sys_update_name>sys_dictionary_x_snc_accessprov_0_aa_request_access_x_m_uid</sys_update_name>
+        <sys_update_name>sys_dictionary_x_snc_accessprov_0_environment_name</sys_update_name>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>

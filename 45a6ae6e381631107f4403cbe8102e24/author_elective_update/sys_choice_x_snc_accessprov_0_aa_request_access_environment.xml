@@ -23,42 +23,10 @@
             <sequence>0</sequence>
             <synonyms/>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2023-11-15 07:29:13</sys_created_on>
+            <sys_created_on>2023-11-22 07:36:18</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <value>dev</value>
-        </sys_choice>
-        <sys_choice action="INSERT_OR_UPDATE">
-            <dependent_value/>
-            <element>environment</element>
-            <hint/>
-            <inactive>false</inactive>
-            <label>UAT</label>
-            <language>en</language>
-            <name>x_snc_accessprov_0_aa_request_access</name>
-            <sequence>1</sequence>
-            <synonyms/>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2023-11-15 07:29:13</sys_created_on>
-            <sys_domain>global</sys_domain>
-            <sys_domain_path>/</sys_domain_path>
-            <value>uat</value>
-        </sys_choice>
-        <sys_choice action="INSERT_OR_UPDATE">
-            <dependent_value/>
-            <element>environment</element>
-            <hint/>
-            <inactive>false</inactive>
-            <label>PROD</label>
-            <language>en</language>
-            <name>x_snc_accessprov_0_aa_request_access</name>
-            <sequence>2</sequence>
-            <synonyms/>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2023-11-15 07:29:13</sys_created_on>
-            <sys_domain>global</sys_domain>
-            <sys_domain_path>/</sys_domain_path>
-            <value>prod</value>
         </sys_choice>
     </sys_choice>
 </record_update>
