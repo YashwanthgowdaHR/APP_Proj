@@ -39,7 +39,7 @@
         <map_to_field>true</map_to_field>
         <mask_use_confirmation>false</mask_use_confirmation>
         <mask_use_encryption>false</mask_use_encryption>
-        <name>f_name</name>
+        <name>first_name</name>
         <order>200</order>
         <post_insert_script/>
         <price_if_checked>0</price_if_checked>
@@ -54,8 +54,8 @@
         <record/>
         <record_producer_table>x_snc_accessprov_0_aa_request_access</record_producer_table>
         <reference/>
-        <reference_qual>undefined</reference_qual>
-        <reference_qual_condition>undefined</reference_qual_condition>
+        <reference_qual/>
+        <reference_qual_condition/>
         <rich_text/>
         <roles_to_use_also_request_for/>
         <save_script><![CDATA[/** This script is executed before the Record is generated
@@ -75,7 +75,7 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-11-15 09:56:01</sys_created_on>
         <sys_id>0ee16701942631107f44a101401430fb</sys_id>
-        <sys_name>Enter your First Name</sys_name>
+        <sys_name>first_name</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>

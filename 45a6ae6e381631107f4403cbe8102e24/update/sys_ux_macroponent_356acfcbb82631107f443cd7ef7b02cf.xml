@@ -172,11 +172,11 @@
     },
     "type" : {
       "type" : "JSON_LITERAL",
-      "value" : "section"
+      "value" : "aside"
     },
     "ariaRole" : {
       "type" : "JSON_LITERAL",
-      "value" : ""
+      "value" : "article"
     }
   },
   "eventMappings" : [ ],
@@ -186,12 +186,197 @@
     "type" : "MACROPONENT"
   },
   "overrides" : {
-    "composition" : [ ],
+    "composition" : [ {
+      "elementId" : "catalog_item_1",
+      "elementLabel" : "Catalog Item 1",
+      "propertyValues" : {
+        "showRequestForHeader" : {
+          "type" : "JSON_LITERAL",
+          "value" : false
+        },
+        "propagateNotifications" : {
+          "type" : "JSON_LITERAL",
+          "value" : false
+        },
+        "sysId" : {
+          "type" : "JSON_LITERAL",
+          "value" : "ffff629f782231107f4427174a80032a"
+        },
+        "label" : {
+          "type" : "TRANSLATION_LITERAL",
+          "value" : {
+            "code" : null,
+            "message" : "",
+            "comment" : ""
+          }
+        },
+        "headingOnlyVisibleToScreenReaders" : {
+          "type" : "JSON_LITERAL",
+          "value" : false
+        },
+        "interceptNotifications" : {
+          "type" : "JSON_LITERAL",
+          "value" : false
+        },
+        "hideOptionsLabel" : {
+          "type" : "JSON_LITERAL",
+          "value" : "false"
+        },
+        "referrer" : {
+          "type" : "JSON_LITERAL",
+          "value" : "default"
+        },
+        "submitPosition" : {
+          "type" : "JSON_LITERAL",
+          "value" : "center"
+        },
+        "headerLevel" : {
+          "type" : "JSON_LITERAL",
+          "value" : "1"
+        },
+        "engagementChannel" : {
+          "type" : "JSON_LITERAL",
+          "value" : "default"
+        },
+        "requestedForId" : {
+          "type" : "JSON_LITERAL",
+          "value" : null
+        },
+        "bare" : {
+          "type" : "JSON_LITERAL",
+          "value" : true
+        },
+        "scrollable" : {
+          "type" : "JSON_LITERAL",
+          "value" : "none"
+        }
+      },
+      "eventMappings" : [ ],
+      "slot" : null,
+      "definition" : {
+        "id" : "afeef20635001010f877265d86f080df",
+        "type" : "MACROPONENT"
+      },
+      "overrides" : null,
+      "isHidden" : {
+        "type" : "JSON_LITERAL",
+        "value" : null
+      },
+      "isHero" : false,
+      "extensionPoints" : [ ],
+      "isNonDestructive" : false,
+      "items" : [ ],
+      "styles" : { }
+    }, {
+      "elementId" : "form_1",
+      "elementLabel" : "Form 1",
+      "propertyValues" : {
+        "encodedRecord" : {
+          "type" : "JSON_LITERAL",
+          "value" : null
+        },
+        "sysId" : {
+          "type" : "JSON_LITERAL",
+          "value" : "ffff629f782231107f4427174a80032a"
+        },
+        "isSectionTitleHidden" : {
+          "type" : "JSON_LITERAL",
+          "value" : false
+        },
+        "relatedLists" : {
+          "type" : "JSON_LITERAL",
+          "value" : ""
+        },
+        "formMessages" : {
+          "type" : "JSON_LITERAL",
+          "value" : [ ]
+        },
+        "isRemovePaddingLeft" : {
+          "type" : "JSON_LITERAL",
+          "value" : false
+        },
+        "isContextMenuHidden" : {
+          "type" : "JSON_LITERAL",
+          "value" : false
+        },
+        "isFormOptionsHidden" : {
+          "type" : "JSON_LITERAL",
+          "value" : false
+        },
+        "sections" : {
+          "type" : "JSON_LITERAL",
+          "value" : [ ]
+        },
+        "inUiBuilder" : {
+          "type" : "JSON_LITERAL",
+          "value" : true
+        },
+        "scrollableHost" : {
+          "type" : "JSON_LITERAL",
+          "value" : null
+        },
+        "view" : {
+          "type" : "JSON_LITERAL",
+          "value" : null
+        },
+        "inRecordPageTab" : {
+          "type" : "JSON_LITERAL",
+          "value" : false
+        },
+        "isSectionMenuHidden" : {
+          "type" : "JSON_LITERAL",
+          "value" : false
+        },
+        "serializedChanges" : {
+          "type" : "JSON_LITERAL",
+          "value" : [ ]
+        },
+        "userSession" : {
+          "type" : "CONTEXT_BINDING",
+          "binding" : {
+            "address" : [ "user" ],
+            "category" : "session"
+          }
+        },
+        "disableCollapse" : {
+          "type" : "JSON_LITERAL",
+          "value" : false
+        },
+        "fields" : {
+          "type" : "JSON_LITERAL",
+          "value" : null
+        },
+        "config" : {
+          "type" : "JSON_LITERAL",
+          "value" : null
+        },
+        "table" : {
+          "type" : "JSON_LITERAL",
+          "value" : null
+        }
+      },
+      "eventMappings" : [ ],
+      "slot" : null,
+      "definition" : {
+        "id" : "cdf8d604a3fda59e69ccd6dd407263d6",
+        "type" : "MACROPONENT"
+      },
+      "overrides" : null,
+      "isHidden" : {
+        "type" : "JSON_LITERAL",
+        "value" : null
+      },
+      "isHero" : false,
+      "extensionPoints" : [ ],
+      "isNonDestructive" : false,
+      "items" : [ ],
+      "styles" : { }
+    } ],
     "layout" : {
       "default" : {
         "children" : null,
         "isInline" : null,
-        "items" : [],
+        "items" : [{"element_id":"catalog_item_1","styles":{}},{"element_id":"form_1","styles":{}}],
         "root" : null,
         "rules" : null,
         "styles" : {"flex-direction":"column"},

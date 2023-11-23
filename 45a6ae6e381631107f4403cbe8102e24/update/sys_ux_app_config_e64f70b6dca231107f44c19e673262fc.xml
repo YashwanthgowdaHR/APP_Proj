@@ -6,7 +6,7 @@
         <description>Request for Access to Portal</description>
         <encode_query_string>false</encode_query_string>
         <icon/>
-        <landing_path>landing</landing_path>
+        <landing_path>home_page</landing_path>
         <name>AccessProvider Config</name>
         <prefetch_limits/>
         <sys_class_name>sys_ux_app_config</sys_class_name>
