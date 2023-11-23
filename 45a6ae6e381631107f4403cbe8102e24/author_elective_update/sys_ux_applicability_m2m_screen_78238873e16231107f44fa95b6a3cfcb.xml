@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_applicability_m2m_screen">
+    <sys_ux_applicability_m2m_screen action="DELETE">
+        <active>true</active>
+        <applicability display_value="Public">be4fb0b60da2311042afcecedabe1936</applicability>
+        <order>0</order>
+        <screen display_value="home_page default">356a83cfb82631107f443cd7ef7b02c9</screen>
+        <sys_class_name>sys_ux_applicability_m2m_screen</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-23 06:44:25</sys_created_on>
+        <sys_id>78238873e16231107f44fa95b6a3cfcb</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sys_ux_applicability_m2m_screen_78238873e16231107f44fa95b6a3cfcb</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-11-23 06:44:25</sys_updated_on>
+    </sys_ux_applicability_m2m_screen>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</application>
+        <file_path/>
+        <instance_id>026a35cac35271d0e1c44dadc0013152</instance_id>
+        <instance_name>nowlearning-nlinst01219194-0001</instance_name>
+        <name>sys_ux_applicability_m2m_screen_78238873e16231107f44fa95b6a3cfcb</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_applicability_m2m_screen"><sys_ux_applicability_m2m_screen action="INSERT_OR_UPDATE"><active>true</active><applicability display_value="Public">be4fb0b60da2311042afcecedabe1936</applicability><order>0</order><screen display_value="home_page default">356a83cfb82631107f443cd7ef7b02c9</screen><sys_class_name>sys_ux_applicability_m2m_screen</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2023-11-23 06:44:25</sys_created_on><sys_id>78238873e16231107f44fa95b6a3cfcb</sys_id><sys_mod_count>0</sys_mod_count><sys_name/><sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package><sys_policy/><sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope><sys_update_name>sys_ux_applicability_m2m_screen_78238873e16231107f44fa95b6a3cfcb</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2023-11-23 06:44:25</sys_updated_on></sys_ux_applicability_m2m_screen></record_update>]]></payload>
+        <payload_hash>-533612375</payload_hash>
+        <record_name/>
+        <reverted_from/>
+        <source>0909aa8fb8a231107f443cd7ef7b0229</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-23 06:44:25</sys_created_on>
+        <sys_id>81238873e16231107f44fa95b6a3cfce</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>18bfaec34b20000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-11-23 06:44:25</sys_updated_on>
+        <type>Screen Applicability</type>
+        <update_guid>f8238873a3623110dce5ff1d4b467dcd</update_guid>
+        <update_guid_history>f8238873a3623110dce5ff1d4b467dcd:-533612375</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-23 07:01:32</sys_created_on>
+        <sys_db_object display_value="" name="sys_ux_applicability_m2m_screen">sys_ux_applicability_m2m_screen</sys_db_object>
+        <sys_id>40c7e0980ab54ec29d74f05b78a461a4</sys_id>
+        <sys_metadata>78238873e16231107f44fa95b6a3cfcb</sys_metadata>
+        <sys_name/>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_scope_delete display_value="">048d5f0e899f424a8270d790e19b3744</sys_scope_delete>
+        <sys_update_name>sys_ux_applicability_m2m_screen_78238873e16231107f44fa95b6a3cfcb</sys_update_name>
+        <sys_update_version display_value="sys_ux_applicability_m2m_screen_78238873e16231107f44fa95b6a3cfcb">81238873e16231107f44fa95b6a3cfce</sys_update_version>
+    </sys_metadata_delete>
+</record_update>

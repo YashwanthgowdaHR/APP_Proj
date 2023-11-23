@@ -141,7 +141,7 @@ if(input){
 <div class="form-group">
   <label class="col-md-4 control-label" for="txt_first_name">First Name</label>  
   <div class="col-md-4">
-  <input id="txt_first_name" ng-model="c.data.user_info.fname" type="text" class="form-control input-md">
+  <input id="txt_first_name" ng-model="c.data.user_info.fname" type="text" class="form-control input-md" disabled>
   </div>
 </div>
 
@@ -149,7 +149,7 @@ if(input){
 <div class="form-group">
   <label class="col-md-4 control-label" for="txt_last_name">Last Name</label>  
   <div class="col-md-4"> 
-  <input id="txt_last_name" ng-model="c.data.user_info.lname" type="text" class="form-control input-md">
+  <input id="txt_last_name" ng-model="c.data.user_info.lname" type="text" class="form-control input-md" disabled>
   </div>
 </div>
 
@@ -157,7 +157,7 @@ if(input){
 <div class="form-group">
   <label class="col-md-4 control-label" for="txt_email">Email Id</label>  
   <div class="col-md-4">
-  <input id="txt_email" ng-model="c.data.user_info.email" type="text" class="form-control input-md">
+  <input id="txt_email" ng-model="c.data.user_info.email" type="text" class="form-control input-md" disabled>
   </div>
 </div>
 
@@ -165,7 +165,7 @@ if(input){
 <div class="form-group">
   <label class="col-md-4 control-label" for="txt_uid">MUID / XUID</label>  
   <div class="col-md-4">
-  <input id="txt_uid" ng-model="c.data.user_info.uid" type="text" class="form-control input-md" required> 
+  <input id="txt_uid" ng-model="c.data.user_info.uid" type="text" class="form-control input-md" disabled> 
   </div>
 </div>
   
