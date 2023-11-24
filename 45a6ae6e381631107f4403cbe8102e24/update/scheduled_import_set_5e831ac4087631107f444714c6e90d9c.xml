@@ -6,10 +6,10 @@
         <condition/>
         <conditional>false</conditional>
         <connection_override/>
-        <data_source display_value="rest_api_record">d7b71f7ac0d231107f448f8fed58164f</data_source>
+        <data_source display_value="Random User list">4b57ec170cd231107f44cb9d57f9b191</data_source>
         <entered_time/>
         <map/>
-        <name>T - Import Users list</name>
+        <name>T-Scheduled_Random_User_List</name>
         <offset/>
         <offset_type>0</offset_type>
         <order/>
@@ -37,20 +37,20 @@
         <run_dayofmonth>1</run_dayofmonth>
         <run_dayofweek>1</run_dayofweek>
         <run_period>1970-01-01 01:00:00</run_period>
-        <run_start>2023-11-09 06:01:33</run_start>
-        <run_time>1970-01-01 10:00:00</run_time>
+        <run_start>2023-11-24 11:53:48</run_start>
+        <run_time>1970-01-01 00:05:00</run_time>
         <run_type>periodically</run_type>
         <show_connection_override>false</show_connection_override>
         <synchronize_inserts>true</synchronize_inserts>
         <sys_class_name>scheduled_import_set</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2023-11-09 06:02:02</sys_created_on>
-        <sys_id>901337cb0c1231107f44cb9d57f9b15d</sys_id>
-        <sys_name>T - Import Users list</sys_name>
+        <sys_created_on>2023-11-24 11:54:22</sys_created_on>
+        <sys_id>5e831ac4087631107f444714c6e90d9c</sys_id>
+        <sys_name>T-Scheduled_Random_User_List</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
-        <sys_update_name>scheduled_import_set_901337cb0c1231107f44cb9d57f9b15d</sys_update_name>
+        <sys_update_name>scheduled_import_set_5e831ac4087631107f444714c6e90d9c</sys_update_name>
         <time_zone/>
         <upgrade_safe>false</upgrade_safe>
         <use_child_connection>false</use_child_connection>

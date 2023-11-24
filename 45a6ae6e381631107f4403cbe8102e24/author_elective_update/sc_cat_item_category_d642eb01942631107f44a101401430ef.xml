@@ -41,7 +41,7 @@
         <update_guid_history>9642eb01ef2631109aedf6f92c748bf2:-795619891</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="Security and Access.Request Access - RP">0562af01942631107f44a10140143055</sys_audit_delete>
+        <sys_audit_delete display_value="">0562af01942631107f44a10140143055</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-11-15 09:56:32</sys_created_on>

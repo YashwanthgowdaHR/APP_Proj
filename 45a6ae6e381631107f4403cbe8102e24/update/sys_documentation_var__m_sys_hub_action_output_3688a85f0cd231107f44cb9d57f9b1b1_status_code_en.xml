@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="status_code" label="status_code" language="en" table="var__m_sys_hub_action_output_3688a85f0cd231107f44cb9d57f9b1b1">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>status_code</element>
+            <help/>
+            <hint/>
+            <label>status_code</label>
+            <language>en</language>
+            <name>var__m_sys_hub_action_output_3688a85f0cd231107f44cb9d57f9b1b1</name>
+            <plural/>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2023-11-09 09:55:13</sys_created_on>
+            <sys_name>status_code</sys_name>
+            <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+            <sys_update_name>sys_documentation_var__m_sys_hub_action_output_3688a85f0cd231107f44cb9d57f9b1b1_status_code_en</sys_update_name>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

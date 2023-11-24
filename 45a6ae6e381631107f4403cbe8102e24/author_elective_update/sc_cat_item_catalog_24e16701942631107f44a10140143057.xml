@@ -41,7 +41,7 @@
         <update_guid_history>64e1670189263110c17034a24cbada59:-453479811</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="Service Catalog.Request Access - RP">9642eb01942631107f44a101401430d5</sys_audit_delete>
+        <sys_audit_delete display_value="">9642eb01942631107f44a101401430d5</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-11-15 09:56:04</sys_created_on>
@@ -50,7 +50,7 @@
         <sys_metadata>24e16701942631107f44a10140143057</sys_metadata>
         <sys_name>Service Catalog.Request Access - RP</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
-        <sys_parent display_value="Request Access - RP">54402f8d94e231107f44a101401430d7</sys_parent>
+        <sys_parent display_value="Request Access">54402f8d94e231107f44a101401430d7</sys_parent>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_scope_delete display_value="">048d5f0e899f424a8270d790e19b3744</sys_scope_delete>

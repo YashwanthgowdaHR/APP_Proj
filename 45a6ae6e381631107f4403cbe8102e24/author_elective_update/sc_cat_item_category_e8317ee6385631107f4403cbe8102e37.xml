@@ -41,7 +41,7 @@
         <update_guid_history>e8317ee66b563110db21c2f9462ecd3a:-494266128</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="Application and Account Access.Requests the access">f041bee6385631107f4403cbe8102e59</sys_audit_delete>
+        <sys_audit_delete display_value="">f041bee6385631107f4403cbe8102e59</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-11-07 11:57:05</sys_created_on>

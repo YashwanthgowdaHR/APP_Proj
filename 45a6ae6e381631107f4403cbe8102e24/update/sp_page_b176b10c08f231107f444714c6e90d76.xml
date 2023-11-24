@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_page">
+    <sp_page action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <css/>
+        <draft>false</draft>
+        <dynamic_title_structure/>
+        <id>tsp_home_page</id>
+        <internal>false</internal>
+        <omit_watcher>false</omit_watcher>
+        <public>false</public>
+        <roles/>
+        <seo_script display_value="SPSEOHeaderTags">f060f7b377011010d81e7811a91061e3</seo_script>
+        <short_description>Test Portal Home Page</short_description>
+        <sys_class_name>sp_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-24 09:49:08</sys_created_on>
+        <sys_id>b176b10c08f231107f444714c6e90d76</sys_id>
+        <sys_name>tsp_home_page</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sp_page_b176b10c08f231107f444714c6e90d76</sys_update_name>
+        <title>Test_Portal-Home_Page</title>
+        <use_seo_script>false</use_seo_script>
+    </sp_page>
+    <sys_translated_text action="delete_multiple" query="documentkey=b176b10c08f231107f444714c6e90d76"/>
+</record_update>

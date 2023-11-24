@@ -41,7 +41,7 @@
         <update_guid_history>7a213ee61056311068fc718e6771a22a:1177968445</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="Resources.Requests the access">24317ee6385631107f4403cbe8102e25</sys_audit_delete>
+        <sys_audit_delete display_value="">24317ee6385631107f4403cbe8102e25</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-11-07 11:56:47</sys_created_on>

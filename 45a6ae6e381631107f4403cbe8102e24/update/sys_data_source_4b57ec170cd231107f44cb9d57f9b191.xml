@@ -31,7 +31,7 @@
         <jpath_root_node>/results/results</jpath_root_node>
         <last_run_database_field/>
         <last_run_datetime/>
-        <last_success_import_time>2023-11-23 12:08:39</last_success_import_time>
+        <last_success_import_time>2023-11-24 15:48:48</last_success_import_time>
         <ldap_target/>
         <ldapprobe_result_set_rows>200</ldapprobe_result_set_rows>
         <limit/>
@@ -85,7 +85,7 @@
         <sys_update_name>sys_data_source_4b57ec170cd231107f44cb9d57f9b191</sys_update_name>
         <table_name/>
         <type>REST</type>
-        <use_batch_import>true</use_batch_import>
+        <use_batch_import>false</use_batch_import>
         <use_integrated_authentication>false</use_integrated_authentication>
         <use_last_run_datetime>false</use_last_run_datetime>
         <xpath_root_node/>

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="scheduled_import_set">
+    <scheduled_import_set action="DELETE">
+        <active>true</active>
+        <business_calendar/>
+        <concurrent_import>false</concurrent_import>
+        <condition/>
+        <conditional>false</conditional>
+        <connection_override/>
+        <data_source display_value="rest_api_record">d7b71f7ac0d231107f448f8fed58164f</data_source>
+        <entered_time/>
+        <map/>
+        <name>T - Import Users list</name>
+        <offset/>
+        <offset_type>0</offset_type>
+        <order/>
+        <parent/>
+        <partition_method>roundRobin</partition_method>
+        <partition_script><![CDATA[(function partitionHash(import_set_row) {
+
+	// Add your code here
+	
+	// eg:
+	// return import_set_row.u_important_category;
+	// This would ensure all rows with the same 'u_important_category' value will be in the same Import Set.
+
+	 return import_set_row.sys_import_row;
+
+})(import_set_row);]]></partition_script>
+        <partition_size/>
+        <post_script/>
+        <post_script_bool>false</post_script_bool>
+        <pre_script/>
+        <pre_script_bool>false</pre_script_bool>
+        <record_source>regular</record_source>
+        <run_as display_value="System Administrator">6816f79cc0a8016401c5a33be04be441</run_as>
+        <run_as_tz/>
+        <run_dayofmonth>1</run_dayofmonth>
+        <run_dayofweek>1</run_dayofweek>
+        <run_period>1970-01-01 01:00:00</run_period>
+        <run_start>2023-11-09 06:01:33</run_start>
+        <run_time>1970-01-01 10:00:00</run_time>
+        <run_type>periodically</run_type>
+        <show_connection_override>false</show_connection_override>
+        <synchronize_inserts>true</synchronize_inserts>
+        <sys_class_name>scheduled_import_set</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-09 06:02:02</sys_created_on>
+        <sys_id>901337cb0c1231107f44cb9d57f9b15d</sys_id>
+        <sys_name>T - Import Users list</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>scheduled_import_set_901337cb0c1231107f44cb9d57f9b15d</sys_update_name>
+        <time_zone/>
+        <upgrade_safe>false</upgrade_safe>
+        <use_child_connection>false</use_child_connection>
+    </scheduled_import_set>
+<sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</application>
+        <file_path/>
+        <instance_id>6ac4d53fc362b5d0e1c44dadc0013172</instance_id>
+        <instance_name>nowlearning-nlinst01265981-0001</instance_name>
+        <name>scheduled_import_set_901337cb0c1231107f44cb9d57f9b15d</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="scheduled_import_set"&gt;
+    &lt;scheduled_import_set action="INSERT_OR_UPDATE"&gt;
+        &lt;active&gt;true&lt;/active&gt;
+        &lt;business_calendar/&gt;
+        &lt;concurrent_import&gt;false&lt;/concurrent_import&gt;
+        &lt;condition/&gt;
+        &lt;conditional&gt;false&lt;/conditional&gt;
+        &lt;connection_override/&gt;
+        &lt;data_source display_value="rest_api_record"&gt;d7b71f7ac0d231107f448f8fed58164f&lt;/data_source&gt;
+        &lt;entered_time/&gt;
+        &lt;map/&gt;
+        &lt;name&gt;T - Import Users list&lt;/name&gt;
+        &lt;offset/&gt;
+        &lt;offset_type&gt;0&lt;/offset_type&gt;
+        &lt;order/&gt;
+        &lt;parent/&gt;
+        &lt;partition_method&gt;roundRobin&lt;/partition_method&gt;
+        &lt;partition_script&gt;&lt;![CDATA[(function partitionHash(import_set_row) {
+
+	// Add your code here
+	
+	// eg:
+	// return import_set_row.u_important_category;
+	// This would ensure all rows with the same 'u_important_category' value will be in the same Import Set.
+
+	 return import_set_row.sys_import_row;
+
+})(import_set_row);]]&gt;&lt;/partition_script&gt;
+        &lt;partition_size/&gt;
+        &lt;post_script/&gt;
+        &lt;post_script_bool&gt;false&lt;/post_script_bool&gt;
+        &lt;pre_script/&gt;
+        &lt;pre_script_bool&gt;false&lt;/pre_script_bool&gt;
+        &lt;record_source&gt;regular&lt;/record_source&gt;
+        &lt;run_as display_value="System Administrator"&gt;6816f79cc0a8016401c5a33be04be441&lt;/run_as&gt;
+        &lt;run_as_tz/&gt;
+        &lt;run_dayofmonth&gt;1&lt;/run_dayofmonth&gt;
+        &lt;run_dayofweek&gt;1&lt;/run_dayofweek&gt;
+        &lt;run_period&gt;1970-01-01 01:00:00&lt;/run_period&gt;
+        &lt;run_start&gt;2023-11-09 06:01:33&lt;/run_start&gt;
+        &lt;run_time&gt;1970-01-01 10:00:00&lt;/run_time&gt;
+        &lt;run_type&gt;periodically&lt;/run_type&gt;
+        &lt;show_connection_override&gt;false&lt;/show_connection_override&gt;
+        &lt;synchronize_inserts&gt;true&lt;/synchronize_inserts&gt;
+        &lt;sys_class_name&gt;scheduled_import_set&lt;/sys_class_name&gt;
+        &lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;
+        &lt;sys_created_on&gt;2023-11-09 06:02:02&lt;/sys_created_on&gt;
+        &lt;sys_id&gt;901337cb0c1231107f44cb9d57f9b15d&lt;/sys_id&gt;
+        &lt;sys_name&gt;T - Import Users list&lt;/sys_name&gt;
+        &lt;sys_package display_value="AccessProvider" source="x_snc_accessprov_0"&gt;45a6ae6e381631107f4403cbe8102e24&lt;/sys_package&gt;
+        &lt;sys_policy/&gt;
+        &lt;sys_scope display_value="AccessProvider"&gt;45a6ae6e381631107f4403cbe8102e24&lt;/sys_scope&gt;
+        &lt;sys_update_name&gt;scheduled_import_set_901337cb0c1231107f44cb9d57f9b15d&lt;/sys_update_name&gt;
+        &lt;time_zone/&gt;
+        &lt;upgrade_safe&gt;false&lt;/upgrade_safe&gt;
+        &lt;use_child_connection&gt;false&lt;/use_child_connection&gt;
+    &lt;/scheduled_import_set&gt;
+&lt;/record_update&gt;</payload>
+        <payload_hash>-2096725535</payload_hash>
+        <record_name>T - Import Users list</record_name>
+        <reverted_from/>
+        <source>8d0b510008b231107f444714c6e90d37</source>
+        <source_table>sys_upgrade_history</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-24 07:47:18</sys_created_on>
+        <sys_id>271bd90008b231107f444714c6e90d3d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>18c004c22640000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-11-24 07:47:18</sys_updated_on>
+        <type>Scheduled Data Import</type>
+        <update_guid>e31bd900d9b2311002e29d621c97413d</update_guid>
+        <update_guid_history>e31bd900d9b2311002e29d621c97413d:-2096725535</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="T - Import Users list">60c3dec4087631107f444714c6e90d0e</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-24 11:54:46</sys_created_on>
+        <sys_db_object display_value="" name="scheduled_import_set">scheduled_import_set</sys_db_object>
+        <sys_id>0fb415baef004432a28687df30927f64</sys_id>
+        <sys_metadata>901337cb0c1231107f44cb9d57f9b15d</sys_metadata>
+        <sys_name>T - Import Users list</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_scope_delete display_value="">048d5f0e899f424a8270d790e19b3744</sys_scope_delete>
+        <sys_update_name>scheduled_import_set_901337cb0c1231107f44cb9d57f9b15d</sys_update_name>
+        <sys_update_version display_value="scheduled_import_set_901337cb0c1231107f44cb9d57f9b15d">271bd90008b231107f444714c6e90d3d</sys_update_version>
+    </sys_metadata_delete>
+</record_update>
