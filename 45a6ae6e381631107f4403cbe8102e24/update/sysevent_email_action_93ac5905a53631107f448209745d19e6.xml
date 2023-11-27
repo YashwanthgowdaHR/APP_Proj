@@ -12,7 +12,7 @@
         </condition>
         <content_type>text/html</content_type>
         <default_interval/>
-        <description>Send a notification when a new record is inserted or deleted</description>
+        <description/>
         <digest_from/>
         <digest_html/>
         <digest_reply_to/>
@@ -28,7 +28,7 @@
         <event_name>activate.life.cycle.migration</event_name>
         <event_parm_1>false</event_parm_1>
         <event_parm_2>false</event_parm_2>
-        <exclude_delegates>true</exclude_delegates>
+        <exclude_delegates>false</exclude_delegates>
         <force_delivery>false</force_delivery>
         <from/>
         <generation_type>engine</generation_type>
@@ -38,18 +38,18 @@
         <item_table/>
         <mandatory>false</mandatory>
         <message/>
-        <message_html><![CDATA[<p>Hi ${first_name} ${last_name},</p>
+        <message_html><![CDATA[<p>Hi <strong>${first_name} ${last_name}</strong>,</p>
 <p>You have subscribed to Servicenow.</p>
-<p>Here are the details:</p>
-<p>Automation Name: ${automation_name}</p>
-<p>Environment: ${environment}</p>
-<p>X / M-UID: ${x_m_uid}</p>
+<p>Here are the details:-</p>
+<p><strong>Automation Name</strong>: ${automation_name}</p>
+<p><strong>Environment</strong>: ${environment}</p>
+<p><strong>X / M-UID</strong>: ${x_m_uid}</p>
 <p>&nbsp;</p>
 <p>Thanks and Regards,</p>
 <p>Servicenow Team</p>]]></message_html>
         <message_list/>
         <message_text/>
-        <name>Mail Notifier</name>
+        <name>Mail notifier</name>
         <omit_watermark>false</omit_watermark>
         <order>100</order>
         <push_message_only>false</push_message_only>
@@ -57,23 +57,23 @@
         <recipient_groups/>
         <recipient_users/>
         <reply_to/>
-        <send_self>false</send_self>
+        <send_self>true</send_self>
         <sms_alternate/>
         <style/>
-        <subject>ServiceNow Alert</subject>
+        <subject>ServiceNow Alert -  Record is Created</subject>
         <subscribable>false</subscribable>
         <sys_class_name>sysevent_email_action</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2023-11-16 12:38:32</sys_created_on>
+        <sys_created_on>2023-11-27 10:29:45</sys_created_on>
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
-        <sys_id>9b8099ad516631107f44bb0679cbb90e</sys_id>
-        <sys_name>Mail Notifier</sys_name>
+        <sys_id>93ac5905a53631107f448209745d19e6</sys_id>
+        <sys_name>Mail notifier</sys_name>
         <sys_overrides/>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
-        <sys_update_name>sysevent_email_action_9b8099ad516631107f44bb0679cbb90e</sys_update_name>
+        <sys_update_name>sysevent_email_action_93ac5905a53631107f448209745d19e6</sys_update_name>
         <sys_version>2</sys_version>
         <template display_value="AES app template email - Standard">f749cd1dc3670110a9f5e548fa40ddd3</template>
         <type>email</type>

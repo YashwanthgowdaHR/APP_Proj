@@ -2,7 +2,7 @@
     <sp_column action="INSERT_OR_UPDATE">
         <class_name/>
         <order>1</order>
-        <size>6</size>
+        <size>12</size>
         <size_lg/>
         <size_sm/>
         <size_xs/>

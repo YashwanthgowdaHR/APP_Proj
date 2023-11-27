@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
-        <client_script><![CDATA[function($scope){
-	var current = this;
-	current.addRecord = function(){
-		current.data.fname = $scope.c.data.fname;
-		current.data.lname = $scope.c.data.lname;
-		current.data.email = $scope.c.data.email;
-		current.data.uid = $scope.c.data.uid;
-		current.data.automation_name = $scope.c.data.automation_name;
-		current.data.environment = $scope.c.data.environment;
-		current.data.action = 'addRecord';
-		current.server.update().then(function(){
-			current.data = {};
-		})
-	}
+        <client_script><![CDATA[function($scope) {
+    var current = this;
+    current.addRecord = function() {
+        current.data.fname = $scope.c.data.fname;
+        current.data.lname = $scope.c.data.lname;
+        current.data.email = $scope.c.data.email;
+        current.data.uid = $scope.c.data.uid;
+        current.data.automation_name = $scope.c.data.automation_name;
+        current.data.environment = $scope.c.data.environment;
+        current.data.action = 'addRecord';
+        current.server.update().then(function() {
+            current.data = {};
+        });
+    };
 }]]></client_script>
         <controller_as>c</controller_as>
         <css/>
@@ -63,7 +63,7 @@ if(input){
 		gr.x_m_uid = input.uid;
 		*/
 		gr.insert();
-		gs.addInfoMessage("Access Requested.")
+		gs.addInfoMessage("Access Requested.");
 	}
 	
 	

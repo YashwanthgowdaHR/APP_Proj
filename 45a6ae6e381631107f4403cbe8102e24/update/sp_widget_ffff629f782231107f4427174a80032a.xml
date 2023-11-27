@@ -4,24 +4,27 @@
         <client_script><![CDATA[function($scope){
 	var current = this;
 	current.addRecord = function(){
-		//current.data = {};
 		current.data.fname = $scope.c.data.user_info.fname;
 		current.data.lname = $scope.c.data.user_info.lname;
 		current.data.email = $scope.c.data.user_info.email;
-		current.data.uid = $scope.c.data.uid;
+		current.data.uid = $scope.c.data.user_info.uid;
 		current.data.automation_name =$scope.c.data.automation_name;
 		current.data.environment = $scope.c.data.environment;
+		
+		
 		delete current.data.user_info;
 		delete current.data.env;
 		current.data.action = 'addRecord';
 		current.server.update().then(function(){
-			current.data = {};
-		})
+			current.data.automation_name = "";
+			current.data.environment = current.data.env[0];
+			alert("Thank You for contacting us...!!!!!");
+		});
 		
-	}
+	};
 	
 	
-}]]></client_script>
+};]]></client_script>
         <controller_as>c</controller_as>
         <css>label{
   font-weight: bold;
@@ -79,18 +82,12 @@ select{
 			email: gr.email.toString(),
 			uid: gr.user_name.toString(),
 			name: gr.name.toString()
-		}
+		};
 	}
 	
 })();
 
 if(input){
-	
-	var key;
-	for(key in input){
-		gs.addInfoMessage("key: "+key+" Value: "+input[key]);
-	}
-	
 	
 	if(input.action=='addRecord'){
 		var gr = new GlideRecord('x_snc_accessprov_0_aa_request_access');
@@ -110,8 +107,8 @@ if(input){
 		gr.environment = input.environment;
 		gr.x_m_uid = input.uid;
 		*/
-		//gr.insert();
-		gs.addInfoMessage("Access Requested.")
+		gr.insert();
+		gs.addInfoMessage("Access Requested.");
 	}
 	
 	
@@ -127,9 +124,9 @@ if(input){
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sp_widget_ffff629f782231107f4427174a80032a</sys_update_name>
         <template><![CDATA[<div>
-  <p>
+  <h3>
     Hi, {{data.user_info.name}}!
-  </p>
+  </h3>
   
 <form class="form-horizontal">
 <fieldset>
@@ -140,7 +137,7 @@ if(input){
 <!-- Text input-->
 <div class="form-group">
   <label class="col-md-4 control-label" for="txt_first_name">First Name</label>  
-  <div class="col-md-4">
+  <div class="col-md-6">
   <input id="txt_first_name" ng-model="c.data.user_info.fname" type="text" class="form-control input-md" disabled>
   </div>
 </div>
@@ -148,7 +145,7 @@ if(input){
   <!-- Text input-->
 <div class="form-group">
   <label class="col-md-4 control-label" for="txt_last_name">Last Name</label>  
-  <div class="col-md-4"> 
+  <div class="col-md-6"> 
   <input id="txt_last_name" ng-model="c.data.user_info.lname" type="text" class="form-control input-md" disabled>
   </div>
 </div>
@@ -156,7 +153,7 @@ if(input){
 <!-- Text input-->
 <div class="form-group">
   <label class="col-md-4 control-label" for="txt_email">Email Id</label>  
-  <div class="col-md-4">
+  <div class="col-md-6">
   <input id="txt_email" ng-model="c.data.user_info.email" type="text" class="form-control input-md" disabled>
   </div>
 </div>
@@ -164,21 +161,21 @@ if(input){
 <!-- Text input-->
 <div class="form-group">
   <label class="col-md-4 control-label" for="txt_uid">MUID / XUID</label>  
-  <div class="col-md-4">
+  <div class="col-md-6">
   <input id="txt_uid" ng-model="c.data.user_info.uid" type="text" class="form-control input-md" disabled> 
   </div>
 </div>
   
 <div class="form-group">
   <label class="col-md-4 control-label" for="txt_automation_name">Automation Name</label>  
-  <div class="col-md-4">
+  <div class="col-md-6">
   <input id="txt_automation_name" ng-model="c.data.automation_name" type="text" class="form-control input-md" required> 
   </div>
 </div>
   
 <div class="form-group">
   <label class="col-md-4 control-label" for="txt_env">Environment</label>  
-  <div class="col-md-4">
+  <div class="col-md-6">
     <select id="txt_env" class="form-control input-md" ng-model="c.data.environment"  ng-init="c.data.environment = data.env[0]" ng-options="option for option in data.env">
     </select> 
   </div>
