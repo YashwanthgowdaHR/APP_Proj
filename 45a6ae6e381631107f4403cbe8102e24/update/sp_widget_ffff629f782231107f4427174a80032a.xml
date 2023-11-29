@@ -18,7 +18,6 @@
 		current.server.update().then(function(){
 			current.data.automation_name = "";
 			current.data.environment = current.data.env[0];
-			alert("Thank You for contacting us...!!!!!");
 		});
 		
 	};
@@ -99,6 +98,14 @@ if(input){
 		gr.setValue('automation_name', input.automation_name);
 		gr.setValue('environment', input.environment);
 		gr.setValue('x_m_uid', input.uid);
+		
+		if(input.fname == undefined || input.lname == undefined || input.email == undefined || input.automation_name==undefined || input.environment== undefined){
+			gs.addErrorMessage("Please fill all the neccessary fields and submit the form.")
+		}else{
+			gr.insert();
+			gs.addInfoMessage("Access Requested.");
+		}
+		
 		/*
 		gr.first_name = input.fname;
 		gr.last_name = input.lname;
@@ -107,8 +114,7 @@ if(input){
 		gr.environment = input.environment;
 		gr.x_m_uid = input.uid;
 		*/
-		gr.insert();
-		gs.addInfoMessage("Access Requested.");
+		
 	}
 	
 	

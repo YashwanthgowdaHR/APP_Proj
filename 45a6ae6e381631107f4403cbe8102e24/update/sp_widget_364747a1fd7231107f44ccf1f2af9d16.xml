@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function() {
+    /* widget controller */
+    var c = this;
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>table td, table th{
+  text-align: center;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>true</has_preview>
+        <id>tsp_admin_access_table</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>tsp_admin_access_table</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+    /* populate the 'data' object */
+    /* e.g., data.table = $sp.getValue('table'); */
+    data.adminAccessInfo = [];
+    var gr = new GlideRecord('x_snc_accessprov_0_aa_request_access');
+    gr.addQuery('x_m_uid', gs.getUserName());
+    gr.query();
+	var i = 1;
+    while (gr.next()) {
+        data.adminAccessInfo.push({
+					no:i++,
+            automationName: gr.getValue('automation_name').toString(),
+            environment: gr.getValue('environment').toString(),
+            status: "Pending"
+        });
+    }
+		
+		
+    data.othersAccessInfo = [];
+	gr = new GlideRecord('x_snc_accessprov_0_aa_request_access');  
+		gr.addEncodedQuery('x_m_uidNOT LIKE' + gs.getUserName());
+    gr.query();
+		i = 1;
+    while (gr.next()) {
+			//gs.addInfoMessage(gr.getValue('automation_name'))
+        
+			data.othersAccessInfo.push({
+				
+					no:i++,
+						name: gr.getValue('first_name').toString()+" " + gr.getValue('last_name').toString(),
+						mailId: gr.getValue('email_id').toString(),
+						uid: gr.getValue('x_m_uid').toString(),
+            automationName: gr.getValue('automation_name').toString(),
+            environment: gr.getValue('environment').toString(),
+            status: "Pending"
+        });
+				
+    }
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-29 08:28:51</sys_created_on>
+        <sys_id>364747a1fd7231107f44ccf1f2af9d16</sys_id>
+        <sys_name>tsp_admin_access_table</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sp_widget_364747a1fd7231107f44ccf1f2af9d16</sys_update_name>
+        <template><![CDATA[<div>
+<div id="admin_section" ng-if="data.adminAccessInfo.length > 0" class="table-responsive-sm">
+  <h2>Find your access details here.</h2>
+  <table ng-if="data.adminAccessInfo.length > 0" class="table table-hover table-bordered">
+    <thead>
+    	<tr>
+        <th scope="col" class="align-middle">#</th>
+      	<th scope="col" class="align-middle">Automation Name</th>
+      	<th scope="col" class="align-middle">Environment</th>
+      	<th scope="col" class="align-middle">Status</th>
+    	</tr>
+    </thead>
+    <tbody>
+    	<tr ng-repeat="info in data.adminAccessInfo">
+        <th scope="row" class="align-middle">{{info.no}}</th>
+      	<td class="align-middle">{{info.automationName}}</td>
+      	<td class="align-middle">{{info.environment}}</td>
+      	<td class="align-middle">{{info.status}}</td>
+    	</tr>
+     </tbody>
+  </table>
+  </div>
+  <div id="admin_section" ng-if="data.othersAccessInfo.length > 0" class="table-responsive-sm">
+  <h2>Find the others access details here.</h2>
+  <table ng-if="data.othersAccessInfo.length > 0" class="table table-hover table-bordered">
+     <thead>
+        <tr>
+          <th scope="col" class="align-middle">#</th>
+          <th scope="col" class="align-middle">Name</th>
+          <th scope="col" class="align-middle">MUID / XUID</th>
+          <th scope="col" class="align-middle">Mail Id</th>
+          <th scope="col" class="align-middle">Automation Name</th>
+          <th scope="col" class="align-middle">Environment</th>
+          <th scope="col" class="align-middle">Status</th>
+        </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="info in data.othersAccessInfo">
+        <th scope="row" class="align-middle">{{info.no}}</th>
+        <td class="align-middle">{{info.name}}</td>
+        <td class="align-middle">{{info.uid}}</td>
+        <td class="align-middle">{{info.mailId}}</td>
+        <td class="align-middle">{{info.automationName}}</td>
+        <td class="align-middle">{{info.environment}}</td>
+        <td class="align-middle">{{info.status}}</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</div>]]></template>
+    </sp_widget>
+</record_update>

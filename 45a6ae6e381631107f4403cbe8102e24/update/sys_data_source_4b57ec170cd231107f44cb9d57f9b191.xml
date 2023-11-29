@@ -31,7 +31,7 @@
         <jpath_root_node>/results/results</jpath_root_node>
         <last_run_database_field/>
         <last_run_datetime/>
-        <last_success_import_time>2023-11-27 11:53:49</last_success_import_time>
+        <last_success_import_time>2023-11-29 10:53:49</last_success_import_time>
         <ldap_target/>
         <ldapprobe_result_set_rows>200</ldapprobe_result_set_rows>
         <limit/>

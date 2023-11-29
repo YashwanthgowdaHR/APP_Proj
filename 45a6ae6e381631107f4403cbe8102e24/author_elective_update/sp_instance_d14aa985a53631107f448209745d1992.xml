@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_instance">
+    <sp_instance action="DELETE">
+        <active>true</active>
+        <class_name/>
+        <color>default</color>
+        <css/>
+        <glyph/>
+        <id/>
+        <order>1</order>
+        <roles/>
+        <short_description/>
+        <size>md</size>
+        <sp_column display_value="1">933ae581a57631107f448209745d191e</sp_column>
+        <sp_widget display_value="Request Access Widget">ffff629f782231107f4427174a80032a</sp_widget>
+        <sys_class_name>sp_instance</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-27 11:28:04</sys_created_on>
+        <sys_id>d14aa985a53631107f448209745d1992</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Request Form</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sp_instance_d14aa985a53631107f448209745d1992</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-11-27 11:28:04</sys_updated_on>
+        <title>Request Form</title>
+        <url/>
+        <widget_parameters/>
+    </sp_instance>
+    <sys_translated_text action="DELETE" query="documentkey=d14aa985a53631107f448209745d1992"/>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</application>
+        <file_path/>
+        <instance_id>6ac4d53fc362b5d0e1c44dadc0013172</instance_id>
+        <instance_name>nowlearning-nlinst01265981-0001</instance_name>
+        <name>sp_instance_d14aa985a53631107f448209745d1992</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_instance"><sp_instance action="INSERT_OR_UPDATE"><active>true</active><class_name/><color>default</color><css/><glyph/><id/><order>1</order><roles/><short_description/><size>md</size><sp_column display_value="1">933ae581a57631107f448209745d191e</sp_column><sp_widget display_value="Request Access Widget">ffff629f782231107f4427174a80032a</sp_widget><sys_class_name>sp_instance</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2023-11-27 11:28:04</sys_created_on><sys_id>d14aa985a53631107f448209745d1992</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Request Form</sys_name><sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package><sys_policy/><sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope><sys_update_name>sp_instance_d14aa985a53631107f448209745d1992</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2023-11-27 11:28:04</sys_updated_on><title>Request Form</title><url/><widget_parameters/></sp_instance><sys_translated_text action="delete_multiple" query="documentkey=d14aa985a53631107f448209745d1992"/></record_update>]]></payload>
+        <payload_hash>1103855099</payload_hash>
+        <record_name>Request Form</record_name>
+        <reverted_from/>
+        <source>e36b118008b231107f444714c6e90d89</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-27 11:28:04</sys_created_on>
+        <sys_id>be6aad81a57631107f448209745d19be</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>18c108954540000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-11-27 11:28:04</sys_updated_on>
+        <type>Instance</type>
+        <update_guid>f66aad81757631103c877f9b71b31fbe</update_guid>
+        <update_guid_history>f66aad81757631103c877f9b71b31fbe:1103855099</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Request Form">955972adfd3231107f44ccf1f2af9dc4</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-29 06:29:49</sys_created_on>
+        <sys_db_object display_value="" name="sp_instance">sp_instance</sys_db_object>
+        <sys_id>073bb85c0d89495680a7a7fa5a7738c4</sys_id>
+        <sys_metadata>d14aa985a53631107f448209745d1992</sys_metadata>
+        <sys_name>Request Form</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_scope_delete display_value="">048d5f0e899f424a8270d790e19b3744</sys_scope_delete>
+        <sys_update_name>sp_instance_d14aa985a53631107f448209745d1992</sys_update_name>
+        <sys_update_version display_value="sp_instance_d14aa985a53631107f448209745d1992">be6aad81a57631107f448209745d19be</sys_update_version>
+    </sys_metadata_delete>
+</record_update>
