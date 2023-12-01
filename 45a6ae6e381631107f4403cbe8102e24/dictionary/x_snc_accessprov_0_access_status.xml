@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="65c36c0610f231107f44b0faa36cade5" label="Access Status" max_length="40" name="x_snc_accessprov_0_access_status" type="collection">
+        <element choice="3" default="pending" display="true" label="Name" max_length="40" name="name" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Pending" sequence="0" value="pending"/>
+                <element inactive_on_update="false" label="Granted" sequence="1" value="granted"/>
+                <element inactive_on_update="false" label="Rejected" sequence="2" value="rejected"/>
+            </choice>
+        </element>
+        <element default="javascript:current.getTableName();" label="Class" max_length="80" name="sys_class_name" type="sys_class_name"/>
+        <index name="index">
+            <element name="sys_class_name"/>
+        </index>
+    </element>
+</database>

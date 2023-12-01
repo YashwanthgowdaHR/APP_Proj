@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_instance">
+    <sp_instance action="DELETE">
+        <active>true</active>
+        <class_name/>
+        <color>primary</color>
+        <css/>
+        <glyph/>
+        <id/>
+        <order>1</order>
+        <roles/>
+        <short_description/>
+        <size>md</size>
+        <sp_column display_value="1">ac324e84083631107f444714c6e90dbb</sp_column>
+        <sp_widget display_value="Request Access Widget">ffff629f782231107f4427174a80032a</sp_widget>
+        <sys_class_name>sp_instance</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-27 08:08:56</sys_created_on>
+        <sys_id>cc8c7409a5b231107f448209745d194e</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>Test-Home Page Instance</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sp_instance_cc8c7409a5b231107f448209745d194e</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-11-27 08:13:55</sys_updated_on>
+        <title>Test-Home Page Instance</title>
+        <url/>
+        <widget_parameters/>
+    </sp_instance>
+    <sys_translated_text action="DELETE" query="documentkey=cc8c7409a5b231107f448209745d194e"/>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</application>
+        <file_path/>
+        <instance_id>6ac4d53fc362b5d0e1c44dadc0013172</instance_id>
+        <instance_name>nowlearning-nlinst01265981-0001</instance_name>
+        <name>sp_instance_cc8c7409a5b231107f448209745d194e</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_instance"><sp_instance action="INSERT_OR_UPDATE"><active>true</active><class_name/><color>primary</color><css/><glyph/><id/><order>1</order><roles/><short_description/><size>md</size><sp_column display_value="1">ac324e84083631107f444714c6e90dbb</sp_column><sp_widget display_value="Request Access Widget">ffff629f782231107f4427174a80032a</sp_widget><sys_class_name>sp_instance</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2023-11-27 08:08:56</sys_created_on><sys_id>cc8c7409a5b231107f448209745d194e</sys_id><sys_mod_count>1</sys_mod_count><sys_name>Test-Home Page Instance</sys_name><sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package><sys_policy/><sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope><sys_update_name>sp_instance_cc8c7409a5b231107f448209745d194e</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2023-11-27 08:13:55</sys_updated_on><title>Test-Home Page Instance</title><url/><widget_parameters/></sp_instance><sys_translated_text action="delete_multiple" query="documentkey=cc8c7409a5b231107f448209745d194e"/></record_update>]]></payload>
+        <payload_hash>2069088529</payload_hash>
+        <record_name>Test-Home Page Instance</record_name>
+        <reverted_from/>
+        <source>e36b118008b231107f444714c6e90d89</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-27 08:13:56</sys_created_on>
+        <sys_id>f6fd7409a5b231107f448209745d1923</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>18c0fd796a70000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-11-27 08:13:56</sys_updated_on>
+        <type>Instance</type>
+        <update_guid>fefd740951b231100ef2154204a99e22</update_guid>
+        <update_guid_history>fefd740951b231100ef2154204a99e22:2069088529,6ddcf4093cb231104d207c0e1720b035:1321640373</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Test-Home Page Instance">60dab7adfd3631107f44ccf1f2af9d2c</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-29 11:15:56</sys_created_on>
+        <sys_db_object display_value="" name="sp_instance">sp_instance</sys_db_object>
+        <sys_id>2832c401ecca4c60885fd62af7012c90</sys_id>
+        <sys_metadata>cc8c7409a5b231107f448209745d194e</sys_metadata>
+        <sys_name>Test-Home Page Instance</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_scope_delete display_value="">048d5f0e899f424a8270d790e19b3744</sys_scope_delete>
+        <sys_update_name>sp_instance_cc8c7409a5b231107f448209745d194e</sys_update_name>
+        <sys_update_version display_value="sp_instance_cc8c7409a5b231107f448209745d194e">f6fd7409a5b231107f448209745d1923</sys_update_version>
+    </sys_metadata_delete>
+</record_update>

@@ -2,28 +2,29 @@
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
         <client_script><![CDATA[function($scope){
-	var current = this;
-	current.addRecord = function(){
-		current.data.fname = $scope.c.data.user_info.fname;
-		current.data.lname = $scope.c.data.user_info.lname;
-		current.data.email = $scope.c.data.user_info.email;
-		current.data.uid = $scope.c.data.user_info.uid;
-		current.data.automation_name =$scope.c.data.automation_name;
-		current.data.environment = $scope.c.data.environment;
+	var c = this;
+	
+	c.addRecord = function(){
+		c.data.fname = $scope.c.data.user_info.fname;
+		c.data.lname = $scope.c.data.user_info.lname;
+		c.data.email = $scope.c.data.user_info.email;
+		c.data.uid = $scope.c.data.user_info.uid;
+		c.data.automation_name =$scope.c.data.automation_name;
+		c.data.environment = $scope.c.data.environment;
 		
+		delete c.data.env;
+		delete c.data.user_info;
 		
-		delete current.data.user_info;
-		delete current.data.env;
-		current.data.action = 'addRecord';
-		current.server.update().then(function(){
-			current.data.automation_name = "";
-			current.data.environment = current.data.env[0];
+		c.data.action = 'addRecord';
+		c.server.update().then(function(){
+			c.data.automation_name = "";
+			c.data.environment = c.data.env[0];
+			delete c.data.action
 		});
 		
-	};
+	}
 	
-	
-};]]></client_script>
+}]]></client_script>
         <controller_as>c</controller_as>
         <css>label{
   font-weight: bold;
@@ -56,31 +57,31 @@ select{
         <docs/>
         <field_list/>
         <has_preview>true</has_preview>
-        <id>request_access_widget</id>
+        <id>tsp_user_request_access</id>
         <internal>false</internal>
         <link><![CDATA[function link(scope, element, attrs, controller) {
   
 }]]></link>
-        <name>Request Access Widget</name>
+        <name>User Request Access</name>
         <option_schema/>
         <public>false</public>
-        <roles/>
+        <roles>x_snc_accessprov_0.user</roles>
         <script><![CDATA[(function(){
 	var gr = new GlideRecord('x_snc_accessprov_0_environment');
 	var env_name = gr.getElement("name");
-	data.env = env_name.getChoices(); // Read the Choices present in the Environment:Name field
-	//gs.addInfoMessage(data.userName);
 	
+	data.env = env_name.getChoices(); // Read the Choices present in the Environment:Name field
+
+	// Fetch User Details
 	gr = new GlideRecord('sys_user');
-	gr.addQuery('sys_id',gs.getUserID());
+	gr.addEncodedQuery('user_name='+gs.getUserName());
 	gr.query();
 	while(gr.next()){
 		data.user_info = {
 			fname: gr.first_name.toString(),
 			lname: gr.last_name.toString(),
 			email: gr.email.toString(),
-			uid: gr.user_name.toString(),
-			name: gr.name.toString()
+			uid: gs.getUserName()
 		};
 	}
 	
@@ -89,34 +90,32 @@ select{
 if(input){
 	
 	if(input.action=='addRecord'){
-		var gr = new GlideRecord('x_snc_accessprov_0_aa_request_access');
-		gr.initialize(); //create an empty record before inserting.
-		
-		gr.setValue('first_name', input.fname);
-		gr.setValue('last_name', input.lname);
-		gr.setValue('email_id', input.email);
-		gr.setValue('automation_name', input.automation_name);
-		gr.setValue('environment', input.environment);
-		gr.setValue('x_m_uid', input.uid);
-		
-		if(input.fname == undefined || input.lname == undefined || input.email == undefined || input.automation_name==undefined || input.environment== undefined){
-			gs.addErrorMessage("Please fill all the neccessary fields and submit the form.")
-		}else{
-			gr.insert();
-			gs.addInfoMessage("Access Requested.");
+		if(input.fname == undefined || input.lname == undefined || input.email == undefined || input.automation_name == undefined || input.environment == undefined){
+			gs.addErrorMessage("Please fill all the neccessary fields and submit the form.");
+		}
+		else{
+			var gr = new GlideRecord('x_snc_accessprov_0_aa_request_access');
+			gr.addEncodedQuery('x_m_uid='+input.uid+"^automation_name="+input.automation_name+"^environment="+input.environment+"^status=pending^ORstatus=granted");
+			gr.query();
+			
+			if(!gr.next()){					
+				gr.initialize(); //create an empty record before inserting.
+				
+				gr.setValue('first_name', input.fname);
+				gr.setValue('last_name', input.lname);
+				gr.setValue('email_id', input.email);
+				gr.setValue('automation_name', input.automation_name);
+				gr.setValue('environment', input.environment);
+				gr.setValue('x_m_uid', input.uid);
+				gr.insert();
+				gs.addInfoMessage("Access Requested. Wait for the notification mail.")
+			}
+			else{
+				gs.addErrorMessage("Request is already made.");
+			}	
 		}
 		
-		/*
-		gr.first_name = input.fname;
-		gr.last_name = input.lname;
-		gr.email_id = input.email;
-		gr.automation_name = input.automation_name;
-		gr.environment = input.environment;
-		gr.x_m_uid = input.uid;
-		*/
-		
 	}
-	
 	
 }]]></script>
         <servicenow>false</servicenow>
@@ -124,22 +123,27 @@ if(input){
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-11-22 06:04:04</sys_created_on>
         <sys_id>ffff629f782231107f4427174a80032a</sys_id>
-        <sys_name>Request Access Widget</sys_name>
+        <sys_name>User Request Access</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sp_widget_ffff629f782231107f4427174a80032a</sys_update_name>
-        <template><![CDATA[<div>
-  <h3>
-    Hi, {{data.user_info.name}}!
-  </h3>
-  
+        <template><![CDATA[<div>  
 <form class="form-horizontal">
 <fieldset>
 
 <!-- Form Name -->
-<legend class="text-center"><h3>Request Access Form</h3></legend>
+<legend class="text-center"><h3>Access request form</h3></legend>
 
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="txt_uid">MUID / XUID</label>  
+  <div class="col-md-6">
+  <input id="txt_uid" ng-model="c.data.user_info.uid" type="text" class="form-control input-md" disabled> 
+  </div>
+</div>
+  
 <!-- Text input-->
 <div class="form-group">
   <label class="col-md-4 control-label" for="txt_first_name">First Name</label>  
@@ -163,17 +167,9 @@ if(input){
   <input id="txt_email" ng-model="c.data.user_info.email" type="text" class="form-control input-md" disabled>
   </div>
 </div>
-
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="txt_uid">MUID / XUID</label>  
-  <div class="col-md-6">
-  <input id="txt_uid" ng-model="c.data.user_info.uid" type="text" class="form-control input-md" disabled> 
-  </div>
-</div>
   
 <div class="form-group">
-  <label class="col-md-4 control-label" for="txt_automation_name">Automation Name</label>  
+  <label class="col-md-4 control-label" for="txt_automation_name">Automation</label>  
   <div class="col-md-6">
   <input id="txt_automation_name" ng-model="c.data.automation_name" type="text" class="form-control input-md" required> 
   </div>

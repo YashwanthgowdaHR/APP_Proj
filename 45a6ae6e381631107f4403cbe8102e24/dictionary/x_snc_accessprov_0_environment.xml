@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element db_object_id="3d9ff65f786231107f4427174a80037a" label="Environment" max_length="40" name="x_snc_accessprov_0_environment" type="collection">
-        <element choice="3" display="true" label="Name" max_length="40" name="name" type="choice">
+        <element choice="3" default="dev" display="true" label="Name" max_length="40" name="name" type="choice">
             <choice>
                 <element inactive_on_update="false" label="DEV" sequence="0" value="dev"/>
                 <element inactive_on_update="false" label="UAT" sequence="1" value="uat"/>

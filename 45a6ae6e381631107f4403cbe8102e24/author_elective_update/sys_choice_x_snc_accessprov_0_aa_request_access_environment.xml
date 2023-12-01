@@ -12,21 +12,5 @@
             <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
             <sys_update_name>sys_choice_x_snc_accessprov_0_aa_request_access_environment</sys_update_name>
         </sys_choice_set>
-        <sys_choice action="INSERT_OR_UPDATE">
-            <dependent_value/>
-            <element>environment</element>
-            <hint/>
-            <inactive>false</inactive>
-            <label>DEV</label>
-            <language>en</language>
-            <name>x_snc_accessprov_0_aa_request_access</name>
-            <sequence>0</sequence>
-            <synonyms/>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2023-11-22 07:36:18</sys_created_on>
-            <sys_domain>global</sys_domain>
-            <sys_domain_path>/</sys_domain_path>
-            <value>dev</value>
-        </sys_choice>
     </sys_choice>
 </record_update>

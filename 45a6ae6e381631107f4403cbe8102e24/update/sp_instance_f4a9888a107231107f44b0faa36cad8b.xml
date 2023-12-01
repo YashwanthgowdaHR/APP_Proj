@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_instance">
+    <sp_instance action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <class_name/>
+        <color>default</color>
+        <css/>
+        <glyph/>
+        <id/>
+        <order>1</order>
+        <roles>x_snc_accessprov_0.user,x_snc_accessprov_0.admin</roles>
+        <short_description/>
+        <size>md</size>
+        <sp_column display_value="1">2a99408a107231107f44b0faa36cad9c</sp_column>
+        <sp_widget display_value="User Request Access">ffff629f782231107f4427174a80032a</sp_widget>
+        <sys_class_name>sp_instance</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-30 06:59:57</sys_created_on>
+        <sys_id>f4a9888a107231107f44b0faa36cad8b</sys_id>
+        <sys_name>tsp_request_access_instance</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sp_instance_f4a9888a107231107f44b0faa36cad8b</sys_update_name>
+        <title>tsp_request_access_instance</title>
+        <url/>
+        <widget_parameters/>
+    </sp_instance>
+    <sys_translated_text action="delete_multiple" query="documentkey=f4a9888a107231107f44b0faa36cad8b"/>
+</record_update>

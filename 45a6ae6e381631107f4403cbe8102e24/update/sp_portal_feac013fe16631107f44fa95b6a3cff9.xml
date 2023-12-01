@@ -5,7 +5,7 @@
         <enable_ais>false</enable_ais>
         <enable_favorites>false</enable_favorites>
         <hide_portal_name>false</hide_portal_name>
-        <homepage display_value="tsp_home_page">b176b10c08f231107f444714c6e90d76</homepage>
+        <homepage display_value="tsp_cmn_home_page">f75c49fbe16631107f44fa95b6a3cf23</homepage>
         <icon/>
         <kb_knowledge_base/>
         <kb_knowledge_page/>
@@ -19,7 +19,7 @@
         <search_application/>
         <search_results_configuration/>
         <sp_chat_queue/>
-        <sp_rectangle_menu display_value="SP Config Menu">061c4c9747101200ba13a5554ee49084</sp_rectangle_menu>
+        <sp_rectangle_menu display_value="TSP Menu">75b8c00a107231107f44b0faa36cadbd</sp_rectangle_menu>
         <sys_class_name>sp_portal</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-11-23 12:06:35</sys_created_on>

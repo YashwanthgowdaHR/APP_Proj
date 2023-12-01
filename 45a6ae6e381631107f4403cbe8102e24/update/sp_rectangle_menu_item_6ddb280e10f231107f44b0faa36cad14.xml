@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_rectangle_menu_item">
+    <sp_rectangle_menu_item action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <color>default</color>
+        <condition/>
+        <display_1/>
+        <display_2/>
+        <display_date/>
+        <filter/>
+        <glyph/>
+        <hint/>
+        <kb_article/>
+        <kb_category/>
+        <kb_topic/>
+        <label>Request New</label>
+        <order>100</order>
+        <record_script/>
+        <sc_cat_item/>
+        <sc_category/>
+        <short_description/>
+        <sp_page display_value="tsp_admin_access_for_others_page">929716d2b07631107f4401c7b3c75a62</sp_page>
+        <sp_rectangle_menu/>
+        <sp_rectangle_menu_item display_value="Access">23f8040a107231107f44b0faa36cad3a</sp_rectangle_menu_item>
+        <sys_class_name>sp_rectangle_menu_item</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-30 09:29:58</sys_created_on>
+        <sys_id>6ddb280e10f231107f44b0faa36cad14</sys_id>
+        <sys_name>Request New</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sp_rectangle_menu_item_6ddb280e10f231107f44b0faa36cad14</sys_update_name>
+        <table/>
+        <type>page</type>
+        <url/>
+        <url_target/>
+    </sp_rectangle_menu_item>
+    <sys_translated_text action="delete_multiple" query="documentkey=6ddb280e10f231107f44b0faa36cad14"/>
+</record_update>

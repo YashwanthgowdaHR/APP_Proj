@@ -2,13 +2,14 @@
     <element db_object_id="ad2d3a8d946231107f44a1014014305e" label="AA Request Access" max_length="40" name="x_snc_accessprov_0_aa_request_access" type="collection">
         <element label="Automation Name" mandatory="true" max_length="40" name="automation_name" type="string"/>
         <element label="Email ID" mandatory="true" max_length="100" name="email_id" type="string"/>
-        <element choice="3" choice_field="name" choice_table="x_snc_accessprov_0_environment" label="Environment" mandatory="true" max_length="32" name="environment" type="choice">
-            <choice>
-                <element inactive_on_update="false" label="DEV" sequence="0" value="dev"/>
-            </choice>
+        <element choice="3" choice_field="name" choice_table="x_snc_accessprov_0_environment" default="dev" label="Environment" max_length="40" name="environment" type="choice">
+            <choice/>
         </element>
         <element label="First Name" mandatory="true" max_length="40" name="first_name" type="string"/>
         <element label="Last Name" mandatory="true" max_length="40" name="last_name" type="string"/>
+        <element choice="3" choice_field="name" choice_table="x_snc_accessprov_0_access_status" default="pending" label="Status" max_length="40" name="status" type="choice">
+            <choice/>
+        </element>
         <element display="true" label="M / X - UID" mandatory="true" max_length="40" name="x_m_uid" type="string"/>
     </element>
 </database>

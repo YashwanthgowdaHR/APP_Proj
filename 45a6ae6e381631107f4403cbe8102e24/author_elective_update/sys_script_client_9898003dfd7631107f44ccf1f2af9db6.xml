@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script_client">
+    <sys_script_client action="DELETE">
+        <active>true</active>
+        <applies_extended>false</applies_extended>
+        <condition/>
+        <description/>
+        <field/>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages/>
+        <name>ShowDataBasedOnUserLoggedIn</name>
+        <order/>
+        <script><![CDATA[function onLoad(){
+	var gr = new GlideRecord('x_snc_accessprov_0_aa_request_access');
+	gr.addQuery('x_m_uid', '==', g_user.userName());
+	gr.query();
+}]]></script>
+        <sys_class_name>sys_script_client</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-29 12:22:10</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>9898003dfd7631107f44ccf1f2af9db6</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>ShowDataBasedOnUserLoggedIn</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sys_script_client_9898003dfd7631107f44ccf1f2af9db6</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-11-29 12:24:36</sys_updated_on>
+        <table>x_snc_accessprov_0_aa_request_access</table>
+        <type>onLoad</type>
+        <ui_type>10</ui_type>
+        <view/>
+    </sys_script_client>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</application>
+        <file_path/>
+        <instance_id>6ac4d53fc362b5d0e1c44dadc0013172</instance_id>
+        <instance_name>nowlearning-nlinst01265981-0001</instance_name>
+        <name>sys_script_client_9898003dfd7631107f44ccf1f2af9db6</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update sys_domain="global" table="sys_script_client"&gt;&lt;sys_script_client action="INSERT_OR_UPDATE"&gt;&lt;active&gt;true&lt;/active&gt;&lt;applies_extended&gt;false&lt;/applies_extended&gt;&lt;condition/&gt;&lt;description/&gt;&lt;field/&gt;&lt;global&gt;true&lt;/global&gt;&lt;isolate_script&gt;true&lt;/isolate_script&gt;&lt;messages/&gt;&lt;name&gt;ShowDataBasedOnUserLoggedIn&lt;/name&gt;&lt;order/&gt;&lt;script&gt;&lt;![CDATA[function onLoad(){
+	var gr = new GlideRecord('x_snc_accessprov_0_aa_request_access');
+	gr.addQuery('x_m_uid', '==', g_user.userName());
+	gr.query();
+}]]&gt;&lt;/script&gt;&lt;sys_class_name&gt;sys_script_client&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2023-11-29 12:22:10&lt;/sys_created_on&gt;&lt;sys_domain&gt;global&lt;/sys_domain&gt;&lt;sys_domain_path&gt;/&lt;/sys_domain_path&gt;&lt;sys_id&gt;9898003dfd7631107f44ccf1f2af9db6&lt;/sys_id&gt;&lt;sys_mod_count&gt;2&lt;/sys_mod_count&gt;&lt;sys_name&gt;ShowDataBasedOnUserLoggedIn&lt;/sys_name&gt;&lt;sys_overrides/&gt;&lt;sys_package display_value="AccessProvider" source="x_snc_accessprov_0"&gt;45a6ae6e381631107f4403cbe8102e24&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="AccessProvider"&gt;45a6ae6e381631107f4403cbe8102e24&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_script_client_9898003dfd7631107f44ccf1f2af9db6&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2023-11-29 12:24:36&lt;/sys_updated_on&gt;&lt;table&gt;x_snc_accessprov_0_aa_request_access&lt;/table&gt;&lt;type&gt;onLoad&lt;/type&gt;&lt;ui_type&gt;10&lt;/ui_type&gt;&lt;view/&gt;&lt;/sys_script_client&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>990996486</payload_hash>
+        <record_name>ShowDataBasedOnUserLoggedIn</record_name>
+        <reverted_from/>
+        <source>e36b118008b231107f444714c6e90d89</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-29 12:24:36</sys_created_on>
+        <sys_id>da8a847dfd7631107f44ccf1f2af9db6</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>18c1b09cc200000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-11-29 12:24:36</sys_updated_on>
+        <type>Client Script</type>
+        <update_guid>d28a847d3b7631109ad35fa30059b9b6</update_guid>
+        <update_guid_history>d28a847d3b7631109ad35fa30059b9b6:990996486,623a847d707631101a6f985cdaec24ea:405594698,eef9047deb7631107c4e6ff56f995ed7:1775459532</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-29 12:44:42</sys_created_on>
+        <sys_db_object display_value="" name="sys_script_client">sys_script_client</sys_db_object>
+        <sys_id>ea64674ada2a46eca6a933539423ffe4</sys_id>
+        <sys_metadata>9898003dfd7631107f44ccf1f2af9db6</sys_metadata>
+        <sys_name>ShowDataBasedOnUserLoggedIn</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_parent display_value="AA Request Access">ad2d3a8d946231107f44a1014014305e</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_scope_delete display_value="">048d5f0e899f424a8270d790e19b3744</sys_scope_delete>
+        <sys_update_name>sys_script_client_9898003dfd7631107f44ccf1f2af9db6</sys_update_name>
+        <sys_update_version display_value="sys_script_client_9898003dfd7631107f44ccf1f2af9db6">da8a847dfd7631107f44ccf1f2af9db6</sys_update_version>
+    </sys_metadata_delete>
+</record_update>

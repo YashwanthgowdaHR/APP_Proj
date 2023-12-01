@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_rectangle_menu_item">
+    <sp_rectangle_menu_item action="DELETE">
+        <active>true</active>
+        <color>default</color>
+        <condition/>
+        <display_1/>
+        <display_2/>
+        <display_date/>
+        <filter/>
+        <glyph/>
+        <hint/>
+        <kb_article/>
+        <kb_category/>
+        <kb_topic/>
+        <label>Access Status</label>
+        <order>300</order>
+        <record_script/>
+        <sc_cat_item/>
+        <sc_category/>
+        <short_description/>
+        <sp_page display_value="tsp_access_list_page">dac990ca10b231107f44b0faa36cadc7</sp_page>
+        <sp_rectangle_menu display_value="TSP Menu">75b8c00a107231107f44b0faa36cadbd</sp_rectangle_menu>
+        <sp_rectangle_menu_item/>
+        <sys_class_name>sp_rectangle_menu_item</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-30 08:12:20</sys_created_on>
+        <sys_id>3d4a900a10b231107f44b0faa36caddc</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>Access Status</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sp_rectangle_menu_item_3d4a900a10b231107f44b0faa36caddc</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-11-30 08:39:14</sys_updated_on>
+        <table/>
+        <type>page</type>
+        <url/>
+        <url_target/>
+    </sp_rectangle_menu_item>
+    <sys_translated_text action="DELETE" query="documentkey=3d4a900a10b231107f44b0faa36caddc"/>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</application>
+        <file_path/>
+        <instance_id>6ac4d53fc362b5d0e1c44dadc0013172</instance_id>
+        <instance_name>nowlearning-nlinst01265981-0001</instance_name>
+        <name>sp_rectangle_menu_item_3d4a900a10b231107f44b0faa36caddc</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_rectangle_menu_item"><sp_rectangle_menu_item action="INSERT_OR_UPDATE"><active>true</active><color>default</color><condition/><display_1/><display_2/><display_date/><filter/><glyph/><hint/><kb_article/><kb_category/><kb_topic/><label>Access Status</label><order>300</order><record_script/><sc_cat_item/><sc_category/><short_description/><sp_page display_value="tsp_access_list_page">dac990ca10b231107f44b0faa36cadc7</sp_page><sp_rectangle_menu display_value="TSP Menu">75b8c00a107231107f44b0faa36cadbd</sp_rectangle_menu><sp_rectangle_menu_item/><sys_class_name>sp_rectangle_menu_item</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2023-11-30 08:12:20</sys_created_on><sys_id>3d4a900a10b231107f44b0faa36caddc</sys_id><sys_mod_count>1</sys_mod_count><sys_name>Access Status</sys_name><sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package><sys_policy/><sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope><sys_update_name>sp_rectangle_menu_item_3d4a900a10b231107f44b0faa36caddc</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2023-11-30 08:39:14</sys_updated_on><table/><type>page</type><url/><url_target/></sp_rectangle_menu_item><sys_translated_text action="delete_multiple" query="documentkey=3d4a900a10b231107f44b0faa36caddc"/></record_update>]]></payload>
+        <payload_hash>1854960880</payload_hash>
+        <record_name>Access Status</record_name>
+        <reverted_from/>
+        <source>e36b118008b231107f444714c6e90d89</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-30 08:39:14</sys_created_on>
+        <sys_id>be80a44210f231107f44b0faa36cad4a</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>18c1f61d6100000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-11-30 08:39:14</sys_updated_on>
+        <type>Menu Item</type>
+        <update_guid>b680a442d1f23110416f8fd32d96334a</update_guid>
+        <update_guid_history>b680a442d1f23110416f8fd32d96334a:1854960880,f86a90ca6eb23110d4f6544994e68fcf:77033454</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Access Status">5dbbe40e10f231107f44b0faa36cad64</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-30 09:28:00</sys_created_on>
+        <sys_db_object display_value="" name="sp_rectangle_menu_item">sp_rectangle_menu_item</sys_db_object>
+        <sys_id>328ed6acdf6e40ee9c22f02d10274a64</sys_id>
+        <sys_metadata>3d4a900a10b231107f44b0faa36caddc</sys_metadata>
+        <sys_name>Access Status</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_scope_delete display_value="">048d5f0e899f424a8270d790e19b3744</sys_scope_delete>
+        <sys_update_name>sp_rectangle_menu_item_3d4a900a10b231107f44b0faa36caddc</sys_update_name>
+        <sys_update_version display_value="sp_rectangle_menu_item_3d4a900a10b231107f44b0faa36caddc">be80a44210f231107f44b0faa36cad4a</sys_update_version>
+    </sys_metadata_delete>
+</record_update>

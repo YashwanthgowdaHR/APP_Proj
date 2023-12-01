@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_instance">
+    <sp_instance action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <class_name/>
+        <color>default</color>
+        <css/>
+        <glyph/>
+        <id/>
+        <order>1</order>
+        <roles>x_snc_accessprov_0.user</roles>
+        <short_description/>
+        <size>md</size>
+        <sp_column display_value="1">7d8c1ed6b07631107f4401c7b3c75ae0</sp_column>
+        <sp_widget display_value="User Request History">9639b32dfd3631107f44ccf1f2af9df4</sp_widget>
+        <sys_class_name>sp_instance</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-12-01 12:20:35</sys_created_on>
+        <sys_id>849c9ed6b07631107f4401c7b3c75a2c</sys_id>
+        <sys_name>User Access History Instance</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sp_instance_849c9ed6b07631107f4401c7b3c75a2c</sys_update_name>
+        <title>User Access History Instance</title>
+        <url/>
+        <widget_parameters/>
+    </sp_instance>
+    <sys_translated_text action="delete_multiple" query="documentkey=849c9ed6b07631107f4401c7b3c75a2c"/>
+</record_update>

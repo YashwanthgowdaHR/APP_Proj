@@ -11,7 +11,7 @@
         <column_label>Name</column_label>
         <comments/>
         <create_roles/>
-        <default_value/>
+        <default_value>dev</default_value>
         <defaultsort/>
         <delete_roles/>
         <dependent/>

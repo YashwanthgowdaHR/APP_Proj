@@ -15,63 +15,73 @@
         <docs/>
         <field_list/>
         <has_preview>true</has_preview>
-        <id>tsp_users_access_table</id>
+        <id>tsp_users_request_history</id>
         <internal>false</internal>
         <link><![CDATA[function link(scope, element, attrs, controller) {
   
 }]]></link>
-        <name>tsp_users_access_table</name>
+        <name>User Request History</name>
         <option_schema/>
         <public>false</public>
-        <roles/>
+        <roles>x_snc_accessprov_0.user</roles>
         <script><![CDATA[(function() {
-    /* populate the 'data' object */
-    /* e.g., data.table = $sp.getValue('table'); */
-    data.adminAccessInfo = [];
-    var gr = new GlideRecord('x_snc_accessprov_0_aa_request_access');
-    gr.addQuery('x_m_uid', gs.getUserName());
-    gr.query();
+	/* populate the 'data' object */
+	/* e.g., data.table = $sp.getValue('table'); */
+	data.accessInfo = [];
 	var i = 1;
-    while (gr.next()) {
-        data.adminAccessInfo.push({
+	var gr = new GlideRecord('x_snc_accessprov_0_aa_request_access');
+	gr.addQuery('x_m_uid', gs.getUserName());
+	gr.query();
+
+
+	while (gr.next()) {
+		data.accessInfo.push({
 			no:i++,
-            automationName: gr.getValue('automation_name').toString(),
-            environment: gr.getValue('environment').toString(),
-            status: "Pending"
-        });
-    }
+			automationName: gr.getValue('automation_name').toString(),
+			environment: gr.getDisplayValue('environment').toString(),
+			status: gr.getDisplayValue('status').toString()
+		})
+	}
 })();]]></script>
         <servicenow>false</servicenow>
         <sys_class_name>sp_widget</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-11-29 11:08:58</sys_created_on>
         <sys_id>9639b32dfd3631107f44ccf1f2af9df4</sys_id>
-        <sys_name>tsp_users_access_table</sys_name>
+        <sys_name>User Request History</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sp_widget_9639b32dfd3631107f44ccf1f2af9df4</sys_update_name>
         <template><![CDATA[<div>
-<div id="users_section" ng-if="data.accessInfo.length > 0" class="table-responsive-sm">
-  <h2>Find your access details here.</h2>
-  <table ng-if="data.accessInfo.length > 0" class="table table-hover table-bordered">
-    <thead>
-    	<tr>
-        <th scope="col" class="align-middle">#</th>
-      	<th scope="col" class="align-middle">Automation Name</th>
-      	<th scope="col" class="align-middle">Environment</th>
-      	<th scope="col" class="align-middle">Status</th>
-    	</tr>
-    </thead>
-    <tbody>
-    	<tr ng-repeat="info in data.accessInfo">
-        <th scope="row" class="align-middle">{{info.no}}</th>
-      	<td class="align-middle">{{info.automationName}}</td>
-      	<td class="align-middle">{{info.environment}}</td>
-      	<td class="align-middle">{{info.status}}</td>
-    	</tr>
-     </tbody>
-  </table>
+	<div ng-if="data.accessInfo.length > 0">
+    <!-- If Any Request Found -->
+  	<h2>Find your access details here.</h2>
+  	<table class="table table-hover table-bordered">
+      <thead>
+        <tr>
+          <th scope="col" class="align-middle">#</th>
+          <th scope="col" class="align-middle">Automation Name</th>
+          <th scope="col" class="align-middle">Environment</th>
+          <th scope="col" class="align-middle">Status</th>
+        </tr>
+      </thead>
+    	<tbody>
+    		<tr ng-repeat="info in data.accessInfo">
+          <th scope="row" class="align-middle">{{info.no}}</th>
+          <td class="align-middle">{{info.automationName}}</td>
+          <td class="align-middle">{{info.environment}}</td>
+          <td class="align-middle">{{info.status}}</td>
+    		</tr>
+     	</tbody>
+  	</table>
+	</div>
+  
+  <div ng-if="data.accessInfo.length <= 0">
+    <!-- If there is No Request Found -->
+    <h2>
+      You have not requested for any access.
+    </h2>
   </div>
 </div>]]></template>
     </sp_widget>
