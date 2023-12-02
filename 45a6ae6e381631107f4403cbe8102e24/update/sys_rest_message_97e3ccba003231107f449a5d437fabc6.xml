@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_rest_message">
+    <sys_rest_message action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <authentication_type>no_authentication</authentication_type>
+        <basic_auth_password/>
+        <basic_auth_profile display_value="AA Cred">c6a484ba003231107f449a5d437fab55</basic_auth_profile>
+        <basic_auth_user/>
+        <description/>
+        <name>AA Authentication</name>
+        <oauth2_profile/>
+        <protocol_name/>
+        <rest_endpoint>https://merck-dev.my.automationanywhere.digital/</rest_endpoint>
+        <sys_class_name>sys_rest_message</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-12-02 14:34:36</sys_created_on>
+        <sys_id>97e3ccba003231107f449a5d437fabc6</sys_id>
+        <sys_name>AA Authentication</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sys_rest_message_97e3ccba003231107f449a5d437fabc6</sys_update_name>
+        <use_basic_auth>false</use_basic_auth>
+        <use_mutual_auth>false</use_mutual_auth>
+    </sys_rest_message>
+</record_update>

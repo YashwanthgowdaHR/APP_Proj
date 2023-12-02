@@ -24,6 +24,17 @@
 		
 	}
 	
+}
+
+function onChange(control, oldValue, newValue, isLoading) { 
+  var elementID = gel('txt_automation_name');
+    switch(newValue) { 
+      case "1": elementID.style.backgroundColor = "red"; break; 
+      case "2": elementID.style.backgroundColor = "tomato"; break;
+      case "3": elementID.style.backgroundColor = "orange"; break;
+      case "4": elementID.style.backgroundColor = "yellow"; break;
+      case "5": elementID.style.backgroundColor = "green"; break; 
+      default: elementID.style.backgroundColor = "white"; break; } 
 }]]></client_script>
         <controller_as>c</controller_as>
         <css>label{

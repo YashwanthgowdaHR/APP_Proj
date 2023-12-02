@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_kmf_module_key_policy">
+    <sys_kmf_module_key_policy action="INSERT_OR_UPDATE">
+        <crypto_module display_value="com_glide_web_service_consumer_glideencrypter">2ca78142e7222010628a20c343f6a92e</crypto_module>
+        <key_type display_value="Symmetric Key Encryption Key">ca005cf7c7103300af4d43c6f0976328</key_type>
+        <last_enforced>2023-12-02 14:33:29</last_enforced>
+        <result>reject</result>
+        <sys_class_name>sys_kmf_module_key_policy</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-12-02 14:33:29</sys_created_on>
+        <sys_id>d3c4c8ba003231107f449a5d437fabdc</sys_id>
+        <sys_name/>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sys_kmf_module_key_policy_d3c4c8ba003231107f449a5d437fabdc</sys_update_name>
+    </sys_kmf_module_key_policy>
+</record_update>
