@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_rest_message_fn_headers">
+    <sys_rest_message_fn_headers action="DELETE">
+        <name>x-authorization</name>
+        <rest_message_function display_value="">85c1066f347231107f44f748c83411ea</rest_message_function>
+        <sys_class_name>sys_rest_message_fn_headers</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-12-05 07:40:05</sys_created_on>
+        <sys_id>11c14a2f347231107f44f748c83411e4</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x-authorization</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sys_rest_message_fn_headers_11c14a2f347231107f44f748c83411e4</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-12-05 07:40:05</sys_updated_on>
+        <value>eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiI0OTgiLCJjbGllbnRUeXBlIjoiV0VCIiwidGVuYW50VXVpZCI6IjBhNjY1NGRkLTgwNGItMTg0My04MTgxLTQyYTI5NWQ0MDI1NCIsImh5YnJpZFRlbmFudCI6IiIsIm11bHRpcGxlTG9naW4iOmZhbHNlLCJpYXQiOjE3MDE3NjE2NjQsImV4cCI6MTcwMTc2Mjg2NCwiaXNzIjoiQXV0b21hdGlvbkFueXdoZXJlIiwibmFub1RpbWUiOjY1NTIzMjk1Nzg4ODI3MH0.AKzY1zDeYQFNLDJptIc0kGDNsvMgzz8I8Zes2rH5Dt8iPuKgWWM8mgwGDdfcAZXa24QYC9ovdGKjTXRCdLqfNHGtxo16F_tq3Rko2LcEyLch_lwh-O2PuJJT8XtkTG6e9x_GFe-qLBezZ6FE0DEFgHOfHIN6mntNudIKWD84tKm4yvXflHcgkqOpuIIes8q5xPgRhWRAu9UgKggZkznOyh822SiCPc1h_-5ZcrCCGIW4BHHlaB9HS2aREri9ca5T9cLlM4OdMpcA1eM56JshmFoXOABx8bPtg_RDd8WnX40j40L7lA_FWa8TQ3vFYuETjiHKGRB-CyK4bYEI7kbuAQ</value>
+    </sys_rest_message_fn_headers>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</application>
+        <file_path/>
+        <instance_id>6ac4d53fc362b5d0e1c44dadc0013172</instance_id>
+        <instance_name>nowlearning-nlinst01265981-0001</instance_name>
+        <name>sys_rest_message_fn_headers_11c14a2f347231107f44f748c83411e4</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_rest_message_fn_headers"><sys_rest_message_fn_headers action="INSERT_OR_UPDATE"><name>x-authorization</name><rest_message_function display_value="">85c1066f347231107f44f748c83411ea</rest_message_function><sys_class_name>sys_rest_message_fn_headers</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2023-12-05 07:40:05</sys_created_on><sys_id>11c14a2f347231107f44f748c83411e4</sys_id><sys_mod_count>0</sys_mod_count><sys_name>x-authorization</sys_name><sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package><sys_policy/><sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope><sys_update_name>sys_rest_message_fn_headers_11c14a2f347231107f44f748c83411e4</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2023-12-05 07:40:05</sys_updated_on><value>eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiI0OTgiLCJjbGllbnRUeXBlIjoiV0VCIiwidGVuYW50VXVpZCI6IjBhNjY1NGRkLTgwNGItMTg0My04MTgxLTQyYTI5NWQ0MDI1NCIsImh5YnJpZFRlbmFudCI6IiIsIm11bHRpcGxlTG9naW4iOmZhbHNlLCJpYXQiOjE3MDE3NjE2NjQsImV4cCI6MTcwMTc2Mjg2NCwiaXNzIjoiQXV0b21hdGlvbkFueXdoZXJlIiwibmFub1RpbWUiOjY1NTIzMjk1Nzg4ODI3MH0.AKzY1zDeYQFNLDJptIc0kGDNsvMgzz8I8Zes2rH5Dt8iPuKgWWM8mgwGDdfcAZXa24QYC9ovdGKjTXRCdLqfNHGtxo16F_tq3Rko2LcEyLch_lwh-O2PuJJT8XtkTG6e9x_GFe-qLBezZ6FE0DEFgHOfHIN6mntNudIKWD84tKm4yvXflHcgkqOpuIIes8q5xPgRhWRAu9UgKggZkznOyh822SiCPc1h_-5ZcrCCGIW4BHHlaB9HS2aREri9ca5T9cLlM4OdMpcA1eM56JshmFoXOABx8bPtg_RDd8WnX40j40L7lA_FWa8TQ3vFYuETjiHKGRB-CyK4bYEI7kbuAQ</value></sys_rest_message_fn_headers></record_update>]]></payload>
+        <payload_hash>-1049749127</payload_hash>
+        <record_name>x-authorization</record_name>
+        <reverted_from/>
+        <source>e36b118008b231107f444714c6e90d89</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-12-05 07:40:05</sys_created_on>
+        <sys_id>8df286af347231107f44f748c8341118</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>18c38eb7ade0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-12-05 07:40:05</sys_updated_on>
+        <type>HTTP Headers</type>
+        <update_guid>c5f286af567231102bab9e57ad4a6918</update_guid>
+        <update_guid_history>c5f286af567231102bab9e57ad4a6918:-1049749127</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-12-05 07:50:53</sys_created_on>
+        <sys_db_object display_value="" name="sys_rest_message_fn_headers">sys_rest_message_fn_headers</sys_db_object>
+        <sys_id>58c1b756529c40179249d5a8b078d591</sys_id>
+        <sys_metadata>11c14a2f347231107f44f748c83411e4</sys_metadata>
+        <sys_name>x-authorization</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_parent display_value="Create User">85c1066f347231107f44f748c83411ea</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_scope_delete display_value="">048d5f0e899f424a8270d790e19b3744</sys_scope_delete>
+        <sys_update_name>sys_rest_message_fn_headers_11c14a2f347231107f44f748c83411e4</sys_update_name>
+        <sys_update_version display_value="sys_rest_message_fn_headers_11c14a2f347231107f44f748c83411e4">8df286af347231107f44f748c8341118</sys_update_version>
+    </sys_metadata_delete>
+</record_update>

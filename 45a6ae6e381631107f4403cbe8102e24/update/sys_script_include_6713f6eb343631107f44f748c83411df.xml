@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_snc_accessprov_0.AutomationAnywhereFunctions</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>AutomationAnywhereFunctions</name>
+        <script><![CDATA[var AutomationAnywhereFunctions = Class.create();
+AutomationAnywhereFunctions.prototype = {
+    initialize: function() {},
+    type: 'AutomationAnywhereFunctions',
+
+    GetToken: function() {
+        var r = new sn_ws.RESTMessageV2('x_snc_accessprov_0.AA Authentication', 'Default Post');
+        r.setStringParameterNoEscape('api_key', 'ii5_V`~@t<3oE|0h1XIQqIUc{|yWotEoK3Oryz^n');
+        r.setStringParameterNoEscape('username', 'X253816');
+        var response = r.execute();
+        var responseBody = response.getBody();
+        var httpStatus = response.getStatusCode();
+
+        if (httpStatus == 200) {
+            // Get the Access Token
+            return JSON.parse(responseBody).token;
+        }
+    },
+
+    GetUserByID: function(id) {
+		gs.info("Checking info for Id: "+id);
+        var token = this.GetToken();
+        var req = new sn_ws.RESTMessageV2('x_snc_accessprov_0.AA Authentication', 'Get User by ID');
+		req.setRequestHeader("x-authorization",token);
+        req.setStringParameterNoEscape('uid', id);
+        var response = req.execute();
+        var responseBody = response.getBody();
+        var httpStatus = response.getStatusCode();		
+		gs.info("Script - Response Status: "+ httpStatus);
+		
+		if(httpStatus == 401){
+			return this.GetUserByID(id);
+		}
+		if(httpStatus == 200){
+			return responseBody;
+		}
+    }
+
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-12-05 11:15:29</sys_created_on>
+        <sys_id>6713f6eb343631107f44f748c83411df</sys_id>
+        <sys_name>AutomationAnywhereFunctions</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sys_script_include_6713f6eb343631107f44f748c83411df</sys_update_name>
+    </sys_script_include>
+</record_update>

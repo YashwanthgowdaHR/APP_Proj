@@ -53,59 +53,58 @@ select{
         <option_schema/>
         <public>false</public>
         <roles>x_snc_accessprov_0.admin</roles>
-        <script><![CDATA[(function(){
-	var gr = new GlideRecord('x_snc_accessprov_0_environment');
-	var env_name = gr.getElement("name");
-	
-	data.env = env_name.getChoices(); 	// Read the Choices present in the Environment:Name field
+        <script><![CDATA[(function() {
+    var gr = new GlideRecord('x_snc_accessprov_0_environment');
+    var env_name = gr.getElement("name");
+
+    data.env = env_name.getChoices(); // Read the Choices present in the Environment:Name field
 })();
 
-if(input){
-	
-	if(input.action == 'getData'){
-		gr = new GlideRecord('sys_user');
-		gr.addEncodedQuery('user_name='+input.uid);
-		
-		gr.query();
-		while(gr.next()){
-			data.user_info = {
-				fname: gr.first_name.toString(),
-				lname: gr.last_name.toString(),
-				email: gr.email.toString(),
-				uid: input.uid
-			}
-		}
-	}
-	
-	if(input.action == 'addRecord'){
-		
-		
-		if(input.fname == undefined || input.lname == undefined || input.email == undefined || input.automation_name==undefined || input.environment== undefined){
-			gs.addErrorMessage("Please fill all the neccessary fields and submit the form.")
-		}
-		else{
-			var gr = new GlideRecord('x_snc_accessprov_0_aa_request_access');
-			gr.addEncodedQuery('x_m_uid='+input.uid+"^automation_name="+input.automation_name+"^environment="+input.environment+"^status=pending^ORstatus=granted")
-			gr.query()			
-			if(!gr.next()){
-				gr.initialize(); //create an empty record before inserting.
-				gr.setValue('first_name', input.fname);
-				gr.setValue('last_name', input.lname);
-				gr.setValue('email_id', input.email);
-				gr.setValue('automation_name', input.automation_name);
-				gr.setValue('environment', input.environment);
-				gr.setValue('x_m_uid', input.uid);
-				gr.insert();
-				gs.addInfoMessage("Access Requested. Wait for the notification mail.")
-			}else{
-				gs.addErrorMessage("Request is already made.")
-			}
-		}
-		
-		
-	}
-	
-	
+if (input) {
+
+    if (input.action == 'getData') {
+        gr = new GlideRecord('sys_user');
+        gr.addEncodedQuery('user_name=' + input.uid);
+
+        gr.query();
+        while (gr.next()) {
+            data.user_info = {
+                fname: gr.first_name.toString(),
+                lname: gr.last_name.toString(),
+                email: gr.email.toString(),
+                uid: input.uid
+            }
+        }
+    }
+
+    if (input.action == 'addRecord') {
+
+
+        if (input.fname == undefined || input.lname == undefined || input.email == undefined || input.automation_name == undefined || input.environment == undefined) {
+            gs.addErrorMessage("Please fill all the neccessary fields and submit the form.")
+        } else {
+            var gr = new GlideRecord('x_snc_accessprov_0_aa_request_access');
+            gr.addEncodedQuery('x_m_uid=' + input.uid + "^automation_name=" + input.automation_name + "^environment=" + input.environment + "^status=pending^ORstatus=granted")
+            gr.query()
+            if (!gr.next()) {
+                gr.initialize(); //create an empty record before inserting.
+                gr.setValue('first_name', input.fname);
+                gr.setValue('last_name', input.lname);
+                gr.setValue('email_id', input.email);
+                gr.setValue('automation_name', input.automation_name);
+                gr.setValue('environment', input.environment);
+                gr.setValue('x_m_uid', input.uid);
+                gr.insert();
+                gs.addInfoMessage("Access Requested. Wait for the notification mail.")
+            } else {
+                gs.addErrorMessage("Request is already made.")
+            }
+        }
+
+
+    }
+
+
 }]]></script>
         <servicenow>false</servicenow>
         <sys_class_name>sp_widget</sys_class_name>

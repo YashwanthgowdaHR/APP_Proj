@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_rest_message_fn_headers">
+    <sys_rest_message_fn_headers action="DELETE">
+        <name>Content-Type</name>
+        <rest_message_function display_value="">691eae67343631107f44f748c83411ba</rest_message_function>
+        <sys_class_name>sys_rest_message_fn_headers</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-12-05 10:56:00</sys_created_on>
+        <sys_id>661e2aa7343631107f44f748c8341172</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Content-Type</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sys_rest_message_fn_headers_661e2aa7343631107f44f748c8341172</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-12-05 10:56:00</sys_updated_on>
+        <value>application/json</value>
+    </sys_rest_message_fn_headers>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</application>
+        <file_path/>
+        <instance_id>6ac4d53fc362b5d0e1c44dadc0013172</instance_id>
+        <instance_name>nowlearning-nlinst01265981-0001</instance_name>
+        <name>sys_rest_message_fn_headers_661e2aa7343631107f44f748c8341172</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_rest_message_fn_headers"><sys_rest_message_fn_headers action="INSERT_OR_UPDATE"><name>Content-Type</name><rest_message_function display_value="">691eae67343631107f44f748c83411ba</rest_message_function><sys_class_name>sys_rest_message_fn_headers</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2023-12-05 10:56:00</sys_created_on><sys_id>661e2aa7343631107f44f748c8341172</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Content-Type</sys_name><sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package><sys_policy/><sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope><sys_update_name>sys_rest_message_fn_headers_661e2aa7343631107f44f748c8341172</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2023-12-05 10:56:00</sys_updated_on><value>application/json</value></sys_rest_message_fn_headers></record_update>]]></payload>
+        <payload_hash>-145747797</payload_hash>
+        <record_name>Content-Type</record_name>
+        <reverted_from/>
+        <source>e36b118008b231107f444714c6e90d89</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-12-05 10:56:00</sys_created_on>
+        <sys_id>47cfa22b343631107f44f748c834119c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>18c399ed97a0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-12-05 10:56:00</sys_updated_on>
+        <type>HTTP Headers</type>
+        <update_guid>8fcfa22b7c363110b6cc499b1a84709b</update_guid>
+        <update_guid_history>8fcfa22b7c363110b6cc499b1a84709b:-145747797</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-12-05 10:57:43</sys_created_on>
+        <sys_db_object display_value="" name="sys_rest_message_fn_headers">sys_rest_message_fn_headers</sys_db_object>
+        <sys_id>82e422d7d5f842d9956cb7c4732d26e1</sys_id>
+        <sys_metadata>661e2aa7343631107f44f748c8341172</sys_metadata>
+        <sys_name>Content-Type</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_parent display_value="Get User by ID">691eae67343631107f44f748c83411ba</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_scope_delete display_value="">048d5f0e899f424a8270d790e19b3744</sys_scope_delete>
+        <sys_update_name>sys_rest_message_fn_headers_661e2aa7343631107f44f748c8341172</sys_update_name>
+        <sys_update_version display_value="sys_rest_message_fn_headers_661e2aa7343631107f44f748c8341172">47cfa22b343631107f44f748c834119c</sys_update_version>
+    </sys_metadata_delete>
+</record_update>

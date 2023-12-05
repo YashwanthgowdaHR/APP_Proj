@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script">
+    <sys_script action="INSERT_OR_UPDATE">
+        <abort_action>false</abort_action>
+        <access>package_private</access>
+        <action_delete>false</action_delete>
+        <action_insert>true</action_insert>
+        <action_query>false</action_query>
+        <action_update>false</action_update>
+        <active>true</active>
+        <add_message>false</add_message>
+        <advanced>true</advanced>
+        <change_fields>false</change_fields>
+        <client_callable>false</client_callable>
+        <collection>x_snc_accessprov_0_aa_request_access</collection>
+        <condition/>
+        <description/>
+        <execute_function>false</execute_function>
+        <filter_condition/>
+        <is_rest>false</is_rest>
+        <message/>
+        <name>Get Access BR</name>
+        <order>100</order>
+        <priority>100</priority>
+        <rest_method/>
+        <rest_method_text/>
+        <rest_service/>
+        <rest_service_text/>
+        <rest_variables/>
+        <role_conditions>x_snc_accessprov_0.user,x_snc_accessprov_0.admin</role_conditions>
+        <script><![CDATA[(function executeRule(current, previous /*null when async*/ ) {
+
+
+    try {
+		
+		// Getting the Token
+        var r = new sn_ws.RESTMessageV2('x_snc_accessprov_0.AA Authentication', 'Default Post');
+        r.setStringParameterNoEscape('api_key', 'ii5_V`~@t<3oE|0h1XIQqIUc{|yWotEoK3Oryz^n');
+        r.setStringParameterNoEscape('username', 'X253816');
+        var response = r.execute();
+        var responseBody = response.getBody();
+        var httpStatus = response.getStatusCode();
+		
+        if (httpStatus == 200) {
+			// Get the Access Token
+            var tkn = JSON.parse(responseBody).token;
+			
+			
+            var fname = current.getValue("first_name");
+            var lname = current.getValue("last_name");
+            var mailId = current.getValue("email_id");
+            var uid = current.getValue("x_m_uid");
+			
+			/*
+			var fname = current.first_name;
+			var lname = current.last_name;
+            var mailId = current.email_id;
+            var uid = current.x_m_uid;
+			*/
+			
+            r = new sn_ws.RESTMessageV2('x_snc_accessprov_0.AA Authentication', 'Create User');
+			r.setRequestHeader("x-authorization",tkn);
+            r.setStringParameterNoEscape('firstName', fname);
+            r.setStringParameterNoEscape('lastName', fname);
+            r.setStringParameterNoEscape('mailId', mailId);
+            r.setStringParameterNoEscape('pass', 'abc@123123');
+            r.setStringParameterNoEscape('userName', uid);
+            r.setStringParameterNoEscape('id', '224');
+			
+            //override authentication profile 
+            //authentication type ='basic'/ 'oauth2'
+            //r.setAuthenticationProfile(authentication type, profile name);
+
+            //set a MID server name if one wants to run the message on MID
+            //r.setMIDServer('MY_MID_SERVER');
+
+            //if the message is configured to communicate through ECC queue, either
+            //by setting a MID server or calling executeAsync, one needs to set skip_sensor
+            //to true. Otherwise, one may get an intermittent error that the response body is null
+            //r.setEccParameter('skip_sensor', true);
+			
+			
+			gs.info(" Executing Create Statement...");
+
+            response = r.execute();
+            responseBody = response.getBody();
+            httpStatus = response.getStatusCode();
+			gs.info("Code: "+httpStatus);
+			if (httpStatus == 201) {
+				gs.info("Updating Values...");
+				current.status = "granted";
+				gs.info("Current Status: "+current.status);
+				gs.info("ID: "+JSON.parse(responseBody).id);
+				current.id = JSON.parse(responseBody).id;
+				current.update();
+			}else{
+				current.status = "pending";
+			}
+			
+        } else {
+			current.status = "pending";
+        }
+    } catch (ex) {
+        var message = ex.message;
+		current.status = "pending";
+    }
+
+})(current, previous);]]></script>
+        <sys_class_name>sys_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-12-05 07:13:55</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>2ebcf92b347231107f44f748c8341155</sys_id>
+        <sys_name>Get Access BR</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sys_script_2ebcf92b347231107f44f748c8341155</sys_update_name>
+        <template/>
+        <when>async_always</when>
+    </sys_script>
+    <sys_translated_text action="delete_multiple" query="documentkey=2ebcf92b347231107f44f748c8341155"/>
+</record_update>

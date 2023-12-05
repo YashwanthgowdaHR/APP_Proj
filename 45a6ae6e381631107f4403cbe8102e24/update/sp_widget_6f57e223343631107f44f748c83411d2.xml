@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function() {
+  /* widget controller */
+  var c = this;
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css/>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>true</has_preview>
+        <id>tsp_admin_list_users</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Users List</name>
+        <option_schema/>
+        <public>false</public>
+        <roles>x_snc_accessprov_0.admin</roles>
+        <script><![CDATA[(function() {
+  /* populate the 'data' object */
+  /* e.g., data.table = $sp.getValue('table'); */
+	data.userInfo = [];
+	var table = new GlideRecord('x_snc_accessprov_0_aa_request_access');
+	var i = 1;
+	table.query()
+	
+	var aaf = new AutomationAnywhereFunctions();
+	
+	
+	while (table.next()) {
+		var userDetails = JSON.parse(aaf.GetUserByID(table.getValue("id")));
+		if(userDetails){
+			gs.addInfoMessage(userDetails["roles"]);
+			for(var role in userDetails["roles"]){
+				gs.info("Role: "+ role);
+				roleDetails += role.name + ";"
+			}
+			gs.addInfoMessage("Roles: "+roles);
+			data.userInfo.push({
+			no:i++,
+			name: table.getValue('first_name').toString()+" " + table.getValue('last_name').toString(),
+			mailId: table.getValue('email_id').toString(),
+			uid: table.getValue('x_m_uid').toString(),
+			automationName: table.getValue('automation_name').toString(),
+			environment: table.getDisplayValue('environment').toString(),
+			status: table.getDisplayValue('status').toString(),
+			id: table.table.getValue("id"),
+			role: roleDetails
+		});
+		}
+	}
+})();
+
+]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-12-05 10:45:46</sys_created_on>
+        <sys_id>6f57e223343631107f44f748c83411d2</sys_id>
+        <sys_name>Users List</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sp_widget_6f57e223343631107f44f748c83411d2</sys_update_name>
+        <template><![CDATA[<div class="table-responsive-sm">
+  <h2>User Details</h2>
+  <table class="table table-hover table-bordered">
+    <thead>
+      <tr>
+        <th scope="col" class="align-middle">#</th>
+        <th scope="col" class="align-middle">Name</th>
+        <th scope="col" class="align-middle">MUID / XUID</th>
+        <th scope="col" class="align-middle">Mail Id</th>
+        <!-- <th scope="col" class="align-middle">Automation Name</th> -->
+        <th scope="col" class="align-middle">Environment</th>
+        <th scope="col" class="align-middle">Status</th>
+        <th scope="col" class="align-middle">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="info in data.userInfo">
+        <th scope="row" class="align-middle">{{info.no}}</th>
+        <td class="align-middle">{{info.name}}</td>
+        <td class="align-middle">{{info.uid}}</td>
+        <td class="align-middle">{{info.mailId}}</td>
+        <!-- <td class="align-middle">{{info.automationName}}</td> -->
+        <td class="align-middle">{{info.environment}}</td>
+        <td class="align-middle">{{info.status}}</td>
+        <td><button name="approve" title="Approve" data-toggle="tooltip" ng-if="approval.state == 'requested'" ng-click="approve(approval.sys_id);" class="btn btn-success btn-xs"> <i class="fa fa-check-square fa-xs"></i></button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div ng-if="data.otherUsersInfo.length <= 0">
+  <h2>
+    No access request found.
+  </h2>
+</div>
+]]></template>
+    </sp_widget>
+</record_update>
