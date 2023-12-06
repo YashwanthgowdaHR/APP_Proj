@@ -31,41 +31,41 @@
 
 
     try {
-		
-		// Getting the Token
+
+        // Getting the Token
         var r = new sn_ws.RESTMessageV2('x_snc_accessprov_0.AA Authentication', 'Default Post');
         r.setStringParameterNoEscape('api_key', 'ii5_V`~@t<3oE|0h1XIQqIUc{|yWotEoK3Oryz^n');
         r.setStringParameterNoEscape('username', 'X253816');
         var response = r.execute();
         var responseBody = response.getBody();
         var httpStatus = response.getStatusCode();
-		
+
         if (httpStatus == 200) {
-			// Get the Access Token
+            // Get the Access Token
             var tkn = JSON.parse(responseBody).token;
-			
-			
+
+
             var fname = current.getValue("first_name");
             var lname = current.getValue("last_name");
             var mailId = current.getValue("email_id");
             var uid = current.getValue("x_m_uid");
-			
-			/*
+
+            /*
 			var fname = current.first_name;
 			var lname = current.last_name;
             var mailId = current.email_id;
             var uid = current.x_m_uid;
 			*/
-			
+
             r = new sn_ws.RESTMessageV2('x_snc_accessprov_0.AA Authentication', 'Create User');
-			r.setRequestHeader("x-authorization",tkn);
+            r.setRequestHeader("x-authorization", tkn);
             r.setStringParameterNoEscape('firstName', fname);
             r.setStringParameterNoEscape('lastName', fname);
             r.setStringParameterNoEscape('mailId', mailId);
             r.setStringParameterNoEscape('pass', 'abc@123123');
             r.setStringParameterNoEscape('userName', uid);
             r.setStringParameterNoEscape('id', '224');
-			
+
             //override authentication profile 
             //authentication type ='basic'/ 'oauth2'
             //r.setAuthenticationProfile(authentication type, profile name);
@@ -77,31 +77,31 @@
             //by setting a MID server or calling executeAsync, one needs to set skip_sensor
             //to true. Otherwise, one may get an intermittent error that the response body is null
             //r.setEccParameter('skip_sensor', true);
-			
-			
-			gs.info(" Executing Create Statement...");
+
+
+            gs.info(" Executing Create Statement...");
 
             response = r.execute();
             responseBody = response.getBody();
             httpStatus = response.getStatusCode();
-			gs.info("Code: "+httpStatus);
-			if (httpStatus == 201) {
-				gs.info("Updating Values...");
-				current.status = "granted";
-				gs.info("Current Status: "+current.status);
-				gs.info("ID: "+JSON.parse(responseBody).id);
-				current.id = JSON.parse(responseBody).id;
-				current.update();
-			}else{
-				current.status = "pending";
-			}
-			
+            gs.info("Code: " + httpStatus);
+            if (httpStatus == 201) {
+                gs.info("Updating Values...");
+                current.status = "granted";
+                gs.info("Current Status: " + current.status);
+                gs.info("ID: " + JSON.parse(responseBody).id);
+                current.id = JSON.parse(responseBody).id;
+                current.update();
+            } else {
+                current.status = "pending";
+            }
+
         } else {
-			current.status = "pending";
+            current.status = "pending";
         }
     } catch (ex) {
         var message = ex.message;
-		current.status = "pending";
+        current.status = "pending";
     }
 
 })(current, previous);]]></script>

@@ -23,44 +23,42 @@
         <public>false</public>
         <roles>x_snc_accessprov_0.admin</roles>
         <script><![CDATA[(function() {
-  /* populate the 'data' object */
-  /* e.g., data.table = $sp.getValue('table'); */
-	data.userInfo = [];
-	var table = new GlideRecord('x_snc_accessprov_0_aa_request_access');
-	var i = 1;
-	table.query()
-	
-	var aaf = new AutomationAnywhereFunctions();
-	
-	
-	while (table.next()) {
-		var userDetails = JSON.parse(aaf.GetUserByID(table.getValue("id")));
-		var roleDetails = "";
-		gs.info(userDetails)
-		gs.info(typeof(userDetails))
-		if(userDetails){
-			for(var key in userDetails){
-				gs.info(i++ + "; Key: "+key+"; "+typeof(key))
-			}/*
-			for(var role in userDetails.roles){
-				roleDetails += role.name + ";"
-			}
-			data.userInfo.push({
-			no:i++,
-			name: table.getValue('first_name').toString()+" " + table.getValue('last_name').toString(),
-			mailId: table.getValue('email_id').toString(),
-			uid: table.getValue('x_m_uid').toString(),
-			automationName: table.getValue('automation_name').toString(),
-			environment: table.getDisplayValue('environment').toString(),
-			status: table.getDisplayValue('status').toString(),
-			id: table.getValue("id"),
-			role: roleDetails
-		});*/
-		}
-	}
-})();
+    /* populate the 'data' object */
+    /* e.g., data.table = $sp.getValue('table'); */
+    data.userInfo = [];
+    var table = new GlideRecord('x_snc_accessprov_0_aa_request_access');
+    var i = 1;
+    table.query();
 
-]]></script>
+    var aaf = new AutomationAnywhereFunctions();
+
+
+    while (table.next()) {
+        var rawRes = aaf.GetUserByID(table.getValue("id"));
+        var userDetails = JSON.parse(rawRes);
+
+        var roleDetails = "";
+        if (userDetails) {
+            for (var index in userDetails.roles) {
+                var role = userDetails.roles[index];
+                roleDetails += role.name + ";";
+            }
+
+            //gs.info("Roles: "+roleDetails)
+            data.userInfo.push({
+                no: i++,
+                name: table.getValue('first_name').toString() + " " + table.getValue('last_name').toString(),
+                mailId: table.getValue('email_id').toString(),
+                uid: table.getValue('x_m_uid').toString(),
+                automationName: table.getValue('automation_name').toString(),
+                environment: table.getDisplayValue('environment').toString(),
+                status: table.getDisplayValue('status').toString(),
+                id: table.getValue("id"),
+                role: roleDetails
+            });
+        }
+    }
+})();]]></script>
         <servicenow>false</servicenow>
         <sys_class_name>sp_widget</sys_class_name>
         <sys_created_by>admin</sys_created_by>

@@ -27,22 +27,23 @@ AutomationAnywhereFunctions.prototype = {
     },
 
     GetUserByID: function(id) {
-		gs.info("Checking info for Id: "+id);
+        gs.info("Checking info for Id: " + id);
         var token = this.GetToken();
         var req = new sn_ws.RESTMessageV2('x_snc_accessprov_0.AA Authentication', 'Get User by ID');
-		req.setRequestHeader("x-authorization",token);
+        req.setRequestHeader("x-authorization", token);
         req.setStringParameterNoEscape('uid', id);
         var response = req.execute();
         var responseBody = response.getBody();
-        var httpStatus = response.getStatusCode();		
-		gs.info("Script - Response Status: "+ httpStatus);
-		
-		if(httpStatus == 401){
-			return this.GetUserByID(id);
-		}
-		if(httpStatus == 200){
-			return JSON.stringify(responseBody);
-		}
+        var httpStatus = response.getStatusCode();
+        gs.info("Script - Response Status: " + httpStatus);
+
+        if (httpStatus == 401) {
+            return this.GetUserByID(id);
+        }
+        if (httpStatus == 200) {
+            //return JSON.stringify(responseBody);
+            return responseBody;
+        }
     }
 
 };]]></script>
