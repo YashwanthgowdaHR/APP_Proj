@@ -41,7 +41,7 @@ AutomationAnywhereFunctions.prototype = {
 			return this.GetUserByID(id);
 		}
 		if(httpStatus == 200){
-			return responseBody;
+			return JSON.stringify(responseBody);
 		}
     }
 

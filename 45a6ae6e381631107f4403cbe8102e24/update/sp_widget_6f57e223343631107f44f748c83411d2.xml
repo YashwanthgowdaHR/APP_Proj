@@ -35,13 +35,16 @@
 	
 	while (table.next()) {
 		var userDetails = JSON.parse(aaf.GetUserByID(table.getValue("id")));
+		var roleDetails = "";
+		gs.info(userDetails)
+		gs.info(typeof(userDetails))
 		if(userDetails){
-			gs.addInfoMessage(userDetails["roles"]);
-			for(var role in userDetails["roles"]){
-				gs.info("Role: "+ role);
+			for(var key in userDetails){
+				gs.info(i++ + "; Key: "+key+"; "+typeof(key))
+			}/*
+			for(var role in userDetails.roles){
 				roleDetails += role.name + ";"
 			}
-			gs.addInfoMessage("Roles: "+roles);
 			data.userInfo.push({
 			no:i++,
 			name: table.getValue('first_name').toString()+" " + table.getValue('last_name').toString(),
@@ -50,9 +53,9 @@
 			automationName: table.getValue('automation_name').toString(),
 			environment: table.getDisplayValue('environment').toString(),
 			status: table.getDisplayValue('status').toString(),
-			id: table.table.getValue("id"),
+			id: table.getValue("id"),
 			role: roleDetails
-		});
+		});*/
 		}
 	}
 })();
@@ -77,6 +80,7 @@
         <th scope="col" class="align-middle">Name</th>
         <th scope="col" class="align-middle">MUID / XUID</th>
         <th scope="col" class="align-middle">Mail Id</th>
+        <th scope="col" class="align-middle">Roles</th>
         <!-- <th scope="col" class="align-middle">Automation Name</th> -->
         <th scope="col" class="align-middle">Environment</th>
         <th scope="col" class="align-middle">Status</th>
@@ -89,6 +93,7 @@
         <td class="align-middle">{{info.name}}</td>
         <td class="align-middle">{{info.uid}}</td>
         <td class="align-middle">{{info.mailId}}</td>
+        <td class="align-middle">{{info.role}}</td>
         <!-- <td class="align-middle">{{info.automationName}}</td> -->
         <td class="align-middle">{{info.environment}}</td>
         <td class="align-middle">{{info.status}}</td>
