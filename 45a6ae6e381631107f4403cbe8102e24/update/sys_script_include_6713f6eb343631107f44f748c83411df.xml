@@ -42,7 +42,7 @@ AutomationAnywhereFunctions.prototype = {
         }
         if (httpStatus == 200) {
             //return JSON.stringify(responseBody);
-            return responseBody;
+            return JSON.parse(responseBody);
         }
     }
 

@@ -34,8 +34,7 @@
 
 
     while (table.next()) {
-        var rawRes = aaf.GetUserByID(table.getValue("id"));
-        var userDetails = JSON.parse(rawRes);
+        var userDetails = aaf.GetUserByID(table.getValue("id"))
 
         var roleDetails = "";
         if (userDetails) {
