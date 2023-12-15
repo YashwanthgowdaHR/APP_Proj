@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function() {
+    /* widget controller */
+    var c = this;
+		c.getData = function(){
+			c.data.uid = $scope.c.data.user_info.uid;
+			c.data.action = "getData";
+			c.server.update();
+		}
+	
+		c.approve = function(user){
+			c.data.info = user;
+			console.log(c.data)
+			c.data.action = 'approve';
+			c.server.update()
+		};
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>@font-face {
+  font-display: block;
+  font-family: "bootstrap-icons";
+  src: url("./fonts/bootstrap-icons.woff2?8d200481aa7f02a2d63a331fc782cfaf") format("woff2"),
+url("./fonts/bootstrap-icons.woff?8d200481aa7f02a2d63a331fc782cfaf") format("woff");
+}
+.table td, .table th{
+  text-align: center;
+  vertical-align: middle;
+}
+
+
+.btn{
+	background: transparent;
+  border-radius: 0px;
+    vertical-align: middle;
+}
+
+.btn-approve{
+	border: 1px solid green;
+}
+  
+.btn-approve:hover{
+  color: white;
+  background: green;
+}
+
+.btn-reject{
+	border: 1px solid red;
+}
+  
+.btn-reject:hover{
+  color: white;
+  background: red;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>true</has_preview>
+        <id/>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Copy of Admin - Others Request History</name>
+        <option_schema/>
+        <public>false</public>
+        <roles>x_snc_accessprov_0.admin</roles>
+        <script><![CDATA[(function() {
+	/* populate the 'data' object */	
+	data.otherUsersInfo = [];
+	var table = new GlideRecord('x_snc_accessprov_0_aa_request_access');
+	var i = 1;
+	table.query()
+	
+	while (table.next()) {
+		//gs.addInfoMessage(gr.getValue('automation_name'))
+		if(table.getValue('status') == "pending"){
+			data.otherUsersInfo.push({
+				no:i++,
+				sys_id: table.getUniqueValue(),
+				fname: table.getValue('first_name').toString(),
+				lname: table.getValue('last_name').toString(),
+				name: table.getValue('first_name').toString()+" " + table.getValue('last_name').toString(),
+				mailId: table.getValue('email_id').toString(),
+				uid: table.getValue('x_m_uid').toString(),
+				automationName: table.getValue('automation_name').toString(),
+				environment: table.getDisplayValue('environment').toString()
+			});		
+		}
+	}
+	
+	if(input){
+		gs.addInfoMessage("Wait for the necessary action")
+		if(input.action == "approve"){
+			gs.addInfoMessage("Access is being provisioned.")
+			var aaf = new AutomationAnywhereFunctions();
+			var output = aaf.CreateUser(input.info);
+			if(output.sts == 1){
+				gs.addInfoMessage("Access Provided");
+			}
+			gs.addErrorMessage("Access provision failed. Reason: "+output.message);
+		}
+	}
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-12-15 13:00:49</sys_created_on>
+        <sys_id>fc4c22b2194731107f44a0124b45cf88</sys_id>
+        <sys_name>Copy of Admin - Others Request History</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sp_widget_fc4c22b2194731107f44a0124b45cf88</sys_update_name>
+        <template><![CDATA[<div ng-if="data.otherUsersInfo.length > 0" class="table-responsive-sm">
+  <h2>Find the others access details here.</h2>
+  <table class="table table-hover table-bordered">
+    <thead>
+      <tr>
+        <th scope="col" class="align-middle">#</th>
+        <th scope="col" class="align-middle">Name</th>
+        <th scope="col" class="align-middle">MUID / XUID</th>
+        <th scope="col" class="align-middle">Mail Id</th>
+        <th scope="col" class="align-middle">Automation Name</th>
+        <th scope="col" class="align-middle">Environment</th>
+        <th scope="col" class="align-middle">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="info in data.otherUsersInfo">
+        <th scope="row">{{info.no}}</th>
+        <td>{{info.name}}</td>
+        <td>{{info.uid}}</td>
+        <td>{{info.mailId}}</td>
+        <td>{{info.automationName}}</td>
+        <td>{{info.environment}}</td>
+        <td>
+        	<button class="btn btn-approve" ng-click="c.approve(info)">Approve</button>
+          <button class="btn btn-reject" ng-click="c.reject(info)">Reject</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div ng-if="data.otherUsersInfo.length <= 0">
+  <h2>
+    No access request found.
+  </h2>
+</div>
+]]></template>
+    </sp_widget>
+</record_update>

@@ -1403,7 +1403,7 @@
         <update_guid_history>e9c8ced58ab231107cadfc7de03ad71c:25305542</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="Copy of Form">428a7661fd7231107f44ccf1f2af9d8b</sys_audit_delete>
+        <sys_audit_delete display_value="">428a7661fd7231107f44ccf1f2af9d8b</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-11-29 06:35:03</sys_created_on>

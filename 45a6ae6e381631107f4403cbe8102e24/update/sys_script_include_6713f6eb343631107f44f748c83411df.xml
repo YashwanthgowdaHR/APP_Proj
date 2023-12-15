@@ -44,6 +44,42 @@ AutomationAnywhereFunctions.prototype = {
             //return JSON.stringify(responseBody);
             return JSON.parse(responseBody);
         }
+    },
+
+    CreateUser: function(user) {
+        var log_name = "SCRIPT- CreateUser: ";
+        var sts = "pending";
+        var tkn = this.GetToken();
+        var req = new sn_ws.RESTMessageV2('x_snc_accessprov_0.AA Authentication', 'Create User');
+        req.setRequestHeader("x-authorization", tkn);
+        req.setStringParameterNoEscape('firstName', user.fname);
+        req.setStringParameterNoEscape('lastName', user.lname);
+        req.setStringParameterNoEscape('mailId', user.mailId);
+        req.setStringParameterNoEscape('pass', 'abc@123123');
+        req.setStringParameterNoEscape('userName', user.uid);
+        req.setStringParameterNoEscape('id', '224');
+
+        gs.info(log_name + "User Creation | Creating User...");
+
+        var response = req.execute();
+        var responseBody = response.getBody();
+        var httpStatus = response.getStatusCode();
+        gs.info(log_name + "User Creation | Result - HTTP status Code: " + httpStatus);
+        var parsed = JSON.parse(responseBody);
+        if (httpStatus == 201) {
+            gs.info(log_name + "User Creation | SUCCESS | New ID is " + parsed.id);
+            return {
+                'sts': 1,
+                "id": parsed.id
+            };
+        } else {
+            gs.error(log_name + "User Creation | FAILED | Reason is " + parsed.message);
+            return {
+                'sts': 0,
+                "message": parsed.message
+            };
+        }
+
     }
 
 };]]></script>

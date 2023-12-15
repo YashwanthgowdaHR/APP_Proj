@@ -10,7 +10,7 @@
             <sys_mod_count>0</sys_mod_count>
             <sys_overrides/>
             <sys_ui_form display_value="connection_attributes" name="connection_attributes" sys_domain="global" view="7966be310a0a0b8c00bd504090503227">19c2ccba003231107f449a5d437fab61</sys_ui_form>
-            <sys_ui_section caption="NULL" display_value="" name="connection_attributes" sys_domain="global" view="7966be310a0a0b8c00bd504090503227">99c2ccba003231107f449a5d437fab6d</sys_ui_section>
+            <sys_ui_section display_value="">99c2ccba003231107f449a5d437fab6d</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2023-12-02 14:24:36</sys_updated_on>
         </sys_ui_form_section>
@@ -24,7 +24,7 @@
             <sys_mod_count>0</sys_mod_count>
             <sys_overrides/>
             <sys_ui_form display_value="connection_attributes" name="connection_attributes" sys_domain="global" view="7966be310a0a0b8c00bd504090503227">19c2ccba003231107f449a5d437fab61</sys_ui_form>
-            <sys_ui_section caption="Reference Specification" display_value="Reference Specification" name="connection_attributes" sys_domain="global" view="7966be310a0a0b8c00bd504090503227">1dc2ccba003231107f449a5d437fab73</sys_ui_section>
+            <sys_ui_section display_value="">1dc2ccba003231107f449a5d437fab73</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2023-12-02 14:24:36</sys_updated_on>
         </sys_ui_form_section>
@@ -38,7 +38,7 @@
             <sys_mod_count>0</sys_mod_count>
             <sys_overrides/>
             <sys_ui_form display_value="connection_attributes" name="connection_attributes" sys_domain="global" view="7966be310a0a0b8c00bd504090503227">19c2ccba003231107f449a5d437fab61</sys_ui_form>
-            <sys_ui_section caption="Choice List Specification" display_value="Choice List Specification" name="connection_attributes" sys_domain="global" view="7966be310a0a0b8c00bd504090503227">99c2ccba003231107f449a5d437fab63</sys_ui_section>
+            <sys_ui_section display_value="">99c2ccba003231107f449a5d437fab63</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2023-12-02 14:24:36</sys_updated_on>
         </sys_ui_form_section>
@@ -52,7 +52,7 @@
             <sys_mod_count>0</sys_mod_count>
             <sys_overrides/>
             <sys_ui_form display_value="connection_attributes" name="connection_attributes" sys_domain="global" view="7966be310a0a0b8c00bd504090503227">19c2ccba003231107f449a5d437fab61</sys_ui_form>
-            <sys_ui_section caption="Dependent Field" display_value="Dependent Field" name="connection_attributes" sys_domain="global" view="7966be310a0a0b8c00bd504090503227">51c2ccba003231107f449a5d437fab67</sys_ui_section>
+            <sys_ui_section display_value="">51c2ccba003231107f449a5d437fab67</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2023-12-02 14:24:36</sys_updated_on>
         </sys_ui_form_section>
@@ -66,7 +66,7 @@
             <sys_mod_count>0</sys_mod_count>
             <sys_overrides/>
             <sys_ui_form display_value="connection_attributes" name="connection_attributes" sys_domain="global" view="7966be310a0a0b8c00bd504090503227">19c2ccba003231107f449a5d437fab61</sys_ui_form>
-            <sys_ui_section caption="Calculated Value" display_value="Calculated Value" name="connection_attributes" sys_domain="global" view="7966be310a0a0b8c00bd504090503227">d5c2ccba003231107f449a5d437fab6a</sys_ui_section>
+            <sys_ui_section display_value="">d5c2ccba003231107f449a5d437fab6a</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2023-12-02 14:24:36</sys_updated_on>
         </sys_ui_form_section>
@@ -80,7 +80,7 @@
             <sys_mod_count>0</sys_mod_count>
             <sys_overrides/>
             <sys_ui_form display_value="connection_attributes" name="connection_attributes" sys_domain="global" view="7966be310a0a0b8c00bd504090503227">19c2ccba003231107f449a5d437fab61</sys_ui_form>
-            <sys_ui_section caption="Default Value" display_value="Default Value" name="connection_attributes" sys_domain="global" view="7966be310a0a0b8c00bd504090503227">91c2ccba003231107f449a5d437fab79</sys_ui_section>
+            <sys_ui_section display_value="">91c2ccba003231107f449a5d437fab79</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
             <sys_updated_on>2023-12-02 14:24:36</sys_updated_on>
         </sys_ui_form_section>

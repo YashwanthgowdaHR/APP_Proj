@@ -138,7 +138,7 @@
         <update_guid_history>e31bd900d9b2311002e29d621c97413d:-2096725535</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="T - Import Users list">60c3dec4087631107f444714c6e90d0e</sys_audit_delete>
+        <sys_audit_delete display_value="">60c3dec4087631107f444714c6e90d0e</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-11-24 11:54:46</sys_created_on>

@@ -55,7 +55,7 @@
         <update_guid_history>fefd740951b231100ef2154204a99e22:2069088529,6ddcf4093cb231104d207c0e1720b035:1321640373</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="Test-Home Page Instance">60dab7adfd3631107f44ccf1f2af9d2c</sys_audit_delete>
+        <sys_audit_delete display_value="">60dab7adfd3631107f44ccf1f2af9d2c</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-11-29 11:15:56</sys_created_on>

@@ -6,7 +6,7 @@
         <action_insert>true</action_insert>
         <action_query>false</action_query>
         <action_update>false</action_update>
-        <active>true</active>
+        <active>false</active>
         <add_message>false</add_message>
         <advanced>true</advanced>
         <change_fields>false</change_fields>
@@ -29,7 +29,8 @@
         <role_conditions>x_snc_accessprov_0.user,x_snc_accessprov_0.admin</role_conditions>
         <script><![CDATA[(function executeRule(current, previous /*null when async*/ ) {
 
-
+    var log_name = "GetAccess-BR: ";
+    current.status = "pending";
     try {
 
         // Getting the Token
@@ -39,11 +40,12 @@
         var response = r.execute();
         var responseBody = response.getBody();
         var httpStatus = response.getStatusCode();
-
+		
+		
         if (httpStatus == 200) {
             // Get the Access Token
             var tkn = JSON.parse(responseBody).token;
-
+            gs.info(log_name + "User Creation | Token received.");
 
             var fname = current.getValue("first_name");
             var lname = current.getValue("last_name");
@@ -79,29 +81,29 @@
             //r.setEccParameter('skip_sensor', true);
 
 
-            gs.info(" Executing Create Statement...");
+            gs.info(log_name + "User Creation | Creating User...");
 
             response = r.execute();
             responseBody = response.getBody();
             httpStatus = response.getStatusCode();
-            gs.info("Code: " + httpStatus);
+            gs.info(log_name + "User Creation | Result - HTTP status Code: " + httpStatus);
             if (httpStatus == 201) {
-                gs.info("Updating Values...");
+                gs.info(log_name + "User Creation | Success - Updating values to table");
                 current.status = "granted";
-                gs.info("Current Status: " + current.status);
-                gs.info("ID: " + JSON.parse(responseBody).id);
+                gs.info(log_name + "User Creation | Current Status: " + current.status);
+                gs.info(log_name + "User Creation | ID: " + JSON.parse(responseBody).id);
                 current.id = JSON.parse(responseBody).id;
                 current.update();
             } else {
-                current.status = "pending";
+                gs.error(log_name + "User Creation | FAILED. Reason: " + JSON.parse(responseBody).message);
             }
 
         } else {
-            current.status = "pending";
+            gs.error(log_name + "User Creation | Unable to get the token. Reason: " + JSON.parse(responseBody).message);
         }
+	
     } catch (ex) {
-        var message = ex.message;
-        current.status = "pending";
+        gs.error(log_name + "User Creation | Error Occured while executing. Error Message - " + ex.message);
     }
 
 })(current, previous);]]></script>
