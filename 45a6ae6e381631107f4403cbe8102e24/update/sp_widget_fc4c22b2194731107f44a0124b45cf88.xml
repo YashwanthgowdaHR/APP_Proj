@@ -1,21 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
-        <client_script><![CDATA[api.controller = function() {
+        <client_script><![CDATA[api.controller = function($scope, spUtil, spModal) {
     /* widget controller */
-    var c = this;
-		c.getData = function(){
-			c.data.uid = $scope.c.data.user_info.uid;
-			c.data.action = "getData";
-			c.server.update();
-		}
+    let c = this;
+
+    c.getData = function() {
+        c.data.uid = c.data.user_info.uid;
+        c.data.action = "getData";
+        c.server.update();
+    };
+
+    function handleUpdateResponse(res) {
+        let { sts, msg } = res.result;
+        if (sts === 1) {
+            c.server.refresh();
+            spUtil.addInfoMessage(msg);
+        } else {
+            alert(msg);
+        }
+    }
 	
-		c.approve = function(user){
-			c.data.info = user;
-			console.log(c.data)
-			c.data.action = 'approve';
-			c.server.update()
-		};
+	 	function handleError(error) {
+        console.error('An error occurred:', error);
+        // Handle or log the error as needed
+    }
+
+    c.approve = function(user) {
+        spUtil.addTrivialMessage("Wait for the necessary action");
+        c.data.info = user;
+        c.data.action = 'approve';
+        c.server.update().then(handleUpdateResponse).catch(handleError);
+    };
+
+    c.reject = function(user) {
+        spModal.open({
+            title: 'Please provide the comments for rejecting the request',
+            buttons: [
+                { label: '✘ ${Cancel}', cancel: true },
+                { label: '✔ ${Reject}', primary: true }
+            ],
+            input: true,
+        }).then(function(reason) {
+            c.data.rejectReason = reason;
+            c.data.info = user;
+            c.data.action = 'reject';
+            c.server.update();
+            c.server.refresh();
+        }, function(){}).catch(handleError);
+    };
 };]]></client_script>
         <controller_as>c</controller_as>
         <css>@font-face {
@@ -28,7 +61,6 @@ url("./fonts/bootstrap-icons.woff?8d200481aa7f02a2d63a331fc782cfaf") format("wof
   text-align: center;
   vertical-align: middle;
 }
-
 
 .btn{
 	background: transparent;
@@ -59,51 +91,62 @@ url("./fonts/bootstrap-icons.woff?8d200481aa7f02a2d63a331fc782cfaf") format("wof
         <docs/>
         <field_list/>
         <has_preview>true</has_preview>
-        <id/>
+        <id>tsp_admin_approve_access_requests</id>
         <internal>false</internal>
         <link><![CDATA[function link(scope, element, attrs, controller) {
   
 }]]></link>
-        <name>Copy of Admin - Others Request History</name>
+        <name>Admin Approve Request</name>
         <option_schema/>
         <public>false</public>
         <roles>x_snc_accessprov_0.admin</roles>
-        <script><![CDATA[(function() {
-	/* populate the 'data' object */	
-	data.otherUsersInfo = [];
-	var table = new GlideRecord('x_snc_accessprov_0_aa_request_access');
-	var i = 1;
-	table.query()
-	
-	while (table.next()) {
-		//gs.addInfoMessage(gr.getValue('automation_name'))
-		if(table.getValue('status') == "pending"){
-			data.otherUsersInfo.push({
-				no:i++,
-				sys_id: table.getUniqueValue(),
-				fname: table.getValue('first_name').toString(),
-				lname: table.getValue('last_name').toString(),
-				name: table.getValue('first_name').toString()+" " + table.getValue('last_name').toString(),
-				mailId: table.getValue('email_id').toString(),
-				uid: table.getValue('x_m_uid').toString(),
-				automationName: table.getValue('automation_name').toString(),
-				environment: table.getDisplayValue('environment').toString()
-			});		
-		}
-	}
-	
-	if(input){
-		gs.addInfoMessage("Wait for the necessary action")
-		if(input.action == "approve"){
-			gs.addInfoMessage("Access is being provisioned.")
-			var aaf = new AutomationAnywhereFunctions();
-			var output = aaf.CreateUser(input.info);
-			if(output.sts == 1){
-				gs.addInfoMessage("Access Provided");
-			}
-			gs.addErrorMessage("Access provision failed. Reason: "+output.message);
-		}
-	}
+        <script><![CDATA[(function () {
+    /* populate the 'data' object */
+    data.otherUsersInfo = [];
+    var table = new GlideRecord('x_snc_accessprov_0_aa_request_access');
+    table.query();
+
+    var i = 1;
+
+    while (table.next()) {
+        //gs.addInfoMessage(gr.getValue('automation_name'))
+        if (table.getValue('status') == "pending") {
+            data.otherUsersInfo.push({
+                no: i++,
+                sysId: table.getUniqueValue(),
+                fname: table.getValue('first_name').toString(),
+                lname: table.getValue('last_name').toString(),
+                name: table.getValue('first_name').toString() + " " + table.getValue('last_name').toString(),
+                email: table.getValue('email_id').toString(),
+                uid: table.getValue('x_m_uid').toString(),
+                automationName: table.getValue('automation_name').toString(),
+                environment: table.getDisplayValue('environment').toString()
+            });
+        }
+    }
+
+    if (input) {
+        var user = input.info;
+        var aaf = new AutomationAnywhereFunctions();
+				table = new GlideRecord('x_snc_accessprov_0_aa_request_access');
+        // APPROVE action
+        if (input.action == "approve") {
+          // Script Includes function
+					var output = aaf.CreateOrRejectUser("create",user);
+					if(output.isCreated)
+						gs.addInfoMessage("User has been created");
+					else
+						gs.addInfoMessage('Unable to create user. Reason: '+output.msg);
+        }
+
+        // REJECT action
+        if (input.action == 'reject') {
+					user.rejectReason = input.rejectReason;
+          aaf.CreateOrRejectUser("reject",user);
+					gs.addInfoMessage("Request Rejected");
+        }
+
+    }
 
 })();]]></script>
         <servicenow>false</servicenow>
@@ -111,7 +154,7 @@ url("./fonts/bootstrap-icons.woff?8d200481aa7f02a2d63a331fc782cfaf") format("wof
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-12-15 13:00:49</sys_created_on>
         <sys_id>fc4c22b2194731107f44a0124b45cf88</sys_id>
-        <sys_name>Copy of Admin - Others Request History</sys_name>
+        <sys_name>Admin Approve Request</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
@@ -135,7 +178,7 @@ url("./fonts/bootstrap-icons.woff?8d200481aa7f02a2d63a331fc782cfaf") format("wof
         <th scope="row">{{info.no}}</th>
         <td>{{info.name}}</td>
         <td>{{info.uid}}</td>
-        <td>{{info.mailId}}</td>
+        <td>{{info.email}}</td>
         <td>{{info.automationName}}</td>
         <td>{{info.environment}}</td>
         <td>

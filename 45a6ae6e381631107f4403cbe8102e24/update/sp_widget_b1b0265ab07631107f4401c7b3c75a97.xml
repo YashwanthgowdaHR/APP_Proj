@@ -59,7 +59,7 @@
         <id/>
         <internal>false</internal>
         <link><![CDATA[function link(scope, element, attrs, controller) {  }]]></link>
-        <name>Copy of Admin Request Access For Others</name>
+        <name>Copy of Admin - Others Request History</name>
         <option_schema/>
         <public>false</public>
         <roles/>
@@ -125,7 +125,7 @@ if(input){
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-12-01 12:37:42</sys_created_on>
         <sys_id>b1b0265ab07631107f4401c7b3c75a97</sys_id>
-        <sys_name>Copy of Admin Request Access For Others</sys_name>
+        <sys_name>Copy of Admin - Others Request History</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>

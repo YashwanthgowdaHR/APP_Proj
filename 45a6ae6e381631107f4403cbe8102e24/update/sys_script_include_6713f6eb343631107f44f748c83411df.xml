@@ -5,12 +5,15 @@
         <api_name>x_snc_accessprov_0.AutomationAnywhereFunctions</api_name>
         <caller_access/>
         <client_callable>false</client_callable>
-        <description/>
+        <description>Provide functions to interact with AA to create the user, to fetch the user's id etc.</description>
         <name>AutomationAnywhereFunctions</name>
         <script><![CDATA[var AutomationAnywhereFunctions = Class.create();
 AutomationAnywhereFunctions.prototype = {
     initialize: function() {},
     type: 'AutomationAnywhereFunctions',
+    restSrc: 'x_snc_accessprov_0.AA Authentication',
+    pass: "abc@123123",
+    table: new GlideRecord('x_snc_accessprov_0_aa_request_access'),
 
     GetToken: function() {
         var r = new sn_ws.RESTMessageV2('x_snc_accessprov_0.AA Authentication', 'Default Post');
@@ -27,36 +30,40 @@ AutomationAnywhereFunctions.prototype = {
     },
 
     GetUserByID: function(id) {
-        gs.info("Checking info for Id: " + id);
-        var token = this.GetToken();
-        var req = new sn_ws.RESTMessageV2('x_snc_accessprov_0.AA Authentication', 'Get User by ID');
-        req.setRequestHeader("x-authorization", token);
-        req.setStringParameterNoEscape('uid', id);
-        var response = req.execute();
-        var responseBody = response.getBody();
-        var httpStatus = response.getStatusCode();
-        gs.info("Script - Response Status: " + httpStatus);
+        if (id) {
+            gs.info("Checking info for Id: " + id);
+            var token = this.GetToken();
+            var req = new sn_ws.RESTMessageV2(this.restSrc, 'Get User by ID');
+            req.setRequestHeader("x-authorization", token);
+            req.setStringParameterNoEscape('uid', id);
+            var response = req.execute();
+            var responseBody = response.getBody();
+            var httpStatus = response.getStatusCode();
+            gs.info("Script - Response Status: " + httpStatus);
 
-        if (httpStatus == 401) {
-            return this.GetUserByID(id);
-        }
-        if (httpStatus == 200) {
-            //return JSON.stringify(responseBody);
-            return JSON.parse(responseBody);
+            if (httpStatus == 401) {
+                return this.GetUserByID(id);
+            }
+            if (httpStatus == 200) {
+                //return JSON.stringify(responseBody);
+                return JSON.parse(responseBody);
+            }
         }
     },
 
-    CreateUser: function(user) {
+    CreateUser: function(userInfo) {
         var log_name = "SCRIPT- CreateUser: ";
-        var sts = "pending";
+        // Get Access Token
         var tkn = this.GetToken();
-        var req = new sn_ws.RESTMessageV2('x_snc_accessprov_0.AA Authentication', 'Create User');
+
+        //Initialize the required REST Message
+        var req = new sn_ws.RESTMessageV2(this.restSrc, 'Create User');
         req.setRequestHeader("x-authorization", tkn);
-        req.setStringParameterNoEscape('firstName', user.fname);
-        req.setStringParameterNoEscape('lastName', user.lname);
-        req.setStringParameterNoEscape('mailId', user.mailId);
-        req.setStringParameterNoEscape('pass', 'abc@123123');
-        req.setStringParameterNoEscape('userName', user.uid);
+        req.setStringParameterNoEscape('firstName', userInfo.fname);
+        req.setStringParameterNoEscape('lastName', userInfo.lname);
+        req.setStringParameterNoEscape('mailId', userInfo.email);
+        req.setStringParameterNoEscape('pass', this.pass);
+        req.setStringParameterNoEscape('userName', userInfo.uid);
         req.setStringParameterNoEscape('id', '224');
 
         gs.info(log_name + "User Creation | Creating User...");
@@ -66,18 +73,98 @@ AutomationAnywhereFunctions.prototype = {
         var httpStatus = response.getStatusCode();
         gs.info(log_name + "User Creation | Result - HTTP status Code: " + httpStatus);
         var parsed = JSON.parse(responseBody);
+        var result = {};
         if (httpStatus == 201) {
+            // User Created Successfully
+            result.isCreated = true;
             gs.info(log_name + "User Creation | SUCCESS | New ID is " + parsed.id);
-            return {
-                'sts': 1,
-                "id": parsed.id
-            };
+            this.table.addQuery('sys_id', userInfo.sysId);
+            this.table.query();
+            if (this.table.next()) {
+                this.table.setValue('id', parsed.id);
+                this.table.setValue('status', "granted");
+                this.table.update('updated ID of record: ' + userInfo.sysId);
+            }
         } else {
+            //Failed to create user through api
+            result.isCreated = false;
+            result.msg = parsed.message;
             gs.error(log_name + "User Creation | FAILED | Reason is " + parsed.message);
-            return {
-                'sts': 0,
-                "message": parsed.message
-            };
+        }
+
+        return result;
+    },
+
+    RejectUser: function(userInfo) {
+        gs.info("Rejecting request");
+        this.table.addQuery('sys_id', userInfo.sysId);
+        this.table.query();
+        if (this.table.next()) {
+            this.table.setValue('status', 'rejected');
+            this.table.update('updated status of record: ' + userInfo.sysId + ' to REJECTED');
+        }
+    },
+
+    CreateOrRejectUser: function(createOrReject, user) {
+        var sts = "pending";
+        if (createOrReject == "create") {
+            var result = this.CreateUser(user);
+            if (result.isCreated)
+                sts = "granted";
+            return result;
+        }
+        if (createOrReject == "reject") {
+            sts = "rejected";
+            this.RejectUser(user);
+        }
+        var details = {
+            'sts': sts,
+            'name': user.name,
+			'pass':this.pass,
+			'reason': user.rejectReason || ""
+        };
+		
+		gs.info("SctiptInclude: Calling Event...");
+        gs.eventQueue(name='x_snc_accessprov_0.send_mail_to_user', record = this.table,parm1=user.email,parm2=JSON.stringify(details));
+		gs.info("SctiptInclude: Event Created");
+    },
+
+    NotifyUserCreation: function(sts, name, to, reason, isNew) {
+        var sub, body, content, header = 'Hi ' + name + ',\n\n',
+            footer = '\n\nThanks & Regards,\nServiceNow';
+        sub = 'AutomationAnywhere Access Request Notification | ';
+        if (isNew) {
+            sub += 'Requested';
+            content = 'Your request has been placed. Please wait for the admin approval.';
+        } else {
+            if (sts == 0) {
+                sub += 'Approved';
+                content = 'Your request has been approved by Admin.\nDefault Password is ' + this.pass;
+            } else {
+                sub += 'Rejected';
+                if (reason)
+                    content = 'Your request has been rejected by Admin. Reason: ' + reason;
+                else
+                    content = 'Your request has been rejected by Admin.';
+            }
+        }
+        body = header + content + footer;
+
+        // Create a GlideEmailOutbound object
+        var email = new GlideEmailOutbound();
+        //mail.addRecipient(to);
+        email.addAddress('cc', to);
+        email.setSubject(sub);
+        email.setBody(body);
+
+        // Save and send the email
+        var emailSysId = email.save();
+
+        // Optionally, you can check for errors
+        if (email.error()) {
+            gs.error('Email sending failed: ' + email.errorMsg());
+        } else {
+            gs.info('Email sent successfully.');
         }
 
     }

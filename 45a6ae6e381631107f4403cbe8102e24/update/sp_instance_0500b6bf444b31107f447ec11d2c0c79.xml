@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_instance">
+    <sp_instance action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <class_name/>
+        <color>default</color>
+        <css/>
+        <glyph/>
+        <id/>
+        <order>1</order>
+        <roles>x_snc_accessprov_0.admin</roles>
+        <short_description/>
+        <size>md</size>
+        <sp_column display_value="1">f9ff66bf444b31107f447ec11d2c0c12</sp_column>
+        <sp_widget display_value="Admin Approve Request">fc4c22b2194731107f44a0124b45cf88</sp_widget>
+        <sys_class_name>sp_instance</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-12-18 15:51:51</sys_created_on>
+        <sys_id>0500b6bf444b31107f447ec11d2c0c79</sys_id>
+        <sys_name>Admin Approve Request Instance</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sp_instance_0500b6bf444b31107f447ec11d2c0c79</sys_update_name>
+        <title>Admin Approve Request Instance</title>
+        <url/>
+        <widget_parameters/>
+    </sp_instance>
+    <sys_translated_text action="delete_multiple" query="documentkey=0500b6bf444b31107f447ec11d2c0c79"/>
+</record_update>

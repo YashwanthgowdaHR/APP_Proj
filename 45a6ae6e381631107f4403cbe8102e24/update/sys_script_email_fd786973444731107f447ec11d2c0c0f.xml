@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_email">
+    <sys_script_email action="INSERT_OR_UPDATE">
+        <name>AP_SendMailToUser</name>
+        <new_lines_to_html>true</new_lines_to_html>
+        <script><![CDATA[(function runMailScript( /* GlideRecord */ current, /* TemplatePrinter */ template,
+    /* Optional EmailOutbound */
+    email, /* Optional GlideRecord */ email_action,
+    /* Optional GlideRecord */
+    event) {
+    gs.info("Entered Notification Mail Script");
+	/*
+	for(var key in event)
+		gs.info("Key: "+key+"; Value: "+event[key]);
+	*/
+	var details = JSON.parse(event.parm2);
+    gs.info("Parsing event data...");
+    // Add your code here
+    var name = details.name,
+        sts = details.sts,
+		pass = details.pass,
+		reason = details.reason,
+        sub, body, content, header = 'Hi ' + name + ',<br><br>',
+        footer = '<br><br>Thanks & Regards,<br>ServiceNow';
+    gs.info("Fetched the required info from event");
+    sub = 'AutomationAnywhere Access Request Notification | ';
+
+
+    if (sts == "pending") {
+        sub += 'Requested';
+        content = 'Your request has been placed. Please wait for the admin approval.';
+    } else if (sts == "granted") {
+        sub += 'Approved';
+        content = 'Your request has been approved by Admin.\nDefault Password is ' + pass;
+    } else {
+        sub += 'Rejected';
+        if (reason)
+            content = 'Your request has been rejected by Admin. <b>Reason</b>: ' + reason;
+        else
+            content = 'Your request has been rejected by Admin.';
+
+    }
+    body = header + content + footer;
+    email.setSubject(sub);
+    email.setBody(body);
+    //email.send();
+    gs.info("Mail sent");
+})(current, template, email, email_action, event);]]></script>
+        <sys_class_name>sys_script_email</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-12-18 12:14:45</sys_created_on>
+        <sys_id>fd786973444731107f447ec11d2c0c0f</sys_id>
+        <sys_name>AP_SendMailToUser</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sys_script_email_fd786973444731107f447ec11d2c0c0f</sys_update_name>
+    </sys_script_email>
+</record_update>

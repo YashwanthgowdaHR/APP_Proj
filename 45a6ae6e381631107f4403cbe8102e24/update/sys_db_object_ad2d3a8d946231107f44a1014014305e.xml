@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sys_db_object">
     <sys_db_object action="INSERT_OR_UPDATE">
-        <access>package_private</access>
+        <access>public</access>
         <actions_access>false</actions_access>
         <alter_access>false</alter_access>
         <caller_access/>
@@ -15,7 +15,7 @@
         <name>x_snc_accessprov_0_aa_request_access</name>
         <number_ref/>
         <provider_class/>
-        <read_access>false</read_access>
+        <read_access>true</read_access>
         <scriptable_table>false</scriptable_table>
         <super_class/>
         <sys_class_name>sys_db_object</sys_class_name>
@@ -27,8 +27,8 @@
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sys_db_object_ad2d3a8d946231107f44a1014014305e</sys_update_name>
-        <update_access>false</update_access>
+        <update_access>true</update_access>
         <user_role/>
-        <ws_access>false</ws_access>
+        <ws_access>true</ws_access>
     </sys_db_object>
 </record_update>
