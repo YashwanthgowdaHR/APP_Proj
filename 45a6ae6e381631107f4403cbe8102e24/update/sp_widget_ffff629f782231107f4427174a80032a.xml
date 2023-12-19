@@ -1,28 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
-        <client_script><![CDATA[function($scope){
+        <client_script><![CDATA[api.controller = function($scope, spUtil){
 	var c = this;
 	
-	c.addRecord = function(){
-		c.data.fname = $scope.c.data.user_info.fname;
-		c.data.lname = $scope.c.data.user_info.lname;
-		c.data.email = $scope.c.data.user_info.email;
-		c.data.uid = $scope.c.data.user_info.uid;
-		c.data.automation_name =$scope.c.data.automation_name;
-		c.data.environment = $scope.c.data.environment;
+	
+	function handleUpdateResponse(res) {
+		c.data.automation_name = "";
+		c.data.environment = c.data.env[0];
+		delete c.data.action
+	}
+
+	function handleError(error) {
+		console.error('An error occurred:', error);
+		// Handle or log the error as needed
+	}
+	
+	c.requestAccess = function(){
+		c.data.fname = c.data.user_info.fname;
+		c.data.lname = c.data.user_info.lname;
+		c.data.email = c.data.user_info.email;
+		c.data.uid = c.data.user_info.uid;
+		c.data.automation_name = c.data.automation_name;
+		c.data.environment = c.data.environment;
 		
 		delete c.data.env;
 		delete c.data.user_info;
 		
-		c.data.action = 'addRecord';
-		c.server.update().then(function(){
-			c.data.automation_name = "";
-			c.data.environment = c.data.env[0];
-			delete c.data.action
-		});
-		
-	}
+		c.data.action = 'requestAccess';
+		c.server.update().then(handleUpdateResponse).catch(handleError)};
 	
 }
 
@@ -35,7 +41,8 @@ function onChange(control, oldValue, newValue, isLoading) {
       case "4": elementID.style.backgroundColor = "yellow"; break;
       case "5": elementID.style.backgroundColor = "green"; break; 
       default: elementID.style.backgroundColor = "white"; break; } 
-}]]></client_script>
+}
+]]></client_script>
         <controller_as>c</controller_as>
         <css>label{
   font-weight: bold;
@@ -80,7 +87,6 @@ select{
         <script><![CDATA[(function(){
 	var gr = new GlideRecord('x_snc_accessprov_0_environment');
 	var env_name = gr.getElement("name");
-	
 	data.env = env_name.getChoices(); // Read the Choices present in the Environment:Name field
 
 	// Fetch User Details
@@ -100,7 +106,7 @@ select{
 
 if(input){
 	
-	if(input.action=='addRecord'){
+	if(input.action=='requestAccess'){
 		if(input.fname == undefined || input.lname == undefined || input.email == undefined || input.automation_name == undefined || input.environment == undefined){
 			gs.addErrorMessage("Please fill all the neccessary fields and submit the form.");
 		}
@@ -111,7 +117,6 @@ if(input){
 			
 			if(!gr.next()){					
 				gr.initialize(); //create an empty record before inserting.
-				
 				gr.setValue('first_name', input.fname);
 				gr.setValue('last_name', input.lname);
 				gr.setValue('email_id', input.email);
@@ -119,7 +124,10 @@ if(input){
 				gr.setValue('environment', input.environment);
 				gr.setValue('x_m_uid', input.uid);
 				gr.insert();
-				gs.addInfoMessage("Access Requested. Wait for the notification mail.")
+				gs.addInfoMessage("Access Requested. Wait for approval.")
+				var userInfo = {'uid':input.uid,'name': input.fname+" "+input.lname,'environment':input.environment};
+				var aaf = new AutomationAnywhereFunctions();
+				aaf.InformAdminOnRequest(userInfo);
 			}
 			else{
 				gs.addErrorMessage("Request is already made.");
@@ -139,72 +147,73 @@ if(input){
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sp_widget_ffff629f782231107f4427174a80032a</sys_update_name>
-        <template><![CDATA[<div>  
-<form class="form-horizontal">
-<fieldset>
+        <template><![CDATA[<div>
+  <form class="form-horizontal">
+    <fieldset>
 
-<!-- Form Name -->
-<legend class="text-center"><h3>Access request form</h3></legend>
-
-
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="txt_uid">MUID / XUID</label>  
-  <div class="col-md-6">
-  <input id="txt_uid" ng-model="c.data.user_info.uid" type="text" class="form-control input-md" disabled> 
-  </div>
-</div>
-  
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="txt_first_name">First Name</label>  
-  <div class="col-md-6">
-  <input id="txt_first_name" ng-model="c.data.user_info.fname" type="text" class="form-control input-md" disabled>
-  </div>
-</div>
-
-  <!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="txt_last_name">Last Name</label>  
-  <div class="col-md-6"> 
-  <input id="txt_last_name" ng-model="c.data.user_info.lname" type="text" class="form-control input-md" disabled>
-  </div>
-</div>
-
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="txt_email">Email Id</label>  
-  <div class="col-md-6">
-  <input id="txt_email" ng-model="c.data.user_info.email" type="text" class="form-control input-md" disabled>
-  </div>
-</div>
-  
-<div class="form-group">
-  <label class="col-md-4 control-label" for="txt_automation_name">Automation</label>  
-  <div class="col-md-6">
-  <input id="txt_automation_name" ng-model="c.data.automation_name" type="text" class="form-control input-md" required> 
-  </div>
-</div>
-  
-<div class="form-group">
-  <label class="col-md-4 control-label" for="txt_env">Environment</label>  
-  <div class="col-md-6">
-    <select id="txt_env" class="form-control input-md" ng-model="c.data.environment"  ng-init="c.data.environment = data.env[0]" ng-options="option for option in data.env">
-    </select> 
-  </div>
-</div>
+      <!-- Form Name -->
+      <legend class="text-center">
+        <h3>Access request form</h3>
+      </legend>
 
 
+      <!-- Text input-->
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="txt_uid">MUID / XUID</label>
+        <div class="col-md-6">
+          <input id="txt_uid" ng-model="c.data.user_info.uid" type="text" class="form-control input-md" disabled>
+        </div>
+      </div>
 
-<!-- Button -->
-<div class="form-group">
-  <div class="col-md-6">
-    <button id="btn_submit" name="btn_submit" class="btn btn-primary" ng-click="c.addRecord()">Submit</button>
-  </div>
-</div>
+      <!-- Text input-->
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="txt_first_name">First Name</label>
+        <div class="col-md-6">
+          <input id="txt_first_name" ng-model="c.data.user_info.fname" type="text" class="form-control input-md" disabled>
+        </div>
+      </div>
 
-</fieldset>
-</form>
+      <!-- Text input-->
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="txt_last_name">Last Name</label>
+        <div class="col-md-6">
+          <input id="txt_last_name" ng-model="c.data.user_info.lname" type="text" class="form-control input-md" disabled>
+        </div>
+      </div>
+
+      <!-- Text input-->
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="txt_email">Email Id</label>
+        <div class="col-md-6">
+          <input id="txt_email" ng-model="c.data.user_info.email" type="email" class="form-control input-md" disabled>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="txt_automation_name">Automation</label>
+        <div class="col-md-6">
+          <input id="txt_automation_name" ng-model="c.data.automation_name" type="text" class="form-control input-md" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="txt_env">Environment</label>
+        <div class="col-md-6">
+          <select id="txt_env" class="form-control input-md" ng-model="c.data.environment"
+            ng-init="c.data.environment = data.env[0]" ng-options="option for option in data.env">
+          </select>
+        </div>
+      </div>
+
+      <!-- Button -->
+      <div class="form-group">
+        <div class="col-md-6">
+          <button id="btn_submit" name="btn_submit" class="btn btn-primary" ng-click="c.requestAccess()" type="submit">Submit</button>
+        </div>
+      </div>
+
+    </fieldset>
+  </form>
 
 </div>]]></template>
     </sp_widget>

@@ -4,26 +4,36 @@
         <client_script><![CDATA[api.controller = function($scope, spUtil, spModal) {
     /* widget controller */
     let c = this;
+		
+		function resetData(){
+			delete c.data.action;
+			delete c.data.info;
+		}
 
     c.getData = function() {
         c.data.uid = c.data.user_info.uid;
         c.data.action = "getData";
-        c.server.update();
+        c.server.update().then(function(){
+					resetData();
+				});
     };
 
     function handleUpdateResponse(res) {
-        let { sts, msg } = res.result;
-        if (sts === 1) {
-            c.server.refresh();
-            spUtil.addInfoMessage(msg);
-        } else {
-            alert(msg);
-        }
+			resetData();
+			
+      let { sts, msg } = res.result;
+      if (sts === 1) {
+        c.server.refresh();
+        spUtil.addInfoMessage(msg);
+      } else {
+        alert(msg);
+      }
     }
 	
 	 	function handleError(error) {
-        console.error('An error occurred:', error);
-        // Handle or log the error as needed
+			resetData();
+      console.error('An error occurred:', error);
+      // Handle or log the error as needed
     }
 
     c.approve = function(user) {
@@ -45,8 +55,12 @@
             c.data.rejectReason = reason;
             c.data.info = user;
             c.data.action = 'reject';
-            c.server.update();
-            c.server.refresh();
+            c.server.update().then(function(res){
+							resetData();
+							spUtil.addInfoMessage(res.result.msg);
+            	c.server.refresh();
+						});
+					
         }, function(){}).catch(handleError);
     };
 };]]></client_script>
@@ -128,22 +142,28 @@ url("./fonts/bootstrap-icons.woff?8d200481aa7f02a2d63a331fc782cfaf") format("wof
     if (input) {
         var user = input.info;
         var aaf = new AutomationAnywhereFunctions();
-				table = new GlideRecord('x_snc_accessprov_0_aa_request_access');
+				//table = new GlideRecord('x_snc_accessprov_0_aa_request_access');
         // APPROVE action
         if (input.action == "approve") {
           // Script Includes function
 					var output = aaf.CreateOrRejectUser("create",user);
+					
+					//return result to client
 					if(output.isCreated)
-						gs.addInfoMessage("User has been created");
+						input.result = {'sts': 1, 'msg':'User has been created'}
 					else
-						gs.addInfoMessage('Unable to create user. Reason: '+output.msg);
+						input.result = {'sts': 0, 'msg':'Unable to create user. Reason: '+output.msg}
         }
 
         // REJECT action
         if (input.action == 'reject') {
 					user.rejectReason = input.rejectReason;
+					
+					// Script Includes function
           aaf.CreateOrRejectUser("reject",user);
-					gs.addInfoMessage("Request Rejected");
+					
+					//return result to client
+					input.result = {'msg':'Request Rejected '};
         }
 
     }

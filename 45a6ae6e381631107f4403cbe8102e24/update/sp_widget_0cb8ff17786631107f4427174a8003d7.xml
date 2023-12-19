@@ -1,108 +1,140 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
-        <client_script><![CDATA[function($scope){		
+        <client_script><![CDATA[api.controller = function ($scope, spUtil, spModal) {
 	var c = this;
-	
+
 	// Get user info based on uid
-	c.getData = function(){
-		c.data.uid = $scope.c.data.user_info.uid;
+	c.getData = function () {
+		c.data.uid = c.data.user_info.uid;
 		c.data.action = "getData";
 		c.server.update();
 	}
-	
-	c.addRecord = function(){
-		c.data.fname = $scope.c.data.user_info.fname;
-		c.data.lname = $scope.c.data.user_info.lname;
-		c.data.email = $scope.c.data.user_info.email;
-		c.data.uid = $scope.c.data.user_info.uid;
-		c.data.automation_name =$scope.c.data.automation_name;
-		c.data.environment = $scope.c.data.environment;
+
+	function handleUpdateResponse(res) {
+		//c.data.automation_name = "";
+		c.data.environment = c.data.env[0];
+		delete c.data.action
+		if(res.result){
+			console.log("User created successfully");
+			console.log(res);
+			let { sts, msg } = res.result;
+			if (sts === 1) {
+				spUtil.addInfoMessage(msg);
+			} else {
+				alert(msg);
+			}
+		}
 		
+	}
+
+	function handleError(error) {
+		console.error('An error occurred:', error);
+		// Handle or log the error as needed
+	}
+
+	c.createUser = function () {
+		c.data.fname = c.data.user_info.fname;
+		c.data.lname = c.data.user_info.lname;
+		c.data.email = c.data.user_info.email;
+		c.data.uid = c.data.user_info.uid;
+		//c.data.automation_name = c.data.automation_name;
+		//c.data.environment = c.data.environment;
+
 		delete c.data.env;
-		delete c.data.user_info;
+		//delete c.data.user_info;
+		console.log(c.data)
 		
-		c.data.action = 'addRecord';
-		
-		c.server.update().then(function(){
-			c.data.automation_name = "";
-			c.data.environment = c.data.env[0];
-			delete c.data.action
-		});
-		
+		c.data.action = 'createUser';
+		console.log("Creating user...")
+		c.server.update().then(handleUpdateResponse).catch(handleError);
+
 	}
 }]]></client_script>
         <controller_as>c</controller_as>
-        <css>label{
-  font-weight: bold;
-}
-
-select{
-  text-transform: uppercase;
+        <css>select{
+text-transform: uppercase;
 }</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
-        <description/>
+        <description>Admin can directly create a new user and it will be auto-approved</description>
         <docs/>
         <field_list/>
         <has_preview>true</has_preview>
-        <id>tsp_admin_request_access_for_others</id>
+        <id>tsp_admin_request_new</id>
         <internal>false</internal>
         <link><![CDATA[function link(scope, element, attrs, controller) {  }]]></link>
-        <name>Admin - Request Access For Others</name>
+        <name>Admin - Request New</name>
         <option_schema/>
         <public>false</public>
         <roles>x_snc_accessprov_0.admin</roles>
-        <script><![CDATA[(function() {
-    var gr = new GlideRecord('x_snc_accessprov_0_environment');
-    var env_name = gr.getElement("name");
-
-    data.env = env_name.getChoices(); // Read the Choices present in the Environment:Name field
+        <script><![CDATA[(function () {
+	var gr = new GlideRecord('x_snc_accessprov_0_environment');
+	var env_name = gr.getElement("name");
+	data.env = env_name.getChoices(); // Read the Choices present in the Environment:Name field
 })();
 
 if (input) {
 
-    if (input.action == 'getData') {
-        gr = new GlideRecord('sys_user');
-        gr.addEncodedQuery('user_name=' + input.uid);
+	if (input.action == 'getData') {
+		// Get data once UID is entered by user is valid
+		gr = new GlideRecord('sys_user');
+		gr.addEncodedQuery('user_name=' + input.uid);
+		gr.query();
+		while (gr.next()) {
+			data.user_info = {
+				fname: gr.first_name.toString(),
+				lname: gr.last_name.toString(),
+				email: gr.email.toString(),
+				uid: input.uid
+			}
+		}
+	}
 
-        gr.query();
-        while (gr.next()) {
-            data.user_info = {
-                fname: gr.first_name.toString(),
-                lname: gr.last_name.toString(),
-                email: gr.email.toString(),
-                uid: input.uid
-            }
-        }
-    }
+	if (input.action == 'createUser') {
+		if (input.fname == undefined || input.lname == undefined || input.email == undefined || input.automation_name == undefined || input.environment == undefined) {
+			gs.addErrorMessage("Please fill all the neccessary fields and submit the form.")
+		} else {
+			var gr = new GlideRecord('x_snc_accessprov_0_aa_request_access');
+			gr.addEncodedQuery('x_m_uid=' + input.uid + "^automation_name=" + input.automation_name + "^environment=" + input.environment + "^status=pending^ORstatus=granted")
+			gr.query()
+			if (!gr.next()) {
+				gr.initialize(); //create an empty record before inserting.
+				gr.setValue('first_name', input.fname);
+				gr.setValue('last_name', input.lname);
+				gr.setValue('email_id', input.email);
+				gr.setValue('automation_name', input.automation_name);
+				gr.setValue('environment', input.environment);
+				gr.setValue('x_m_uid', input.uid);
+				var sysId = gr.insert();
+				
+				var user = {
+					sysId: sysId,
+					fname: input.fname,
+					lname: input.lname,
+					name: input.fname + " " + input.lname,
+					email: input.email,
+					uid: input.uid,
+					automationName: input.automation_name,
+					environment: input.environment
+				}
+				// Script Includes Class
+				var aaf = new AutomationAnywhereFunctions();
+				var output = aaf.CreateOrRejectUser("create", user);
+				gs.addInfoMessage("Request is made to AutomationAnywhere.");
+				
+				//return result to client
+				if (output.isCreated)
+					data.result = { 'sts': 1, 'msg': 'User has been created. Notification will send to user"s mail' }
+				else
+					data.result = { 'sts': 0, 'msg': 'Unable to create user. Reason: ' + output.msg }
+			} else {
+				gs.addErrorMessage("Request is already made.")
+			}
+		}
 
-    if (input.action == 'addRecord') {
 
-
-        if (input.fname == undefined || input.lname == undefined || input.email == undefined || input.automation_name == undefined || input.environment == undefined) {
-            gs.addErrorMessage("Please fill all the neccessary fields and submit the form.")
-        } else {
-            var gr = new GlideRecord('x_snc_accessprov_0_aa_request_access');
-            gr.addEncodedQuery('x_m_uid=' + input.uid + "^automation_name=" + input.automation_name + "^environment=" + input.environment + "^status=pending^ORstatus=granted")
-            gr.query()
-            if (!gr.next()) {
-                gr.initialize(); //create an empty record before inserting.
-                gr.setValue('first_name', input.fname);
-                gr.setValue('last_name', input.lname);
-                gr.setValue('email_id', input.email);
-                gr.setValue('automation_name', input.automation_name);
-                gr.setValue('environment', input.environment);
-                gr.setValue('x_m_uid', input.uid);
-                gr.insert();
-                gs.addInfoMessage("Access Requested. Wait for the notification mail.")
-            } else {
-                gs.addErrorMessage("Request is already made.")
-            }
-        }
-
-
-    }
+	}
 
 
 }]]></script>
@@ -111,77 +143,78 @@ if (input) {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-11-22 11:20:18</sys_created_on>
         <sys_id>0cb8ff17786631107f4427174a8003d7</sys_id>
-        <sys_name>Admin - Request Access For Others</sys_name>
+        <sys_name>Admin - Request New</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sp_widget_0cb8ff17786631107f4427174a8003d7</sys_update_name>
-        <template><![CDATA[<div>  
-<form class="form-horizontal">
-<fieldset>
+        <template><![CDATA[<div class="widget-enclose">
+  <form class="form-horizontal">
+    <fieldset>
 
-<!-- Form Name -->
-<legend class="text-center"><h3>Access request form</h3></legend>
+      <!-- Form Name -->
+      <legend class="text-center">
+        <h3>Access request form</h3>
+      </legend>
 
+      <!-- Text input-->
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="txt_uid">MUID / XUID</label>
+        <div class="col-md-6">
+          <input id="txt_uid" type="text" ng-model="c.data.user_info.uid" ng-model-options="{debounce: 1000}"
+                 class="form-control" ng-change="c.getData()" required>
+        </div>
+      </div>
 
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="txt_uid">MUID / XUID</label>  
-  <div class="col-md-6">
-  <input id="txt_uid" ng-model="c.data.user_info.uid" ng-model-options="{debounce: 1000}" type="text" class="form-control input-md" ng-change="c.getData()" required> 
-  </div>
-</div>
-  
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="txt_first_name">First Name</label>  
-  <div class="col-md-6">
-  <input id="txt_first_name" ng-model="c.data.user_info.fname" type="text" class="form-control input-md" required>
-  </div>
-</div>
+      <!-- Text input-->
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="txt_first_name">First Name</label>
+        <div class="col-md-6">
+          <input id="txt_first_name" type="text" ng-model="c.data.user_info.fname" class="form-control" required>
+        </div>
+      </div>
 
-  <!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="txt_last_name">Last Name</label>  
-  <div class="col-md-6"> 
-  <input id="txt_last_name" ng-model="c.data.user_info.lname" type="text" class="form-control input-md" required>
-  </div>
-</div>
+      <!-- Text input-->
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="txt_last_name">Last Name</label>
+        <div class="col-md-6">
+          <input id="txt_last_name" type="text" ng-model="c.data.user_info.lname" class="form-control" required>
+        </div>
+      </div>
 
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="txt_email">Email Id</label>  
-  <div class="col-md-6">
-  <input id="txt_email" ng-model="c.data.user_info.email" type="text" class="form-control input-md" required>
-  </div>
-</div>
-  
-<div class="form-group">
-  <label class="col-md-4 control-label" for="txt_automation_name">Automation</label>  
-  <div class="col-md-6">
-  <input id="txt_automation_name" ng-model="c.data.automation_name" type="text" class="form-control input-md" required> 
-  </div>
-</div>
-  
-<div class="form-group">
-  <label class="col-md-4 control-label" for="txt_env">Environment</label>  
-  <div class="col-md-6">
-    <select id="txt_env" class="form-control input-md" ng-model="c.data.environment"  ng-init="c.data.environment = data.env[0]" ng-options="option for option in data.env">
-    </select> 
-  </div>
-</div>
+      <!-- Text input-->
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="txt_email">Email Id</label>
+        <div class="col-md-6">
+          <input id="txt_email" type="text" ng-model="c.data.user_info.email" class="form-control" required>
+        </div>
+      </div>
 
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="txt_automation_name">Automation</label>
+        <div class="col-md-6">
+          <input id="txt_automation_name" type="text" ng-model="c.data.automation_name" class="form-control" required>
+        </div>
+      </div>
 
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="txt_env">Environment</label>
+        <div class="col-md-6">
+          <select id="txt_env" class="form-control" ng-model="c.data.environment"
+                  ng-init="c.data.environment = data.env[0]" ng-options="option for option in data.env">
+          </select>
+        </div>
+      </div>
 
-<!-- Button -->
-<div class="form-group">
-  <div class="col-md-6">
-    <button id="btn_submit" name="btn_submit" class="btn btn-primary" ng-click="c.addRecord()">Submit</button>
-  </div>
-</div>
+      <!-- Button -->
+      <div class="form-group">
+        <div class="col-md-6">
+          <input type="submit" id="btn_submit" name="btn_submit" class="btn btn-primary" ng-click="c.createUser()" value="Submit">
+        </div>
+      </div>
 
-</fieldset>
-</form>
+    </fieldset>
+  </form>
 
 </div>]]></template>
     </sp_widget>

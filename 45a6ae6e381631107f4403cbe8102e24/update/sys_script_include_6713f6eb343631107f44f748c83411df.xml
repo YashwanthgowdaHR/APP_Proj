@@ -13,7 +13,86 @@ AutomationAnywhereFunctions.prototype = {
     type: 'AutomationAnywhereFunctions',
     restSrc: 'x_snc_accessprov_0.AA Authentication',
     pass: "abc@123123",
-    table: new GlideRecord('x_snc_accessprov_0_aa_request_access'),
+    requestTable: new GlideRecord('x_snc_accessprov_0_aa_request_access'),
+	members: new GlideRecord('sys_user_grmember'),
+
+    CreateOrRejectUser: function(createOrReject, user) {
+        var sts = "pending";
+        if (createOrReject == "create") {
+            var result = this.CreateUser(user);
+            if (result.isCreated)
+                sts = "granted";
+            return result;
+        }
+        if (createOrReject == "reject") {
+            sts = "rejected";
+            this.RejectUser(user);
+        }
+        var details = {
+            'sts': sts,
+            'name': user.name,
+            'pass': this.pass,
+            'reason': user.rejectReason || ""
+        };
+
+        gs.info("SctiptInclude: Calling UserCreationOrRejection Event...");
+        gs.eventQueue(name = 'x_snc_accessprov_0.send_mail_to_user', record = this.requestTable, parm1 = user.email, parm2 = JSON.stringify(details));
+        gs.info("SctiptInclude: Event Created");
+    },
+
+    CreateUser: function(userInfo) {
+        var log_name = "SCRIPT- CreateUser: ";
+        // Get Access Token
+        var tkn = this.GetToken();
+
+        //Initialize the required REST Message
+        var req = new sn_ws.RESTMessageV2(this.restSrc, 'Create User');
+        req.setRequestHeader("x-authorization", tkn);
+        req.setStringParameterNoEscape('firstName', userInfo.fname);
+        req.setStringParameterNoEscape('lastName', userInfo.lname);
+        req.setStringParameterNoEscape('mailId', userInfo.email);
+        req.setStringParameterNoEscape('pass', this.pass);
+        req.setStringParameterNoEscape('userName', userInfo.uid);
+        req.setStringParameterNoEscape('id', '224');
+
+        gs.info(log_name + "User Creation | Creating User...");
+
+        var response = req.execute();
+        var responseBody = response.getBody();
+        var httpStatus = response.getStatusCode();
+        gs.info(log_name + "User Creation | Result - HTTP status Code: " + httpStatus);
+        var parsed = JSON.parse(responseBody);
+        var result = {};
+        if (httpStatus == 201) {
+            // User Created Successfully
+            result.isCreated = true;
+            gs.info(log_name + "User Creation | SUCCESS | New ID is " + parsed.id);
+            this.requestTable.addQuery('sys_id', userInfo.sysId);
+            this.requestTable.query();
+            if (this.requestTable.next()) {
+                this.requestTable.setValue('id', parsed.id);
+                this.requestTable.setValue('status', "granted");
+                this.requestTable.update('updated ID of record: ' + userInfo.sysId);
+            }
+        } else {
+            //Failed to create user through api
+            result.isCreated = false;
+            result.msg = parsed.message;
+            gs.error(log_name + "User Creation | FAILED | Reason is " + parsed.message);
+        }
+
+        return result;
+    },
+
+    FetchUsersOfGroup: function(sysId) {
+        this.members.addQuery('group', sysId);
+        this.members.query();
+        var users = [];
+        while (this.members.next()) {
+            users.push(this.members.user.email.toString());
+        }
+		return users;
+    },
 
     GetToken: function() {
         var r = new sn_ws.RESTMessageV2('x_snc_accessprov_0.AA Authentication', 'Default Post');
@@ -51,82 +130,22 @@ AutomationAnywhereFunctions.prototype = {
         }
     },
 
-    CreateUser: function(userInfo) {
-        var log_name = "SCRIPT- CreateUser: ";
-        // Get Access Token
-        var tkn = this.GetToken();
-
-        //Initialize the required REST Message
-        var req = new sn_ws.RESTMessageV2(this.restSrc, 'Create User');
-        req.setRequestHeader("x-authorization", tkn);
-        req.setStringParameterNoEscape('firstName', userInfo.fname);
-        req.setStringParameterNoEscape('lastName', userInfo.lname);
-        req.setStringParameterNoEscape('mailId', userInfo.email);
-        req.setStringParameterNoEscape('pass', this.pass);
-        req.setStringParameterNoEscape('userName', userInfo.uid);
-        req.setStringParameterNoEscape('id', '224');
-
-        gs.info(log_name + "User Creation | Creating User...");
-
-        var response = req.execute();
-        var responseBody = response.getBody();
-        var httpStatus = response.getStatusCode();
-        gs.info(log_name + "User Creation | Result - HTTP status Code: " + httpStatus);
-        var parsed = JSON.parse(responseBody);
-        var result = {};
-        if (httpStatus == 201) {
-            // User Created Successfully
-            result.isCreated = true;
-            gs.info(log_name + "User Creation | SUCCESS | New ID is " + parsed.id);
-            this.table.addQuery('sys_id', userInfo.sysId);
-            this.table.query();
-            if (this.table.next()) {
-                this.table.setValue('id', parsed.id);
-                this.table.setValue('status', "granted");
-                this.table.update('updated ID of record: ' + userInfo.sysId);
-            }
-        } else {
-            //Failed to create user through api
-            result.isCreated = false;
-            result.msg = parsed.message;
-            gs.error(log_name + "User Creation | FAILED | Reason is " + parsed.message);
-        }
-
-        return result;
-    },
-
-    RejectUser: function(userInfo) {
-        gs.info("Rejecting request");
-        this.table.addQuery('sys_id', userInfo.sysId);
-        this.table.query();
-        if (this.table.next()) {
-            this.table.setValue('status', 'rejected');
-            this.table.update('updated status of record: ' + userInfo.sysId + ' to REJECTED');
-        }
-    },
-
-    CreateOrRejectUser: function(createOrReject, user) {
-        var sts = "pending";
-        if (createOrReject == "create") {
-            var result = this.CreateUser(user);
-            if (result.isCreated)
-                sts = "granted";
-            return result;
-        }
-        if (createOrReject == "reject") {
-            sts = "rejected";
-            this.RejectUser(user);
-        }
-        var details = {
-            'sts': sts,
-            'name': user.name,
-			'pass':this.pass,
-			'reason': user.rejectReason || ""
-        };
+    InformAdminOnRequest: function(userInfo) {
+//         var userTable = new GlideRecord('sys_user');
+//         // fetch the user details who have admin role
+//         userTable.addQuery('roles', 'x_snc_accessprov_0.admin');
+//         userTable.query();
+//         var mailList = "";
+//         while (userTable.next())
+//             mailList += userTable.getValue('mailId') + ";";
+		var adminMailList = this.FetchUsersOfGroup('333afe4c1c1731107f44d85edddcec9e');
+		gs.info("Admin List: "+adminMailList);
+        gs.info("SctiptInclude: Calling Inform Admin Event...");
 		
-		gs.info("SctiptInclude: Calling Event...");
-        gs.eventQueue(name='x_snc_accessprov_0.send_mail_to_user', record = this.table,parm1=user.email,parm2=JSON.stringify(details));
-		gs.info("SctiptInclude: Event Created");
+		var details = {"userInfo":userInfo,'adminMailList': adminMailList};
+		
+		gs.eventQueue(name = 'x_snc_accessprov_0.inform_admin', record = this.members, parm1 = "yashwanthgowda.hr@external.merckgroup.com", parm2 = JSON.stringify(details));
+        gs.info("SctiptInclude: Event Created");
     },
 
     NotifyUserCreation: function(sts, name, to, reason, isNew) {
@@ -167,7 +186,17 @@ AutomationAnywhereFunctions.prototype = {
             gs.info('Email sent successfully.');
         }
 
-    }
+    },
+
+    RejectUser: function(userInfo) {
+        gs.info("Rejecting request");
+        this.requestTable.addQuery('sys_id', userInfo.sysId);
+        this.requestTable.query();
+        if (this.requestTable.next()) {
+            this.requestTable.setValue('status', 'rejected');
+            this.requestTable.update('updated status of record: ' + userInfo.sysId + ' to REJECTED');
+        }
+    },
 
 };]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
