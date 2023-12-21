@@ -3,8 +3,18 @@
         <category>custom</category>
         <client_script><![CDATA[api.controller = function(spUtil){
 	var c = this;
+	//$scope.snTableName = c.data.snTableName;
 	
+	c.data.referenceFieldValue = 'value2'
+    c.data.referenceFieldOptions= [
+        { label: 'Option 1', value: 'value1' },
+        { label: 'Option 2', value: 'value2' },
+        // Add more options as needed
+    ];
 	
+	console.log('Options:', c.data.referenceFieldOptions);
+console.log('Selected Value:', c.data.referenceFieldValue);
+		
 	function handleUpdateResponse(res) {
 		c.data.automation_name = "";
 		c.data.environment = c.data.env[0];
@@ -17,18 +27,20 @@
 	}
 	
 	c.requestAccess = function(){
-		c.data.fname = c.data.user_info.fname;
-		c.data.lname = c.data.user_info.lname;
-		c.data.email = c.data.user_info.email;
-		c.data.uid = c.data.user_info.uid;
-		c.data.automation_name = c.data.automation_name;
-		c.data.environment = c.data.environment;
+		console.log(c);
+		//console.log($scope);
+		c.data.fname = data.user_info.fname;
+		c.data.lname = data.user_info.lname;
+		c.data.email = data.user_info.email;
+		c.data.uid = data.user_info.uid;
+		c.data.automation_name = data.automation_name;
+		c.data.environment = data.environment;
 		
-		delete c.data.env;
-		delete c.data.user_info;
+		delete data.env;
+		delete data.user_info;
 		
 		c.data.action = 'requestAccess';
-		c.server.update().then(handleUpdateResponse).catch(handleError)};
+		//c.server.update().then(handleUpdateResponse).catch(handleError)};
 	
 }
 
@@ -42,6 +54,7 @@ function onChange(control, oldValue, newValue, isLoading) {
       case "5": elementID.style.backgroundColor = "green"; break; 
       default: elementID.style.backgroundColor = "white"; break;
 		} 
+}
 }
 ]]></client_script>
         <controller_as>c</controller_as>
@@ -69,7 +82,8 @@ function onChange(control, oldValue, newValue, isLoading) {
 
 select{
   text-transform: uppercase;
-}</css>
+}
+</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
         <description>Form to take input</description>
@@ -90,6 +104,16 @@ select{
 	var env_name = gr.getElement("name");
 	data.env = env_name.getChoices(); // Read the Choices present in the Environment:Name field
 
+	
+	gr = new GlideRecord('x_snc_accessprov_0_automationlist');
+	gr.query();
+	data.snTableName = 'x_snc_accessprov_0_automationlist';
+	data.automationFieldOptions = [];
+	while(gr.next()){
+		var cur = gr.getValue('name').toString();
+		data.automationFieldOptions.push({'displayValue': cur.toUpperCase(),'value': cur,'name':cur.toUpperCase()});
+	}
+	
 	// Fetch User Details
 	gr = new GlideRecord('sys_user');
 	gr.addEncodedQuery('user_name='+gs.getUserName());
@@ -161,7 +185,7 @@ if(input){
       <div class="form-group">
         <label class="col-md-4 control-label" for="txt_uid">MUID / XUID</label>
         <div class="col-md-6">
-          <input id="txt_uid" ng-model="c.data.user_info.uid" type="text" class="form-control input-md" disabled>
+          <input id="txt_uid" ng-model="data.user_info.uid" type="text" class="form-control input-md" disabled>
         </div>
       </div>
 
@@ -169,7 +193,7 @@ if(input){
       <div class="form-group">
         <label class="col-md-4 control-label" for="txt_first_name">First Name</label>
         <div class="col-md-6">
-          <input id="txt_first_name" ng-model="c.data.user_info.fname" type="text" class="form-control input-md" disabled>
+          <input id="txt_first_name" ng-model="data.user_info.fname" type="text" class="form-control input-md" disabled>
         </div>
       </div>
 
@@ -177,7 +201,7 @@ if(input){
       <div class="form-group">
         <label class="col-md-4 control-label" for="txt_last_name">Last Name</label>
         <div class="col-md-6">
-          <input id="txt_last_name" ng-model="c.data.user_info.lname" type="text" class="form-control input-md" disabled>
+          <input id="txt_last_name" ng-model="data.user_info.lname" type="text" class="form-control input-md" disabled>
         </div>
       </div>
 
@@ -185,25 +209,36 @@ if(input){
       <div class="form-group">
         <label class="col-md-4 control-label" for="txt_email">Email Id</label>
         <div class="col-md-6">
-          <input id="txt_email" ng-model="c.data.user_info.email" type="email" class="form-control input-md" disabled>
+          <input id="txt_email" ng-model="data.user_info.email" type="email" class="form-control input-md" disabled>
         </div>
       </div>
+      
+    <div>
+    <label for="referenceField">Select a Record:</label>
+		<ap-Reference-Getter table="data.snTableName" field="data.new_automation_name" display-field="'name'" value-field="'name'" search-fields="'name'" page-size="10" custom-Style="{'text-transform':'None'}"></ap-Reference-Getter>
+</div>
+
+
+
+
 
       <div class="form-group">
         <label class="col-md-4 control-label" for="txt_automation_name">Automation</label>
         <div class="col-md-6">
-          <input id="txt_automation_name" ng-model="c.data.automation_name" type="text" class="form-control input-md" required>
+          <input id="txt_automation_name" ng-model="data.automation_name" type="text" class="form-control input-md" required>
         </div>
       </div>
 
       <div class="form-group">
         <label class="col-md-4 control-label" for="txt_env">Environment</label>
         <div class="col-md-6">
-          <select id="txt_env" class="form-control input-md" ng-model="c.data.environment"
-            ng-init="c.data.environment = data.env[0]" ng-options="option for option in data.env">
+          <select id="txt_env" class="form-control input-md" ng-model="data.environment"
+            ng-init="data.environment = data.env[0]" ng-options="option for option in data.env">
           </select>
         </div>
       </div>
+     
+
 
       <!-- Button -->
       <div class="form-group">

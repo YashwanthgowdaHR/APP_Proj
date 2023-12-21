@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update>
-    <sys_dictionary action="INSERT_OR_UPDATE" element="automation_name" table="x_snc_accessprov_0_aa_request_access">
+    <sys_dictionary action="INSERT_OR_UPDATE" element="sys_class_name" table="x_snc_accessprov_0_automationlist">
         <active>true</active>
         <array>false</array>
         <attributes/>
         <audit>false</audit>
         <calculation/>
-        <choice>3</choice>
+        <choice>0</choice>
         <choice_field/>
         <choice_table/>
-        <column_label>Automation Name</column_label>
+        <column_label>Class</column_label>
         <comments/>
         <create_roles/>
-        <default_value/>
+        <default_value>javascript:current.getTableName();</default_value>
         <defaultsort/>
         <delete_roles/>
         <dependent/>
@@ -21,21 +21,21 @@
         <dynamic_creation_script/>
         <dynamic_default_value/>
         <dynamic_ref_qual/>
-        <element>automation_name</element>
+        <element>sys_class_name</element>
         <element_reference>false</element_reference>
         <foreign_database/>
         <formula/>
         <function_definition/>
         <function_field>false</function_field>
-        <internal_type display_value="Reference">reference</internal_type>
-        <mandatory>true</mandatory>
-        <max_length>32</max_length>
-        <name>x_snc_accessprov_0_aa_request_access</name>
+        <internal_type display_value="">sys_class_name</internal_type>
+        <mandatory>false</mandatory>
+        <max_length>80</max_length>
+        <name>x_snc_accessprov_0_automationlist</name>
         <next_element/>
         <primary>false</primary>
         <read_only>false</read_only>
         <read_roles/>
-        <reference display_value="" name="x_snc_accessprov_0_automationlist">x_snc_accessprov_0_automationlist</reference>
+        <reference/>
         <reference_cascade_rule/>
         <reference_floats>false</reference_floats>
         <reference_key/>
@@ -46,12 +46,12 @@
         <staged>false</staged>
         <sys_class_name>sys_dictionary</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2023-11-15 07:29:11</sys_created_on>
-        <sys_name>Automation Name</sys_name>
+        <sys_created_on>2023-12-21 07:08:16</sys_created_on>
+        <sys_name>Class</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
-        <sys_update_name>sys_dictionary_x_snc_accessprov_0_aa_request_access_automation_name</sys_update_name>
+        <sys_update_name>sys_dictionary_x_snc_accessprov_0_automationlist_sys_class_name</sys_update_name>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>
@@ -59,7 +59,7 @@
         <use_dynamic_default>false</use_dynamic_default>
         <use_reference_qualifier>simple</use_reference_qualifier>
         <virtual>false</virtual>
-        <virtual_type>script</virtual_type>
+        <virtual_type/>
         <widget/>
         <write_roles/>
         <xml_view>false</xml_view>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="071514bce95331107f445943278c18bb" label="AutomationList" max_length="40" name="x_snc_accessprov_0_automationlist" type="collection">
+        <element display="true" label="Name" max_length="100" name="name" type="string"/>
+        <element default="javascript:current.getTableName();" label="Class" max_length="80" name="sys_class_name" type="sys_class_name"/>
+        <index name="index">
+            <element name="sys_class_name"/>
+        </index>
+    </element>
+</database>

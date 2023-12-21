@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element db_object_id="ad2d3a8d946231107f44a1014014305e" label="AA Request Access" max_length="40" name="x_snc_accessprov_0_aa_request_access" type="collection">
-        <element label="Automation Name" mandatory="true" max_length="40" name="automation_name" type="string"/>
+        <element choice="3" label="Automation Name" mandatory="true" max_length="32" name="automation_name" reference="x_snc_accessprov_0_automationlist" type="reference">
+            <choice/>
+        </element>
         <element label="Email ID" mandatory="true" max_length="100" name="email_id" type="string"/>
         <element choice="3" choice_field="name" choice_table="x_snc_accessprov_0_environment" default="dev" label="Environment" max_length="40" name="environment" type="choice">
             <choice/>
