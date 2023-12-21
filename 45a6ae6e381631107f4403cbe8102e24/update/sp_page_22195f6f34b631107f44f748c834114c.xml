@@ -20,7 +20,7 @@
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sp_page_22195f6f34b631107f44f748c834114c</sys_update_name>
-        <title>User List</title>
+        <title>Admin - Users List</title>
         <use_seo_script>false</use_seo_script>
     </sp_page>
     <sys_translated_text action="delete_multiple" query="documentkey=22195f6f34b631107f44f748c834114c"/>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_email">
     <sys_script_email action="INSERT_OR_UPDATE">
-        <name>AP_SendMailToUser</name>
+        <name>AP_InformUser</name>
         <new_lines_to_html>true</new_lines_to_html>
         <script><![CDATA[(function runMailScript( /* GlideRecord */ current, /* TemplatePrinter */ template,
     /* Optional EmailOutbound */
@@ -30,11 +30,11 @@
         content = 'Your request has been placed. Please wait for the admin approval.';
     } else if (sts == "granted") {
         sub += 'Approved';
-        content = 'Your request has been approved by Admin.\nDefault Password is ' + pass;
+        content = 'Your request has been approved.<br>Default Password is <b>' + pass+'</b>';
     } else {
         sub += 'Rejected';
         if (reason)
-            content = 'Your request has been rejected by Admin. <b>Reason</b>: ' + reason;
+            content = 'Your request has been rejected by Admin.<br><b>Reason</b>: ' + reason;
         else
             content = 'Your request has been rejected by Admin.';
 
@@ -49,7 +49,7 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-12-18 12:14:45</sys_created_on>
         <sys_id>fd786973444731107f447ec11d2c0c0f</sys_id>
-        <sys_name>AP_SendMailToUser</sys_name>
+        <sys_name>AP_InformUser</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>

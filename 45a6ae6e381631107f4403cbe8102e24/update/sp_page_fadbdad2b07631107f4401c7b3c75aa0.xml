@@ -20,7 +20,7 @@
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sp_page_fadbdad2b07631107f4401c7b3c75aa0</sys_update_name>
-        <title>Request History</title>
+        <title>User - Request History</title>
         <use_seo_script>false</use_seo_script>
     </sp_page>
     <sys_translated_text action="delete_multiple" query="documentkey=fadbdad2b07631107f4401c7b3c75aa0"/>

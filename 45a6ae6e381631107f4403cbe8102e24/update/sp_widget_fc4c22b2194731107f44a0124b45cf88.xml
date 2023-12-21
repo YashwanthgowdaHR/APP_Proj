@@ -1,76 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
-        <client_script><![CDATA[api.controller = function($scope, spUtil, spModal) {
-    /* widget controller */
-    let c = this;
-		
-		function resetData(){
+        <client_script><![CDATA[api.controller = function (spUtil, spModal) {
+	/* widget controller */
+	const c = this;
+
+	// Reset data properties
+	function resetData() {
+		if(c.data.action)
 			delete c.data.action;
+
+		if(c.data.info)
 			delete c.data.info;
+
+		if (c.data.rejectReason)
+			delete c.data.rejectReason;
+	}
+
+	c.getData = function () {
+		c.data.uid = c.data.user_info.uid;
+		c.data.action = "getData";
+		c.server.update().then(function () {
+			resetData();
+		}).catch(handleError);
+	};
+
+	function handleUpdateResponse(res) {
+		resetData();
+		const { sts, msg } = res.result;
+		if (sts === 1) {
+			c.server.refresh();
+			spUtil.addInfoMessage(msg);
+		} else {
+			alert(msg);
 		}
+	}
 
-    c.getData = function() {
-        c.data.uid = c.data.user_info.uid;
-        c.data.action = "getData";
-        c.server.update().then(function(){
-					resetData();
-				});
-    };
+	function handleError(error) {
+		console.log("Error Info: ", error);
+		// Handle or log the error as needed
+		resetData();
+		console.error('An error occurred:', error);
+	}
 
-    function handleUpdateResponse(res) {
-			resetData();
-			
-      let { sts, msg } = res.result;
-      if (sts === 1) {
-        c.server.refresh();
-        spUtil.addInfoMessage(msg);
-      } else {
-        alert(msg);
-      }
-    }
-	
-	 	function handleError(error) {
-			resetData();
-      console.error('An error occurred:', error);
-      // Handle or log the error as needed
-    }
+	c.approve = function (user) {
+		var warn = '<i class="fa fa-warning" aria-hidden="true"></i>';
+		spModal.confirm("Are you sure to <b>approve</b> this user?").then(function(confirmed) {
+			spUtil.addTrivialMessage("Approving the request...");
+			c.data.info = user;
+			c.data.action = 'approve';
+			c.server.update().then(handleUpdateResponse).catch(handleError);
+		})
 
-    c.approve = function(user) {
-        spUtil.addTrivialMessage("Wait for the necessary action");
-        c.data.info = user;
-        c.data.action = 'approve';
-        c.server.update().then(handleUpdateResponse).catch(handleError);
-    };
+	};
 
-    c.reject = function(user) {
-        spModal.open({
-            title: 'Please provide the comments for rejecting the request',
-            buttons: [
-                { label: '✘ ${Cancel}', cancel: true },
-                { label: '✔ ${Reject}', primary: true }
-            ],
-            input: true,
-        }).then(function(reason) {
-            c.data.rejectReason = reason;
-            c.data.info = user;
-            c.data.action = 'reject';
-            c.server.update().then(function(res){
-							resetData();
-							spUtil.addInfoMessage(res.result.msg);
-            	c.server.refresh();
-						});
-					
-        }, function(){}).catch(handleError);
-    };
-};]]></client_script>
+	c.reject = function (user) {
+		console.log(c)
+
+		spModal.open({
+			title: 'Reason for rejecting',
+			message: 'Please <b>provide the comments</b> for rejecting the request.',
+			buttons: [
+				{ label: '✘ ${Cancel}', cancel: true },
+				{ label: '✔ ${Reject}', primary: true }
+			],
+			input: true,
+			size: 'md'
+		}).then(function (reason) {
+			c.data.rejectReason = reason;
+			c.data.info = user;
+			c.data.action = 'reject';
+			c.server.update().then(function (res) {
+				spUtil.addInfoMessage(res.result.msg);
+				resetData();
+				c.server.refresh();
+			}).catch(handleError)
+		}, function () { }).catch(handleError);
+	};
+};
+]]></client_script>
         <controller_as>c</controller_as>
         <css>@font-face {
   font-display: block;
   font-family: "bootstrap-icons";
   src: url("./fonts/bootstrap-icons.woff2?8d200481aa7f02a2d63a331fc782cfaf") format("woff2"),
-url("./fonts/bootstrap-icons.woff?8d200481aa7f02a2d63a331fc782cfaf") format("woff");
+	url("./fonts/bootstrap-icons.woff?8d200481aa7f02a2d63a331fc782cfaf") format("woff");
 }
+
 .table td, .table th{
   text-align: center;
   vertical-align: middle;
@@ -79,13 +95,13 @@ url("./fonts/bootstrap-icons.woff?8d200481aa7f02a2d63a331fc782cfaf") format("wof
 .btn{
 	background: transparent;
   border-radius: 0px;
-    vertical-align: middle;
+  vertical-align: middle;
 }
 
 .btn-approve{
 	border: 1px solid green;
 }
-  
+
 .btn-approve:hover{
   color: white;
   background: green;
@@ -98,6 +114,16 @@ url("./fonts/bootstrap-icons.woff?8d200481aa7f02a2d63a331fc782cfaf") format("wof
 .btn-reject:hover{
   color: white;
   background: red;
+}
+
+.no-request{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  text-align: center;
+  color: black;
+  text-transform: uppercase;
 }</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
@@ -115,60 +141,68 @@ url("./fonts/bootstrap-icons.woff?8d200481aa7f02a2d63a331fc782cfaf") format("wof
         <public>false</public>
         <roles>x_snc_accessprov_0.admin</roles>
         <script><![CDATA[(function () {
-    /* populate the 'data' object */
-    data.otherUsersInfo = [];
-    var table = new GlideRecord('x_snc_accessprov_0_aa_request_access');
-    table.query();
+	/* populate the 'data' object */
+	data.otherUsersInfo = []; // list stores the user information who request's status is pending
+	var table = new GlideRecord('x_snc_accessprov_0_aa_request_access');
+	table.query();
 
-    var i = 1;
+	var i = 1;
 
-    while (table.next()) {
-        //gs.addInfoMessage(gr.getValue('automation_name'))
-        if (table.getValue('status') == "pending") {
-            data.otherUsersInfo.push({
-                no: i++,
-                sysId: table.getUniqueValue(),
-                fname: table.getValue('first_name').toString(),
-                lname: table.getValue('last_name').toString(),
-                name: table.getValue('first_name').toString() + " " + table.getValue('last_name').toString(),
-                email: table.getValue('email_id').toString(),
-                uid: table.getValue('x_m_uid').toString(),
-                automationName: table.getValue('automation_name').toString(),
-                environment: table.getDisplayValue('environment').toString()
-            });
-        }
-    }
+	function createUserInfoObject(record) {
+		return {
+			no: i++,
+			sysId: record.getUniqueValue(),
+			fname: record.getValue('first_name').toString(),
+			lname: record.getValue('last_name').toString(),
+			name: record.getValue('first_name').toString() + " " + record.getValue('last_name').toString(),
+			email: record.getValue('email_id').toString(),
+			uid: record.getValue('x_m_uid').toString(),
+			automationName: record.getValue('automation_name').toString(),
+			environment: record.getDisplayValue('environment').toString()
+		};
+	}
 
-    if (input) {
-        var user = input.info;
-        var aaf = new AutomationAnywhereFunctions();
-				//table = new GlideRecord('x_snc_accessprov_0_aa_request_access');
-        // APPROVE action
-        if (input.action == "approve") {
-          // Script Includes function
-					var output = aaf.CreateOrRejectUser("create",user);
-					
-					//return result to client
-					if(output.isCreated)
-						input.result = {'sts': 1, 'msg':'User has been created'}
-					else
-						input.result = {'sts': 0, 'msg':'Unable to create user. Reason: '+output.msg}
-        }
+	while (table.next()) {
+		if (table.getValue('status') === "pending") {
+			data.otherUsersInfo.push(createUserInfoObject(table));
+		}
+	}
 
-        // REJECT action
-        if (input.action == 'reject') {
-					user.rejectReason = input.rejectReason;
-					
-					// Script Includes function
-          aaf.CreateOrRejectUser("reject",user);
-					
-					//return result to client
-					input.result = {'msg':'Request Rejected '};
-        }
+	if (input) {
+		var user = input.info;
+		var apcf = new APCommonFunctions();
 
-    }
+		// APPROVE action
+		if (input.action === "approve") {
+			try {
+				var output = apcf.CreateOrRejectUser("create", user);
+				// Return result to the client
+				data.result = {
+					'sts': output.isCreated ? 1 : 0,
+					'msg': output.isCreated ? 'User has been created' : 'Error while creating user.\n<b>Reason:</b> ' + output.msg
+				};
+			} catch (e) {
+				gs.error('Error approving request:', e);
+				data.result = { 'sts': 0, 'msg': 'An error occurred while approving the request.' };
+			}
+		}
 
-})();]]></script>
+		// REJECT action
+		if (input.action === 'reject') {
+			try {
+				user.rejectReason = input.rejectReason;
+				// Script Includes function
+				apcf.CreateOrRejectUser("reject", user);
+				// Return result to the client
+				data.result = { 'msg': 'Request Rejected' };
+			} catch (e) {
+				gs.error('Error rejecting request:', e);
+				data.result = { 'msg': 'An error occurred while rejecting the request.' };
+			}
+		}
+	}
+})();
+]]></script>
         <servicenow>false</servicenow>
         <sys_class_name>sp_widget</sys_class_name>
         <sys_created_by>admin</sys_created_by>
@@ -209,10 +243,9 @@ url("./fonts/bootstrap-icons.woff?8d200481aa7f02a2d63a331fc782cfaf") format("wof
     </tbody>
   </table>
 </div>
-<div ng-if="data.otherUsersInfo.length <= 0">
-  <h2>
-    No access request found.
-  </h2>
+
+<div ng-if="data.otherUsersInfo.length <= 0" class="no-request">
+  <h3>No Request Found</h3>
 </div>
 ]]></template>
     </sp_widget>

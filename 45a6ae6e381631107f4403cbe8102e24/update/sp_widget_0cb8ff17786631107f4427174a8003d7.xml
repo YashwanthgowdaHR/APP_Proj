@@ -68,7 +68,7 @@ text-transform: uppercase;
         <option_schema/>
         <public>false</public>
         <roles>x_snc_accessprov_0.admin</roles>
-        <script><![CDATA[(function () {
+        <script><![CDATA[(function() {
 	var gr = new GlideRecord('x_snc_accessprov_0_environment');
 	var env_name = gr.getElement("name");
 	data.env = env_name.getChoices(); // Read the Choices present in the Environment:Name field
@@ -87,17 +87,17 @@ if (input) {
 				lname: gr.last_name.toString(),
 				email: gr.email.toString(),
 				uid: input.uid
-			}
+			};
 		}
 	}
 
 	if (input.action == 'createUser') {
 		if (input.fname == undefined || input.lname == undefined || input.email == undefined || input.automation_name == undefined || input.environment == undefined) {
-			gs.addErrorMessage("Please fill all the neccessary fields and submit the form.")
+			gs.addErrorMessage("Please fill all the neccessary fields and submit the form.");
 		} else {
 			var gr = new GlideRecord('x_snc_accessprov_0_aa_request_access');
-			gr.addEncodedQuery('x_m_uid=' + input.uid + "^automation_name=" + input.automation_name + "^environment=" + input.environment + "^status=pending^ORstatus=granted")
-			gr.query()
+			gr.addEncodedQuery('x_m_uid=' + input.uid + "^automation_name=" + input.automation_name + "^environment=" + input.environment + "^status=pending^ORstatus=granted");
+			gr.query();
 			if (!gr.next()) {
 				gr.initialize(); //create an empty record before inserting.
 				gr.setValue('first_name', input.fname);
@@ -107,7 +107,7 @@ if (input) {
 				gr.setValue('environment', input.environment);
 				gr.setValue('x_m_uid', input.uid);
 				var sysId = gr.insert();
-				
+
 				var user = {
 					sysId: sysId,
 					fname: input.fname,
@@ -117,19 +117,25 @@ if (input) {
 					uid: input.uid,
 					automationName: input.automation_name,
 					environment: input.environment
-				}
+				};
 				// Script Includes Class
-				var aaf = new AutomationAnywhereFunctions();
-				var output = aaf.CreateOrRejectUser("create", user);
+				var apcf = new APCommonFunctions();
+				var output = apcf.CreateOrRejectUser("create", user);
 				gs.addInfoMessage("Request is made to AutomationAnywhere.");
-				
+
 				//return result to client
 				if (output.isCreated)
-					data.result = { 'sts': 1, 'msg': 'User has been created. Notification will send to user"s mail' }
+					data.result = {
+						'sts': 1,
+						'msg': 'User has been created. Notification will send to user"s mail'
+					};
 				else
-					data.result = { 'sts': 0, 'msg': 'Unable to create user. Reason: ' + output.msg }
+					data.result = {
+						'sts': 0,
+						'msg': 'Unable to create user. Reason: ' + output.msg
+					};
 			} else {
-				gs.addErrorMessage("Request is already made.")
+				gs.addErrorMessage("Request is already made.");
 			}
 		}
 

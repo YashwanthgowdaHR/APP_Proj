@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
-        <client_script><![CDATA[api.controller = function($scope, spUtil){
+        <client_script><![CDATA[api.controller = function(spUtil){
 	var c = this;
 	
 	
@@ -40,7 +40,8 @@ function onChange(control, oldValue, newValue, isLoading) {
       case "3": elementID.style.backgroundColor = "orange"; break;
       case "4": elementID.style.backgroundColor = "yellow"; break;
       case "5": elementID.style.backgroundColor = "green"; break; 
-      default: elementID.style.backgroundColor = "white"; break; } 
+      default: elementID.style.backgroundColor = "white"; break;
+		} 
 }
 ]]></client_script>
         <controller_as>c</controller_as>
@@ -101,11 +102,10 @@ select{
 			uid: gs.getUserName()
 		};
 	}
-	
 })();
 
+
 if(input){
-	
 	if(input.action=='requestAccess'){
 		if(input.fname == undefined || input.lname == undefined || input.email == undefined || input.automation_name == undefined || input.environment == undefined){
 			gs.addErrorMessage("Please fill all the neccessary fields and submit the form.");
@@ -125,9 +125,9 @@ if(input){
 				gr.setValue('x_m_uid', input.uid);
 				gr.insert();
 				gs.addInfoMessage("Access Requested. Wait for approval.")
-				var userInfo = {'uid':input.uid,'name': input.fname+" "+input.lname,'environment':input.environment};
-				var aaf = new AutomationAnywhereFunctions();
-				aaf.InformAdminOnRequest(userInfo);
+				
+				var apcf = new APCommonFunctions();
+				apcf.InformAdminOnRequest({'uid':input.uid,'name': input.fname+" "+input.lname,'environment':input.environment});
 			}
 			else{
 				gs.addErrorMessage("Request is already made.");

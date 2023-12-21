@@ -18,52 +18,50 @@
         <link><![CDATA[function link(scope, element, attrs, controller) {
   
 }]]></link>
-        <name>Users List</name>
+        <name>Admin - Users List</name>
         <option_schema/>
         <public>false</public>
         <roles>x_snc_accessprov_0.admin</roles>
         <script><![CDATA[(function() {
-    /* populate the 'data' object */
-    /* e.g., data.table = $sp.getValue('table'); */
-    data.userInfo = [];
-    var table = new GlideRecord('x_snc_accessprov_0_aa_request_access');
-    var i = 1;
-    table.query();
+	/* populate the 'data' object */
+	/* e.g., data.table = $sp.getValue('table'); */
+	data.userInfo = [];
+	var table = new GlideRecord('x_snc_accessprov_0_aa_request_access');
+	var apcf = new APCommonFunctions();
+	var i = 1;
 
-    var aaf = new AutomationAnywhereFunctions();
+	table.query();
+	while (table.next()) {
+		var userDetails = apcf.GetUserByID(table.getValue("id"))
 
+		var roleDetails = "";
+		if (userDetails) {
+			for (var index in userDetails.roles) {
+				var role = userDetails.roles[index];
+				roleDetails += role.name + ";";
+			}
 
-    while (table.next()) {
-        var userDetails = aaf.GetUserByID(table.getValue("id"))
-
-        var roleDetails = "";
-        if (userDetails) {
-            for (var index in userDetails.roles) {
-                var role = userDetails.roles[index];
-                roleDetails += role.name + ";";
-            }
-
-            //gs.info("Roles: "+roleDetails)
-            data.userInfo.push({
-                no: i++,
-                name: table.getValue('first_name').toString() + " " + table.getValue('last_name').toString(),
-                mailId: table.getValue('email_id').toString(),
-                uid: table.getValue('x_m_uid').toString(),
-                automationName: table.getValue('automation_name').toString(),
-                environment: table.getDisplayValue('environment').toString(),
-                status: table.getDisplayValue('status').toString(),
-                id: table.getValue("id"),
-                role: roleDetails
-            });
-        }
-    }
+			//gs.info("Roles: "+roleDetails)
+			data.userInfo.push({
+				no: i++,
+				name: table.getValue('first_name').toString() + " " + table.getValue('last_name').toString(),
+				mailId: table.getValue('email_id').toString(),
+				uid: table.getValue('x_m_uid').toString(),
+				automationName: table.getValue('automation_name').toString(),
+				environment: table.getDisplayValue('environment').toString(),
+				status: table.getDisplayValue('status').toString(),
+				id: table.getValue("id"),
+				role: roleDetails
+			});
+		}
+	}
 })();]]></script>
         <servicenow>false</servicenow>
         <sys_class_name>sp_widget</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-12-05 10:45:46</sys_created_on>
         <sys_id>6f57e223343631107f44f748c83411d2</sys_id>
-        <sys_name>Users List</sys_name>
+        <sys_name>Admin - Users List</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>

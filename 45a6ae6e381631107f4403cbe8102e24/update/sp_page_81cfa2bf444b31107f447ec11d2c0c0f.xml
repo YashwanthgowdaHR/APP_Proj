@@ -20,7 +20,7 @@
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sp_page_81cfa2bf444b31107f447ec11d2c0c0f</sys_update_name>
-        <title>TSP Admin Approve Requests</title>
+        <title>Admin - Approve Requests</title>
         <use_seo_script>false</use_seo_script>
     </sp_page>
     <sys_translated_text action="delete_multiple" query="documentkey=81cfa2bf444b31107f447ec11d2c0c0f"/>

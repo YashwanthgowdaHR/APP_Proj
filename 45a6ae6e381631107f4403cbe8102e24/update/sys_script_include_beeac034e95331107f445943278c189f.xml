@@ -2,20 +2,22 @@
     <sys_script_include action="INSERT_OR_UPDATE">
         <access>package_private</access>
         <active>true</active>
-        <api_name>x_snc_accessprov_0.AutomationAnywhereFunctions</api_name>
+        <api_name>x_snc_accessprov_0.APCommonFunctions</api_name>
         <caller_access/>
         <client_callable>false</client_callable>
-        <description>Provide functions to interact with AA to create the user, to fetch the user's id etc.</description>
-        <name>AutomationAnywhereFunctions</name>
-        <script><![CDATA[var AutomationAnywhereFunctions = Class.create();
-AutomationAnywhereFunctions.prototype = {
+        <description>Provide functions to interact with AA.</description>
+        <name>APCommonFunctions</name>
+        <script><![CDATA[var APCommonFunctions = Class.create();
+APCommonFunctions.prototype = {
     initialize: function() {},
-    type: 'AutomationAnywhereFunctions',
+    type: 'APCommonFunctions',
     restSrc: 'x_snc_accessprov_0.AA Authentication',
     defaultPass: "abc@123123",
     defaultRole: '224',
-    accessRequestTable: new GlideRecord('x_snc_accessprov_0_aa_request_access'),
-    grpMemTable: new GlideRecord('sys_user_grmember'),
+    reqAccessT: new GlideRecord('x_snc_accessprov_0_aa_request_access'),
+    grpMemT: new GlideRecord('sys_user_grmember'),
+    event1: 'x_snc_accessprov_0.send_mail_to_user',
+    event2: 'x_snc_accessprov_0.inform_admin',
 
     CreateOrRejectUser: function(createOrReject, user) {
         var sts = "pending";
@@ -36,7 +38,7 @@ AutomationAnywhereFunctions.prototype = {
         };
 
         gs.info("SctiptInclude: Calling UserCreationOrRejection Event...");
-        gs.eventQueue(name = 'x_snc_accessprov_0.send_mail_to_user', record = this.requestTable, parm1 = user.email, parm2 = JSON.stringify(details));
+        gs.eventQueue(name = this.event1, record = this.reqAccessT, parm1 = user.email, parm2 = JSON.stringify(details));
         gs.info("SctiptInclude: Event Created");
         if (result)
             return result;
@@ -89,17 +91,17 @@ AutomationAnywhereFunctions.prototype = {
     },
 
     FetchUsersOfGroup: function(sysId) {
-        this.members.addQuery('group', sysId);
-        this.members.query();
+        this.grpMemT.addQuery('group', sysId);
+        this.grpMemT.query();
         var users = [];
-        while (this.members.next()) {
-            users.push(this.members.user.email.toString());
+        while (this.grpMemT.next()) {
+            users.push(this.grpMemT.user.email.toString());
         }
         return users;
     },
 
     GetToken: function() {
-        var r = new sn_ws.RESTMessageV2('x_snc_accessprov_0.AA Authentication', 'Default Post');
+        var r = new sn_ws.RESTMessageV2(this.restSrc, 'Default Post');
         r.setStringParameterNoEscape('api_key', 'ii5_V`~@t<3oE|0h1XIQqIUc{|yWotEoK3Oryz^n');
         r.setStringParameterNoEscape('username', 'X253816');
         var response = r.execute();
@@ -142,7 +144,7 @@ AutomationAnywhereFunctions.prototype = {
             'adminMailList': adminMailList
         };
 
-        gs.eventQueue(name = 'x_snc_accessprov_0.inform_admin', record = this.members, parm1 = "yashwanthgowda.hr@external.merckgroup.com", parm2 = JSON.stringify(details));
+        gs.eventQueue(name = this.event2, record = this.grpMemT, parm1 = "yashwanthgowda.hr@external.merckgroup.com", parm2 = JSON.stringify(details));
         gs.info("SctiptInclude: Event Created");
     },
 
@@ -188,33 +190,33 @@ AutomationAnywhereFunctions.prototype = {
 
     RejectUser: function(userInfo) {
         gs.info("Rejecting request");
-        this.requestTable.addQuery('sys_id', userInfo.sysId);
-        this.requestTable.query();
-        if (this.requestTable.next()) {
-            this.requestTable.setValue('status', 'rejected');
-            this.requestTable.update('updated status of record: ' + userInfo.sysId + ' to REJECTED');
+        this.reqAccessT.addQuery('sys_id', userInfo.sysId);
+        this.reqAccessT.query();
+        if (this.reqAccessT.next()) {
+            this.reqAccessT.setValue('status', 'rejected');
+            this.reqAccessT.update('updated status of record: ' + userInfo.sysId + ' to REJECTED');
         }
     },
 
     UpdateRequestTable: function(userInfo, newId, status) {
-        this.requestTable.addQuery('sys_id', userInfo.sysId);
-        this.requestTable.query();
-        if (this.requestTable.next()) {
-            this.requestTable.setValue('id', newId);
-            this.requestTable.setValue('status', status);
-            this.requestTable.update('updated ID of record: ' + userInfo.sysId);
+        this.reqAccessT.addQuery('sys_id', userInfo.sysId);
+        this.reqAccessT.query();
+        if (this.reqAccessT.next()) {
+            this.reqAccessT.setValue('id', newId);
+            this.reqAccessT.setValue('status', status);
+            this.reqAccessT.update('updated ID of record: ' + userInfo.sysId);
         }
     },
 
 };]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2023-12-05 11:15:29</sys_created_on>
-        <sys_id>6713f6eb343631107f44f748c83411df</sys_id>
-        <sys_name>AutomationAnywhereFunctions</sys_name>
+        <sys_created_on>2023-12-21 06:28:28</sys_created_on>
+        <sys_id>beeac034e95331107f445943278c189f</sys_id>
+        <sys_name>APCommonFunctions</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
-        <sys_update_name>sys_script_include_6713f6eb343631107f44f748c83411df</sys_update_name>
+        <sys_update_name>sys_script_include_beeac034e95331107f445943278c189f</sys_update_name>
     </sys_script_include>
 </record_update>

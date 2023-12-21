@@ -23,10 +23,10 @@
 
     gs.info(scriptName+"Fetched the required info from event");
     sub = 'AutomationAnywhere Access Request Notification';
-	content = "A request is raised for the Automation Anywhere access."+br+"<b>Requester Details:<b>"+br;
-	content += "<b>XUID / MUID:<b> "+userInfo.uid+br;
-	content += "<b>Name:<b> "+userInfo.name+br;
-	content += "<b>Environment:<b> "+userInfo.environment+br;
+	content = "A request is raised for Automation Anywhere access."+br+br+"<b>Requester Details:</b>"+br;
+	content += "<b>XUID / MUID:</b> "+userInfo.uid+br;
+	content += "<b>Name:</b> "+userInfo.name+br;
+	content += "<b>Environment:</b> "+userInfo.environment+br;
     body = header + content + footer;
     email.setSubject(sub);
     email.setBody(body);
