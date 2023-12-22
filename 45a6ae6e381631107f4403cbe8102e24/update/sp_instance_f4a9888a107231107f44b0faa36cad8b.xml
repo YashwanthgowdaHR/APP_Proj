@@ -11,7 +11,7 @@
         <short_description/>
         <size>md</size>
         <sp_column display_value="1">2a99408a107231107f44b0faa36cad9c</sp_column>
-        <sp_widget display_value="User Request Access">ffff629f782231107f4427174a80032a</sp_widget>
+        <sp_widget display_value="User - Request Access">ffff629f782231107f4427174a80032a</sp_widget>
         <sys_class_name>sp_instance</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-11-30 06:59:57</sys_created_on>

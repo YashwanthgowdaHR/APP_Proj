@@ -18,7 +18,7 @@
         <sc_cat_item/>
         <sc_category/>
         <short_description/>
-        <sp_page display_value="tsp_user_access_history">fadbdad2b07631107f4401c7b3c75aa0</sp_page>
+        <sp_page display_value="tsp_user_page_access_history">fadbdad2b07631107f4401c7b3c75aa0</sp_page>
         <sp_rectangle_menu/>
         <sp_rectangle_menu_item display_value="User Access">4961badab0b631107f4401c7b3c75aaa</sp_rectangle_menu_item>
         <sys_class_name>sp_rectangle_menu_item</sys_class_name>

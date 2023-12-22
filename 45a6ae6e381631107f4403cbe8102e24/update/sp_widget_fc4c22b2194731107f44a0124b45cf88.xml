@@ -3,44 +3,38 @@
         <category>custom</category>
         <client_script><![CDATA[api.controller = function (spUtil, spModal) {
 	/* widget controller */
-	const c = this;
+	var c = this;
+
+	// delete object property if exists
+	function deleteProp(obj, key) {
+		if(obj.hasOwnProperty(key)) { 
+			delete obj[key];
+		}
+		return obj;
+	}
 
 	// Reset data properties
 	function resetData() {
-		if(c.data.action)
-			delete c.data.action;
-
-		if(c.data.info)
-			delete c.data.info;
-
-		if (c.data.rejectReason)
-			delete c.data.rejectReason;
+		deleteProp("action");
+		deleteProp("info");
+		deleteProp("rejectReason");
 	}
 
 	c.getData = function () {
 		c.data.uid = c.data.user_info.uid;
 		c.data.action = "getData";
-		c.server.update().then(function () {
-			resetData();
-		}).catch(handleError);
+		c.server.update().then(resetData).catch(handleError);
 	};
 
 	function handleUpdateResponse(res) {
 		resetData();
-		const { sts, msg } = res.result;
-		if (sts === 1) {
-			c.server.refresh();
-			spUtil.addInfoMessage(msg);
-		} else {
-			alert(msg);
-		}
+		c.server.refresh();
 	}
 
 	function handleError(error) {
-		console.log("Error Info: ", error);
 		// Handle or log the error as needed
-		resetData();
 		console.error('An error occurred:', error);
+		resetData();
 	}
 
 	c.approve = function (user) {
@@ -55,8 +49,6 @@
 	};
 
 	c.reject = function (user) {
-		console.log(c)
-
 		spModal.open({
 			title: 'Reason for rejecting',
 			message: 'Please <b>provide the comments</b> for rejecting the request.',
@@ -70,11 +62,7 @@
 			c.data.rejectReason = reason;
 			c.data.info = user;
 			c.data.action = 'reject';
-			c.server.update().then(function (res) {
-				spUtil.addInfoMessage(res.result.msg);
-				resetData();
-				c.server.refresh();
-			}).catch(handleError)
+			c.server.update().then(handleUpdateResponse).catch(handleError)
 		}, function () { }).catch(handleError);
 	};
 };
@@ -131,24 +119,24 @@
         <docs/>
         <field_list/>
         <has_preview>true</has_preview>
-        <id>tsp_admin_approve_access_requests</id>
+        <id>tsp_admin_approve_usr_reqs</id>
         <internal>false</internal>
         <link><![CDATA[function link(scope, element, attrs, controller) {
   
 }]]></link>
-        <name>Admin Approve Request</name>
+        <name>Admin - Approve Request</name>
         <option_schema/>
         <public>false</public>
         <roles>x_snc_accessprov_0.admin</roles>
         <script><![CDATA[(function () {
 	/* populate the 'data' object */
 	data.otherUsersInfo = []; // list stores the user information who request's status is pending
-	var table = new GlideRecord('x_snc_accessprov_0_aa_request_access');
-	table.query();
+	var reqGR = new GlideRecord('x_snc_accessprov_0_aa_request_access');
+	reqGR.query();
 
 	var i = 1;
 
-	function createUserInfoObject(record) {
+	function createUsrObj(record) {
 		return {
 			no: i++,
 			sysId: record.getUniqueValue(),
@@ -162,9 +150,9 @@
 		};
 	}
 
-	while (table.next()) {
-		if (table.getValue('status') === "pending") {
-			data.otherUsersInfo.push(createUserInfoObject(table));
+	while (reqGR.next()) {
+		if (reqGR.getValue('status') === "pending") {
+			data.otherUsersInfo.push(createUsrObj(reqGR));
 		}
 	}
 
@@ -175,15 +163,14 @@
 		// APPROVE action
 		if (input.action === "approve") {
 			try {
-				var output = apcf.CreateOrRejectUser("create", user);
-				// Return result to the client
-				data.result = {
-					'sts': output.isCreated ? 1 : 0,
-					'msg': output.isCreated ? 'User has been created' : 'Error while creating user.\n<b>Reason:</b> ' + output.msg
-				};
+				var output = apcf.createOrRejectUser("create", user);
+				if (output.isCreated)
+					gs.addInfoMessage("User has been created");
+				else
+					gs.addErrorMessage('Error while creating user.\n<b>Reason:</b> ' + output.msg);
 			} catch (e) {
 				gs.error('Error approving request:', e);
-				data.result = { 'sts': 0, 'msg': 'An error occurred while approving the request.' };
+				gs.addErrorMessage('An error occurred while approving the request.');
 			}
 		}
 
@@ -192,12 +179,11 @@
 			try {
 				user.rejectReason = input.rejectReason;
 				// Script Includes function
-				apcf.CreateOrRejectUser("reject", user);
-				// Return result to the client
-				data.result = { 'msg': 'Request Rejected' };
+				apcf.createOrRejectUser("reject", user);
+				gs.addInfoMessage("User has been rejected");
 			} catch (e) {
 				gs.error('Error rejecting request:', e);
-				data.result = { 'msg': 'An error occurred while rejecting the request.' };
+				gs.addErrorMessage('An error occurred while rejecting the request.');
 			}
 		}
 	}
@@ -208,13 +194,13 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-12-15 13:00:49</sys_created_on>
         <sys_id>fc4c22b2194731107f44a0124b45cf88</sys_id>
-        <sys_name>Admin Approve Request</sys_name>
+        <sys_name>Admin - Approve Request</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sp_widget_fc4c22b2194731107f44a0124b45cf88</sys_update_name>
         <template><![CDATA[<div ng-if="data.otherUsersInfo.length > 0" class="table-responsive-sm">
-  <h2>Find the others access details here.</h2>
+  <h2 class="text-center">Rquests Details:-</h2><br>
   <table class="table table-hover table-bordered">
     <thead>
       <tr>

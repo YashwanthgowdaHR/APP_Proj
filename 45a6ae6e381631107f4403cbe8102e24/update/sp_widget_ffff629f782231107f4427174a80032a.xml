@@ -3,47 +3,42 @@
         <category>custom</category>
         <client_script><![CDATA[api.controller = function(spUtil){
 	var c = this;
-	//$scope.snTableName = c.data.snTableName;
-	
-	c.data.referenceFieldValue = 'value2'
-    c.data.referenceFieldOptions= [
-        { label: 'Option 1', value: 'value1' },
-        { label: 'Option 2', value: 'value2' },
-        // Add more options as needed
-    ];
-	
-	console.log('Options:', c.data.referenceFieldOptions);
-console.log('Selected Value:', c.data.referenceFieldValue);
-		
+
+	function deleteProp(obj, key) {
+		if(obj.hasOwnProperty(key)) { 
+			delete obj[key];
+		}
+		return obj;
+	}
+
 	function handleUpdateResponse(res) {
-		c.data.automation_name = "";
-		c.data.environment = c.data.env[0];
-		delete c.data.action
+		deleteProp(c.data, "action");
+		deleteProp(c.data, "fname");
+		deleteProp(c.data, "lname");
+		deleteProp(c.data, "uid");
+		deleteProp(c.data, "automation");
+		deleteProp(c.data, "email");
+		deleteProp(c.data, "environment");
 	}
 
 	function handleError(error) {
 		console.error('An error occurred:', error);
-		// Handle or log the error as needed
+		deleteProp(c.data, "action");
 	}
-	
-	c.requestAccess = function(){
-		console.log(c);
-		//console.log($scope);
-		c.data.fname = data.user_info.fname;
-		c.data.lname = data.user_info.lname;
-		c.data.email = data.user_info.email;
-		c.data.uid = data.user_info.uid;
-		c.data.automation_name = data.automation_name;
-		c.data.environment = data.environment;
-		
-		delete data.env;
-		delete data.user_info;
-		
-		c.data.action = 'requestAccess';
-		//c.server.update().then(handleUpdateResponse).catch(handleError)};
-	
-}
 
+	c.requestAccess = function(){
+		c.data.fname = c.data.user_info.fname;
+		c.data.lname = c.data.user_info.lname;
+		c.data.email = c.data.user_info.email;
+		c.data.uid = c.data.user_info.uid;
+		c.data.automation = c.data.temp_auto_name.value;
+		c.data.environment = c.data.temp_env;
+		c.data.action = 'requestAccess';
+		c.server.update().then(handleUpdateResponse).catch(handleError);
+	}
+
+
+	/*
 function onChange(control, oldValue, newValue, isLoading) { 
   var elementID = gel('txt_automation_name');
     switch(newValue) { 
@@ -55,6 +50,7 @@ function onChange(control, oldValue, newValue, isLoading) {
       default: elementID.style.backgroundColor = "white"; break;
 		} 
 }
+*/
 }
 ]]></client_script>
         <controller_as>c</controller_as>
@@ -90,12 +86,12 @@ select{
         <docs/>
         <field_list/>
         <has_preview>true</has_preview>
-        <id>tsp_user_request_access</id>
+        <id>tsp_usr_req_access</id>
         <internal>false</internal>
         <link><![CDATA[function link(scope, element, attrs, controller) {
   
 }]]></link>
-        <name>User Request Access</name>
+        <name>User - Request Access</name>
         <option_schema/>
         <public>false</public>
         <roles>x_snc_accessprov_0.user</roles>
@@ -103,18 +99,10 @@ select{
 	var gr = new GlideRecord('x_snc_accessprov_0_environment');
 	var env_name = gr.getElement("name");
 	data.env = env_name.getChoices(); // Read the Choices present in the Environment:Name field
-
 	
-	gr = new GlideRecord('x_snc_accessprov_0_automationlist');
-	gr.query();
 	data.snTableName = 'x_snc_accessprov_0_automationlist';
-	data.automationFieldOptions = [];
-	while(gr.next()){
-		var cur = gr.getValue('name').toString();
-		data.automationFieldOptions.push({'displayValue': cur.toUpperCase(),'value': cur,'name':cur.toUpperCase()});
-	}
 	
-	// Fetch User Details
+	// Fetch User Details to auto-fill the fields
 	gr = new GlideRecord('sys_user');
 	gr.addEncodedQuery('user_name='+gs.getUserName());
 	gr.query();
@@ -131,27 +119,29 @@ select{
 
 if(input){
 	if(input.action=='requestAccess'){
-		if(input.fname == undefined || input.lname == undefined || input.email == undefined || input.automation_name == undefined || input.environment == undefined){
+		// validate if any of the required field is undefined
+		if(input.fname == undefined || input.lname == undefined || input.email == undefined || input.automation == undefined || input.environment == undefined){
 			gs.addErrorMessage("Please fill all the neccessary fields and submit the form.");
 		}
 		else{
 			var gr = new GlideRecord('x_snc_accessprov_0_aa_request_access');
-			gr.addEncodedQuery('x_m_uid='+input.uid+"^automation_name="+input.automation_name+"^environment="+input.environment+"^status=pending^ORstatus=granted");
+			gr.addEncodedQuery('x_m_uid='+input.uid+"^automation_name="+input.automation+"^environment="+input.environment+"^status=pending^ORstatus=granted");
 			gr.query();
 			
-			if(!gr.next()){					
+			if(!gr.next()){		
 				gr.initialize(); //create an empty record before inserting.
 				gr.setValue('first_name', input.fname);
 				gr.setValue('last_name', input.lname);
 				gr.setValue('email_id', input.email);
-				gr.setValue('automation_name', input.automation_name);
+				gr.setValue('automation_name', input.automation);
 				gr.setValue('environment', input.environment);
 				gr.setValue('x_m_uid', input.uid);
 				gr.insert();
+		
 				gs.addInfoMessage("Access Requested. Wait for approval.")
 				
 				var apcf = new APCommonFunctions();
-				apcf.InformAdminOnRequest({'uid':input.uid,'name': input.fname+" "+input.lname,'environment':input.environment});
+				apcf.informAdminOnUsrReq({'uid':input.uid,'name': input.fname+" "+input.lname,'environment':input.environment});
 			}
 			else{
 				gs.addErrorMessage("Request is already made.");
@@ -166,7 +156,7 @@ if(input){
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-11-22 06:04:04</sys_created_on>
         <sys_id>ffff629f782231107f4427174a80032a</sys_id>
-        <sys_name>User Request Access</sys_name>
+        <sys_name>User - Request Access</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
@@ -177,11 +167,10 @@ if(input){
 
       <!-- Form Name -->
       <legend class="text-center">
-        <h3>Access request form</h3>
+        <h3>Raise Request</h3>
       </legend>
 
-
-      <!-- Text input-->
+      <!-- MUID/XUID -->
       <div class="form-group">
         <label class="col-md-4 control-label" for="txt_uid">MUID / XUID</label>
         <div class="col-md-6">
@@ -189,7 +178,7 @@ if(input){
         </div>
       </div>
 
-      <!-- Text input-->
+      <!-- First Name -->
       <div class="form-group">
         <label class="col-md-4 control-label" for="txt_first_name">First Name</label>
         <div class="col-md-6">
@@ -197,7 +186,7 @@ if(input){
         </div>
       </div>
 
-      <!-- Text input-->
+      <!-- Last Name -->
       <div class="form-group">
         <label class="col-md-4 control-label" for="txt_last_name">Last Name</label>
         <div class="col-md-6">
@@ -205,45 +194,37 @@ if(input){
         </div>
       </div>
 
-      <!-- Text input-->
+      <!-- Email ID -->
       <div class="form-group">
         <label class="col-md-4 control-label" for="txt_email">Email Id</label>
         <div class="col-md-6">
           <input id="txt_email" ng-model="data.user_info.email" type="email" class="form-control input-md" disabled>
         </div>
       </div>
-      
-    <div>
-    <label for="referenceField">Select a Record:</label>
-		<ap-Reference-Getter table="data.snTableName" field="data.new_automation_name" display-field="'name'" value-field="'name'" search-fields="'name'" page-size="10" custom-Style="{'text-transform':'None'}"></ap-Reference-Getter>
-</div>
 
-
-
-
-
+      <!-- Automation -->
       <div class="form-group">
-        <label class="col-md-4 control-label" for="txt_automation_name">Automation</label>
+        <label class="col-md-4 control-label" for="txt_automation">Automation</label>
         <div class="col-md-6">
-          <input id="txt_automation_name" ng-model="data.automation_name" type="text" class="form-control input-md" required>
-        </div>
+        <sn-record-picker table="data.snTableName" field="data.temp_auto_name" display-field="'name'" value-field="'name'" search-fields="'name'" page-size="10"></sn-record-picker>
+      </div>
       </div>
 
+      <!-- Environment -->
       <div class="form-group">
         <label class="col-md-4 control-label" for="txt_env">Environment</label>
         <div class="col-md-6">
-          <select id="txt_env" class="form-control input-md" ng-model="data.environment"
-            ng-init="data.environment = data.env[0]" ng-options="option for option in data.env">
+          <select id="txt_env" class="form-control input-md" ng-model="data.temp_env"
+            ng-init="data.temp_env = data.env[0]" ng-options="option for option in data.env">
           </select>
         </div>
       </div>
-     
 
-
-      <!-- Button -->
+      <!-- Submit Button -->
       <div class="form-group">
         <div class="col-md-6">
-          <button id="btn_submit" name="btn_submit" class="btn btn-primary" ng-click="c.requestAccess()" type="submit">Submit</button>
+          <button id="btn_submit" name="btn_submit" class="btn btn-primary" ng-click="c.requestAccess()"
+            type="submit">Submit</button>
         </div>
       </div>
 

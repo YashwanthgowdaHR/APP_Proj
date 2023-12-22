@@ -18,7 +18,7 @@
         <sc_cat_item/>
         <sc_category/>
         <short_description/>
-        <sp_page display_value="tsp_admin_approve_requests">81cfa2bf444b31107f447ec11d2c0c0f</sp_page>
+        <sp_page display_value="tsp_admin_page_approve_reqs">81cfa2bf444b31107f447ec11d2c0c0f</sp_page>
         <sp_rectangle_menu/>
         <sp_rectangle_menu_item display_value="Access">23f8040a107231107f44b0faa36cad3a</sp_rectangle_menu_item>
         <sys_class_name>sp_rectangle_menu_item</sys_class_name>

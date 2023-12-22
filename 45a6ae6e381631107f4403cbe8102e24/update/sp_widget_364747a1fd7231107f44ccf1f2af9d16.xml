@@ -15,7 +15,7 @@
         <docs/>
         <field_list/>
         <has_preview>true</has_preview>
-        <id>tsp_admin_request_history</id>
+        <id>tsp_admin_usrs_req_history</id>
         <internal>false</internal>
         <link><![CDATA[function link(scope, element, attrs, controller) {
   
@@ -30,20 +30,23 @@
 	var table = new GlideRecord('x_snc_accessprov_0_aa_request_access');
 	var i = 1;
 	table.query()
-	
+
 	while (table.next()) {
 		//gs.addInfoMessage(gr.getValue('automation_name'))
-		data.otherUsersInfo.push({
-			no:i++,
-			name: table.getValue('first_name').toString()+" " + table.getValue('last_name').toString(),
-			mailId: table.getValue('email_id').toString(),
-			uid: table.getValue('x_m_uid').toString(),
-			automationName: table.getValue('automation_name').toString(),
-			environment: table.getDisplayValue('environment').toString(),
-			status: table.getDisplayValue('status').toString()
-		});		
+		if(table.getValue('status')!="pending"){
+			data.otherUsersInfo.push({
+				no:i++,
+				name: table.getValue('first_name').toString()+" " + table.getValue('last_name').toString(),
+				mailId: table.getValue('email_id').toString(),
+				uid: table.getValue('x_m_uid').toString(),
+				automationName: table.getValue('automation_name').toString(),
+				environment: table.getDisplayValue('environment').toString(),
+				status: table.getDisplayValue('status').toString()
+			});	
+		}
+
 	}
-		
+
 })();]]></script>
         <servicenow>false</servicenow>
         <sys_class_name>sp_widget</sys_class_name>
@@ -56,7 +59,7 @@
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sp_widget_364747a1fd7231107f44ccf1f2af9d16</sys_update_name>
         <template><![CDATA[<div ng-if="data.otherUsersInfo.length > 0" class="table-responsive-sm">
-  <h2>Find the others access details here.</h2>
+  <h2>Find the requests details here.</h2>
   <table class="table table-hover table-bordered">
     <thead>
       <tr>

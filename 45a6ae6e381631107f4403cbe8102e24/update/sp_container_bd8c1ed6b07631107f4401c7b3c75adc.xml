@@ -8,7 +8,7 @@
         <container_class_name/>
         <name>User - Request History - Container 1</name>
         <order>1</order>
-        <sp_page display_value="tsp_user_access_history">fadbdad2b07631107f4401c7b3c75aa0</sp_page>
+        <sp_page display_value="tsp_user_page_access_history">fadbdad2b07631107f4401c7b3c75aa0</sp_page>
         <subheader>false</subheader>
         <sys_class_name>sp_container</sys_class_name>
         <sys_created_by>admin</sys_created_by>

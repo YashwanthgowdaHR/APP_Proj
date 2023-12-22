@@ -13,7 +13,7 @@
         <docs/>
         <field_list/>
         <has_preview>true</has_preview>
-        <id>tsp_admin_list_users</id>
+        <id>tsp_admin_usrs_list</id>
         <internal>false</internal>
         <link><![CDATA[function link(scope, element, attrs, controller) {
   
@@ -32,7 +32,7 @@
 
 	table.query();
 	while (table.next()) {
-		var userDetails = apcf.GetUserByID(table.getValue("id"))
+		var userDetails = apcf.getUserByID(table.getValue("id"))
 
 		var roleDetails = "";
 		if (userDetails) {
@@ -66,7 +66,7 @@
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sp_widget_6f57e223343631107f44f748c83411d2</sys_update_name>
-        <template><![CDATA[<div class="table-responsive-sm">
+        <template><![CDATA[<div class="table-responsive-sm" ng-if="data.userInfo.length > 0">
   <h2>User Details</h2>
   <table class="table table-hover table-bordered">
     <thead>
@@ -97,9 +97,9 @@
     </tbody>
   </table>
 </div>
-<div ng-if="data.otherUsersInfo.length <= 0">
+<div ng-if="data.userInfo.length <= 0">
   <h2>
-    No access request found.
+    No records found.
   </h2>
 </div>
 ]]></template>

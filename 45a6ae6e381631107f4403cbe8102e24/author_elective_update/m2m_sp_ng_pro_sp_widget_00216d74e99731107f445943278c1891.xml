@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="m2m_sp_ng_pro_sp_widget">
+    <m2m_sp_ng_pro_sp_widget action="DELETE">
+        <sp_angular_provider display_value="apReferenceGetter">51f815bce95731107f445943278c18fd</sp_angular_provider>
+        <sp_widget display_value="User Request Access">ffff629f782231107f4427174a80032a</sp_widget>
+        <sys_class_name>m2m_sp_ng_pro_sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-12-21 12:40:23</sys_created_on>
+        <sys_id>00216d74e99731107f445943278c1891</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>apReferenceGetter.User Request Access</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>m2m_sp_ng_pro_sp_widget_00216d74e99731107f445943278c1891</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-12-21 12:40:23</sys_updated_on>
+    </m2m_sp_ng_pro_sp_widget>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</application>
+        <file_path/>
+        <instance_id>482552a2c3473110e1c44dadc0013169</instance_id>
+        <instance_name>nowlearning-nlinst01319311-0001</instance_name>
+        <name>m2m_sp_ng_pro_sp_widget_00216d74e99731107f445943278c1891</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="m2m_sp_ng_pro_sp_widget"><m2m_sp_ng_pro_sp_widget action="INSERT_OR_UPDATE"><sp_angular_provider display_value="apReferenceGetter">51f815bce95731107f445943278c18fd</sp_angular_provider><sp_widget display_value="User Request Access">ffff629f782231107f4427174a80032a</sp_widget><sys_class_name>m2m_sp_ng_pro_sp_widget</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2023-12-21 12:40:23</sys_created_on><sys_id>00216d74e99731107f445943278c1891</sys_id><sys_mod_count>0</sys_mod_count><sys_name>apReferenceGetter.User Request Access</sys_name><sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package><sys_policy/><sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope><sys_update_name>m2m_sp_ng_pro_sp_widget_00216d74e99731107f445943278c1891</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2023-12-21 12:40:23</sys_updated_on></m2m_sp_ng_pro_sp_widget></record_update>]]></payload>
+        <payload_hash>498256529</payload_hash>
+        <record_name>apReferenceGetter.User Request Access</record_name>
+        <reverted_from/>
+        <source>36521df2190331107f44a0124b45cf63</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-12-21 12:40:23</sys_created_on>
+        <sys_id>08216d74e99731107f445943278c1893</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>18c8c64273d0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-12-21 12:40:23</sys_updated_on>
+        <type>Angular Providers</type>
+        <update_guid>40216d745e973110e05d2c98211b4f93</update_guid>
+        <update_guid_history>40216d745e973110e05d2c98211b4f93:498256529</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="apReferenceGetter.User Request Access">ee87e9cdd05331107f449dee9ab9f347</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-12-22 07:46:54</sys_created_on>
+        <sys_db_object display_value="" name="m2m_sp_ng_pro_sp_widget">m2m_sp_ng_pro_sp_widget</sys_db_object>
+        <sys_id>1e1f26bab9fd496093e81f8155564900</sys_id>
+        <sys_metadata>00216d74e99731107f445943278c1891</sys_metadata>
+        <sys_name>apReferenceGetter.User Request Access</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_scope_delete display_value="">048d5f0e899f424a8270d790e19b3744</sys_scope_delete>
+        <sys_update_name>m2m_sp_ng_pro_sp_widget_00216d74e99731107f445943278c1891</sys_update_name>
+        <sys_update_version display_value="m2m_sp_ng_pro_sp_widget_00216d74e99731107f445943278c1891">08216d74e99731107f445943278c1893</sys_update_version>
+    </sys_metadata_delete>
+</record_update>

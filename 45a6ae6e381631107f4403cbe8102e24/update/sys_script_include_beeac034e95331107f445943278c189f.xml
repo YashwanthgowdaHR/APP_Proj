@@ -14,21 +14,21 @@ APCommonFunctions.prototype = {
     restSrc: 'x_snc_accessprov_0.AA Authentication',
     defaultPass: "abc@123123",
     defaultRole: '224',
-    reqAccessT: new GlideRecord('x_snc_accessprov_0_aa_request_access'),
-    grpMemT: new GlideRecord('sys_user_grmember'),
+    reqAccessGR: new GlideRecord('x_snc_accessprov_0_aa_request_access'),
+    grpMemGR: new GlideRecord('sys_user_grmember'),
     event1: 'x_snc_accessprov_0.send_mail_to_user',
     event2: 'x_snc_accessprov_0.inform_admin',
 
-    CreateOrRejectUser: function(createOrReject, user) {
+    createOrRejectUser: function(createOrReject, user) {
         var sts = "pending";
         if (createOrReject == "create") {
-            var result = this.CreateUser(user);
+            var result = this.createUser(user);
             if (result.isCreated)
                 sts = "granted";
         }
         if (createOrReject == "reject") {
             sts = "rejected";
-            this.RejectUser(user);
+            this.rejectUser(user);
         }
         var details = {
             'sts': sts,
@@ -38,19 +38,19 @@ APCommonFunctions.prototype = {
         };
 
         gs.info("SctiptInclude: Calling UserCreationOrRejection Event...");
-        gs.eventQueue(name = this.event1, record = this.reqAccessT, parm1 = user.email, parm2 = JSON.stringify(details));
+        gs.eventQueue(name = this.event1, record = this.reqAccessGR, parm1 = user.email, parm2 = JSON.stringify(details));
         gs.info("SctiptInclude: Event Created");
         if (result)
             return result;
     },
 
-    CreateUser: function(userInfo) {
-        var logName = "SCRIPT- CreateUser: ";
+    createUser: function(userInfo) {
+        var logName = "SCRIPT- createUser: ";
         var result = {};
 
         try {
             // Get Access Token
-            var tkn = this.GetToken();
+            var tkn = this.getToken();
 
             //Initialize the required REST Message
             var req = new sn_ws.RESTMessageV2(this.restSrc, 'Create User');
@@ -73,7 +73,7 @@ APCommonFunctions.prototype = {
                 // User Created Successfully
                 result.isCreated = true;
                 gs.info(logName + "User Creation | SUCCESS | New ID is " + parsed.id);
-                this.UpdateRequestTable(userInfo, parsed.id, "granted");
+                this.updateRequestTable(userInfo, parsed.id, "granted");
 
             } else {
                 //Failed to create user through api
@@ -90,17 +90,27 @@ APCommonFunctions.prototype = {
         return result;
     },
 
-    FetchUsersOfGroup: function(sysId) {
-        this.grpMemT.addQuery('group', sysId);
-        this.grpMemT.query();
+    getGrpMembers: function(sysId) {
+        this.grpMemGR.addQuery('group', sysId);
+        this.grpMemGR.query();
         var users = [];
-        while (this.grpMemT.next()) {
-            users.push(this.grpMemT.user.email.toString());
+
+        while (this.grpMemGR.next()) {
+            gs.info("ScriptInclude- While loop...");
+            gs.info("Fetching Name...");
+            var name = this.grpMemGR.user.fname.toString() + " " + this.grpMemGR.user.lname.toString();
+            gs.info("Fetching Email...");
+            var emailId = this.grpMemGR.user.email.toString();
+            gs.info("ScriptInclude-Name: " + name + ";email: " + emailId);
+            users.push({
+                "Name": name,
+                "email": emailId
+            });
         }
         return users;
     },
 
-    GetToken: function() {
+    getToken: function() {
         var r = new sn_ws.RESTMessageV2(this.restSrc, 'Default Post');
         r.setStringParameterNoEscape('api_key', 'ii5_V`~@t<3oE|0h1XIQqIUc{|yWotEoK3Oryz^n');
         r.setStringParameterNoEscape('username', 'X253816');
@@ -114,10 +124,10 @@ APCommonFunctions.prototype = {
         }
     },
 
-    GetUserByID: function(id) {
+    getUserByID: function(id) {
         if (id) {
             gs.info("Checking info for Id: " + id);
-            var token = this.GetToken();
+            var token = this.getToken();
             var req = new sn_ws.RESTMessageV2(this.restSrc, 'Get User by ID');
             req.setRequestHeader("x-authorization", token);
             req.setStringParameterNoEscape('uid', id);
@@ -127,15 +137,15 @@ APCommonFunctions.prototype = {
             gs.info("Script - Response Status: " + httpStatus);
 
             if (httpStatus == 401)
-                return this.GetUserByID(id);
+                return this.getUserByID(id);
 
             if (httpStatus == 200)
                 return JSON.parse(responseBody);
         }
     },
 
-    InformAdminOnRequest: function(userInfo) {
-        var adminMailList = this.FetchUsersOfGroup('333afe4c1c1731107f44d85edddcec9e');
+    informAdminOnUsrReq: function(userInfo) {
+        var adminMailList = this.getGrpMembers('333afe4c1c1731107f44d85edddcec9e');
         gs.info("Admin List: " + adminMailList);
         gs.info("SctiptInclude: Calling Inform Admin Event...");
 
@@ -144,11 +154,11 @@ APCommonFunctions.prototype = {
             'adminMailList': adminMailList
         };
 
-        gs.eventQueue(name = this.event2, record = this.grpMemT, parm1 = "yashwanthgowda.hr@external.merckgroup.com", parm2 = JSON.stringify(details));
+        //gs.eventQueue(name = this.event2, record = this.grpMemGR, parm1 = "yashwanthgowda.hr@external.merckgroup.com", parm2 = JSON.stringify(details));
         gs.info("SctiptInclude: Event Created");
     },
 
-    NotifyUserCreation: function(sts, name, to, reason, isNew) {
+    notifyUserCreation: function(sts, name, to, reason, isNew) {
         var sub, body, content, header = 'Hi ' + name + ',\n\n',
             footer = '\n\nThanks & Regards,\nServiceNow';
         sub = 'AutomationAnywhere Access Request Notification | ';
@@ -188,23 +198,23 @@ APCommonFunctions.prototype = {
 
     },
 
-    RejectUser: function(userInfo) {
+    rejectUser: function(userInfo) {
         gs.info("Rejecting request");
-        this.reqAccessT.addQuery('sys_id', userInfo.sysId);
-        this.reqAccessT.query();
-        if (this.reqAccessT.next()) {
-            this.reqAccessT.setValue('status', 'rejected');
-            this.reqAccessT.update('updated status of record: ' + userInfo.sysId + ' to REJECTED');
+        this.reqAccessGR.addQuery('sys_id', userInfo.sysId);
+        this.reqAccessGR.query();
+        if (this.reqAccessGR.next()) {
+            this.reqAccessGR.setValue('status', 'rejected');
+            this.reqAccessGR.update('updated status of record: ' + userInfo.sysId + ' to REJECTED');
         }
     },
 
-    UpdateRequestTable: function(userInfo, newId, status) {
-        this.reqAccessT.addQuery('sys_id', userInfo.sysId);
-        this.reqAccessT.query();
-        if (this.reqAccessT.next()) {
-            this.reqAccessT.setValue('id', newId);
-            this.reqAccessT.setValue('status', status);
-            this.reqAccessT.update('updated ID of record: ' + userInfo.sysId);
+    updateRequestTable: function(userInfo, newId, status) {
+        this.reqAccessGR.addQuery('sys_id', userInfo.sysId);
+        this.reqAccessGR.query();
+        if (this.reqAccessGR.next()) {
+            this.reqAccessGR.setValue('id', newId);
+            this.reqAccessGR.setValue('status', status);
+            this.reqAccessGR.update('updated ID of record: ' + userInfo.sysId);
         }
     },
 

@@ -11,7 +11,7 @@
         <short_description/>
         <size>md</size>
         <sp_column display_value="1">e80fbba1fd7631107f44ccf1f2af9d22</sp_column>
-        <sp_widget display_value="Home Intro">407fbfa1fd7631107f44ccf1f2af9d8b</sp_widget>
+        <sp_widget display_value="Home page">407fbfa1fd7631107f44ccf1f2af9d8b</sp_widget>
         <sys_class_name>sp_instance</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-11-29 11:35:12</sys_created_on>

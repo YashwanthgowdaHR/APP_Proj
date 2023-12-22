@@ -8,7 +8,7 @@
         <container_class_name/>
         <name>Admin - Access History - Container 1</name>
         <order>1</order>
-        <sp_page display_value="tsp_admin_access_history_page">dac990ca10b231107f44b0faa36cadc7</sp_page>
+        <sp_page display_value="tsp_admin_page_access_history">dac990ca10b231107f44b0faa36cadc7</sp_page>
         <subheader>false</subheader>
         <sys_class_name>sp_container</sys_class_name>
         <sys_created_by>admin</sys_created_by>

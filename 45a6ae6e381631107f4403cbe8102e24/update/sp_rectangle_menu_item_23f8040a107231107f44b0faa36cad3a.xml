@@ -18,7 +18,7 @@
         <sc_cat_item/>
         <sc_category/>
         <short_description/>
-        <sp_page display_value="tsp_user_access_request_page">9059448a107231107f44b0faa36cad6a</sp_page>
+        <sp_page display_value="tsp_user_page_req_access">9059448a107231107f44b0faa36cad6a</sp_page>
         <sp_rectangle_menu display_value="TSP Menu">75b8c00a107231107f44b0faa36cadbd</sp_rectangle_menu>
         <sp_rectangle_menu_item/>
         <sys_class_name>sp_rectangle_menu_item</sys_class_name>

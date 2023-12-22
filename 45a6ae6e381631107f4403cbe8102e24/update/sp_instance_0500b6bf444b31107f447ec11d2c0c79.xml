@@ -11,7 +11,7 @@
         <short_description/>
         <size>md</size>
         <sp_column display_value="1">f9ff66bf444b31107f447ec11d2c0c12</sp_column>
-        <sp_widget display_value="Admin Approve Request">fc4c22b2194731107f44a0124b45cf88</sp_widget>
+        <sp_widget display_value="Admin - Approve Request">fc4c22b2194731107f44a0124b45cf88</sp_widget>
         <sys_class_name>sp_instance</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-12-18 15:51:51</sys_created_on>

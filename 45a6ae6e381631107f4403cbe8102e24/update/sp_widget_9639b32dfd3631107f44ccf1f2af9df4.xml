@@ -15,7 +15,7 @@
         <docs/>
         <field_list/>
         <has_preview>true</has_preview>
-        <id>tsp_users_request_history</id>
+        <id>tsp_usr_req_history</id>
         <internal>false</internal>
         <link><![CDATA[function link(scope, element, attrs, controller) {
   
@@ -56,7 +56,9 @@
         <template><![CDATA[<div>
 	<div ng-if="data.accessInfo.length > 0">
     <!-- If Any Request Found -->
-  	<h2>Find your access details here.</h2>
+  	 <legend class="text-center">
+        <h2>Rquests Details</h2>
+   </legend>
   	<table class="table table-hover table-bordered">
       <thead>
         <tr>
@@ -83,6 +85,8 @@
       You have not requested for any access.
     </h2>
   </div>
-</div>]]></template>
+</div>
+
+]]></template>
     </sp_widget>
 </record_update>
