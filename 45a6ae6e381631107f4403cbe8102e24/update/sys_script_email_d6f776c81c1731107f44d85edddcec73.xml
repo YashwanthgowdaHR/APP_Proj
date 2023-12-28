@@ -3,41 +3,40 @@
         <name>AP_InformAdminOnRequestRaised</name>
         <new_lines_to_html>true</new_lines_to_html>
         <script><![CDATA[(function runMailScript( /* GlideRecord */ current, /* TemplatePrinter */ template,
-    /* Optional EmailOutbound */
-    email, /* Optional GlideRecord */ email_action,
-    /* Optional GlideRecord */
-    event) {
+											/* Optional EmailOutbound */
+											email, /* Optional GlideRecord */ email_action,
+											/* Optional GlideRecord */
+											event) {
 
-    var scriptName = "MailScript-InformAdminOnRequestRaised: ";
-    var br = "<br>";
-    // Add your code here
-    gs.info(scriptName + "Entered");
-    var details = JSON.parse(event.parm2);
-    var userInfo = details.userInfo;
-    var adminMailList = details.adminMailList;
+	var scriptName = "MailScript-InformAdminOnRequestRaised: ";
+	var br = "<br>";
+	// Add your code here
+	gs.info(scriptName + "Entered");
+	var details = JSON.parse(event.parm2);
+	var userInfo = details.userInfo;
+	var adminDetails = details.adminDetails;
 
-    gs.info(scriptName + "Parsing event data...");
-    // Add your code here
-    var sub, body, content, header = 'Hi,' + br + br,
-        footer = br + br + 'Thanks & Regards,' + br + 'ServiceNow';
+	gs.info(scriptName + "Parsing event data...");
+	// Add your code here
+	var sub, body, content, header = 'Hi,' + br + br,
+		footer = br + br + 'Thanks & Regards,' + br + 'ServiceNow';
 
-    gs.info(scriptName + "Fetched the required info from event");
-    sub = 'AutomationAnywhere Access Request Notification';
-    content = "A request is raised for Automation Anywhere access." + br + br + "<b>Requester Details:</b>" + br;
-    content += "<b>XUID / MUID:</b> " + userInfo.uid + br;
-    content += "<b>Name:</b> " + userInfo.name + br;
-    content += "<b>Environment:</b> " + userInfo.environment + br;
-    body = header + content + footer;
-    email.setSubject(sub);
-    email.setBody(body);
-    //email.addAddress("cc","yashwanth1ga16cs184@gmail.com","Yashwanth");
-    adminMailList.forEach((user, index) => {
-		gs.info("Name: "+user.name+"; Mail: "+user.mail);
-        email.addAddress('cc', user.mail, user.name);
-        email.addAddress('bcc', user.mail, user.name);
-    });
-    //email.send();
-    gs.info(scriptName + "Mail sent");
+	gs.info(scriptName + "Fetched the required info from event");
+	sub = 'AutomationAnywhere Access Request Notification';
+	content = "A request is raised for Automation Anywhere access." + br + br + "<b>Requester Details:</b>" + br;
+	content += "<b>XUID / MUID:</b> " + userInfo.uid + br;
+	content += "<b>Name:</b> " + userInfo.name + br;
+	content += "<b>Environment:</b> " + userInfo.environment + br;
+	body = header + content + footer;
+	email.setSubject(sub);
+	email.setBody(body);
+	adminDetails.forEach((user, index) => {
+		gs.info(scriptName + " name-" + user.name + "; email-" + user.email);
+		//email.addAddress('cc', user.email, user.name);
+		email.addAddress('bcc', user.email, user.name);
+	});
+	//email.send();
+	gs.info(scriptName + "Mail sent");
 
 })(current, template, email, email_action, event);]]></script>
         <sys_class_name>sys_script_email</sys_class_name>

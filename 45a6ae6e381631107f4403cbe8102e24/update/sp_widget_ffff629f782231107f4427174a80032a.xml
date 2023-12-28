@@ -141,7 +141,7 @@ if(input){
 				gs.addInfoMessage("Access Requested. Wait for approval.")
 				
 				var apcf = new APCommonFunctions();
-				apcf.informAdminOnUsrReq({'uid':input.uid,'name': input.fname+" "+input.lname,'environment':input.environment});
+				apcf.informAdminOnUsrReq({'uid':input.uid,'name': input.fname+" "+input.lname,'environment':input.environment.toUpperCase()});
 			}
 			else{
 				gs.addErrorMessage("Request is already made.");

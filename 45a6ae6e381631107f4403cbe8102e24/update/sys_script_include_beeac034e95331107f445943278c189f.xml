@@ -11,11 +11,11 @@
 APCommonFunctions.prototype = {
     initialize: function() {},
     type: 'APCommonFunctions',
-    restSrc: 'x_snc_accessprov_0.AA Authentication',
+    restSrc: 'x_snc_accessprov_0.Automation Anyhere - API',
     defaultPass: "abc@123123",
     defaultRole: '224',
     reqAccessGR: new GlideRecord('x_snc_accessprov_0_aa_request_access'),
-    grpMemGR: new GlideRecord('sys_user_grmember'),
+    groupMemberGR: new GlideRecord('sys_user_grmember'),
     event1: 'x_snc_accessprov_0.send_mail_to_user',
     event2: 'x_snc_accessprov_0.inform_admin',
 
@@ -54,7 +54,7 @@ APCommonFunctions.prototype = {
 
             //Initialize the required REST Message
             var req = new sn_ws.RESTMessageV2(this.restSrc, 'Create User');
-            req.setRequestHeader("x-authorization", tkn);
+            req.setStringParameterNoEscape("authorization", tkn);
             req.setStringParameterNoEscape('firstName', userInfo.fname);
             req.setStringParameterNoEscape('lastName', userInfo.lname);
             req.setStringParameterNoEscape('mailId', userInfo.email);
@@ -89,23 +89,42 @@ APCommonFunctions.prototype = {
 
         return result;
     },
+	
+	deleteUsr: function(id) {
+        if (id) {
+            gs.info("Checking info for Id: " + id);
+            var token = this.getToken();
+            var req = new sn_ws.RESTMessageV2(this.restSrc, 'DeleteUser');
+            req.setStringParameterNoEscape("authorization", token);
+            req.setStringParameterNoEscape('uid', id);
+            var response = req.execute();
+            var responseBody = response.getBody();
+            var httpStatus = response.getStatusCode();
+            gs.info("Script - Response Status: " + httpStatus);
+
+            if (httpStatus == 200)
+                return JSON.parse(responseBody);
+        }
+    },
 
     getGrpMembers: function(sysId) {
-        this.grpMemGR.addQuery('group', sysId);
-        this.grpMemGR.query();
-        var users = [];
+        this.groupMemberGR.addQuery('group', sysId);
+        this.groupMemberGR.query();
+		var users = [];
 
-        while (this.grpMemGR.next()) {
-            gs.info("ScriptInclude- While loop...");
-            gs.info("Fetching Name...");
-            var name = this.grpMemGR.user.fname.toString() + " " + this.grpMemGR.user.lname.toString();
-            gs.info("Fetching Email...");
-            var emailId = this.grpMemGR.user.email.toString();
-            gs.info("ScriptInclude-Name: " + name + ";email: " + emailId);
-            users.push({
-                "Name": name,
-                "email": emailId
-            });
+        // Check if there are any members in the group
+        if (this.groupMemberGR.getRowCount() > 0) {
+            // Loop through the group members and get user details
+            while (this.groupMemberGR.next()) {
+                // Get the user record for each member
+                var userGR = new GlideRecord('sys_user');
+                if (userGR.get(this.groupMemberGR.getValue('user'))) {
+                    users.push({
+                        "name": userGR.getValue('name'),
+                        "email": userGR.getValue('email')
+                    });
+                }
+            }
         }
         return users;
     },
@@ -129,7 +148,7 @@ APCommonFunctions.prototype = {
             gs.info("Checking info for Id: " + id);
             var token = this.getToken();
             var req = new sn_ws.RESTMessageV2(this.restSrc, 'Get User by ID');
-            req.setRequestHeader("x-authorization", token);
+            req.setStringParameterNoEscape("authorization", token);
             req.setStringParameterNoEscape('uid', id);
             var response = req.execute();
             var responseBody = response.getBody();
@@ -145,16 +164,15 @@ APCommonFunctions.prototype = {
     },
 
     informAdminOnUsrReq: function(userInfo) {
-        var adminMailList = this.getGrpMembers('333afe4c1c1731107f44d85edddcec9e');
-        gs.info("Admin List: " + adminMailList);
+        var adminDetails = this.getGrpMembers('333afe4c1c1731107f44d85edddcec9e');
         gs.info("SctiptInclude: Calling Inform Admin Event...");
 
         var details = {
             "userInfo": userInfo,
-            'adminMailList': adminMailList
+            'adminDetails': adminDetails
         };
 
-        //gs.eventQueue(name = this.event2, record = this.grpMemGR, parm1 = "yashwanthgowda.hr@external.merckgroup.com", parm2 = JSON.stringify(details));
+        gs.eventQueue(name = this.event2, record = this.groupMemberGR, parm1 = "yashwanthgowda.hr@external.merckgroup.com", parm2 = JSON.stringify(details));
         gs.info("SctiptInclude: Event Created");
     },
 

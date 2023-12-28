@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sysauto_script">
+    <sysauto_script action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <business_calendar/>
+        <condition/>
+        <conditional>false</conditional>
+        <entered_time>1970-01-01 00:00:00</entered_time>
+        <name>Import Roles</name>
+        <offset/>
+        <offset_type>0</offset_type>
+        <run_as display_value="System Administrator">6816f79cc0a8016401c5a33be04be441</run_as>
+        <run_as_tz/>
+        <run_dayofmonth>1</run_dayofmonth>
+        <run_dayofweek>1</run_dayofweek>
+        <run_period>1970-01-01 12:00:00</run_period>
+        <run_start>2023-12-28 14:50:30</run_start>
+        <run_time>1970-01-01 00:00:00</run_time>
+        <run_type>periodically</run_type>
+        <script><![CDATA[var aacf = new APCommonFunctions();
+var tkn = aacf.getToken();
+var outboundRESTName = 'x_snc_accessprov_0.Automation Anyhere - API';
+var methodName = 'List Roles';
+
+var logName = "Scheduled Script | ";
+
+//Initialize the required REST Message
+var req = new sn_ws.RESTMessageV2(outboundRESTName, methodName);
+req.setStringParameterNoEscape("authorization", tkn);
+
+var response = req.execute();
+var responseBody = response.getBody();
+var httpStatus = response.getStatusCode();
+gs.info(logName + "Fetching Roles | Result - HTTP status Code: " + httpStatus);
+var parsed = JSON.parse(responseBody);
+if (httpStatus == 200) {
+	// Fetched the list of roles
+    var roles = parsed.list;
+    roles.forEach(function(role) {
+        var id = role.id;
+        var gr = new GlideRecord("x_snc_accessprov_0_aa_roles");
+        gr.addQuery("id", id);
+        gr.query();
+        if (!gr.next()) {
+            gs.info(logName + "Role ID: " + id + " doesn't exists. Adding it");
+            gr.initialize(); //create an empty record before inserting.
+            gr.setValue('name', role.name);
+            gr.setValue('id', id);
+            gr.setValue('description', role.description);
+            gr.insert();
+        } else {
+            gs.info(logName + "Role ID: " + id + " exists.");
+        }
+
+    });
+}]]></script>
+        <sys_class_name>sysauto_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-12-28 15:57:49</sys_created_on>
+        <sys_id>92024a4768d731107f445f54df46a106</sys_id>
+        <sys_name>Import Roles</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sysauto_script_92024a4768d731107f445f54df46a106</sys_update_name>
+        <time_zone/>
+        <upgrade_safe>false</upgrade_safe>
+    </sysauto_script>
+</record_update>
