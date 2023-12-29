@@ -5,11 +5,7 @@
         <basic_auth_profile/>
         <basic_auth_user/>
         <content>{&#13;
-  "roles": [&#13;
-    {&#13;
-      "id":${id}&#13;
-    }&#13;
-  ],&#13;
+  "roles": ${roles},&#13;
   "email": "${mailId}",&#13;
   "enableAutoLogin": true,&#13;
   "username": "${userName}",&#13;

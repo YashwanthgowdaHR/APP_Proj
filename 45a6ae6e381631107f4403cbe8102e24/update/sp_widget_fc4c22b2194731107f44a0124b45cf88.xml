@@ -135,8 +135,10 @@
 	reqGR.query();
 
 	var i = 1;
+	var apcf = new APCommonFunctions();
 
 	function createUsrObj(record) {
+		var tmpRoles = apcf.getRoleName(record.getValue("roles"));
 		return {
 			no: i++,
 			sysId: record.getUniqueValue(),
@@ -146,7 +148,9 @@
 			email: record.getValue('email_id').toString(),
 			uid: record.getValue('x_m_uid').toString(),
 			automationName: record.getValue('automation_name').toString(),
-			environment: record.getDisplayValue('environment').toString()
+			environment: record.getDisplayValue('environment').toString(),
+			roleIds: record.getDisplayValue("roles").toString(),
+			role: tmpRoles.toString(),
 		};
 	}
 
@@ -158,7 +162,6 @@
 
 	if (input) {
 		var user = input.info;
-		var apcf = new APCommonFunctions();
 
 		// APPROVE action
 		if (input.action === "approve") {
@@ -210,6 +213,7 @@
         <th scope="col" class="align-middle">Mail Id</th>
         <th scope="col" class="align-middle">Automation Name</th>
         <th scope="col" class="align-middle">Environment</th>
+        <th scope="col" class="align-middle">Role</th>
         <th scope="col" class="align-middle">Action</th>
       </tr>
     </thead>
@@ -221,6 +225,7 @@
         <td>{{info.email}}</td>
         <td>{{info.automationName}}</td>
         <td>{{info.environment}}</td>
+        <td>{{info.role}}</td>
         <td>
         	<button class="btn btn-approve" ng-click="c.approve(info)">Approve</button>
           <button class="btn btn-reject" ng-click="c.reject(info)">Reject</button>

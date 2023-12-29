@@ -13,7 +13,6 @@ APCommonFunctions.prototype = {
     type: 'APCommonFunctions',
     restSrc: 'x_snc_accessprov_0.Automation Anyhere - API',
     defaultPass: "abc@123123",
-    defaultRole: '224',
     reqAccessGR: new GlideRecord('x_snc_accessprov_0_aa_request_access'),
     groupMemberGR: new GlideRecord('sys_user_grmember'),
     event1: 'x_snc_accessprov_0.send_mail_to_user',
@@ -51,7 +50,12 @@ APCommonFunctions.prototype = {
         try {
             // Get Access Token
             var tkn = this.getToken();
-
+			var tmpRoles = userInfo.roleIds.split(",");
+			var roles = [];
+			tmpRoles.forEach(function(id) {
+				roles.push({"id":id});
+			});
+			
             //Initialize the required REST Message
             var req = new sn_ws.RESTMessageV2(this.restSrc, 'Create User');
             req.setStringParameterNoEscape("authorization", tkn);
@@ -60,7 +64,7 @@ APCommonFunctions.prototype = {
             req.setStringParameterNoEscape('mailId', userInfo.email);
             req.setStringParameterNoEscape('pass', this.defaultPass);
             req.setStringParameterNoEscape('userName', userInfo.uid);
-            req.setStringParameterNoEscape('id', this.defaultRole);
+            req.setStringParameterNoEscape('roles',JSON.stringify(roles));
 
             gs.info(logName + "User Creation | Creating User...");
 
@@ -89,8 +93,8 @@ APCommonFunctions.prototype = {
 
         return result;
     },
-	
-	deleteUsr: function(id) {
+
+    deleteUsr: function(id) {
         if (id) {
             gs.info("Checking info for Id: " + id);
             var token = this.getToken();
@@ -110,7 +114,7 @@ APCommonFunctions.prototype = {
     getGrpMembers: function(sysId) {
         this.groupMemberGR.addQuery('group', sysId);
         this.groupMemberGR.query();
-		var users = [];
+        var users = [];
 
         // Check if there are any members in the group
         if (this.groupMemberGR.getRowCount() > 0) {
@@ -127,6 +131,28 @@ APCommonFunctions.prototype = {
             }
         }
         return users;
+    },
+
+    getRoleName: function(roleIds) {
+        
+        gs.info("ScriptIncludes | GetRoleName | Reading roles names using its id...");
+
+        var tmpRoles = Array.isArray(roleIds) ? roleIds : roleIds.split(",");
+        var roles = [];
+		
+        tmpRoles.forEach(function(id) {
+			var gr = new GlideRecord("x_snc_accessprov_0_aa_roles");
+            gs.info("Fetching Role name for id: " + id);
+			gr.get(id);
+			roles.push(gr.name);
+		});
+
+        if (Array.isArray(roleIds)) {
+            return roles;
+        } else {
+            return roles.length > 0 ? roles.join(", ") : null;
+        }
+		
     },
 
     getToken: function() {
