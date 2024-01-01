@@ -134,9 +134,7 @@ APCommonFunctions.prototype = {
     },
 
     getRoleName: function(roleIds) {
-        
         gs.info("ScriptIncludes | GetRoleName | Reading roles names using its id...");
-
         var tmpRoles = Array.isArray(roleIds) ? roleIds : roleIds.split(",");
         var roles = [];
 		
@@ -190,7 +188,7 @@ APCommonFunctions.prototype = {
     },
 
     informAdminOnUsrReq: function(userInfo) {
-        var adminDetails = this.getGrpMembers('333afe4c1c1731107f44d85edddcec9e');
+        var adminDetails = this.getGrpMembers('eb488d149fa331107f44c737f024abcf'); // sys_id provided
         gs.info("SctiptInclude: Calling Inform Admin Event...");
 
         var details = {

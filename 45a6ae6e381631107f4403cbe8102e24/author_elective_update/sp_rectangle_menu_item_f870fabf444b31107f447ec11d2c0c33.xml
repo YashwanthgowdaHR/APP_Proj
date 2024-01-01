@@ -65,7 +65,7 @@
         <update_guid_history>aa807ebf864b31106ef90db3fab72c71:1494934665</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="Approve Request">1da0babf444b31107f447ec11d2c0c7c</sys_audit_delete>
+        <sys_audit_delete display_value="">1da0babf444b31107f447ec11d2c0c7c</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-12-18 15:53:53</sys_created_on>

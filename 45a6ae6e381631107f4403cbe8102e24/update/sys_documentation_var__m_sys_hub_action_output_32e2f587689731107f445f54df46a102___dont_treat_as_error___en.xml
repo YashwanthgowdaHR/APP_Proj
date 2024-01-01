@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="__dont_treat_as_error__" label="Don't Treat as Error" language="en" table="var__m_sys_hub_action_output_32e2f587689731107f445f54df46a102">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>__dont_treat_as_error__</element>
+            <help/>
+            <hint/>
+            <label>Don't Treat as Error</label>
+            <language>en</language>
+            <name>var__m_sys_hub_action_output_32e2f587689731107f445f54df46a102</name>
+            <plural/>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2023-12-28 13:46:26</sys_created_on>
+            <sys_name>Don't Treat as Error</sys_name>
+            <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+            <sys_update_name>sys_documentation_var__m_sys_hub_action_output_32e2f587689731107f445f54df46a102___dont_treat_as_error___en</sys_update_name>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

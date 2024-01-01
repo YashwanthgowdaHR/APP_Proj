@@ -124,6 +124,7 @@ if(input){
 			gs.addErrorMessage("Please fill all the neccessary fields and submit the form.");
 		}
 		else{
+			gs.info("User Request Access: "+JSON.stringify(input));
 			var gr = new GlideRecord('x_snc_accessprov_0_aa_request_access');
 			gr.addEncodedQuery('x_m_uid='+input.uid+"^automation_name="+input.automation+"^environment="+input.environment+"^status=pending^ORstatus=granted");
 			gr.query();
@@ -172,7 +173,7 @@ if(input){
 
       <!-- MUID/XUID -->
       <div class="form-group">
-        <label class="col-md-4 control-label" for="txt_uid">MUID / XUID</label>
+        <label class="col-md-4 control-label" for="txt_uid">MUID </label>
         <div class="col-md-6">
           <input id="txt_uid" ng-model="data.user_info.uid" type="text" class="form-control input-md" disabled>
         </div>

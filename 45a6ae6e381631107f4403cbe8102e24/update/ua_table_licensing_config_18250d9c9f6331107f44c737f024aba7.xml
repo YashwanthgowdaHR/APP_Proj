@@ -4,19 +4,19 @@
         <license_condition/>
         <license_model>none</license_model>
         <license_roles/>
-        <name>x_snc_accessprov_0_temp_get_users_list</name>
+        <name>x_snc_accessprov_0_randomuserslist</name>
         <op_delete>true</op_delete>
         <op_insert>true</op_insert>
         <op_update>true</op_update>
         <owner_condition/>
         <sys_class_name>ua_table_licensing_config</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2023-11-09 05:37:42</sys_created_on>
-        <sys_id>a3b199b6190331107f44a0124b45cf58</sys_id>
-        <sys_name>x_snc_accessprov_0_temp_get_users_list</sys_name>
+        <sys_created_on>2023-11-09 11:09:23</sys_created_on>
+        <sys_id>18250d9c9f6331107f44c737f024aba7</sys_id>
+        <sys_name>x_snc_accessprov_0_randomuserslist</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
-        <sys_update_name>ua_table_licensing_config_a3b199b6190331107f44a0124b45cf58</sys_update_name>
+        <sys_update_name>ua_table_licensing_config_18250d9c9f6331107f44c737f024aba7</sys_update_name>
     </ua_table_licensing_config>
 </record_update>

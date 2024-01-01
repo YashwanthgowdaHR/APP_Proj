@@ -4,19 +4,19 @@
         <license_condition/>
         <license_model>none</license_model>
         <license_roles/>
-        <name>x_snc_accessprov_0_access_status</name>
+        <name>x_snc_accessprov_0_environment</name>
         <op_delete>true</op_delete>
         <op_insert>true</op_insert>
         <op_update>true</op_update>
         <owner_condition/>
         <sys_class_name>ua_table_licensing_config</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2023-11-30 08:56:16</sys_created_on>
-        <sys_id>1fb199b6190331107f44a0124b45cf05</sys_id>
-        <sys_name>x_snc_accessprov_0_access_status</sys_name>
+        <sys_created_on>2023-11-22 07:10:51</sys_created_on>
+        <sys_id>61258d9c9f6331107f44c737f024ab00</sys_id>
+        <sys_name>x_snc_accessprov_0_environment</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
-        <sys_update_name>ua_table_licensing_config_1fb199b6190331107f44a0124b45cf05</sys_update_name>
+        <sys_update_name>ua_table_licensing_config_61258d9c9f6331107f44c737f024ab00</sys_update_name>
     </ua_table_licensing_config>
 </record_update>

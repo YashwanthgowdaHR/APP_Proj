@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sysauto_script">
+    <sysauto_script action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <business_calendar/>
+        <condition/>
+        <conditional>false</conditional>
+        <entered_time>1970-01-01 00:00:00</entered_time>
+        <name>AA - Fetch Roles</name>
+        <offset/>
+        <offset_type>0</offset_type>
+        <run_as display_value="System Administrator">6816f79cc0a8016401c5a33be04be441</run_as>
+        <run_as_tz/>
+        <run_dayofmonth>1</run_dayofmonth>
+        <run_dayofweek>1</run_dayofweek>
+        <run_period>1970-01-01 12:00:00</run_period>
+        <run_start>2024-01-01 00:00:00</run_start>
+        <run_time>1970-01-01 12:00:00</run_time>
+        <run_type>periodically</run_type>
+        <script><![CDATA[var logName = "ScheduledScript | ";
+var apcf = new APCommonFunctions();
+var token = apcf.getToken();
+var req = new sn_ws.RESTMessageV2('x_snc_accessprov_0.Automation Anyhere - API', 'List Roles');
+req.setStringParameterNoEscape("authorization", token);
+var response = req.execute();
+var responseBody = response.getBody();
+var httpStatus = response.getStatusCode();
+gs.info(logName + " Response Status: " + httpStatus);
+
+if (httpStatus == 200){
+	var rolesList = JSON.parse(responseBody).list;
+	var gr = new GlideRecord("x_snc_accessprov_0_aa_roles");
+	rolesList.forEach(function(role){
+		gr.addQuery('id', role.id);
+		gr.query();
+		if(!gr.next()){
+			gs.info(logName + "Role doesn't exists. Adding it");
+			gr.initialize();
+			gr.setValue("id", role.id);
+			gr.setValue("name", role.name);
+			gr.setValue("description", role.description);
+			gr.insert();
+		}
+	});
+}else{
+	gs.error(logName + " Error Occured. "+responseBody);
+}]]></script>
+        <sys_class_name>sysauto_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-01-01 08:50:42</sys_created_on>
+        <sys_id>f100591c9fa331107f44c737f024ab7c</sys_id>
+        <sys_name>AA - Fetch Roles</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sysauto_script_f100591c9fa331107f44c737f024ab7c</sys_update_name>
+        <time_zone/>
+        <upgrade_safe>false</upgrade_safe>
+    </sysauto_script>
+</record_update>

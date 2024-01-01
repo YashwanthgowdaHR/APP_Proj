@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element db_object_id="ad2d3a8d946231107f44a1014014305e" label="AA Request Access" max_length="40" name="x_snc_accessprov_0_aa_request_access" type="collection">
-        <element choice="3" label="Automation Name" mandatory="true" max_length="32" name="automation_name" reference="x_snc_accessprov_0_automationlist" type="reference">
+        <element choice="3" label="Automation Name" mandatory="true" max_length="1000" name="automation_name" type="string">
             <choice/>
         </element>
         <element label="Email ID" mandatory="true" max_length="100" name="email_id" type="string"/>
@@ -10,12 +10,15 @@
         <element label="First Name" mandatory="true" max_length="40" name="first_name" type="string"/>
         <element label="Id" max_length="255" name="id" type="integer"/>
         <element label="Last Name" mandatory="true" max_length="40" name="last_name" type="string"/>
-        <element choice="3" default="b4d3da87681b31107f445f54df46a1ef,f8d3da87681b31107f445f54df46a1ef," label="Roles" mandatory="true" max_length="4000" name="roles" reference="x_snc_accessprov_0_aa_roles" type="glide_list">
+        <element choice="3" default="78a6d9909fe331107f44c737f024ab41," label="Roles" mandatory="true" max_length="4000" name="roles" reference="x_snc_accessprov_0_aa_roles" type="glide_list">
             <choice/>
         </element>
         <element choice="3" choice_field="name" choice_table="x_snc_accessprov_0_access_status" default="pending" label="Status" max_length="40" name="status" type="choice">
             <choice/>
         </element>
         <element display="true" label="M / X - UID" mandatory="true" max_length="40" name="x_m_uid" type="string"/>
+        <index name="index">
+            <element name="automation_name"/>
+        </index>
     </element>
 </database>

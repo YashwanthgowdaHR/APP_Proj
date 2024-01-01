@@ -11,7 +11,7 @@
         <column_label>Roles</column_label>
         <comments/>
         <create_roles/>
-        <default_value>b4d3da87681b31107f445f54df46a1ef,f8d3da87681b31107f445f54df46a1ef,</default_value>
+        <default_value>78a6d9909fe331107f44c737f024ab41,</default_value>
         <defaultsort/>
         <delete_roles/>
         <dependent/>
