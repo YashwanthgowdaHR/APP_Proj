@@ -1,12 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
-        <client_script><![CDATA[api.controller=function() {
+        <client_script><![CDATA[api.controller=function(spUtil,spModal) {
   /* widget controller */
   var c = this;
+	
+	// delete object property if exists
+	function deleteProp(obj, key) {
+		if(obj.hasOwnProperty(key)) { 
+			delete obj[key];
+		}
+		return obj;
+	}
+	
+	// Reset data properties
+	function resetData() {
+		deleteProp("action");
+		deleteProp("userId");
+		deleteProp("sysId");
+	}
+	
+	function handleSuccess(res) {
+		resetData();
+		c.server.refresh();
+	}
+
+	function handleError(error) {
+		// Handle or log the error as needed
+		console.error('An error occurred:', error);
+		resetData();
+	}
+	c.delete = function(userId, sysId){
+		console.log(sysId);
+		var warn = '<i class="fa fa-warning" aria-hidden="true"></i>';
+		spModal.confirm("Are you sure to <b>remove</b> this user?").then(function(confirmed) {
+			spUtil.addTrivialMessage("Removing user...");
+			c.data.userId = userId;
+		c.data.sysId = sysId;
+		c.data.action = "removeUser";
+		c.server.update().then(handleSuccess).catch(handleError);
+		})
+		
+	}
+	
+	
 };]]></client_script>
         <controller_as>c</controller_as>
-        <css/>
+        <css>th, td{
+  text-align: center;
+  vertical-align: middle !important;
+}
+
+</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
         <description/>
@@ -22,15 +67,14 @@
         <option_schema/>
         <public>false</public>
         <roles>x_snc_accessprov_0.admin</roles>
-        <script><![CDATA[(function() {
-	/* populate the 'data' object */
-	/* e.g., data.table = $sp.getValue('table'); */
+        <script><![CDATA[(function () {
 	data.userInfo = [];
 	var table = new GlideRecord('x_snc_accessprov_0_aa_request_access');
 	var apcf = new APCommonFunctions();
 	var i = 1;
-
+	table.addQuery('status', 'granted');
 	table.query();
+
 	while (table.next()) {
 		var userDetails = apcf.getUserByID(table.getValue("id"))
 
@@ -51,8 +95,32 @@
 				environment: table.getDisplayValue('environment').toString(),
 				status: table.getDisplayValue('status').toString(),
 				id: table.getValue("id"),
-				role: roleDetails
+				role: roleDetails,
+				sysId: table.getValue("sys_id")
 			});
+		}
+	}
+
+	if (input) {
+		if (input.action == "removeUser") {
+			try {
+				var userId = input.userId;
+				var sysId = input.sysId;
+				apcf.deleteUsr(userId);
+				table = new GlideRecord('x_snc_accessprov_0_aa_request_access');
+				table.addQuery('sys_id',sysId);
+				table.query();
+				while(table.next()){
+					gs.info("Updating status of User as Removed");
+					table.setValue('status', 'removed');
+					table.update("User has been deleted");
+				}
+				gs.addInfoMessage("User has been removed");
+			} catch (e) {
+				gs.error('Error deleting user:', e);
+				gs.addErrorMessage('An error occurred while rejecting the request.');
+			}
+
 		}
 	}
 })();]]></script>
@@ -71,28 +139,28 @@
   <table class="table table-hover table-bordered">
     <thead>
       <tr>
-        <th scope="col" class="align-middle">#</th>
-        <th scope="col" class="align-middle">Name</th>
-        <th scope="col" class="align-middle">MUID / XUID</th>
-        <th scope="col" class="align-middle">Mail Id</th>
-        <th scope="col" class="align-middle">Roles</th>
-        <!-- <th scope="col" class="align-middle">Automation Name</th> -->
-        <th scope="col" class="align-middle">Environment</th>
-        <th scope="col" class="align-middle">Status</th>
-        <th scope="col" class="align-middle">Action</th>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">MUID / XUID</th>
+        <th scope="col">Mail Id</th>
+        <th scope="col">Roles</th>
+        <!-- <th scope="col">Automation Name</th> -->
+        <th scope="col">Environment</th>
+        <th scope="col">Status</th>
+        <th scope="col">Action</th>
       </tr>
     </thead>
     <tbody>
       <tr ng-repeat="info in data.userInfo">
-        <th scope="row" class="align-middle">{{info.no}}</th>
-        <td class="align-middle">{{info.name}}</td>
-        <td class="align-middle">{{info.uid}}</td>
-        <td class="align-middle">{{info.mailId}}</td>
-        <td class="align-middle">{{info.role}}</td>
-        <!-- <td class="align-middle">{{info.automationName}}</td> -->
-        <td class="align-middle">{{info.environment}}</td>
-        <td class="align-middle">{{info.status}}</td>
-        <td><button name="approve" title="Approve" data-toggle="tooltip" ng-if="approval.state == 'requested'" ng-click="approve(approval.sys_id);" class="btn btn-success btn-xs"> <i class="fa fa-check-square fa-xs"></i></button></td>
+        <td scope="row">{{info.no}}</td>
+        <td>{{info.name}}</td>
+        <td>{{info.uid}}</td>
+        <td>{{info.mailId}}</td>
+        <td>{{info.role}}</td>
+        <!-- <td>{{info.automationName}}</td> -->
+        <td>{{info.environment}}</td>
+        <td>{{info.status}}</td>
+        <td><button ng-click="c.delete(info.id, info.sysId)" class="btn btn-danger btn-md"> <i class="fa fa-close fa-md"></i></button></td>
       </tr>
     </tbody>
   </table>
