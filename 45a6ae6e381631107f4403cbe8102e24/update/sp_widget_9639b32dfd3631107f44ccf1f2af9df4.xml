@@ -8,6 +8,27 @@
         <controller_as>c</controller_as>
         <css>table td, table th{
   text-align: center;
+}
+
+td[class^="text"] {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.text-red{
+  color: #dc3545!important;
+}
+
+.text-blue{
+  color: #007bff!important;
+}
+
+.text-warning{
+  color: orange!important;
+}
+
+.text-green{
+  color: #28a745!important;
 }</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
@@ -73,7 +94,10 @@
           <th scope="row" class="align-middle">{{info.no}}</th>
           <td class="align-middle">{{info.automationName}}</td>
           <td class="align-middle">{{info.environment}}</td>
-          <td class="align-middle">{{info.status}}</td>
+          <td ng-if="info.status=='Granted'"class="text-green align-middle">{{info.status}}</td>
+        <td ng-if="info.status=='Removed'" class="text-warning align-middle">{{info.status}}</td>
+        <td ng-if="info.status=='Rejected'" class="text-red align-middle">{{info.status}}</td>
+        <td ng-if="info.status=='Pending'" class="text-blue align-middle">{{info.status}}</td>
     		</tr>
      	</tbody>
   	</table>

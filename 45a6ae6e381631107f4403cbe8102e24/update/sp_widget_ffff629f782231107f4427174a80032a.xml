@@ -99,9 +99,9 @@ select{
 	var gr = new GlideRecord('x_snc_accessprov_0_environment');
 	var env_name = gr.getElement("name");
 	data.env = env_name.getChoices(); // Read the Choices present in the Environment:Name field
-	
+
 	data.snTableName = 'x_snc_accessprov_0_automationlist';
-	
+
 	// Fetch User Details to auto-fill the fields
 	gr = new GlideRecord('sys_user');
 	gr.addEncodedQuery('user_name='+gs.getUserName());
@@ -124,33 +124,17 @@ if(input){
 			gs.addErrorMessage("Please fill all the neccessary fields and submit the form.");
 		}
 		else{
-			gs.info("User Request Access: "+JSON.stringify(input));
-			var gr = new GlideRecord('x_snc_accessprov_0_aa_request_access');
-			gr.addEncodedQuery('x_m_uid='+input.uid+"^automation_name="+input.automation+"^environment="+input.environment+"^status=pending^ORstatus=granted");
-			gr.query();
-			
-			if(!gr.next()){		
-				gr.initialize(); //create an empty record before inserting.
-				gr.setValue('first_name', input.fname);
-				gr.setValue('last_name', input.lname);
-				gr.setValue('email_id', input.email);
-				gr.setValue('automation_name', input.automation);
-				gr.setValue('environment', input.environment);
-				gr.setValue('x_m_uid', input.uid);
-				gr.insert();
-		
-				gs.addInfoMessage("Access Requested. Wait for approval.")
-				
-				var apcf = new APCommonFunctions();
-				apcf.informAdminOnUsrReq({'uid':input.uid,'name': input.fname+" "+input.lname,'environment':input.environment.toUpperCase()});
-			}
-			else{
+			var apcf = new APCommonFunctions();
+			var tmpData = {'fname': input.fname, 'lname': input.lname, 'email':input.email, 'automation':input.automation, 'environment': input.environment, 'uid':input.uid};
+			var res = apcf.createReq(tmpData);
+			if(res)
 				gs.addErrorMessage("Request is already made.");
-			}	
+			else
+				gs.addInfoMessage("Access Requested. Wait for approval");
 		}
-		
+
 	}
-	
+
 }]]></script>
         <servicenow>false</servicenow>
         <sys_class_name>sp_widget</sys_class_name>

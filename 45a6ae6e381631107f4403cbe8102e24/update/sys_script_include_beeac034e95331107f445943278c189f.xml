@@ -9,256 +9,243 @@
         <name>APCommonFunctions</name>
         <script><![CDATA[var APCommonFunctions = Class.create();
 APCommonFunctions.prototype = {
-    initialize: function() {},
-    type: 'APCommonFunctions',
-    restSrc: 'x_snc_accessprov_0.Automation Anyhere - API',
-    defaultPass: "abc@123123",
-    reqAccessGR: new GlideRecord('x_snc_accessprov_0_aa_request_access'),
-    groupMemberGR: new GlideRecord('sys_user_grmember'),
-    event1: 'x_snc_accessprov_0.send_mail_to_user',
-    event2: 'x_snc_accessprov_0.inform_admin',
+	initialize: function() {},
+	type: 'APCommonFunctions',
+	restSrc: 'x_snc_accessprov_0.Automation Anyhere - API',
+	defaultPass: "abc@123123",
+	reqAccessGR: new GlideRecord('x_snc_accessprov_0_aa_request_access'),
+	groupMemberGR: new GlideRecord('sys_user_grmember'),
+	event1: 'x_snc_accessprov_0.send_mail_to_user',
+	event2: 'x_snc_accessprov_0.inform_admin',
 
-    createOrRejectUser: function(createOrReject, user) {
-        var sts = "pending";
-        if (createOrReject == "create") {
-            var result = this.createUser(user);
-            if (result.isCreated)
-                sts = "granted";
-        }
-        if (createOrReject == "reject") {
-            sts = "rejected";
-            this.rejectUser(user);
-        }
-        var details = {
-            'sts': sts,
-            'name': user.name,
-            'pass': this.defaultPass,
-            'reason': user.rejectReason || ""
-        };
+	createOrRejectUser: function(createOrReject, user) {
+		var sts = "pending";
+		if (createOrReject == "create") {
+			var result = this.createUser(user);
+			if (result.isCreated)
+				sts = "granted";
+		}
+		if (createOrReject == "reject") {
+			sts = "rejected";
+			this.rejectUser(user);
+		}
+		var details = {
+			'sts': sts,
+			'name': user.name,
+			'pass': this.defaultPass,
+			'reason': user.rejectReason || ""
+		};
 
-        gs.info("SctiptInclude: Calling UserCreationOrRejection Event...");
-        gs.eventQueue(name = this.event1, record = this.reqAccessGR, parm1 = user.email, parm2 = JSON.stringify(details));
-        gs.info("SctiptInclude: Event Created");
-        if (result)
-            return result;
-    },
+		gs.info("SctiptInclude: Calling UserCreationOrRejection Event...");
+		gs.eventQueue(name = this.event1, record = this.reqAccessGR, parm1 = user.email, parm2 = JSON.stringify(details));
+		gs.info("SctiptInclude: Event Created");
+		if (result)
+			return result;
+	},
 
-    createUser: function(userInfo) {
-        var logName = "SCRIPT- createUser: ";
-        var result = {};
+	createReq: function(input) {
+		gs.info("Creating user request...");
+		this.reqAccessGR.addEncodedQuery('x_m_uid=' + input.uid + "^automation_name=" + input.automation + "^environment=" + input.environment + "^status=pending^ORstatus=granted");
+		this.reqAccessGR.query();
 
-        try {
-            // Get Access Token
-            var tkn = this.getToken();
+		if (!this.reqAccessGR.next()) {
+			this.reqAccessGR.initialize(); //create an empty record before inserting.
+			this.reqAccessGR.setValue('first_name', input.fname);
+			this.reqAccessGR.setValue('last_name', input.lname);
+			this.reqAccessGR.setValue('email_id', input.email);
+			this.reqAccessGR.setValue('automation_name', input.automation);
+			this.reqAccessGR.setValue('environment', input.environment);
+			this.reqAccessGR.setValue('x_m_uid', input.uid);
+			var tmpSysId = this.reqAccessGR.insert();
+			this.informAdminOnUsrReq({
+				'uid': input.uid,
+				'name': input.fname + " " + input.lname,
+				'environment': input.environment.toUpperCase()
+			});
+			gs.info("Record inserted into requests table successfully");
+			return 0;
+		} else
+			return 1;
+	},
+
+	createUser: function(userInfo) {
+		var logName = "SCRIPT - createUser: ";
+		var result = {};
+
+		try {
+			// Get Access Token
+			var tkn = this.getToken();
 			var tmpRoles = userInfo.roleIds.split(",");
 			var roles = [];
 			tmpRoles.forEach(function(id) {
-				roles.push({"id":id});
+				roles.push({
+					"id": id
+				});
 			});
-			
-            //Initialize the required REST Message
-            var req = new sn_ws.RESTMessageV2(this.restSrc, 'Create User');
-            req.setStringParameterNoEscape("authorization", tkn);
-            req.setStringParameterNoEscape('firstName', userInfo.fname);
-            req.setStringParameterNoEscape('lastName', userInfo.lname);
-            req.setStringParameterNoEscape('mailId', userInfo.email);
-            req.setStringParameterNoEscape('pass', this.defaultPass);
-            req.setStringParameterNoEscape('userName', userInfo.uid);
-            req.setStringParameterNoEscape('roles',JSON.stringify(roles));
 
-            gs.info(logName + "User Creation | Creating User...");
+			//Initialize the required REST Message
+			var req = new sn_ws.RESTMessageV2(this.restSrc, 'Create User');
+			req.setStringParameterNoEscape("authorization", tkn);
+			req.setStringParameterNoEscape('firstName', userInfo.fname);
+			req.setStringParameterNoEscape('lastName', userInfo.lname);
+			req.setStringParameterNoEscape('mailId', userInfo.email);
+			req.setStringParameterNoEscape('pass', this.defaultPass);
+			req.setStringParameterNoEscape('userName', userInfo.uid);
+			req.setStringParameterNoEscape('roles', JSON.stringify(roles));
 
-            var response = req.execute();
-            var responseBody = response.getBody();
-            var httpStatus = response.getStatusCode();
-            gs.info(logName + "User Creation | Result - HTTP status Code: " + httpStatus);
-            var parsed = JSON.parse(responseBody);
-            if (httpStatus == 201) {
-                // User Created Successfully
-                result.isCreated = true;
-                gs.info(logName + "User Creation | SUCCESS | New ID is " + parsed.id);
-                this.updateRequestTable(userInfo, parsed.id, "granted");
+			gs.info(logName + "User Creation | Creating User...");
 
-            } else {
-                //Failed to create user through api
-                result.isCreated = false;
-                result.msg = parsed.message;
-                gs.error(logName + "User Creation | FAILED | Reason is " + parsed.message);
-            }
-        } catch (e) {
-            gs.error(logName + "User Creation | Exception: " + e);
-            result.isCreated = false;
-            result.msg = "An error occurred while creating the user.";
-        }
+			var response = req.execute();
+			var responseBody = response.getBody();
+			var httpStatus = response.getStatusCode();
+			gs.info(logName + "User Creation | Result - HTTP status Code: " + httpStatus);
+			var parsed = JSON.parse(responseBody);
+			if (httpStatus == 201) {
+				// User Created Successfully
+				result.isCreated = true;
+				gs.info(logName + "User Creation | SUCCESS | New ID is " + parsed.id);
+				this.updateRequestTable(userInfo, parsed.id, "granted");
 
-        return result;
-    },
+			} else {
+				//Failed to create user through api
+				result.isCreated = false;
+				result.msg = parsed.message;
+				gs.error(logName + "User Creation | FAILED | Reason is " + parsed.message);
+			}
+		} catch (e) {
+			gs.error(logName + "User Creation | Exception: " + e);
+			result.isCreated = false;
+			result.msg = "An error occurred while creating the user.";
+		}
 
-    deleteUsr: function(id) {
-        if (id) {
-            gs.info("Checking info for Id: " + id);
-            var token = this.getToken();
-            var req = new sn_ws.RESTMessageV2(this.restSrc, 'DeleteUser');
-            req.setStringParameterNoEscape("authorization", token);
-            req.setStringParameterNoEscape('uid', id);
-            var response = req.execute();
-            var responseBody = response.getBody();
-            var httpStatus = response.getStatusCode();
-            gs.info("Script - Response Status: " + httpStatus);
+		return result;
+	},
 
-            if (httpStatus == 200)
-                return JSON.parse(responseBody);
-        }
-    },
+	deleteUsr: function(id) {
+		if (id) {
+			gs.info("Checking info for Id: " + id);
+			var token = this.getToken();
+			var req = new sn_ws.RESTMessageV2(this.restSrc, 'DeleteUser');
+			req.setStringParameterNoEscape("authorization", token);
+			req.setStringParameterNoEscape('uid', id);
+			var response = req.execute();
+			var responseBody = response.getBody();
+			var httpStatus = response.getStatusCode();
+			gs.info("Script - Response Status: " + httpStatus);
 
-    getGrpMembers: function(sysId) {
-        this.groupMemberGR.addQuery('group', sysId);
-        this.groupMemberGR.query();
-        var users = [];
+			if (httpStatus == 200)
+				return JSON.parse(responseBody);
+		}
+	},
 
-        // Check if there are any members in the group
-        if (this.groupMemberGR.getRowCount() > 0) {
-            // Loop through the group members and get user details
-            while (this.groupMemberGR.next()) {
-                // Get the user record for each member
-                var userGR = new GlideRecord('sys_user');
-                if (userGR.get(this.groupMemberGR.getValue('user'))) {
-                    users.push({
-                        "name": userGR.getValue('name'),
-                        "email": userGR.getValue('email')
-                    });
-                }
-            }
-        }
-        return users;
-    },
+	getGrpMembers: function(sysId) {
+		this.groupMemberGR.addQuery('group', sysId);
+		this.groupMemberGR.query();
+		var users = [];
 
-    getRoleName: function(roleIds) {
-        gs.info("ScriptIncludes | GetRoleName | Reading roles names using its id...");
-        var tmpRoles = Array.isArray(roleIds) ? roleIds : roleIds.split(",");
-        var roles = [];
-		
-        tmpRoles.forEach(function(id) {
+		// Check if there are any members in the group
+		if (this.groupMemberGR.getRowCount() > 0) {
+			// Loop through the group members and get user details
+			while (this.groupMemberGR.next()) {
+				// Get the user record for each member
+				var userGR = new GlideRecord('sys_user');
+				if (userGR.get(this.groupMemberGR.getValue('user'))) {
+					users.push({
+						"name": userGR.getValue('name'),
+						"email": userGR.getValue('email')
+					});
+				}
+			}
+		}
+		return users;
+	},
+
+	getRoleName: function(roleIds) {
+		gs.info("ScriptIncludes | GetRoleName | Reading roles names using its id...");
+		var tmpRoles = Array.isArray(roleIds) ? roleIds : roleIds.split(",");
+		var roles = [];
+
+		tmpRoles.forEach(function(id) {
 			var gr = new GlideRecord("x_snc_accessprov_0_aa_roles");
-            gs.info("Fetching Role name for id: " + id);
+			gs.info("Fetching Role name for id: " + id);
 			gr.get(id);
 			roles.push(gr.name);
 		});
 
-        if (Array.isArray(roleIds)) {
-            return roles;
-        } else {
-            return roles.length > 0 ? roles.join(", ") : null;
-        }
-		
-    },
+		if (Array.isArray(roleIds)) {
+			return roles;
+		} else {
+			return roles.length > 0 ? roles.join(", ") : null;
+		}
 
-    getToken: function() {
-        var r = new sn_ws.RESTMessageV2(this.restSrc, 'Default Post');
-        r.setStringParameterNoEscape('api_key', 'ii5_V`~@t<3oE|0h1XIQqIUc{|yWotEoK3Oryz^n');
-        r.setStringParameterNoEscape('username', 'X253816');
-        var response = r.execute();
-        var responseBody = response.getBody();
-        var httpStatus = response.getStatusCode();
+	},
 
-        if (httpStatus == 200) {
-            // Get the Access Token
-            return JSON.parse(responseBody).token;
-        }
-    },
+	getToken: function() {
+		var r = new sn_ws.RESTMessageV2(this.restSrc, 'Default Post');
+		r.setStringParameterNoEscape('api_key', 'ii5_V`~@t<3oE|0h1XIQqIUc{|yWotEoK3Oryz^n');
+		r.setStringParameterNoEscape('username', 'X253816');
+		var response = r.execute();
+		var responseBody = response.getBody();
+		var httpStatus = response.getStatusCode();
 
-    getUserByID: function(id) {
-        if (id) {
-            gs.info("Checking info for Id: " + id);
-            var token = this.getToken();
-            var req = new sn_ws.RESTMessageV2(this.restSrc, 'Get User by ID');
-            req.setStringParameterNoEscape("authorization", token);
-            req.setStringParameterNoEscape('uid', id);
-            var response = req.execute();
-            var responseBody = response.getBody();
-            var httpStatus = response.getStatusCode();
-            gs.info("Script - Response Status: " + httpStatus);
+		if (httpStatus == 200) {
+			// Get the Access Token
+			return JSON.parse(responseBody).token;
+		}
+	},
 
-            if (httpStatus == 401)
-                return this.getUserByID(id);
+	getUserByID: function(id) {
+		if (id) {
+			gs.info("Checking info for Id: " + id);
+			var token = this.getToken();
+			var req = new sn_ws.RESTMessageV2(this.restSrc, 'Get User by ID');
+			req.setStringParameterNoEscape("authorization", token);
+			req.setStringParameterNoEscape('uid', id);
+			var response = req.execute();
+			var responseBody = response.getBody();
+			var httpStatus = response.getStatusCode();
+			gs.info("Script - Response Status: " + httpStatus);
 
-            if (httpStatus == 200)
-                return JSON.parse(responseBody);
-        }
-    },
+			if (httpStatus == 401)
+				return this.getUserByID(id);
 
-    informAdminOnUsrReq: function(userInfo) {
-        var adminDetails = this.getGrpMembers('eb488d149fa331107f44c737f024abcf'); // sys_id provided
-        gs.info("SctiptInclude: Calling Inform Admin Event...");
+			if (httpStatus == 200)
+				return JSON.parse(responseBody);
+		}
+	},
 
-        var details = {
-            "userInfo": userInfo,
-            'adminDetails': adminDetails
-        };
+	informAdminOnUsrReq: function(userInfo) {
+		var adminDetails = this.getGrpMembers('eb488d149fa331107f44c737f024abcf'); // sys_id provided
+		gs.info("SctiptInclude: Calling Inform Admin Event...");
 
-        gs.eventQueue(name = this.event2, record = this.groupMemberGR, parm1 = "yashwanthgowda.hr@external.merckgroup.com", parm2 = JSON.stringify(details));
-        gs.info("SctiptInclude: Event Created");
-    },
+		var details = {
+			"userInfo": userInfo,
+			'adminDetails': adminDetails
+		};
 
-    notifyUserCreation: function(sts, name, to, reason, isNew) {
-        var sub, body, content, header = 'Hi ' + name + ',\n\n',
-            footer = '\n\nThanks & Regards,\nServiceNow';
-        sub = 'AutomationAnywhere Access Request Notification | ';
-        if (isNew) {
-            sub += 'Requested';
-            content = 'Your request has been placed. Please wait for the admin approval.';
-        } else {
-            if (sts == 0) {
-                sub += 'Approved';
-                content = 'Your request has been approved by Admin.\nDefault Password is ' + this.pass;
-            } else {
-                sub += 'Rejected';
-                if (reason)
-                    content = 'Your request has been rejected by Admin. Reason: ' + reason;
-                else
-                    content = 'Your request has been rejected by Admin.';
-            }
-        }
-        body = header + content + footer;
+		gs.eventQueue(name = this.event2, record = this.groupMemberGR, parm1 = "yashwanthgowda.hr@external.merckgroup.com", parm2 = JSON.stringify(details));
+		gs.info("SctiptInclude: Event Created");
+	},
 
-        // Create a GlideEmailOutbound object
-        var email = new GlideEmailOutbound();
-        //mail.addRecipient(to);
-        email.addAddress('cc', to);
-        email.setSubject(sub);
-        email.setBody(body);
+	rejectUser: function(userInfo) {
+		gs.info("Rejecting request");
+		this.reqAccessGR.addQuery('sys_id', userInfo.sysId);
+		this.reqAccessGR.query();
+		if (this.reqAccessGR.next()) {
+			this.reqAccessGR.setValue('status', 'rejected');
+			this.reqAccessGR.update('updated status of record: ' + userInfo.sysId + ' to REJECTED');
+		}
+	},
 
-        // Save and send the email
-        var emailSysId = email.save();
-
-        // Optionally, you can check for errors
-        if (email.error()) {
-            gs.error('Email sending failed: ' + email.errorMsg());
-        } else {
-            gs.info('Email sent successfully.');
-        }
-
-    },
-
-    rejectUser: function(userInfo) {
-        gs.info("Rejecting request");
-        this.reqAccessGR.addQuery('sys_id', userInfo.sysId);
-        this.reqAccessGR.query();
-        if (this.reqAccessGR.next()) {
-            this.reqAccessGR.setValue('status', 'rejected');
-            this.reqAccessGR.update('updated status of record: ' + userInfo.sysId + ' to REJECTED');
-        }
-    },
-
-    updateRequestTable: function(userInfo, newId, status) {
-        this.reqAccessGR.addQuery('sys_id', userInfo.sysId);
-        this.reqAccessGR.query();
+	updateRequestTable: function(userInfo, newId, status) {
+		this.reqAccessGR.addQuery('sys_id', userInfo.sysId);
+		this.reqAccessGR.query();
         if (this.reqAccessGR.next()) {
             this.reqAccessGR.setValue('id', newId);
             this.reqAccessGR.setValue('status', status);
             this.reqAccessGR.update('updated ID of record: ' + userInfo.sysId);
         }
-    },
+	},
 
 };]]></script>
         <sys_class_name>sys_script_include</sys_class_name>

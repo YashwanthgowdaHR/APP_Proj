@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="15e736689f2731107f44c737f024abf5" label="Access Logs" max_length="40" name="x_snc_accessprov_0_access_logs" type="collection">
+        <element label="Automation" max_length="150" name="automation_name" read_only="true" type="string"/>
+        <element label="Email ID" max_length="150" name="email_id" read_only="true" type="string"/>
+        <element label="First Name" max_length="40" name="first_name" read_only="true" type="string"/>
+        <element label="Id" max_length="255" name="id" read_only="true" type="integer"/>
+        <element label="Last Name" max_length="40" name="last_name" read_only="true" type="string"/>
+        <element label="Roles" max_length="2000" name="roles" read_only="true" type="string"/>
+        <element label="Status" max_length="40" name="status" read_only="true" type="string"/>
+        <element label="M/X-UID" max_length="40" name="x_m_uid" read_only="true" type="string"/>
+    </element>
+</database>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl">
+    <sys_security_acl action="DELETE">
+        <active>true</active>
+        <admin_overrides>true</admin_overrides>
+        <advanced>false</advanced>
+        <condition/>
+        <description/>
+        <name>x_snc_accessprov_0_access_logs</name>
+        <operation display_value="create">create</operation>
+        <script/>
+        <sys_class_name>sys_security_acl</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-01-02 05:38:18</sys_created_on>
+        <sys_id>529335289f2331107f44c737f024abec</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_snc_accessprov_0_access_logs</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sys_security_acl_529335289f2331107f44c737f024abec</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-02 05:38:18</sys_updated_on>
+        <type display_value="record">record</type>
+    </sys_security_acl>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</application>
+        <file_path/>
+        <instance_id>a2793f93c31bb910dc9cb30a05013171</instance_id>
+        <instance_name>nowlearning-nlinst01352945-0001</instance_name>
+        <name>sys_security_acl_529335289f2331107f44c737f024abec</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl"><sys_security_acl action="INSERT_OR_UPDATE"><active>true</active><admin_overrides>true</admin_overrides><advanced>false</advanced><condition/><description/><name>x_snc_accessprov_0_access_logs</name><operation display_value="create">create</operation><script/><sys_class_name>sys_security_acl</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2024-01-02 05:38:18</sys_created_on><sys_id>529335289f2331107f44c737f024abec</sys_id><sys_mod_count>0</sys_mod_count><sys_name>x_snc_accessprov_0_access_logs</sys_name><sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package><sys_policy/><sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope><sys_update_name>sys_security_acl_529335289f2331107f44c737f024abec</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2024-01-02 05:38:18</sys_updated_on><type display_value="record">record</type></sys_security_acl></record_update>]]></payload>
+        <payload_hash>-1752481228</payload_hash>
+        <record_name>x_snc_accessprov_0_access_logs</record_name>
+        <reverted_from/>
+        <source>96d5819c9f6331107f44c737f024ab27</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-01-02 05:38:18</sys_created_on>
+        <sys_id>9a9335289f2331107f44c737f024abfa</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>18cc8ae0b730000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-02 05:38:18</sys_updated_on>
+        <type>Access Control</type>
+        <update_guid>d2933528b723311066974fe5637648fa</update_guid>
+        <update_guid_history>d2933528b723311066974fe5637648fa:-1752481228</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-01-02 10:35:46</sys_created_on>
+        <sys_db_object display_value="" name="sys_security_acl">sys_security_acl</sys_db_object>
+        <sys_id>478aadb47291444ca71a61ef3614ff24</sys_id>
+        <sys_metadata>529335289f2331107f44c737f024abec</sys_metadata>
+        <sys_name>x_snc_accessprov_0_access_logs</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_parent display_value="">bf83b1289f2331107f44c737f024abb7</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_scope_delete display_value="">048d5f0e899f424a8270d790e19b3744</sys_scope_delete>
+        <sys_update_name>sys_security_acl_529335289f2331107f44c737f024abec</sys_update_name>
+        <sys_update_version display_value="sys_security_acl_529335289f2331107f44c737f024abec">9a9335289f2331107f44c737f024abfa</sys_update_version>
+    </sys_metadata_delete>
+</record_update>

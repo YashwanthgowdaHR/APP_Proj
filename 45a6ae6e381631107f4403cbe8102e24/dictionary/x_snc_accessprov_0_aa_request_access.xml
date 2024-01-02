@@ -16,9 +16,13 @@
         <element choice="3" choice_field="name" choice_table="x_snc_accessprov_0_access_status" default="pending" label="Status" max_length="40" name="status" type="choice">
             <choice/>
         </element>
+        <element default="javascript:current.getTableName();" label="Class" max_length="80" name="sys_class_name" type="sys_class_name"/>
         <element display="true" label="M / X - UID" mandatory="true" max_length="40" name="x_m_uid" type="string"/>
         <index name="index">
             <element name="automation_name"/>
+        </index>
+        <index name="index2">
+            <element name="sys_class_name"/>
         </index>
     </element>
 </database>
