@@ -2,49 +2,59 @@
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
         <client_script><![CDATA[api.controller=function(spUtil,spModal) {
-  /* widget controller */
-  var c = this;
-	
-	// delete object property if exists
-	function deleteProp(obj, key) {
-		if(obj.hasOwnProperty(key)) { 
-			delete obj[key];
-		}
-		return obj;
-	}
-	
-	// Reset data properties
-	function resetData() {
-		deleteProp("action");
-		deleteProp("userId");
-		deleteProp("sysId");
-	}
-	
-	function handleSuccess(res) {
-		resetData();
-		c.server.refresh();
-	}
-
-	function handleError(error) {
-		// Handle or log the error as needed
-		console.error('An error occurred:', error);
-		resetData();
-	}
-	c.delete = function(userId, sysId){
-		console.log(sysId);
-		var warn = '<i class="fa fa-warning" aria-hidden="true"></i>';
-		spModal.confirm("Are you sure to <b>remove</b> this user?").then(function(confirmed) {
-			spUtil.addTrivialMessage("Removing user...");
-			c.data.userId = userId;
-		c.data.sysId = sysId;
-		c.data.action = "removeUser";
-		c.server.update().then(handleSuccess).catch(handleError);
-		})
-		
-	}
-	
-	
-};]]></client_script>
+    /* widget controller */
+    var c = this;
+      
+      // delete object property if exists
+      function deleteProp(obj, key) {
+          if(obj.hasOwnProperty(key)) { 
+              delete obj[key];
+          }
+          return obj;
+      }
+      
+      // Reset data properties
+      function resetData() {
+          deleteProp("action");
+          deleteProp("userId");
+          deleteProp("sysId");
+      }
+      
+      function handleSuccess(res) {
+          resetData();
+          c.server.refresh();
+      }
+  
+      function handleError(error) {
+          // Handle or log the error as needed
+          console.error('An error occurred:', error);
+          resetData();
+      }
+      c.delete = function(userId, sysId){
+				/*
+				console.log(sysId)
+				spModal.open({
+            title: 'Displaying widget',
+            widget: 'widget-form', 
+            widgetInput: {table:'x_snc_accessprov_0_aa_request_access',sys_id:'3496c7e49f6731107f44c737f024ab45'},
+        }).then(function(){
+            alert("Widget closed");
+        })  
+				*/
+          console.log(sysId);
+          var warn = '<i class="fa fa-warning" aria-hidden="true"></i>';
+          spModal.confirm("Are you sure to <b>remove</b> this user?").then(function(confirmed) {
+              spUtil.addTrivialMessage("Removing user...");
+              c.data.userId = userId;
+          c.data.sysId = sysId;
+          c.data.action = "removeUser";
+          c.server.update().then(handleSuccess).catch(handleError);
+          })
+          
+      }
+      
+      
+  };]]></client_script>
         <controller_as>c</controller_as>
         <css>th, td{
   text-align: center;
@@ -71,6 +81,7 @@
 	data.userInfo = [];
 	var table = new GlideRecord('x_snc_accessprov_0_aa_request_access');
 	var apcf = new APCommonFunctions();
+	data.table = table;
 	var i = 1;
 	table.addQuery('status', 'granted');
 	table.query();
@@ -160,7 +171,7 @@
         <!-- <td>{{info.automationName}}</td> -->
         <td>{{info.environment}}</td>
         <td>{{info.status}}</td>
-        <td><button ng-click="c.delete(info.id, info.sysId)" class="btn btn-danger btn-md"> <i class="fa fa-close fa-md"></i></button></td>
+        <td><button ng-click="c.delete(info.id, info.sysId)" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button></td>
       </tr>
     </tbody>
   </table>

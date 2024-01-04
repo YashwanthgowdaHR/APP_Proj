@@ -52,15 +52,22 @@ td[class^="text"] {
 	var i = 1;
 	var gr = new GlideRecord('x_snc_accessprov_0_aa_request_access');
 	gr.addQuery('x_m_uid', gs.getUserName());
+	gr.orderByDesc('sys_created_on');
 	gr.query();
 
 
 	while (gr.next()) {
+		var gdt = new GlideDateTime(gr.sys_created_on.toString());
+		gdt.add(19800000);
+		var gd = new GlideDate();
+		gd.setValue(gdt.toString());
+		
 		data.accessInfo.push({
 			no:i++,
 			automationName: gr.getValue('automation_name').toString(),
 			environment: gr.getDisplayValue('environment').toString(),
-			status: gr.getDisplayValue('status').toString()
+			status: gr.getDisplayValue('status').toString(),
+			requestOn: gd.getByFormat("dd-MMM-yyyy hh:mm a"),
 		})
 	}
 })();]]></script>
@@ -84,6 +91,7 @@ td[class^="text"] {
       <thead>
         <tr>
           <th scope="col" class="align-middle">#</th>
+          <th scope="col" class="align-middle">Requested On</th>
           <th scope="col" class="align-middle">Automation Name</th>
           <th scope="col" class="align-middle">Environment</th>
           <th scope="col" class="align-middle">Status</th>
@@ -92,12 +100,14 @@ td[class^="text"] {
     	<tbody>
     		<tr ng-repeat="info in data.accessInfo">
           <th scope="row" class="align-middle">{{info.no}}</th>
+          <td class="align-middle">{{info.requestOn}}</td>
           <td class="align-middle">{{info.automationName}}</td>
           <td class="align-middle">{{info.environment}}</td>
           <td ng-if="info.status=='Granted'"class="text-green align-middle">{{info.status}}</td>
         <td ng-if="info.status=='Removed'" class="text-warning align-middle">{{info.status}}</td>
         <td ng-if="info.status=='Rejected'" class="text-red align-middle">{{info.status}}</td>
         <td ng-if="info.status=='Pending'" class="text-blue align-middle">{{info.status}}</td>
+
     		</tr>
      	</tbody>
   	</table>

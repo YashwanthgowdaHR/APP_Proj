@@ -132,6 +132,7 @@
 	/* populate the 'data' object */
 	data.otherUsersInfo = []; // list stores the user information who request's status is pending
 	var reqGR = new GlideRecord('x_snc_accessprov_0_aa_request_access');
+	reqGR.orderByDesc('sys_created_on');
 	reqGR.query();
 
 	var i = 1;
@@ -139,6 +140,11 @@
 
 	function createUsrObj(record) {
 		var tmpRoles = apcf.getRoleName(record.getValue("roles"));
+		var gdt = new GlideDateTime(record.sys_created_on.toString());
+		gdt.add(19800000);
+		var gd = new GlideDate();
+		gd.setValue(gdt.toString());
+		
 		return {
 			no: i++,
 			sysId: record.getUniqueValue(),
@@ -151,6 +157,7 @@
 			environment: record.getDisplayValue('environment').toString(),
 			roleIds: record.getDisplayValue("roles").toString(),
 			role: tmpRoles.toString(),
+			requestOn: gd.getByFormat("dd-MMM-yyyy hh:mm a"),
 		};
 	}
 
@@ -214,6 +221,7 @@
         <th scope="col" class="align-middle">Automation Name</th>
         <th scope="col" class="align-middle">Environment</th>
         <th scope="col" class="align-middle">Role</th>
+        <th scope="col" class="align-middle">Requested On</th>
         <th scope="col" class="align-middle">Action</th>
       </tr>
     </thead>
@@ -225,6 +233,7 @@
         <td>{{info.email}}</td>
         <td>{{info.automationName}}</td>
         <td>{{info.environment}}</td>
+        <td>{{info.requestOn}}</td>
         <td>{{info.role}}</td>
         <td>
         	<button class="btn btn-approve" ng-click="c.approve(info)">Approve</button>

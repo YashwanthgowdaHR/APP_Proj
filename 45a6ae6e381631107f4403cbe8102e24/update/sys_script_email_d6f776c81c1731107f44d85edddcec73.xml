@@ -26,7 +26,8 @@
 	content = "A request is raised for Automation Anywhere access." + br + br + "<b>Requester Details:</b>" + br;
 	content += "<b>XUID / MUID:</b> " + userInfo.uid + br;
 	content += "<b>Name:</b> " + userInfo.name + br;
-	content += "<b>Environment:</b> " + userInfo.environment + br;
+	content += "<b>Environment:</b> " + userInfo.environment + br + br;
+	content += "Click on the link to view it: <a href='https://nowlearning-nlinst01352945-0001.lab.service-now.com/tsp?id=tsp_admin_page_approve_reqs'>Approve Requests</a>";
 	body = header + content + footer;
 	email.setSubject(sub);
 	email.setBody(body);
