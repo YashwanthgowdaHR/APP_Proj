@@ -13,9 +13,9 @@
         <lock>false</lock>
         <oauth2_profile/>
         <protocol_name/>
-        <qualified_name>Automation Anyhere - API [ Default Post ]</qualified_name>
+        <qualified_name>AA-API [ Default Post ]</qualified_name>
         <rest_endpoint>https://merck-dev.my.automationanywhere.digital/v1/authentication</rest_endpoint>
-        <rest_message display_value="Automation Anyhere - API">97e3ccba003231107f449a5d437fabc6</rest_message>
+        <rest_message display_value="AA-API">97e3ccba003231107f449a5d437fabc6</rest_message>
         <sys_class_name>sys_rest_message_fn</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-12-02 14:34:37</sys_created_on>

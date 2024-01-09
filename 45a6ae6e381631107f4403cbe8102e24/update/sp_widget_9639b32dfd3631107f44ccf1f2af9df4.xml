@@ -29,6 +29,17 @@ td[class^="text"] {
 
 .text-green{
   color: #28a745!important;
+}
+
+
+.no-request{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  text-align: center;
+  color: black;
+  text-transform: uppercase;
 }</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
@@ -48,28 +59,7 @@ td[class^="text"] {
         <script><![CDATA[(function() {
 	/* populate the 'data' object */
 	/* e.g., data.table = $sp.getValue('table'); */
-	data.accessInfo = [];
-	var i = 1;
-	var gr = new GlideRecord('x_snc_accessprov_0_aa_request_access');
-	gr.addQuery('x_m_uid', gs.getUserName());
-	gr.orderByDesc('sys_created_on');
-	gr.query();
-
-
-	while (gr.next()) {
-		var gdt = new GlideDateTime(gr.sys_created_on.toString());
-		gdt.add(19800000);
-		var gd = new GlideDate();
-		gd.setValue(gdt.toString());
-		
-		data.accessInfo.push({
-			no:i++,
-			automationName: gr.getValue('automation_name').toString(),
-			environment: gr.getDisplayValue('environment').toString(),
-			status: gr.getDisplayValue('status').toString(),
-			requestOn: gd.getByFormat("dd-MMM-yyyy hh:mm a"),
-		})
-	}
+	data.accessInfo = new APCommonFunctions().getReqHistory(gs.getUserName());
 })();]]></script>
         <servicenow>false</servicenow>
         <sys_class_name>sp_widget</sys_class_name>
@@ -113,10 +103,10 @@ td[class^="text"] {
   	</table>
 	</div>
   
-  <div ng-if="data.accessInfo.length <= 0">
+  <div ng-if="data.accessInfo.length <= 0" class="no-request">
     <!-- If there is No Request Found -->
     <h2>
-      You have not requested for any access.
+      no request found.
     </h2>
   </div>
 </div>

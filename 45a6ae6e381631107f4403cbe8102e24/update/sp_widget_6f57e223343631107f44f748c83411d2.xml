@@ -31,16 +31,6 @@
           resetData();
       }
       c.delete = function(userId, sysId){
-				/*
-				console.log(sysId)
-				spModal.open({
-            title: 'Displaying widget',
-            widget: 'widget-form', 
-            widgetInput: {table:'x_snc_accessprov_0_aa_request_access',sys_id:'3496c7e49f6731107f44c737f024ab45'},
-        }).then(function(){
-            alert("Widget closed");
-        })  
-				*/
           console.log(sysId);
           var warn = '<i class="fa fa-warning" aria-hidden="true"></i>';
           spModal.confirm("Are you sure to <b>remove</b> this user?").then(function(confirmed) {
@@ -61,7 +51,16 @@
   vertical-align: middle !important;
 }
 
-</css>
+
+.no-request{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  text-align: center;
+  color: black;
+  text-transform: uppercase;
+}</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
         <description/>
@@ -78,60 +77,22 @@
         <public>false</public>
         <roles>x_snc_accessprov_0.admin</roles>
         <script><![CDATA[(function () {
-	data.userInfo = [];
-	var table = new GlideRecord('x_snc_accessprov_0_aa_request_access');
 	var apcf = new APCommonFunctions();
-	data.table = table;
-	var i = 1;
-	table.addQuery('status', 'granted');
-	table.query();
-
-	while (table.next()) {
-		var userDetails = apcf.getUserByID(table.getValue("id"))
-
-		var roleDetails = "";
-		if (userDetails) {
-			for (var index in userDetails.roles) {
-				var role = userDetails.roles[index];
-				roleDetails += role.name + ";";
-			}
-
-			//gs.info("Roles: "+roleDetails)
-			data.userInfo.push({
-				no: i++,
-				name: table.getValue('first_name').toString() + " " + table.getValue('last_name').toString(),
-				mailId: table.getValue('email_id').toString(),
-				uid: table.getValue('x_m_uid').toString(),
-				automationName: table.getValue('automation_name').toString(),
-				environment: table.getDisplayValue('environment').toString(),
-				status: table.getDisplayValue('status').toString(),
-				id: table.getValue("id"),
-				role: roleDetails,
-				sysId: table.getValue("sys_id")
-			});
-		}
-	}
+	data.userInfo = apcf.getAllApprovedUsers();
 
 	if (input) {
 		if (input.action == "removeUser") {
 			try {
 				var userId = input.userId;
 				var sysId = input.sysId;
-				apcf.deleteUsr(userId);
-				table = new GlideRecord('x_snc_accessprov_0_aa_request_access');
-				table.addQuery('sys_id',sysId);
-				table.query();
-				while(table.next()){
-					gs.info("Updating status of User as Removed");
-					table.setValue('status', 'removed');
-					table.update("User has been deleted");
-				}
-				gs.addInfoMessage("User has been removed");
+				if(apcf.removeUsr(userId, sysId))
+					gs.addErrorMessage('An error occurred while removing user.');
+				else
+					gs.addInfoMessage("User has been removed");
 			} catch (e) {
 				gs.error('Error deleting user:', e);
-				gs.addErrorMessage('An error occurred while rejecting the request.');
+				gs.addErrorMessage('An error occurred while removing user.'+e);
 			}
-
 		}
 	}
 })();]]></script>
@@ -176,7 +137,7 @@
     </tbody>
   </table>
 </div>
-<div ng-if="data.userInfo.length <= 0">
+<div ng-if="data.userInfo.length <= 0" class="no-request">
   <h2>
     No records found.
   </h2>

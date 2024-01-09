@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
     <sp_widget action="INSERT_OR_UPDATE">
-        <category>standard</category>
+        <category>custom</category>
         <client_script><![CDATA[api.controller=function() {
-    /* widget controller */
-    var c = this;
+  /* widget controller */
+  var c = this;
 };]]></client_script>
         <controller_as>c</controller_as>
         <css/>
@@ -15,44 +15,55 @@
         <has_preview>true</has_preview>
         <id/>
         <internal>false</internal>
-        <link><![CDATA[function link(scope, element, attrs, controller) {  }]]></link>
-        <name>UserProfile</name>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>UserInfo</name>
         <option_schema/>
         <public>false</public>
         <roles/>
-        <script><![CDATA[(function () {
+        <script><![CDATA[(function() {
+	/* populate the 'data' object */
+	/* e.g., data.table = $sp.getValue('table'); */
 	//data.table = options.table || $sp.getParameter("t") || $sp.getParameter("table") || 'x_snc_accessprov_0_aa_request_access';
 	//data.sys_id = options.sys_id || $sp.getParameter("sys_id") || '3496c7e49f6731107f44c737f024ab45';
-	gs.info("Reading the data")
+	gs.info("Reading the data");
 
 	data.table = 'x_snc_accessprov_0_aa_request_access';
 	data.sys_id = '5e2f88dd9f2331107f44c737f024ab6c';
-	
+
 
 	if(!data.table || !data.sys_id)
-		return
+		return;
 
 	var cm = new CommonMethods();
 	//var rec = cm.getRecord(data.table, data.sys_id);	
-	var rec = cm.getRecord(data.table, data.sys_id);	
-	gs.info("Valid Record");
-	
-	var gdt = new GlideDateTime(rec.sys_created_on.toString());
-	gdt.add(19800000);
-	gs.info(gdt);
-	
+	var rec = cm.getRecord(data.table, data.sys_id);
+	gs.info(JSON.stringify(rec));
+	if(!rec.isValid)
+		return
+	else{
+		gs.info("Valid Record");
+
+		var gdt = new GlideDateTime(rec.sys_created_on.toString());
+		gdt.add(19800000);
+		gs.info(gdt);
+	}
+
 
 })();]]></script>
         <servicenow>false</servicenow>
         <sys_class_name>sp_widget</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2024-01-02 11:48:38</sys_created_on>
-        <sys_id>835807e49f6731107f44c737f024ab3e</sys_id>
-        <sys_name>UserProfile</sys_name>
+        <sys_created_on>2024-01-04 08:36:28</sys_created_on>
+        <sys_id>697fe0519fe331107f44c737f024ab7c</sys_id>
+        <sys_name>UserInfo</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
-        <sys_update_name>sp_widget_835807e49f6731107f44c737f024ab3e</sys_update_name>
-        <template/>
+        <sys_update_name>sp_widget_697fe0519fe331107f44c737f024ab7c</sys_update_name>
+        <template><![CDATA[<div>
+<!-- your widget template -->
+</div>]]></template>
     </sp_widget>
 </record_update>

@@ -21,7 +21,7 @@
 	}
 
 	c.getData = function () {
-		c.data.uid = c.data.user_info.uid;
+		c.data.uid = c.data.usersReq.uID;
 		c.data.action = "getData";
 		c.server.update().then(resetData).catch(handleError);
 	};
@@ -135,37 +135,9 @@
 	reqGR.orderByDesc('sys_created_on');
 	reqGR.query();
 
-	var i = 1;
 	var apcf = new APCommonFunctions();
+	data.usersReq = apcf.getAllPendingReq();
 
-	function createUsrObj(record) {
-		var tmpRoles = apcf.getRoleName(record.getValue("roles"));
-		var gdt = new GlideDateTime(record.sys_created_on.toString());
-		gdt.add(19800000);
-		var gd = new GlideDate();
-		gd.setValue(gdt.toString());
-		
-		return {
-			no: i++,
-			sysId: record.getUniqueValue(),
-			fname: record.getValue('first_name').toString(),
-			lname: record.getValue('last_name').toString(),
-			name: record.getValue('first_name').toString() + " " + record.getValue('last_name').toString(),
-			email: record.getValue('email_id').toString(),
-			uid: record.getValue('x_m_uid').toString(),
-			automationName: record.getValue('automation_name').toString(),
-			environment: record.getDisplayValue('environment').toString(),
-			roleIds: record.getDisplayValue("roles").toString(),
-			role: tmpRoles.toString(),
-			requestOn: gd.getByFormat("dd-MMM-yyyy hh:mm a"),
-		};
-	}
-
-	while (reqGR.next()) {
-		if (reqGR.getValue('status') === "pending") {
-			data.otherUsersInfo.push(createUsrObj(reqGR));
-		}
-	}
 
 	if (input) {
 		var user = input.info;
@@ -173,7 +145,7 @@
 		// APPROVE action
 		if (input.action === "approve") {
 			try {
-				var output = apcf.createOrRejectUser("create", user);
+				var output = apcf.approveOrRejectUser("approve",user);
 				if (output.isCreated)
 					gs.addInfoMessage("User has been created");
 				else
@@ -189,7 +161,7 @@
 			try {
 				user.rejectReason = input.rejectReason;
 				// Script Includes function
-				apcf.createOrRejectUser("reject", user);
+				apcf.approveOrRejectUser("reject", user);
 				gs.addInfoMessage("User has been rejected");
 			} catch (e) {
 				gs.error('Error rejecting request:', e);
@@ -209,7 +181,7 @@
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sp_widget_fc4c22b2194731107f44a0124b45cf88</sys_update_name>
-        <template><![CDATA[<div ng-if="data.otherUsersInfo.length > 0" class="table-responsive-sm">
+        <template><![CDATA[<div ng-if="data.usersReq.length > 0" class="table-responsive-sm">
   <h2 class="text-center">Rquests Details:-</h2><br>
   <table class="table table-hover table-bordered">
     <thead>
@@ -226,15 +198,15 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="info in data.otherUsersInfo">
+      <tr ng-repeat="info in data.usersReq">
         <th scope="row">{{info.no}}</th>
         <td>{{info.name}}</td>
-        <td>{{info.uid}}</td>
-        <td>{{info.email}}</td>
+        <td>{{info.uID}}</td>
+        <td>{{info.mailID}}</td>
         <td>{{info.automationName}}</td>
         <td>{{info.environment}}</td>
-        <td>{{info.requestOn}}</td>
         <td>{{info.role}}</td>
+        <td>{{info.requestOn}}</td>
         <td>
         	<button class="btn btn-approve" ng-click="c.approve(info)">Approve</button>
           <button class="btn btn-reject" ng-click="c.reject(info)">Reject</button>
@@ -244,8 +216,8 @@
   </table>
 </div>
 
-<div ng-if="data.otherUsersInfo.length <= 0" class="no-request">
-  <h3>No Request Found</h3>
+<div ng-if="data.usersReq.length <= 0" class="no-request">
+  <h2>No Request Found.</h2>
 </div>
 ]]></template>
     </sp_widget>

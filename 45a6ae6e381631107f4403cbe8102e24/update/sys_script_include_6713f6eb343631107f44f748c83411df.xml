@@ -2,63 +2,55 @@
     <sys_script_include action="INSERT_OR_UPDATE">
         <access>package_private</access>
         <active>true</active>
-        <api_name>x_snc_accessprov_0.AutomationAnywhereFunctions</api_name>
+        <api_name>x_snc_accessprov_0.AutomationAnywhere_APIs</api_name>
         <caller_access/>
         <client_callable>false</client_callable>
         <description>Provide functions to interact with AA to create the user, to fetch the user's id etc.</description>
-        <name>AutomationAnywhereFunctions</name>
-        <script><![CDATA[var AutomationAnywhereFunctions = Class.create();
-AutomationAnywhereFunctions.prototype = {
-    initialize: function() {},
-    type: 'AutomationAnywhereFunctions',
-    restSrc: 'x_snc_accessprov_0.AA Authentication',
-    defaultPass: "abc@123123",
-    defaultRole: '224',
-    accessRequestTable: new GlideRecord('x_snc_accessprov_0_aa_request_access'),
-    grpMemTable: new GlideRecord('sys_user_grmember'),
-
-    CreateOrRejectUser: function(createOrReject, user) {
-        var sts = "pending";
-        if (createOrReject == "create") {
-            var result = this.CreateUser(user);
-            if (result.isCreated)
-                sts = "granted";
-        }
-        if (createOrReject == "reject") {
-            sts = "rejected";
-            this.RejectUser(user);
-        }
-        var details = {
-            'sts': sts,
-            'name': user.name,
-            'pass': this.defaultPass,
-            'reason': user.rejectReason || ""
-        };
-
-        gs.info("SctiptInclude: Calling UserCreationOrRejection Event...");
-        gs.eventQueue(name = 'x_snc_accessprov_0.send_mail_to_user', record = this.requestTable, parm1 = user.email, parm2 = JSON.stringify(details));
-        gs.info("SctiptInclude: Event Created");
-        if (result)
-            return result;
+        <name>AutomationAnywhere_APIs</name>
+        <script><![CDATA[var AutomationAnywhere_APIs = Class.create(); 
+AutomationAnywhere_APIs.prototype = {
+    initialize: function(defaultPass) {
+        this.defaultPass = defaultPass;
+        this.log = "SI | AutomationAnywhere_APIs | ";
     },
+    type: 'AutomationAnywhere_APIs',
+    restSrc: 'x_snc_accessprov_0.AA-API',
 
-    CreateUser: function(userInfo) {
-        var logName = "SCRIPT- CreateUser: ";
+    /**
+     * Foo takes any argument.
+     * The return value is 'baz' in all cases.
+     * @param {json} user - user json should contains keys i.e 
+     * firstName[string],lastName[string],mailId[string],uID[string],roles[string] - roles containing role id separated by comma.
+     * @return {json} result - result will have keys i.e. 
+     * isCreated[bool] - if the user is created, it will be true,
+     * id[number] - if isCreated is true, then it will contain id of the user and 
+     * msg[string] - if user creation failed, then msg will holds the error message.
+     */
+    createUsr: function(user) {
+        var logName = this.log + "CreateUser | ";
         var result = {};
 
         try {
+			gs.info(logName+" Received a request to Create a New user with details: "+JSON.stringify(user));
             // Get Access Token
-            var tkn = this.GetToken();
+            var tkn = this.getToken();
+            var tmpRoles = user.roleIds.split(",");
+            var roles = [];
+            tmpRoles.forEach(function(id) {
+                roles.push({
+                    "id": id
+                });
+            });
 
             //Initialize the required REST Message
             var req = new sn_ws.RESTMessageV2(this.restSrc, 'Create User');
-            req.setRequestHeader("x-authorization", tkn);
-            req.setStringParameterNoEscape('firstName', userInfo.fname);
-            req.setStringParameterNoEscape('lastName', userInfo.lname);
-            req.setStringParameterNoEscape('mailId', userInfo.email);
+            req.setStringParameterNoEscape("authorization", tkn);
+            req.setStringParameterNoEscape('firstName', user.firstName);
+            req.setStringParameterNoEscape('lastName', user.lastName);
+            req.setStringParameterNoEscape('mailID', user.mailID);
             req.setStringParameterNoEscape('pass', this.defaultPass);
-            req.setStringParameterNoEscape('userName', userInfo.uid);
-            req.setStringParameterNoEscape('id', this.defaultRole);
+            req.setStringParameterNoEscape('userName', user.uID);
+            req.setStringParameterNoEscape('roles', JSON.stringify(roles));
 
             gs.info(logName + "User Creation | Creating User...");
 
@@ -71,7 +63,7 @@ AutomationAnywhereFunctions.prototype = {
                 // User Created Successfully
                 result.isCreated = true;
                 gs.info(logName + "User Creation | SUCCESS | New ID is " + parsed.id);
-                this.UpdateRequestTable(userInfo, parsed.id, "granted");
+                result.id = parsed.id;
 
             } else {
                 //Failed to create user through api
@@ -84,22 +76,47 @@ AutomationAnywhereFunctions.prototype = {
             result.isCreated = false;
             result.msg = "An error occurred while creating the user.";
         }
-
         return result;
     },
+    /**
+     * Foo takes any argument.
+     * The return value is 'baz' in all cases.
+     * @param {string} id - id of the user which was received after user has been created.
+     * @return {json} result - result will have keys i.e. isCreated[bool] - if the user is created, it will be true and msg[string] - if user creation failed, then msg will holds the error message.
+     */
+    deleteUsr: function(uID, id) {
+        var logName = this.log + "DeleteUser | ";
+        if (id) {
+            gs.info("Checking if user with id " + id + "exists in AA...");
+            var exists = this.getUserByID(id);
+            if (!exists) {
+                gs.error(logName + "User doesn't exists in Automation Anywhere.");
+                return 1;
+            } else {
+                if (exists.username == uID) {
+                    var token = this.getToken();
+                    var req = new sn_ws.RESTMessageV2(this.restSrc, 'DeleteUser');
+                    req.setStringParameterNoEscape("authorization", token);
+                    req.setStringParameterNoEscape('id', id);
+                    var response = req.execute();
+                    var responseBody = response.getBody();
+                    var httpStatus = response.getStatusCode();
+                    gs.info(logName + "Response Status: " + httpStatus);
 
-    FetchUsersOfGroup: function(sysId) {
-        this.members.addQuery('group', sysId);
-        this.members.query();
-        var users = [];
-        while (this.members.next()) {
-            users.push(this.members.user.email.toString());
+                    if (httpStatus == 204)
+                        return 0;
+                } else {
+                    gs.error(logName + "you are trying to delete another user having UID:" + uID);
+                    return 1;
+                }
+
+            }
         }
-        return users;
     },
 
-    GetToken: function() {
-        var r = new sn_ws.RESTMessageV2('x_snc_accessprov_0.AA Authentication', 'Default Post');
+    getToken: function() {
+        // API call made to AA to get the TOKEN
+        var r = new sn_ws.RESTMessageV2(this.restSrc, 'Default Post');
         r.setStringParameterNoEscape('api_key', 'ii5_V`~@t<3oE|0h1XIQqIUc{|yWotEoK3Oryz^n');
         r.setStringParameterNoEscape('username', 'X253816');
         var response = r.execute();
@@ -112,106 +129,35 @@ AutomationAnywhereFunctions.prototype = {
         }
     },
 
-    GetUserByID: function(id) {
+    getUserByID: function(id) {
+        // API Call made to AA to get User info by User ID
         if (id) {
             gs.info("Checking info for Id: " + id);
-            var token = this.GetToken();
+            var token = this.getToken();
             var req = new sn_ws.RESTMessageV2(this.restSrc, 'Get User by ID');
-            req.setRequestHeader("x-authorization", token);
-            req.setStringParameterNoEscape('uid', id);
+            req.setStringParameterNoEscape("authorization", token);
+            req.setStringParameterNoEscape('id', id);
             var response = req.execute();
             var responseBody = response.getBody();
             var httpStatus = response.getStatusCode();
             gs.info("Script - Response Status: " + httpStatus);
 
+            if (httpStatus == 404)
+                return;
+
             if (httpStatus == 401)
-                return this.GetUserByID(id);
+                return this.getUserByID(id);
 
             if (httpStatus == 200)
                 return JSON.parse(responseBody);
         }
     },
-
-    InformAdminOnRequest: function(userInfo) {
-        var adminMailList = this.FetchUsersOfGroup('333afe4c1c1731107f44d85edddcec9e');
-        gs.info("Admin List: " + adminMailList);
-        gs.info("SctiptInclude: Calling Inform Admin Event...");
-
-        var details = {
-            "userInfo": userInfo,
-            'adminMailList': adminMailList
-        };
-
-        gs.eventQueue(name = 'x_snc_accessprov_0.inform_admin', record = this.members, parm1 = "yashwanthgowda.hr@external.merckgroup.com", parm2 = JSON.stringify(details));
-        gs.info("SctiptInclude: Event Created");
-    },
-
-    NotifyUserCreation: function(sts, name, to, reason, isNew) {
-        var sub, body, content, header = 'Hi ' + name + ',\n\n',
-            footer = '\n\nThanks & Regards,\nServiceNow';
-        sub = 'AutomationAnywhere Access Request Notification | ';
-        if (isNew) {
-            sub += 'Requested';
-            content = 'Your request has been placed. Please wait for the admin approval.';
-        } else {
-            if (sts == 0) {
-                sub += 'Approved';
-                content = 'Your request has been approved by Admin.\nDefault Password is ' + this.pass;
-            } else {
-                sub += 'Rejected';
-                if (reason)
-                    content = 'Your request has been rejected by Admin. Reason: ' + reason;
-                else
-                    content = 'Your request has been rejected by Admin.';
-            }
-        }
-        body = header + content + footer;
-
-        // Create a GlideEmailOutbound object
-        var email = new GlideEmailOutbound();
-        //mail.addRecipient(to);
-        email.addAddress('cc', to);
-        email.setSubject(sub);
-        email.setBody(body);
-
-        // Save and send the email
-        var emailSysId = email.save();
-
-        // Optionally, you can check for errors
-        if (email.error()) {
-            gs.error('Email sending failed: ' + email.errorMsg());
-        } else {
-            gs.info('Email sent successfully.');
-        }
-
-    },
-
-    RejectUser: function(userInfo) {
-        gs.info("Rejecting request");
-        this.requestTable.addQuery('sys_id', userInfo.sysId);
-        this.requestTable.query();
-        if (this.requestTable.next()) {
-            this.requestTable.setValue('status', 'rejected');
-            this.requestTable.update('updated status of record: ' + userInfo.sysId + ' to REJECTED');
-        }
-    },
-
-    UpdateRequestTable: function(userInfo, newId, status) {
-        this.requestTable.addQuery('sys_id', userInfo.sysId);
-        this.requestTable.query();
-        if (this.requestTable.next()) {
-            this.requestTable.setValue('id', newId);
-            this.requestTable.setValue('status', status);
-            this.requestTable.update('updated ID of record: ' + userInfo.sysId);
-        }
-    },
-
 };]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-12-05 11:15:29</sys_created_on>
         <sys_id>6713f6eb343631107f44f748c83411df</sys_id>
-        <sys_name>AutomationAnywhereFunctions</sys_name>
+        <sys_name>AutomationAnywhere_APIs</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>

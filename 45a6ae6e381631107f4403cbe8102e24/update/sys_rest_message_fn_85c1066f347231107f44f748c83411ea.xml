@@ -6,7 +6,7 @@
         <basic_auth_user/>
         <content>{&#13;
   "roles": ${roles},&#13;
-  "email": "${mailId}",&#13;
+  "email": "${mailID}",&#13;
   "enableAutoLogin": true,&#13;
   "username": "${userName}",&#13;
   "firstName": "${firstName}",&#13;
@@ -19,9 +19,9 @@
         <lock>false</lock>
         <oauth2_profile/>
         <protocol_name/>
-        <qualified_name>Automation Anyhere - API [ Create User ]</qualified_name>
+        <qualified_name>AA-API [ Create User ]</qualified_name>
         <rest_endpoint>https://merck-dev.my.automationanywhere.digital/v1/usermanagement/users</rest_endpoint>
-        <rest_message display_value="Automation Anyhere - API">97e3ccba003231107f449a5d437fabc6</rest_message>
+        <rest_message display_value="AA-API">97e3ccba003231107f449a5d437fabc6</rest_message>
         <sys_class_name>sys_rest_message_fn</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-12-05 07:40:05</sys_created_on>

@@ -13,11 +13,11 @@
 
 	function handleUpdateResponse(res) {
 		deleteProp(c.data, "action");
-		deleteProp(c.data, "fname");
-		deleteProp(c.data, "lname");
-		deleteProp(c.data, "uid");
-		deleteProp(c.data, "automation");
-		deleteProp(c.data, "email");
+		deleteProp(c.data, "firstName");
+		deleteProp(c.data, "lastName");
+		deleteProp(c.data, "uID");
+		deleteProp(c.data, "automationName");
+		deleteProp(c.data, "mailID");
 		deleteProp(c.data, "environment");
 	}
 
@@ -27,12 +27,12 @@
 	}
 
 	c.requestAccess = function(){
-		c.data.fname = c.data.user_info.fname;
-		c.data.lname = c.data.user_info.lname;
-		c.data.email = c.data.user_info.email;
-		c.data.uid = c.data.user_info.uid;
-		c.data.automation = c.data.temp_auto_name.value;
-		c.data.environment = c.data.temp_env;
+		c.data.firstName = c.data.userInfo.firstName;
+		c.data.lastName = c.data.userInfo.lastName;
+		c.data.mailID = c.data.userInfo.mailID;
+		c.data.uID = c.data.userInfo.uID;
+		c.data.automationName = c.data.tempAutoName.value;
+		c.data.environment = c.data.tempEnv;
 		c.data.action = 'requestAccess';
 		c.server.update().then(handleUpdateResponse).catch(handleError);
 	}
@@ -101,36 +101,23 @@ select{
 	data.env = env_name.getChoices(); // Read the Choices present in the Environment:Name field
 
 	data.snTableName = 'x_snc_accessprov_0_automationlist';
-
-	// Fetch User Details to auto-fill the fields
-	gr = new GlideRecord('sys_user');
-	gr.addEncodedQuery('user_name='+gs.getUserName());
-	gr.query();
-	while(gr.next()){
-		data.user_info = {
-			fname: gr.first_name.toString(),
-			lname: gr.last_name.toString(),
-			email: gr.email.toString(),
-			uid: gs.getUserName()
-		};
-	}
+	data.userInfo = new CommonMethods().getUserDataByUID(gs.getUserName());
 })();
 
 
 if(input){
 	if(input.action=='requestAccess'){
 		// validate if any of the required field is undefined
-		if(input.fname == undefined || input.lname == undefined || input.email == undefined || input.automation == undefined || input.environment == undefined){
-			gs.addErrorMessage("Please fill all the neccessary fields and submit the form.");
+		if(input.firstName == undefined || input.lastName == undefined || input.mailID == undefined || input.automationName == undefined || input.environment == undefined){
+			gs.addErrorMessage("Please fill all the necessary fields and submit the form.");
 		}
 		else{
-			var apcf = new APCommonFunctions();
-			var tmpData = {'fname': input.fname, 'lname': input.lname, 'email':input.email, 'automation':input.automation, 'environment': input.environment, 'uid':input.uid};
-			var res = apcf.createReq(tmpData);
-			if(res)
-				gs.addErrorMessage("Request is already made.");
-			else
+			var tmpData = {'firstName': input.firstName, 'lastName': input.lastName, 'mailID':input.mailID, 'automationName':input.automationName, 'environment': input.environment, 'uID':input.uID};
+			var res = new APCommonFunctions().createReq(tmpData);
+			if(!res)
 				gs.addInfoMessage("Access Requested. Wait for approval");
+			else
+				gs.addErrorMessage("Request is already made.");
 		}
 
 	}
@@ -159,7 +146,7 @@ if(input){
       <div class="form-group">
         <label class="col-md-4 control-label" for="txt_uid">MUID </label>
         <div class="col-md-6">
-          <input id="txt_uid" ng-model="data.user_info.uid" type="text" class="form-control input-md" disabled>
+          <input id="txt_uid" ng-model="data.userInfo.uID" type="text" class="form-control input-md" disabled>
         </div>
       </div>
 
@@ -167,7 +154,7 @@ if(input){
       <div class="form-group">
         <label class="col-md-4 control-label" for="txt_first_name">First Name</label>
         <div class="col-md-6">
-          <input id="txt_first_name" ng-model="data.user_info.fname" type="text" class="form-control input-md" disabled>
+          <input id="txt_first_name" ng-model="data.userInfo.firstName" type="text" class="form-control input-md" disabled>
         </div>
       </div>
 
@@ -175,7 +162,7 @@ if(input){
       <div class="form-group">
         <label class="col-md-4 control-label" for="txt_last_name">Last Name</label>
         <div class="col-md-6">
-          <input id="txt_last_name" ng-model="data.user_info.lname" type="text" class="form-control input-md" disabled>
+          <input id="txt_last_name" ng-model="data.userInfo.lastName" type="text" class="form-control input-md" disabled>
         </div>
       </div>
 
@@ -183,7 +170,7 @@ if(input){
       <div class="form-group">
         <label class="col-md-4 control-label" for="txt_email">Email Id</label>
         <div class="col-md-6">
-          <input id="txt_email" ng-model="data.user_info.email" type="email" class="form-control input-md" disabled>
+          <input id="txt_email" ng-model="data.userInfo.mailID" type="email" class="form-control input-md" disabled>
         </div>
       </div>
 
@@ -191,7 +178,7 @@ if(input){
       <div class="form-group">
         <label class="col-md-4 control-label" for="txt_automation">Automation</label>
         <div class="col-md-6">
-        <sn-record-picker table="data.snTableName" field="data.temp_auto_name" display-field="'name'" value-field="'name'" search-fields="'name'" page-size="10"></sn-record-picker>
+        <sn-record-picker table="data.snTableName" field="data.tempAutoName" display-field="'name'" value-field="'name'" search-fields="'name'" page-size="10"></sn-record-picker>
       </div>
       </div>
 
@@ -199,8 +186,8 @@ if(input){
       <div class="form-group">
         <label class="col-md-4 control-label" for="txt_env">Environment</label>
         <div class="col-md-6">
-          <select id="txt_env" class="form-control input-md" ng-model="data.temp_env"
-            ng-init="data.temp_env = data.env[0]" ng-options="option for option in data.env">
+          <select id="txt_env" class="form-control input-md" ng-model="data.tempEnv"
+            ng-init="data.tempEnv = data.env[0]" ng-options="option for option in data.env">
           </select>
         </div>
       </div>
