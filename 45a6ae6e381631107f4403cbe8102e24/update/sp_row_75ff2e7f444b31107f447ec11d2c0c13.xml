@@ -3,7 +3,7 @@
         <class_name/>
         <order>1</order>
         <sp_column/>
-        <sp_container display_value="Admin - Approve Requests - Container 1">79ff2e7f444b31107f447ec11d2c0c10</sp_container>
+        <sp_container display_value="Admin - Approve OR Reject Requests - Container 1">79ff2e7f444b31107f447ec11d2c0c10</sp_container>
         <sys_class_name>sp_row</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-12-18 15:50:55</sys_created_on>

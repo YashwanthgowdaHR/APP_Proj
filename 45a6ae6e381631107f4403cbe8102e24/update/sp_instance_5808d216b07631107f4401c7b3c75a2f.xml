@@ -11,7 +11,7 @@
         <short_description/>
         <size>md</size>
         <sp_column display_value="1">2df79ad2b07631107f4401c7b3c75a79</sp_column>
-        <sp_widget display_value="Admin - Request New">0cb8ff17786631107f4427174a8003d7</sp_widget>
+        <sp_widget display_value="Admin - Request for Others">0cb8ff17786631107f4427174a8003d7</sp_widget>
         <sys_class_name>sp_instance</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-12-01 12:01:40</sys_created_on>

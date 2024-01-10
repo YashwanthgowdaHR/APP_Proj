@@ -6,7 +6,7 @@
         <bootstrap_alt>false</bootstrap_alt>
         <class_name/>
         <container_class_name/>
-        <name>User - Access Request - Container 1</name>
+        <name>User - Request Access - Container 1</name>
         <order>1</order>
         <sp_page display_value="tsp_user_page_req_access">9059448a107231107f44b0faa36cad6a</sp_page>
         <subheader>false</subheader>
@@ -14,7 +14,7 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-11-30 06:58:59</sys_created_on>
         <sys_id>1699408a107231107f44b0faa36cad97</sys_id>
-        <sys_name>User - Access Request - Container 1</sys_name>
+        <sys_name>User - Request Access - Container 1</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>

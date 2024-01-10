@@ -20,7 +20,7 @@
         <short_description/>
         <sp_page display_value="tsp_admin_page_access_history">dac990ca10b231107f44b0faa36cadc7</sp_page>
         <sp_rectangle_menu/>
-        <sp_rectangle_menu_item display_value="Access">23f8040a107231107f44b0faa36cad3a</sp_rectangle_menu_item>
+        <sp_rectangle_menu_item display_value="Requests">23f8040a107231107f44b0faa36cad3a</sp_rectangle_menu_item>
         <sys_class_name>sp_rectangle_menu_item</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-11-30 09:30:36</sys_created_on>

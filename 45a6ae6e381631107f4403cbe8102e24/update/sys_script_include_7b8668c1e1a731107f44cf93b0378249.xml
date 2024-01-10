@@ -52,15 +52,15 @@ CommonMethods.prototype = {
 			return;
 		}
 		gr = new GlideRecord('sys_user');
-		gr.addEncodedQuery('user_name=' + input.uID);
+		gr.addEncodedQuery('user_name=' + uID);
 		gr.query();
 		var result;
 		if (gr.hasNext()) {
 			gr.next();
 			result = {
-				fname: gr.first_name.toString(),
-				lname: gr.last_name.toString(),
-				email: gr.email.toString(),
+				firstName: gr.first_name.toString(),
+				lastName: gr.last_name.toString(),
+				mailID: gr.email.toString(),
 				uID: uID,
 			};
 		}

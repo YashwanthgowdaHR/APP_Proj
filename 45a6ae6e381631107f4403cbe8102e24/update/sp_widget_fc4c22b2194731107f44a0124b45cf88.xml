@@ -37,18 +37,18 @@
 		resetData();
 	}
 
-	c.approve = function (user) {
+	c.approve = function (record) {
 		var warn = '<i class="fa fa-warning" aria-hidden="true"></i>';
-		spModal.confirm("Are you sure to <b>approve</b> this user?").then(function(confirmed) {
+		spModal.confirm("Are you sure to <b>approve</b> this request?").then(function(confirmed) {
 			spUtil.addTrivialMessage("Approving the request...");
-			c.data.info = user;
+			c.data.info = record;
 			c.data.action = 'approve';
 			c.server.update().then(handleUpdateResponse).catch(handleError);
 		})
 
 	};
 
-	c.reject = function (user) {
+	c.reject = function (record) {
 		spModal.open({
 			title: 'Reason for rejecting',
 			message: 'Please <b>provide the comments</b> for rejecting the request.',
@@ -60,7 +60,7 @@
 			size: 'md'
 		}).then(function (reason) {
 			c.data.rejectReason = reason;
-			c.data.info = user;
+			c.data.info = record;
 			c.data.action = 'reject';
 			c.server.update().then(handleUpdateResponse).catch(handleError)
 		}, function () { }).catch(handleError);
@@ -119,12 +119,12 @@
         <docs/>
         <field_list/>
         <has_preview>true</has_preview>
-        <id>tsp_admin_approve_usr_reqs</id>
+        <id>tsp_admin_approve_reject_reqs</id>
         <internal>false</internal>
         <link><![CDATA[function link(scope, element, attrs, controller) {
   
 }]]></link>
-        <name>Admin - Approve Request</name>
+        <name>Admin - Approve OR Reject Request</name>
         <option_schema/>
         <public>false</public>
         <roles>x_snc_accessprov_0.admin</roles>
@@ -140,12 +140,12 @@
 
 
 	if (input) {
-		var user = input.info;
+		var record = input.info;
 
 		// APPROVE action
 		if (input.action === "approve") {
 			try {
-				var output = apcf.approveOrRejectUser("approve",user);
+				var output = apcf.approveOrRejectUser("approve",record);
 				if (output.isCreated)
 					gs.addInfoMessage("User has been created");
 				else
@@ -159,9 +159,9 @@
 		// REJECT action
 		if (input.action === 'reject') {
 			try {
-				user.rejectReason = input.rejectReason;
+				record.rejectReason = input.rejectReason;
 				// Script Includes function
-				apcf.approveOrRejectUser("reject", user);
+				apcf.approveOrRejectUser("reject", record);
 				gs.addInfoMessage("User has been rejected");
 			} catch (e) {
 				gs.error('Error rejecting request:', e);
@@ -176,7 +176,7 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-12-15 13:00:49</sys_created_on>
         <sys_id>fc4c22b2194731107f44a0124b45cf88</sys_id>
-        <sys_name>Admin - Approve Request</sys_name>
+        <sys_name>Admin - Approve OR Reject Request</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
@@ -206,7 +206,7 @@
         <td>{{info.automationName}}</td>
         <td>{{info.environment}}</td>
         <td>{{info.role}}</td>
-        <td>{{info.requestOn}}</td>
+        <td>{{info.requestedOn}}</td>
         <td>
         	<button class="btn btn-approve" ng-click="c.approve(info)">Approve</button>
           <button class="btn btn-reject" ng-click="c.reject(info)">Reject</button>

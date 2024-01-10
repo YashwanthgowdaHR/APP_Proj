@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="DELETE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function($scope,spModal, spUtil) {
+	/* widget controller */
+	var c = this;
+	c.request = function(){
+		var option = {
+			widget: "request_access_widget_2",
+			buttons: [{
+				label: "Submit",
+				value: "submit",
+				class: "btn-primary"
+			}]
+		}
+		spModal.open(option).then(function(response){
+			c.server.get({
+				action: "get_data"
+			}).then (function (serverResponse) {
+				console.log(serverResponse.data)
+			})
+			/*if(btn.value == "submit"){
+				c.data.fname = $scope.c.data.user_info.fname;
+				c.data.lname = $scope.c.data.user_info.lname;
+				c.data.email = $scope.c.data.user_info.email;
+				c.data.uid = $scope.c.data.user_info.uid;
+				c.data.automation_name =$scope.c.data.automation_name;
+				c.data.environment = $scope.c.data.environment;
+				
+				// delete the data.user_info and data.env variable
+				delete c.data.user_info;
+				delete c.data.env;
+				c.data.action = 'addRecord';
+				c.server.update().then(function(){
+					c.data.automation_name = "";
+					c.data.environment = c.data.env[0];
+					spModal.alert("Access Requested")
+				})
+				
+			}*/
+			
+		})
+		
+		
+		/*
+		spModal.open(option).then(function(btn){
+			if(btn.value == "submit"){
+				console.log(spModal)
+				console.log($scope)
+				c.data.fname = $scope.c.data.user_info.fname;
+				c.data.lname = $scope.c.data.user_info.lname;
+				c.data.email = $scope.c.data.user_info.email;
+				c.data.uid = $scope.c.data.user_info.uid;
+				c.data.automation_name =$scope.c.data.automation_name;
+				c.data.environment = $scope.c.data.environment;
+				
+				// delete the data.user_info and data.env variable
+				delete c.data.user_info;
+				delete c.data.env;
+				c.data.action = 'addRecord';
+				c.server.update().then(function(){
+					c.data.automation_name = "";
+					c.data.environment = c.data.env[0];
+					spModal.alert("Access Requested")
+				})
+				
+			}
+		})
+		spUtil.get("request_access_widget_2").then(function(response) {
+  c.coolClock = response;
+});*/
+		
+	}
+
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css/>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>true</has_preview>
+        <id>test_widget</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {  }]]></link>
+        <name>test_widget</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function(){
+	
+	
+})();
+
+
+if(input){
+	
+	if(input.action=='get_data'){
+		var gr = new GlideRecord('x_snc_accessprov_0_environment');
+	var env_name = gr.getElement("name");
+	data.env = env_name.getChoices(); // Read the Choices present in the Environment:Name field
+	//gs.addInfoMessage(data.userName);
+	
+	gr = new GlideRecord('sys_user');
+	gr.addQuery('sys_id',gs.getUserID());
+	gr.query();
+	while(gr.next()){
+		data.user_info = {
+			fname: gr.first_name.toString(),
+			lname: gr.last_name.toString(),
+			email: gr.email.toString(),
+			uid: gr.user_name.toString(),
+			name: gr.name.toString()
+		};
+	}
+	}
+	
+	if(input.action=='addRecord'){
+		gs.addInfoMessage("Recevied Request")
+		var gr = new GlideRecord('x_snc_accessprov_0_aa_request_access');
+		gr.initialize(); //create an empty record before inserting.
+		
+		gr.setValue('first_name', input.fname);
+		gr.setValue('last_name', input.lname);
+		gr.setValue('email_id', input.email);
+		gr.setValue('automation_name', input.automation_name);
+		gr.setValue('environment', input.environment);
+		gr.setValue('x_m_uid', input.uid);
+		gr.insert();
+	}
+	
+	
+}]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-11-23 12:04:23</sys_created_on>
+        <sys_id>f35c49fbe16631107f44fa95b6a3cf20</sys_id>
+        <sys_name>test_widget</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sp_widget_f35c49fbe16631107f44fa95b6a3cf20</sys_update_name>
+        <template><![CDATA[<div>
+<!-- your widget template -->
+  <h3>Hi, Welcome to ServiceNow.</h3>
+  <button ng-click="c.request()">Request Access</button>
+</div>]]></template>
+    </sp_widget>
+<sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</application>
+        <file_path/>
+        <instance_id>a2793f93c31bb910dc9cb30a05013171</instance_id>
+        <instance_name>nowlearning-nlinst01352945-0001</instance_name>
+        <name>sp_widget_f35c49fbe16631107f44fa95b6a3cf20</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sp_widget"&gt;
+    &lt;sp_widget action="INSERT_OR_UPDATE"&gt;
+        &lt;category&gt;custom&lt;/category&gt;
+        &lt;client_script&gt;&lt;![CDATA[api.controller=function($scope,spModal, spUtil) {
+	/* widget controller */
+	var c = this;
+	c.request = function(){
+		var option = {
+			widget: "request_access_widget_2",
+			buttons: [{
+				label: "Submit",
+				value: "submit",
+				class: "btn-primary"
+			}]
+		}
+		spModal.open(option).then(function(response){
+			c.server.get({
+				action: "get_data"
+			}).then (function (serverResponse) {
+				console.log(serverResponse.data)
+			})
+			/*if(btn.value == "submit"){
+				c.data.fname = $scope.c.data.user_info.fname;
+				c.data.lname = $scope.c.data.user_info.lname;
+				c.data.email = $scope.c.data.user_info.email;
+				c.data.uid = $scope.c.data.user_info.uid;
+				c.data.automation_name =$scope.c.data.automation_name;
+				c.data.environment = $scope.c.data.environment;
+				
+				// delete the data.user_info and data.env variable
+				delete c.data.user_info;
+				delete c.data.env;
+				c.data.action = 'addRecord';
+				c.server.update().then(function(){
+					c.data.automation_name = "";
+					c.data.environment = c.data.env[0];
+					spModal.alert("Access Requested")
+				})
+				
+			}*/
+			
+		})
+		
+		
+		/*
+		spModal.open(option).then(function(btn){
+			if(btn.value == "submit"){
+				console.log(spModal)
+				console.log($scope)
+				c.data.fname = $scope.c.data.user_info.fname;
+				c.data.lname = $scope.c.data.user_info.lname;
+				c.data.email = $scope.c.data.user_info.email;
+				c.data.uid = $scope.c.data.user_info.uid;
+				c.data.automation_name =$scope.c.data.automation_name;
+				c.data.environment = $scope.c.data.environment;
+				
+				// delete the data.user_info and data.env variable
+				delete c.data.user_info;
+				delete c.data.env;
+				c.data.action = 'addRecord';
+				c.server.update().then(function(){
+					c.data.automation_name = "";
+					c.data.environment = c.data.env[0];
+					spModal.alert("Access Requested")
+				})
+				
+			}
+		})
+		spUtil.get("request_access_widget_2").then(function(response) {
+  c.coolClock = response;
+});*/
+		
+	}
+
+};]]&gt;&lt;/client_script&gt;
+        &lt;controller_as&gt;c&lt;/controller_as&gt;
+        &lt;css/&gt;
+        &lt;data_table&gt;sp_instance&lt;/data_table&gt;
+        &lt;demo_data/&gt;
+        &lt;description/&gt;
+        &lt;docs/&gt;
+        &lt;field_list/&gt;
+        &lt;has_preview&gt;true&lt;/has_preview&gt;
+        &lt;id&gt;test_widget&lt;/id&gt;
+        &lt;internal&gt;false&lt;/internal&gt;
+        &lt;link&gt;&lt;![CDATA[function link(scope, element, attrs, controller) {  }]]&gt;&lt;/link&gt;
+        &lt;name&gt;test_widget&lt;/name&gt;
+        &lt;option_schema/&gt;
+        &lt;public&gt;false&lt;/public&gt;
+        &lt;roles/&gt;
+        &lt;script&gt;&lt;![CDATA[(function(){
+	
+	
+})();
+
+
+if(input){
+	
+	if(input.action=='get_data'){
+		var gr = new GlideRecord('x_snc_accessprov_0_environment');
+	var env_name = gr.getElement("name");
+	data.env = env_name.getChoices(); // Read the Choices present in the Environment:Name field
+	//gs.addInfoMessage(data.userName);
+	
+	gr = new GlideRecord('sys_user');
+	gr.addQuery('sys_id',gs.getUserID());
+	gr.query();
+	while(gr.next()){
+		data.user_info = {
+			fname: gr.first_name.toString(),
+			lname: gr.last_name.toString(),
+			email: gr.email.toString(),
+			uid: gr.user_name.toString(),
+			name: gr.name.toString()
+		};
+	}
+	}
+	
+	if(input.action=='addRecord'){
+		gs.addInfoMessage("Recevied Request")
+		var gr = new GlideRecord('x_snc_accessprov_0_aa_request_access');
+		gr.initialize(); //create an empty record before inserting.
+		
+		gr.setValue('first_name', input.fname);
+		gr.setValue('last_name', input.lname);
+		gr.setValue('email_id', input.email);
+		gr.setValue('automation_name', input.automation_name);
+		gr.setValue('environment', input.environment);
+		gr.setValue('x_m_uid', input.uid);
+		gr.insert();
+	}
+	
+	
+}]]&gt;&lt;/script&gt;
+        &lt;servicenow&gt;false&lt;/servicenow&gt;
+        &lt;sys_class_name&gt;sp_widget&lt;/sys_class_name&gt;
+        &lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;
+        &lt;sys_created_on&gt;2023-11-23 12:04:23&lt;/sys_created_on&gt;
+        &lt;sys_id&gt;f35c49fbe16631107f44fa95b6a3cf20&lt;/sys_id&gt;
+        &lt;sys_name&gt;test_widget&lt;/sys_name&gt;
+        &lt;sys_package display_value="AccessProvider" source="x_snc_accessprov_0"&gt;45a6ae6e381631107f4403cbe8102e24&lt;/sys_package&gt;
+        &lt;sys_policy/&gt;
+        &lt;sys_scope display_value="AccessProvider"&gt;45a6ae6e381631107f4403cbe8102e24&lt;/sys_scope&gt;
+        &lt;sys_update_name&gt;sp_widget_f35c49fbe16631107f44fa95b6a3cf20&lt;/sys_update_name&gt;
+        &lt;template&gt;&lt;![CDATA[&lt;div&gt;
+&lt;!-- your widget template --&gt;
+  &lt;h3&gt;Hi, Welcome to ServiceNow.&lt;/h3&gt;
+  &lt;button ng-click="c.request()"&gt;Request Access&lt;/button&gt;
+&lt;/div&gt;]]&gt;&lt;/template&gt;
+    &lt;/sp_widget&gt;
+&lt;/record_update&gt;</payload>
+        <payload_hash>102953016</payload_hash>
+        <record_name>test_widget</record_name>
+        <reverted_from/>
+        <source>863541dc9f6331107f44c737f024ab94</source>
+        <source_table>sys_upgrade_history</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-01-01 07:37:48</sys_created_on>
+        <sys_id>c35501109fa331107f44c737f024ab40</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>18cc3f517490000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-01 07:37:48</sys_updated_on>
+        <type>Widget</type>
+        <update_guid>8355011071a33110610a70cd56393040</update_guid>
+        <update_guid_history>8355011071a33110610a70cd56393040:102953016</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="test_widget">d4c184d79f2731107f44c737f024abbf</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-01-10 10:24:12</sys_created_on>
+        <sys_db_object display_value="" name="sp_widget">sp_widget</sys_db_object>
+        <sys_id>7aee04c1654b442595ced329802538b1</sys_id>
+        <sys_metadata>f35c49fbe16631107f44fa95b6a3cf20</sys_metadata>
+        <sys_name>test_widget</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_scope_delete display_value="">048d5f0e899f424a8270d790e19b3744</sys_scope_delete>
+        <sys_update_name>sp_widget_f35c49fbe16631107f44fa95b6a3cf20</sys_update_name>
+        <sys_update_version display_value="sp_widget_f35c49fbe16631107f44fa95b6a3cf20">c35501109fa331107f44c737f024ab40</sys_update_version>
+    </sys_metadata_delete>
+</record_update>

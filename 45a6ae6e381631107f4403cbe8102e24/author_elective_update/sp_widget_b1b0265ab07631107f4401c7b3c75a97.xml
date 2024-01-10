@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="DELETE">
+        <category>custom</category>
+        <client_script><![CDATA[function($scope){
+	
+	/*
+	var current = this;
+	current.addRecord = function(){
+		current.data.fname = $scope.c.data.user_info.fname;
+		current.data.lname = $scope.c.data.user_info.lname;
+		current.data.email = $scope.c.data.user_info.email;
+		current.data.uid = $scope.c.data.user_info.uid;
+		current.data.automation_name =$scope.c.data.automation_name;
+		current.data.environment = $scope.c.data.environment;
+		
+		delete current.data.user_info;
+		delete current.data.env;
+		current.data.action = 'addRecord';
+		current.server.update().then(function(){
+			current.data.automation_name = "";
+			current.data.environment = current.data.env[0];
+		});
+		
+	};
+	*/
+	
+	var c = this;
+	c.getData = function(){
+		c.data.uid = $scope.c.data.user_info.uid;
+		c.data.action = "getData";
+		c.server.update();
+	}
+	c.addRecord = function(){
+		c.data.fname = $scope.c.data.user_info.fname;
+		c.data.lname = $scope.c.data.user_info.lname;
+		c.data.email = $scope.c.data.user_info.email;
+		c.data.uid = $scope.c.data.user_info.uid;
+		c.data.automation_name =$scope.c.data.automation_name;
+		c.data.environment = $scope.c.data.environment;
+		delete c.data.env;
+		
+		c.data.action = 'addRecord';
+		console.log(c.data)
+		c.server.update()
+		
+	};
+	
+}]]></client_script>
+        <controller_as>c</controller_as>
+        <css>label{
+  font-weight: bold;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>true</has_preview>
+        <id/>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {  }]]></link>
+        <name>Copy of Admin - Others Request History</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function(){
+	var gr = new GlideRecord('x_snc_accessprov_0_environment')
+	var env_name = gr.getElement("name")
+	
+	// Read the Choices present in the Environment:Name field
+	data.env = env_name.getChoices()
+	
+	
+})();
+
+if(input){
+	
+	if(input.action == 'getData'){
+		gr = new GlideRecord('sys_user');
+		gr.addEncodedQuery('user_name='+input.uid);
+		
+		gr.query();
+		while(gr.next()){
+			data.user_info = {
+				fname: gr.first_name.toString(),
+				lname: gr.last_name.toString(),
+				email: gr.email.toString(),
+				uid: input.uid
+			}
+		}
+	}
+	
+	if(input.action == 'addRecord'){
+		
+		
+		if(input.fname == undefined || input.lname == undefined || input.email == undefined || input.automation_name==undefined || input.environment== undefined){
+			gs.addErrorMessage("Please fill all the neccessary fields and submit the form.")
+		}
+		else{
+			var gr = new GlideRecord('x_snc_accessprov_0_aa_request_access');
+			gr.addEncodedQuery('x_m_uid='+input.uid+"^automation_name="+input.automation_name+"^environment="+input.environment+"^status=pending^ORstatus=granted")
+			gr.query()			
+			if(!gr.next()){
+				gr.initialize(); //create an empty record before inserting.
+				gr.setValue('first_name', input.fname);
+				gr.setValue('last_name', input.lname);
+				gr.setValue('email_id', input.email);
+				gr.setValue('automation_name', input.automation_name);
+				gr.setValue('environment', input.environment);
+				gr.setValue('x_m_uid', input.uid);
+				gr.insert();
+				gs.addInfoMessage("Access Requested. Wait for the notification mail.")
+			}else{
+				gs.addErrorMessage("Request is already made.")
+			}
+		}
+		
+		
+	}
+	
+	
+}]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-12-01 12:37:42</sys_created_on>
+        <sys_id>b1b0265ab07631107f4401c7b3c75a97</sys_id>
+        <sys_name>Copy of Admin - Others Request History</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sp_widget_b1b0265ab07631107f4401c7b3c75a97</sys_update_name>
+        <template><![CDATA[<div>  
+<form class="form-horizontal">
+<fieldset>
+
+<!-- Form Name -->
+<legend class="text-center"><h3>Request Access Form</h3></legend>
+
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="txt_uid">MUID / XUID</label>  
+  <div class="col-md-6">
+  <input id="txt_uid" ng-model="c.data.user_info.uid" ng-model-options="{debounce: 1000}" type="text" class="form-control input-md" ng-change="c.getData()" required> 
+  </div>
+</div>
+  
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="txt_first_name">First Name</label>  
+  <div class="col-md-6">
+  <input id="txt_first_name" ng-model="c.data.user_info.fname" type="text" class="form-control input-md" required>
+  </div>
+</div>
+
+  <!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="txt_last_name">Last Name</label>  
+  <div class="col-md-6"> 
+  <input id="txt_last_name" ng-model="c.data.user_info.lname" type="text" class="form-control input-md" required>
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="txt_email">Email Id</label>  
+  <div class="col-md-6">
+  <input id="txt_email" ng-model="c.data.user_info.email" type="text" class="form-control input-md" required>
+  </div>
+</div>
+  
+<div class="form-group">
+  <label class="col-md-4 control-label" for="txt_automation_name">Automation</label>  
+  <div class="col-md-6">
+  <input id="txt_automation_name" ng-model="c.data.automation_name" type="text" class="form-control input-md" required> 
+  </div>
+</div>
+  
+<div class="form-group">
+  <label class="col-md-4 control-label" for="txt_env">Environment</label>  
+  <div class="col-md-6">
+    <select id="txt_env" class="form-control input-md" ng-model="c.data.environment"  ng-init="c.data.environment = data.env[0]" ng-options="option for option in data.env">
+    </select> 
+  </div>
+</div>
+
+
+
+<!-- Button -->
+<div class="form-group">
+  <div class="col-md-6">
+    <button id="btn_submit" name="btn_submit" class="btn btn-primary" ng-click="c.addRecord()">Submit</button>
+  </div>
+</div>
+
+</fieldset>
+</form>
+
+</div>]]></template>
+    </sp_widget>
+<sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</application>
+        <file_path/>
+        <instance_id>a2793f93c31bb910dc9cb30a05013171</instance_id>
+        <instance_name>nowlearning-nlinst01352945-0001</instance_name>
+        <name>sp_widget_b1b0265ab07631107f4401c7b3c75a97</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sp_widget"&gt;
+    &lt;sp_widget action="INSERT_OR_UPDATE"&gt;
+        &lt;category&gt;custom&lt;/category&gt;
+        &lt;client_script&gt;&lt;![CDATA[function($scope){
+	
+	/*
+	var current = this;
+	current.addRecord = function(){
+		current.data.fname = $scope.c.data.user_info.fname;
+		current.data.lname = $scope.c.data.user_info.lname;
+		current.data.email = $scope.c.data.user_info.email;
+		current.data.uid = $scope.c.data.user_info.uid;
+		current.data.automation_name =$scope.c.data.automation_name;
+		current.data.environment = $scope.c.data.environment;
+		
+		delete current.data.user_info;
+		delete current.data.env;
+		current.data.action = 'addRecord';
+		current.server.update().then(function(){
+			current.data.automation_name = "";
+			current.data.environment = current.data.env[0];
+		});
+		
+	};
+	*/
+	
+	var c = this;
+	c.getData = function(){
+		c.data.uid = $scope.c.data.user_info.uid;
+		c.data.action = "getData";
+		c.server.update();
+	}
+	c.addRecord = function(){
+		c.data.fname = $scope.c.data.user_info.fname;
+		c.data.lname = $scope.c.data.user_info.lname;
+		c.data.email = $scope.c.data.user_info.email;
+		c.data.uid = $scope.c.data.user_info.uid;
+		c.data.automation_name =$scope.c.data.automation_name;
+		c.data.environment = $scope.c.data.environment;
+		delete c.data.env;
+		
+		c.data.action = 'addRecord';
+		console.log(c.data)
+		c.server.update()
+		
+	};
+	
+}]]&gt;&lt;/client_script&gt;
+        &lt;controller_as&gt;c&lt;/controller_as&gt;
+        &lt;css&gt;label{
+  font-weight: bold;
+}&lt;/css&gt;
+        &lt;data_table&gt;sp_instance&lt;/data_table&gt;
+        &lt;demo_data/&gt;
+        &lt;description/&gt;
+        &lt;docs/&gt;
+        &lt;field_list/&gt;
+        &lt;has_preview&gt;true&lt;/has_preview&gt;
+        &lt;id/&gt;
+        &lt;internal&gt;false&lt;/internal&gt;
+        &lt;link&gt;&lt;![CDATA[function link(scope, element, attrs, controller) {  }]]&gt;&lt;/link&gt;
+        &lt;name&gt;Copy of Admin - Others Request History&lt;/name&gt;
+        &lt;option_schema/&gt;
+        &lt;public&gt;false&lt;/public&gt;
+        &lt;roles/&gt;
+        &lt;script&gt;&lt;![CDATA[(function(){
+	var gr = new GlideRecord('x_snc_accessprov_0_environment')
+	var env_name = gr.getElement("name")
+	
+	// Read the Choices present in the Environment:Name field
+	data.env = env_name.getChoices()
+	
+	
+})();
+
+if(input){
+	
+	if(input.action == 'getData'){
+		gr = new GlideRecord('sys_user');
+		gr.addEncodedQuery('user_name='+input.uid);
+		
+		gr.query();
+		while(gr.next()){
+			data.user_info = {
+				fname: gr.first_name.toString(),
+				lname: gr.last_name.toString(),
+				email: gr.email.toString(),
+				uid: input.uid
+			}
+		}
+	}
+	
+	if(input.action == 'addRecord'){
+		
+		
+		if(input.fname == undefined || input.lname == undefined || input.email == undefined || input.automation_name==undefined || input.environment== undefined){
+			gs.addErrorMessage("Please fill all the neccessary fields and submit the form.")
+		}
+		else{
+			var gr = new GlideRecord('x_snc_accessprov_0_aa_request_access');
+			gr.addEncodedQuery('x_m_uid='+input.uid+"^automation_name="+input.automation_name+"^environment="+input.environment+"^status=pending^ORstatus=granted")
+			gr.query()			
+			if(!gr.next()){
+				gr.initialize(); //create an empty record before inserting.
+				gr.setValue('first_name', input.fname);
+				gr.setValue('last_name', input.lname);
+				gr.setValue('email_id', input.email);
+				gr.setValue('automation_name', input.automation_name);
+				gr.setValue('environment', input.environment);
+				gr.setValue('x_m_uid', input.uid);
+				gr.insert();
+				gs.addInfoMessage("Access Requested. Wait for the notification mail.")
+			}else{
+				gs.addErrorMessage("Request is already made.")
+			}
+		}
+		
+		
+	}
+	
+	
+}]]&gt;&lt;/script&gt;
+        &lt;servicenow&gt;false&lt;/servicenow&gt;
+        &lt;sys_class_name&gt;sp_widget&lt;/sys_class_name&gt;
+        &lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;
+        &lt;sys_created_on&gt;2023-12-01 12:37:42&lt;/sys_created_on&gt;
+        &lt;sys_id&gt;b1b0265ab07631107f4401c7b3c75a97&lt;/sys_id&gt;
+        &lt;sys_name&gt;Copy of Admin - Others Request History&lt;/sys_name&gt;
+        &lt;sys_package display_value="AccessProvider" source="x_snc_accessprov_0"&gt;45a6ae6e381631107f4403cbe8102e24&lt;/sys_package&gt;
+        &lt;sys_policy/&gt;
+        &lt;sys_scope display_value="AccessProvider"&gt;45a6ae6e381631107f4403cbe8102e24&lt;/sys_scope&gt;
+        &lt;sys_update_name&gt;sp_widget_b1b0265ab07631107f4401c7b3c75a97&lt;/sys_update_name&gt;
+        &lt;template&gt;&lt;![CDATA[&lt;div&gt;  
+&lt;form class="form-horizontal"&gt;
+&lt;fieldset&gt;
+
+&lt;!-- Form Name --&gt;
+&lt;legend class="text-center"&gt;&lt;h3&gt;Request Access Form&lt;/h3&gt;&lt;/legend&gt;
+
+
+&lt;!-- Text input--&gt;
+&lt;div class="form-group"&gt;
+  &lt;label class="col-md-4 control-label" for="txt_uid"&gt;MUID / XUID&lt;/label&gt;  
+  &lt;div class="col-md-6"&gt;
+  &lt;input id="txt_uid" ng-model="c.data.user_info.uid" ng-model-options="{debounce: 1000}" type="text" class="form-control input-md" ng-change="c.getData()" required&gt; 
+  &lt;/div&gt;
+&lt;/div&gt;
+  
+&lt;!-- Text input--&gt;
+&lt;div class="form-group"&gt;
+  &lt;label class="col-md-4 control-label" for="txt_first_name"&gt;First Name&lt;/label&gt;  
+  &lt;div class="col-md-6"&gt;
+  &lt;input id="txt_first_name" ng-model="c.data.user_info.fname" type="text" class="form-control input-md" required&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+  &lt;!-- Text input--&gt;
+&lt;div class="form-group"&gt;
+  &lt;label class="col-md-4 control-label" for="txt_last_name"&gt;Last Name&lt;/label&gt;  
+  &lt;div class="col-md-6"&gt; 
+  &lt;input id="txt_last_name" ng-model="c.data.user_info.lname" type="text" class="form-control input-md" required&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Text input--&gt;
+&lt;div class="form-group"&gt;
+  &lt;label class="col-md-4 control-label" for="txt_email"&gt;Email Id&lt;/label&gt;  
+  &lt;div class="col-md-6"&gt;
+  &lt;input id="txt_email" ng-model="c.data.user_info.email" type="text" class="form-control input-md" required&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+  
+&lt;div class="form-group"&gt;
+  &lt;label class="col-md-4 control-label" for="txt_automation_name"&gt;Automation&lt;/label&gt;  
+  &lt;div class="col-md-6"&gt;
+  &lt;input id="txt_automation_name" ng-model="c.data.automation_name" type="text" class="form-control input-md" required&gt; 
+  &lt;/div&gt;
+&lt;/div&gt;
+  
+&lt;div class="form-group"&gt;
+  &lt;label class="col-md-4 control-label" for="txt_env"&gt;Environment&lt;/label&gt;  
+  &lt;div class="col-md-6"&gt;
+    &lt;select id="txt_env" class="form-control input-md" ng-model="c.data.environment"  ng-init="c.data.environment = data.env[0]" ng-options="option for option in data.env"&gt;
+    &lt;/select&gt; 
+  &lt;/div&gt;
+&lt;/div&gt;
+
+
+
+&lt;!-- Button --&gt;
+&lt;div class="form-group"&gt;
+  &lt;div class="col-md-6"&gt;
+    &lt;button id="btn_submit" name="btn_submit" class="btn btn-primary" ng-click="c.addRecord()"&gt;Submit&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/fieldset&gt;
+&lt;/form&gt;
+
+&lt;/div&gt;]]&gt;&lt;/template&gt;
+    &lt;/sp_widget&gt;
+&lt;/record_update&gt;</payload>
+        <payload_hash>-379533975</payload_hash>
+        <record_name>Copy of Admin - Others Request History</record_name>
+        <reverted_from/>
+        <source>863541dc9f6331107f44c737f024ab94</source>
+        <source_table>sys_upgrade_history</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-01-01 07:37:48</sys_created_on>
+        <sys_id>475501109fa331107f44c737f024ab3d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>18cc3f517210000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-01 07:37:48</sys_updated_on>
+        <type>Widget</type>
+        <update_guid>0755011075a3311030b6fd6af821ea3d</update_guid>
+        <update_guid_history>0755011075a3311030b6fd6af821ea3d:-379533975</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Copy of Admin - Others Request History">d4c184d79f2731107f44c737f024abb6</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-01-10 10:24:12</sys_created_on>
+        <sys_db_object display_value="" name="sp_widget">sp_widget</sys_db_object>
+        <sys_id>07b4c8d634e84d76883f35c7b1840824</sys_id>
+        <sys_metadata>b1b0265ab07631107f4401c7b3c75a97</sys_metadata>
+        <sys_name>Copy of Admin - Others Request History</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_scope_delete display_value="">048d5f0e899f424a8270d790e19b3744</sys_scope_delete>
+        <sys_update_name>sp_widget_b1b0265ab07631107f4401c7b3c75a97</sys_update_name>
+        <sys_update_version display_value="sp_widget_b1b0265ab07631107f4401c7b3c75a97">475501109fa331107f44c737f024ab3d</sys_update_version>
+    </sys_metadata_delete>
+</record_update>

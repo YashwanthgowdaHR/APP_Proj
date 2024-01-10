@@ -59,7 +59,7 @@ td[class^="text"] {
         <script><![CDATA[(function() {
 	/* populate the 'data' object */
 	/* e.g., data.table = $sp.getValue('table'); */
-	data.accessInfo = new APCommonFunctions().getReqHistory(gs.getUserName());
+	data.reqHistory = new APCommonFunctions().getReqHistoryForUser(gs.getUserName());
 })();]]></script>
         <servicenow>false</servicenow>
         <sys_class_name>sp_widget</sys_class_name>
@@ -72,7 +72,7 @@ td[class^="text"] {
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sp_widget_9639b32dfd3631107f44ccf1f2af9df4</sys_update_name>
         <template><![CDATA[<div>
-	<div ng-if="data.accessInfo.length > 0">
+	<div ng-if="data.reqHistory.length > 0">
     <!-- If Any Request Found -->
   	 <legend class="text-center">
         <h2>Rquests Details</h2>
@@ -88,9 +88,9 @@ td[class^="text"] {
         </tr>
       </thead>
     	<tbody>
-    		<tr ng-repeat="info in data.accessInfo">
+    		<tr ng-repeat="info in data.reqHistory">
           <th scope="row" class="align-middle">{{info.no}}</th>
-          <td class="align-middle">{{info.requestOn}}</td>
+          <td class="align-middle">{{info.requestedOn}}</td>
           <td class="align-middle">{{info.automationName}}</td>
           <td class="align-middle">{{info.environment}}</td>
           <td ng-if="info.status=='Granted'"class="text-green align-middle">{{info.status}}</td>
@@ -103,7 +103,7 @@ td[class^="text"] {
   	</table>
 	</div>
   
-  <div ng-if="data.accessInfo.length <= 0" class="no-request">
+  <div ng-if="data.reqHistory.length <= 0" class="no-request">
     <!-- If there is No Request Found -->
     <h2>
       no request found.

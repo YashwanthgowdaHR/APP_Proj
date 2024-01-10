@@ -114,6 +114,7 @@ if(input){
 		else{
 			var tmpData = {'firstName': input.firstName, 'lastName': input.lastName, 'mailID':input.mailID, 'automationName':input.automationName, 'environment': input.environment, 'uID':input.uID};
 			var res = new APCommonFunctions().createReq(tmpData);
+			// role field will contain the default value i.e. 224(AAE_Basic)
 			if(!res)
 				gs.addInfoMessage("Access Requested. Wait for approval");
 			else

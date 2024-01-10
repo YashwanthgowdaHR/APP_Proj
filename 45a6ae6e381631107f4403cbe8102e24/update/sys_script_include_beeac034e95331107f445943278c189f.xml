@@ -10,333 +10,407 @@
         <script><![CDATA[var APCommonFunctions = Class.create();
 
 APCommonFunctions.prototype = {
-	initialize: function () {
-		this.defaultPass = "abc@123123";
-		this.log = "SI | APCommonFunctions | ";
-	},
-	type: 'APCommonFunctions',
-	AA_API: new AutomationAnywhere_APIs(this.defaultPass),
-	adminGroupID: 'eb488d149fa331107f44c737f024abcf',
-	event1: 'x_snc_accessprov_0.send_mail_to_user',
-	event2: 'x_snc_accessprov_0.inform_admin',
-	groupMemberGR: new GlideRecord('sys_user_grmember'),
-	reqAccessGR: new GlideRecord('x_snc_accessprov_0_aa_request_access'),
+    initialize: function() {
+        this.defaultPass = "abc@123123";
+        this.log = "SI | APCommonFunctions | ";
+    },
+    type: 'APCommonFunctions',
+    AA_API: new AutomationAnywhere_APIs(this.defaultPass),
+    adminGroupID: 'eb488d149fa331107f44c737f024abcf',
+    event1: 'x_snc_accessprov_0.send_mail_to_user',
+    event2: 'x_snc_accessprov_0.inform_admin',
+    groupMemberGR: new GlideRecord('sys_user_grmember'),
+    reqAccessGR: new GlideRecord('x_snc_accessprov_0_aa_request_access'),
 
-	addEvent: function (event, rec, p1, p2) {
-		gs.info(this.log + " addEvent >> " + event);
-		gs.eventQueue(name = event, record = rec, parm1 = p1, parm2 = p2);
-	},
+    addEvent: function(event, rec, p1, p2) {
+        gs.info(this.log + " addEvent >> " + event);
+        gs.eventQueue(name = event, record = rec, parm1 = p1, parm2 = p2);
+    },
 
-	addAndApproveReq: function (userData) {
-		var logName = this.log + " addAndApproveReq >> ";
+    addAndApproveReq: function(userData) {
+        var logName = this.log + " addAndApproveReq >> ";
 
+        if (!this.isAdmin()) {
+            gs.error(logName + " Unknown Access found");
+            // Add Mail Notification when someone other than admin tried to access it.
+            return;
+        }
+        var recordSysID = this.insertRecord(userData);
+        if (!recordSysID) {
+            return {
+                isCreated: false,
+                msg: "Request exists already."
+            };
+        }
+
+        var record = userData;
+        record.recordSysID = recordSysID;
+        record.roleIds = this.getDisplayValueFromRecord(this.reqAccessGR, recordSysID, "roles");
+
+        var result = this.createUser(record);
+        if (result.isCreated) {
+            sts = "granted";
+            var details = {
+                sts: sts,
+                name: userData.name,
+                pass: this.defaultPass,
+                reason: userData.rejectReason || ""
+            };
+            this.addEvent(this.event1, this.reqAccessGR, userData.mailID, JSON.stringify(details));
+        }
+        return result;
+    },
+
+    approveOrRejectUser: function(action, record) {
+        var logName = this.log + "approveOrRejectUser >> ";
+
+        if (!this.isAdmin()) {
+            gs.error(logName + " Unknown Access found");
+            // Add Mail Notification when someone other than admin tried to access it.
+            return;
+        }
+
+        var sts = "pending";
+
+        // approve the req and create the user in AA
+        if (action == "approve") {
+            var result = this.createUser(record);
+            if (result.isCreated)
+                sts = "granted";
+            else
+                return result;
+        }
+
+        //reject the req
+        if (action == "reject") {
+            sts = "rejected";
+            this.rejectReq(record);
+        }
+
+        var details = {
+            sts: sts,
+            name: record.name,
+            pass: this.defaultPass,
+            reason: record.rejectReason || ""
+        };
+        this.addEvent(this.event1, this.reqAccessGR, record.mailID, JSON.stringify(details));
+
+        if (result)
+            return result;
+    },
+
+    createReq: function(userData) {
+        if (!this.insertRecord(userData))
+            return 1;
+        else {
+            this.informAdminOnUsrReq({
+                uID: userData.uID,
+                name: input.firstName + " " + input.lastName,
+                environment: input.environment.toUpperCase()
+            });
+            return 0;
+        }
+    },
+
+    createUser: function(record) {
+        var userInfo = {
+            firstName: record.firstName,
+            lastName: record.lastName,
+            roleIds: record.roleIds,
+            mailID: record.mailID,
+            uID: record.uID
+        };
+        var output = this.AA_API.createUsr(userInfo);
+        if (output.isCreated) {
+            this.updateRequestTable(record.recordSysID, output.id, "granted");
+        }
+        return output;
+    },
+
+    getGrpMembers: function(gropupSysID) {
+        this.groupMemberGR.addQuery('group', gropupSysID);
+        this.groupMemberGR.query();
+        var users = [];
+        // Check if there are any members in the group
+        if (this.groupMemberGR.getRowCount() > 0) {
+            // Loop through the group members and get user details
+            while (this.groupMemberGR.next()) {
+                // Get the user record for each member
+                var userGR = new GlideRecord('sys_user');
+                if (userGR.get(this.groupMemberGR.getValue('user'))) {
+                    users.push({
+                        name: userGR.getValue('name'),
+                        mailID: userGR.getValue('mailID')
+                    });
+                }
+            }
+        }
+        return users;
+    },
+
+    getAllApprovedUsers: function() {
+		var logName = this.log + "getAllApprovedUsers >> ";
+        if (!this.isAdmin()) {
+            gs.error(logName + " Unknown Access found");
+            // Add Mail Notification when someone other than admin tried to access it.
+            return;
+        } else {
+            var i = 0;
+            var data = [];
+            var gd = new GlideDate();
+
+            let table = this.reqAccessGR;
+            table.addQuery('status', 'granted');
+            table.orderByDesc('sys_created_on');
+            table.query();
+
+            while (table.next()) {
+                let gdt = new GlideDateTime(table.sys_created_on.toString());
+                gdt.add(19800000);
+                gd.setValue(gdt.getValue());
+                var tmpRoles = this.getRoleName(table.getValue("roles"));
+                data.push({
+                    no: ++i,
+                    name: table.getValue('first_name').toString() + " " + table.getValue('last_name').toString(),
+                    mailID: table.getValue('email_id').toString(),
+                    uID: table.getValue('x_m_uid').toString(),
+                    automationName: table.getValue('automation_name').toString(),
+                    environment: table.getDisplayValue('environment').toString(),
+                    status: table.getDisplayValue('status').toString(),
+                    id: table.getValue("id"),
+                    role: tmpRoles,
+                    recordSysID: table.getValue("sys_id"),
+                    requestedON: gd.getByFormat("dd-MMM-yyyy hh:mm a"),
+                });
+            }
+            return data;
+        }
+    },
+
+    getAllPendingReq: function() {
+        var logName = this.log + "getAllPendingReq >> ";
+
+        if (!this.isAdmin()) {
+            gs.error(logName + " Unknown Access found");
+            // Add Mail Notification when someone other than admin tried to access it.
+            return;
+        } else {
+			gs.info(logName + "getting all the pending requests.");
+            var reqData = [];
+            var i = 0;
+            var gd = new GlideDate();
+
+            let table = this.reqAccessGR;
+            table.addQuery('status', 'pending');
+            table.orderByDesc('sys_created_on');
+            table.query();
+
+            while (table.next()) {
+                var tmpRoles = this.getRoleName(table.getValue("roles"));
+                let gdt = new GlideDateTime(table.sys_created_on.toString());
+                gdt.add(19800000);
+                gd.setValue(gdt.getValue());
+
+                reqData.push({
+                    no: ++i,
+                    recordSysID: table.getUniqueValue(),
+                    firstName: table.getValue('first_name').toString(),
+                    lastName: table.getValue('last_name').toString(),
+                    name: table.getValue('first_name').toString() + " " + table.getValue('last_name').toString(),
+                    mailID: table.getValue('email_id').toString(),
+                    uID: table.getValue('x_m_uid').toString(),
+                    automationName: table.getValue('automation_name').toString(),
+                    environment: table.getDisplayValue('environment').toString(),
+                    roleIds: table.getDisplayValue("roles").toString(),
+                    role: tmpRoles,
+                    requestedOn: gd.getByFormat("dd-MMM-yyyy hh:mm a"),
+                });
+            }
+            return reqData;
+        }
+    },
+
+	getReqHistory: function(){
+		// Returns the Request History;
 		if (!this.isAdmin()) {
-			gs.error(logName + " Unknown Access found");
-			// Add Mail Notification when someone other than admin tried to access it.
-			return;
-		}
-		if (!this.insertRecord(userData)) {
-			return { "isCreated": false, msg: "Request exists already." };
-		}
-		var result = this.createUser(userData);
-		if (result.isCreated) {
-			sts = "granted";
-			var details = {
-				'sts': sts,
-				'name': userData.name,
-				'pass': this.defaultPass,
-				'reason': userData.rejectReason || ""
-			};
-			this.addEvent(this.event1, this.reqAccessGR, userData.mailID, JSON.stringify(details));
-		}
-		return result;
-	},
-
-	approveOrRejectUser: function (action, userData) {
-		var logName = this.log + "approveOrRejectUser >> ";
-
-		if (!this.isAdmin()) {
-			gs.error(logName + " Unknown Access found");
-			// Add Mail Notification when someone other than admin tried to access it.
-			return;
-		}
-
-		var sts = "pending";
-
-		// approve the req and create the user in AA
-		if (action == "approve") {
-			var result = this.createUser(userData);
-			if (result.isCreated)
-				sts = "granted";
-			else
-				return result;
-		}
-
-
-		//reject the req
-		if (action == "reject") {
-			sts = "rejected";
-			this.rejectUser(userData);
-		}
-
-		var details = {
-			'sts': sts,
-			'name': userData.name,
-			'pass': this.defaultPass,
-			'reason': userData.rejectReason || ""
-		};
-		this.addEvent(this.event1, this.reqAccessGR, userData.mailID, JSON.stringify(details));
-
-		if (result)
-			return result;
-	},
-
-	createReq: function (userData) {
-		if (!this.insertRecord(userData))
-			return 1;
-		else {
-			gs.info("Record inserted into requests table successfully");
-			this.informAdminOnUsrReq({
-				'uID': userData.uID,
-				'name': input.firstName + " " + input.lastName,
-				'environment': input.environment.toUpperCase()
-			});
-			return 0;
-		}
-	},
-
-	createUser: function (userInfo) {
-		var output = this.AA_API.createUsr(userInfo);
-		if (output.isCreated) {
-			this.updateRequestTable(userInfo, output.id, "granted");
-		} 
-		return output;
-	},
-
-	removeUsr: function (id, sysId) {
-		if (this.AA_API.deleteUsr(id)) {
-			gs.error(logName + " user deletion failed.");
-			return 1;
-		} else {
-			let record = this.reqAccessGR;
-			record.addQuery('sys_id', sysId);
-			record.query();
-			while (record.next()) {
-				gs.info("Updating status of User as Removed");
-				record.setValue('id', '');
-				record.setValue('roles', '');
-				record.setValue('status', 'removed');
-				record.update("User has been deleted");
-			}
-			gs.info("user deleted successfully");
-			return 0;
-		}
-	},
-
-	getGrpMembers: function (sysId) {
-		this.groupMemberGR.addQuery('group', sysId);
-		this.groupMemberGR.query();
-		var users = [];
-		// Check if there are any members in the group
-		if (this.groupMemberGR.getRowCount() > 0) {
-			// Loop through the group members and get user details
-			while (this.groupMemberGR.next()) {
-				// Get the user record for each member
-				var userGR = new GlideRecord('sys_user');
-				if (userGR.get(this.groupMemberGR.getValue('user'))) {
-					users.push({
-						"name": userGR.getValue('name'),
-						"mailID": userGR.getValue('mailID')
-					});
-				}
-			}
-		}
-		return users;
-	},
-
-	getAllApprovedUsers: function () {
-		var i = 0;
-		var data = [];
-
-		let record = this.reqAccessGR;
-		record.addQuery('status', 'granted');
-		record.orderByDesc('sys_created_on');
-		record.query();
-
-		while (record.next()) {
-			var roleDetails = "";
-			if (userDetails) {
-				var tmpRoles = this.getRoleName(record.getValue("roles"));
-				for (var index in userDetails.roles) {
-					var role = userDetails.roles[index];
-					roleDetails += role.name + ";";
-				}
-				//gs.info("Roles: "+roleDetails)
-				data.push({
-					no: ++i,
-					name: record.getValue('first_name').toString() + " " + record.getValue('last_name').toString(),
-					mailID: record.getValue('email_id').toString(),
-					uID: record.getValue('x_m_uid').toString(),
-					automationName: record.getValue('automation_name').toString(),
-					environment: record.getDisplayValue('environment').toString(),
-					status: record.getDisplayValue('status').toString(),
-					id: record.getValue("id"),
-					role: tmpRoles,
-					sysId: record.getValue("sys_id")
-				});
-			}
-		}
-		return data;
-	},
-
-	getAllPendingReq: function () {
-		var logName = "getAllPendingReq >> ";
-
-		if (!this.isAdmin()) {
-			gs.error(logName + " Unknown Access found");
-			// Add Mail Notification when someone other than admin tried to access it.
-			return;
-		} else {
+            gs.error(logName + " Unknown Access found");
+            // Add Mail Notification when someone other than admin tried to access it.
+            return;
+        }else{
 			var reqData = [];
 			var i = 0;
 			var gd = new GlideDate();
-
-			let record = this.reqAccessGR;
-			record.addQuery('status', 'pending');
-			record.orderByDesc('sys_created_on');
-			record.query();
-
-			while (record.next()) {
-				var tmpRoles = this.getRoleName(record.getValue("roles"));
-				let gdt = new GlideDateTime(record.sys_created_on.toString());
+	
+			let table = this.reqAccessGR;
+			table.addEncodedQuery("status!=pending");
+			table.orderByDesc('sys_created_on');
+			table.query();
+	
+			while (table.next()) {
+                var tmpRoles = this.getRoleName(table.getValue("roles"));
+				let gdt = new GlideDateTime(table.sys_created_on.toString());
 				gdt.add(19800000);
 				gd.setValue(gdt.getValue());
-
+	
 				reqData.push({
 					no: ++i,
-					sysId: record.getUniqueValue(),
-					firstName: record.getValue('first_name').toString(),
-					lastName: record.getValue('last_name').toString(),
-					name: record.getValue('first_name').toString() + " " + record.getValue('last_name').toString(),
-					mailID: record.getValue('email_id').toString(),
-					uID: record.getValue('x_m_uid').toString(),
-					automationName: record.getValue('automation_name').toString(),
-					environment: record.getDisplayValue('environment').toString(),
-					roleIds: record.getDisplayValue("roles").toString(),
+					uID: table.getValue('x_m_uid').toString(),
+					firstName: table.getValue('first_name').toString(),
+					lastName: table.getValue('last_name').toString(),
+					name: table.getValue('first_name').toString() + " " + table.getValue('last_name').toString(),
+					mailID: table.getValue('email_id').toString(),
+					automationName: table.getValue('automation_name').toString(),
+					environment: table.getDisplayValue('environment').toString(),
+					status: table.getDisplayValue('status').toString(),
+					requestedOn: gd.getByFormat("dd-MMM-yyyy hh:mm a"),
 					role: tmpRoles,
-					requestOn: gd.getByFormat("dd-MMM-yyyy hh:mm a"),
 				});
 			}
 			return reqData;
 		}
 	},
 
-	getReqHistory: function (uID) {
-		// Returns the Request History of particular user;
-		var reqData = [];
-		var i = 0;
-		var gd = new GlideDate();
+    getReqHistoryForUser: function(uID) {
+        // Returns the Request History of particular user;
+        var reqData = [];
+        var i = 0;
+        var gd = new GlideDate();
 
-		let record = this.reqAccessGR;
-		record.addQuery('x_m_uid', uID);
-		record.orderByDesc('sys_created_on');
-		record.query();
+        let table = this.reqAccessGR;
+        table.addQuery('x_m_uid', uID);
+        table.orderByDesc('sys_created_on');
+        table.query();
 
-		while (record.next()) {
-			let gdt = new GlideDateTime(record.sys_created_on.toString());
-			gdt.add(19800000);
-			gd.setValue(gdt.getValue());
+        while (table.next()) {
+            let gdt = new GlideDateTime(table.sys_created_on.toString());
+            gdt.add(19800000);
+            gd.setValue(gdt.getValue());
 
-			reqData.push({
-				no: ++i,
-				automationName: record.getValue('automation_name').toString(),
-				environment: record.getDisplayValue('environment').toString(),
-				status: record.getDisplayValue('status').toString(),
-				requestOn: gd.getByFormat("dd-MMM-yyyy hh:mm a"),
-			});
-		}
-		return reqData;
-	},
+            reqData.push({
+                no: ++i,
+                automationName: table.getValue('automation_name').toString(),
+                environment: table.getDisplayValue('environment').toString(),
+                status: table.getDisplayValue('status').toString(),
+                requestedOn: gd.getByFormat("dd-MMM-yyyy hh:mm a"),
+            });
+        }
+        return reqData;
+    },
 
-	getRoleName: function (roleIds) {
-		var logName = this.log + "GetRoleName >> ";
-		gs.info(logName+" Reading roles names using its id...");
-		var tmpRoles = Array.isArray(roleIds) ? roleIds : roleIds.split(",");
-		var roles = [];
+    getRoleName: function(roleIds) {
+        var logName = this.log + "GetRoleName >> ";
+        gs.info(logName + " Reading roles names using its id...");
+        var tmpRoles = Array.isArray(roleIds) ? roleIds : roleIds.split(",");
+        var roles = [];
 
-		tmpRoles.forEach(function (id) {
-			var record = new GlideRecord("x_snc_accessprov_0_aa_roles");
-			gs.info("Fetching Role name for id: " + id);
-			record.get(id);
-			roles.push(record.name);
-		});
+        tmpRoles.forEach(function(id) {
+            var gr = new GlideRecord("x_snc_accessprov_0_aa_roles");
+            gr.get(id);
+            roles.push(gr.name);
+        });
 
-		if (Array.isArray(roleIds)) {
-			return roles;
-		} else {
-			return roles.length > 0 ? roles.join(";") : null;
-		}
+        if (Array.isArray(roleIds)) {
+            return roles;
+        } else {
+            return roles.length > 0 ? roles.join(";") : null;
+        }
 
-	},
+    },
 
-	informAdminOnUsrReq: function (userInfo) {
-		var adminDetails = this.getGrpMembers(this.adminGroupID); // sys_id provided
-		gs.info("ScriptInclude: Calling Inform Admin Event...");
+    getDisplayValueFromRecord: function(table, recordSysID, column) {
+        table.addQuery("sys_id", recordSysID);
+        table.query();
+        if (table.hasNext()) {
+            table.next();
+            return table.getDisplayValue(column).toString();
+        }
+    },
 
-		var details = {
-			"userInfo": userInfo,
-			'adminDetails': adminDetails
-		};
-		this.addEvent(this.event2, this.groupMemberGR, "yashwanthgowda.hr@external.merckgroup.com", JSON.stringify(details));
-		gs.info("ScriptInclude: Event Created");
-	},
+    informAdminOnUsrReq: function(userInfo) {
+        var adminDetails = this.getGrpMembers(this.adminGroupID); // sys_id of admin group is provided
+        var details = {
+            userInfo: userInfo,
+            adminDetails: adminDetails
+        };
+        this.addEvent(this.event2, this.groupMemberGR, "yashwanthgowda.hr@external.merckgroup.com", JSON.stringify(details));
+        gs.info("ScriptInclude: Event Created");
+    },
 
-	insertRecord: function (input) {
-		// Insert Record into RequestAccess table.		
-		let record = this.reqAccessGR;
-		record.addEncodedQuery('x_m_uid=' + input.uID + "^automation_name=" + input.automationName + "^environment=" + input.environment + "^status=pending^ORstatus=granted");
-		record.query();
-		if (!record.hasNext()) {
-			record.initialize(); //create an empty record before inserting.
-			record.setValue('first_name', input.firstName);
-			record.setValue('last_name', input.lastName);
-			record.setValue('email_id', input.mailID);
-			record.setValue('automation_name', input.automationName);
-			record.setValue('environment', input.environment);
-			record.setValue('x_m_uid', input.uID);
-			record.insert();
-			return true;
-		} else {
-			gs.info("Record already exists for this input. " + JSON.stringify(input));
-		}
-		return false;
-	},
+    /**
+     * Foo takes any argument.
+     * The return value is 'baz' in all cases.
+     * @param {json} input - It should contains keys i.e 
+     * firstName[string], lastName[string], mailId[string], uID[string], automationName[string], environment[string], optional - roles[string][default value is 224 - AAE_Basic] - roles containing role id separated by comma.
+     * @return {string} result - it will contain sysID of the record which is being created, else it will return null.
+     */
+    insertRecord: function(input) {
+        // Insert Record into RequestAccess table.	
+		var logName = this.log + "insertRecord >> ";	
+        let table = this.reqAccessGR;
+        table.addEncodedQuery('x_m_uid=' + input.uID + "^automation_name=" + input.automationName + "^environment=" + input.environment + "^status=pending^ORstatus=granted");
+        table.query();
+        if (!table.hasNext()) {
+            table.initialize(); //create an empty record before inserting.
+            table.setValue('first_name', input.firstName);
+            table.setValue('last_name', input.lastName);
+            table.setValue('email_id', input.mailID);
+            table.setValue('automation_name', input.automationName);
+            table.setValue('environment', input.environment);
+            table.setValue('x_m_uid', input.uID);
+            //
+            var recordSysID = table.insert();
+            return recordSysID;
+        } else
+            gs.info(logName + "Record already exists for this input. " + JSON.stringify(input));
+    },
 
-	isAdmin: function () {
-		return gs.getUser().isMemberOf(this.adminGroupID);
-	},
+    isAdmin: function() {
+        return gs.getUser().isMemberOf(this.adminGroupID);
+    },
 
-	rejectUser: function (userInfo) {
-		gs.info("Rejecting request");
-		let record = this.reqAccessGR;
-		record.addQuery('sys_id', userInfo.sysId);
-		record.query();
-		if (record.next()) {
-			record.setValue('status', 'rejected');
-			record.update('updated status of record: ' + userInfo.sysId + ' to REJECTED');
-		}
-	},
+    rejectReq: function(record) {
+		var logName = this.log + "rejectReq >> ";
+        gs.info(logName + "Rejecting the request...");
+        let table = this.reqAccessGR;
+        table.addQuery('sys_id', record.recordSysID);
+        table.query();
+        if (table.next()) {
+            table.setValue('status', 'rejected');
+            table.update('updated status of record: ' + record.recordSysID + ' to REJECTED');
+        }
+    },
 
-	updateRequestTable: function (userInfo, newId, status) {
-		let record = this.reqAccessGR;
-		record.addQuery('sys_id', userInfo.sysId);
-		record.query();
-		if (record.next()) {
-			record.setValue('id', newId);
-			record.setValue('status', status);
-			record.update('updated ID of record: ' + userInfo.sysId);
-		}
-	},
+    removeUsr: function(uID, userID, recordSysID) {
+		var logName = this.log + "removeUser >> ";
+		gs.info(logName + "Removing the user with ID: "+userID);
+        if (this.AA_API.deleteUsr( uID,userID)) {
+            gs.error(logName + "User deletion failed.");
+            return 1;
+        } else {
+            let table = this.reqAccessGR;
+            table.addQuery('sys_id', recordSysID);
+            table.query();
+            while (table.next()) {
+                table.setValue('id', '');
+                table.setValue('roles', '');
+                table.setValue('status', 'removed');
+                table.update("User has been deleted");
+            }
+            gs.info(logName + "user deleted successfully");
+            return 0;
+        }
+    },
+
+    updateRequestTable: function(recordSysID, userNewID, status) {
+        let table = this.reqAccessGR;
+        table.addQuery('sys_id', recordSysID);
+        table.query();
+        if (table.next()) {
+            table.setValue('id', userNewID);
+            table.setValue('status', status);
+            table.update('updated ID of record: ' + recordSysID);
+        }
+    },
 };]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>

@@ -11,7 +11,7 @@
         <short_description/>
         <size>md</size>
         <sp_column display_value="1">d65913af34b631107f44f748c83411f2</sp_column>
-        <sp_widget display_value="Admin - Users List">6f57e223343631107f44f748c83411d2</sp_widget>
+        <sp_widget display_value="Admin - Approved Users List">6f57e223343631107f44f748c83411d2</sp_widget>
         <sys_class_name>sp_instance</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-12-05 13:58:13</sys_created_on>

@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="DELETE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function() {
+    /* widget controller */
+    var c = this;
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>table td, table th{
+  text-align: center;
+  vertical-align: middle !important;
+}
+
+.no-request{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  text-align: center;
+  color: black;
+  text-transform: uppercase;
+}
+
+span.sts:has([value="Granted"])  {
+  color: #2543be;
+}
+
+td[class^="text"] {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.text-red, .btn-rejected{
+  color: #dc3545!important;
+  border-color:  #dc3545!important;
+}
+
+.text-blue, .btn-pending{
+  color: #007bff!important;
+  border-color:  #007bff!important;
+}
+
+.text-warning, .btn-removed{
+  color: orange!important;
+  border-color:  orange!important;
+}
+
+.text-green, .btn-approved{
+  color: #28a745!important;
+  border-color:  #28a745!important;
+}
+
+button[class*="btn-"]{
+background: transparent !important;
+  border: 1px solid black;
+}
+
+
+
+</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>true</has_preview>
+        <id/>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Copy of Admin - Request History</name>
+        <option_schema/>
+        <public>false</public>
+        <roles>x_snc_accessprov_0.admin</roles>
+        <script><![CDATA[(function() {
+	/* populate the 'data' object */	
+	data.otherUsersInfo = [];
+	var table = new GlideRecord('x_snc_accessprov_0_aa_request_access');
+	var i = 1;
+	table.query()
+
+	while (table.next()) {
+		//gs.addInfoMessage(gr.getValue('automation_name'))
+		if(table.getValue('status')!="pending"){
+			data.otherUsersInfo.push({
+				no:i++,
+				name: table.getValue('first_name').toString()+" " + table.getValue('last_name').toString(),
+				mailId: table.getValue('email_id').toString(),
+				uid: table.getValue('x_m_uid').toString(),
+				automationName: table.getValue('automation_name').toString(),
+				environment: table.getDisplayValue('environment').toString(),
+				status: table.getDisplayValue('status').toString()
+			});	
+		}
+
+	}
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-01-04 09:47:44</sys_created_on>
+        <sys_id>2bdff45d9fe331107f44c737f024ab21</sys_id>
+        <sys_mod_count>14</sys_mod_count>
+        <sys_name>Copy of Admin - Request History</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sp_widget_2bdff45d9fe331107f44c737f024ab21</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-04 11:35:19</sys_updated_on>
+        <template><![CDATA[<div ng-if="data.otherUsersInfo.length >= 0" class="table-responsive-sm">
+  <div class="filters">
+    <button class="btn btn-all" ng-click="c.filter('all')">All</button>
+    <button class="btn btn-approved" ng-click="c.filter('approved')">Approved</button>
+    <button class="btn btn-rejected" ng-click="c.filter('rejected')">Rejected</button>
+    <button class="btn btn-pending" ng-click="c.filter('pending')">Pending</button>
+  </div>
+  <h2>Find the requests details here.</h2>
+  <table class="table table-hover table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">MUID / XUID</th>
+        <th scope="col">Mail Id</th>
+        <th scope="col">Automation Name</th>
+        <th scope="col">Environment</th>
+        <th scope="col">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="info in data.otherUsersInfo">
+        <th scope="row">{{info.no}}</th>
+        <td>{{info.name}}</td>
+        <td>{{info.uid}}</td>
+        <td>{{info.mailId}}</td>
+        <td>{{info.automationName}}</td>
+        <td>{{info.environment}}</td>
+        <td ng-if="info.status=='Granted'"class="text-green">{{info.status}}</td>
+        <td ng-if="info.status=='Removed'" class="text-warning">{{info.status}}</td>
+        <td ng-if="info.status=='Rejected'" class="text-red">{{info.status}}</td>
+        <td ng-if="info.status=='Pending'" class="text-blue">{{info.status}}</td>
+       <!--
+        <td  ng-class="{'text-red': item.value='Rejected','text-warning': item.value='Removed','text-green': item.value='Granted'}">{{info.status}}</td>
+-->      
+</tr>
+    </tbody>
+  </table>
+</div>
+<div ng-if="data.otherUsersInfo.length <= 0" class="no-request">
+  <h2>
+    No request found.
+  </h2>
+</div>
+]]></template>
+    </sp_widget>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</application>
+        <file_path/>
+        <instance_id>a2793f93c31bb910dc9cb30a05013171</instance_id>
+        <instance_name>nowlearning-nlinst01352945-0001</instance_name>
+        <name>sp_widget_2bdff45d9fe331107f44c737f024ab21</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sp_widget"&gt;&lt;sp_widget action="INSERT_OR_UPDATE"&gt;&lt;category&gt;custom&lt;/category&gt;&lt;client_script&gt;&lt;![CDATA[api.controller = function() {
+    /* widget controller */
+    var c = this;
+};]]&gt;&lt;/client_script&gt;&lt;controller_as&gt;c&lt;/controller_as&gt;&lt;css&gt;table td, table th{
+  text-align: center;
+  vertical-align: middle !important;
+}
+
+.no-request{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  text-align: center;
+  color: black;
+  text-transform: uppercase;
+}
+
+span.sts:has([value="Granted"])  {
+  color: #2543be;
+}
+
+td[class^="text"] {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.text-red, .btn-rejected{
+  color: #dc3545!important;
+  border-color:  #dc3545!important;
+}
+
+.text-blue, .btn-pending{
+  color: #007bff!important;
+  border-color:  #007bff!important;
+}
+
+.text-warning, .btn-removed{
+  color: orange!important;
+  border-color:  orange!important;
+}
+
+.text-green, .btn-approved{
+  color: #28a745!important;
+  border-color:  #28a745!important;
+}
+
+button[class*="btn-"]{
+background: transparent !important;
+  border: 1px solid black;
+}
+
+
+
+&lt;/css&gt;&lt;data_table&gt;sp_instance&lt;/data_table&gt;&lt;demo_data/&gt;&lt;description/&gt;&lt;docs/&gt;&lt;field_list/&gt;&lt;has_preview&gt;true&lt;/has_preview&gt;&lt;id/&gt;&lt;internal&gt;false&lt;/internal&gt;&lt;link&gt;&lt;![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]&gt;&lt;/link&gt;&lt;name&gt;Copy of Admin - Request History&lt;/name&gt;&lt;option_schema/&gt;&lt;public&gt;false&lt;/public&gt;&lt;roles&gt;x_snc_accessprov_0.admin&lt;/roles&gt;&lt;script&gt;&lt;![CDATA[(function() {
+	/* populate the 'data' object */	
+	data.otherUsersInfo = [];
+	var table = new GlideRecord('x_snc_accessprov_0_aa_request_access');
+	var i = 1;
+	table.query()
+
+	while (table.next()) {
+		//gs.addInfoMessage(gr.getValue('automation_name'))
+		if(table.getValue('status')!="pending"){
+			data.otherUsersInfo.push({
+				no:i++,
+				name: table.getValue('first_name').toString()+" " + table.getValue('last_name').toString(),
+				mailId: table.getValue('email_id').toString(),
+				uid: table.getValue('x_m_uid').toString(),
+				automationName: table.getValue('automation_name').toString(),
+				environment: table.getDisplayValue('environment').toString(),
+				status: table.getDisplayValue('status').toString()
+			});	
+		}
+
+	}
+
+})();]]&gt;&lt;/script&gt;&lt;servicenow&gt;false&lt;/servicenow&gt;&lt;sys_class_name&gt;sp_widget&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2024-01-04 09:47:44&lt;/sys_created_on&gt;&lt;sys_id&gt;2bdff45d9fe331107f44c737f024ab21&lt;/sys_id&gt;&lt;sys_mod_count&gt;14&lt;/sys_mod_count&gt;&lt;sys_name&gt;Copy of Admin - Request History&lt;/sys_name&gt;&lt;sys_package display_value="AccessProvider" source="x_snc_accessprov_0"&gt;45a6ae6e381631107f4403cbe8102e24&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="AccessProvider"&gt;45a6ae6e381631107f4403cbe8102e24&lt;/sys_scope&gt;&lt;sys_update_name&gt;sp_widget_2bdff45d9fe331107f44c737f024ab21&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2024-01-04 11:35:19&lt;/sys_updated_on&gt;&lt;template&gt;&lt;![CDATA[&lt;div ng-if="data.otherUsersInfo.length &gt;= 0" class="table-responsive-sm"&gt;
+  &lt;div class="filters"&gt;
+    &lt;button class="btn btn-all" ng-click="c.filter('all')"&gt;All&lt;/button&gt;
+    &lt;button class="btn btn-approved" ng-click="c.filter('approved')"&gt;Approved&lt;/button&gt;
+    &lt;button class="btn btn-rejected" ng-click="c.filter('rejected')"&gt;Rejected&lt;/button&gt;
+    &lt;button class="btn btn-pending" ng-click="c.filter('pending')"&gt;Pending&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;h2&gt;Find the requests details here.&lt;/h2&gt;
+  &lt;table class="table table-hover table-bordered"&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;
+        &lt;th scope="col"&gt;#&lt;/th&gt;
+        &lt;th scope="col"&gt;Name&lt;/th&gt;
+        &lt;th scope="col"&gt;MUID / XUID&lt;/th&gt;
+        &lt;th scope="col"&gt;Mail Id&lt;/th&gt;
+        &lt;th scope="col"&gt;Automation Name&lt;/th&gt;
+        &lt;th scope="col"&gt;Environment&lt;/th&gt;
+        &lt;th scope="col"&gt;Status&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr ng-repeat="info in data.otherUsersInfo"&gt;
+        &lt;th scope="row"&gt;{{info.no}}&lt;/th&gt;
+        &lt;td&gt;{{info.name}}&lt;/td&gt;
+        &lt;td&gt;{{info.uid}}&lt;/td&gt;
+        &lt;td&gt;{{info.mailId}}&lt;/td&gt;
+        &lt;td&gt;{{info.automationName}}&lt;/td&gt;
+        &lt;td&gt;{{info.environment}}&lt;/td&gt;
+        &lt;td ng-if="info.status=='Granted'"class="text-green"&gt;{{info.status}}&lt;/td&gt;
+        &lt;td ng-if="info.status=='Removed'" class="text-warning"&gt;{{info.status}}&lt;/td&gt;
+        &lt;td ng-if="info.status=='Rejected'" class="text-red"&gt;{{info.status}}&lt;/td&gt;
+        &lt;td ng-if="info.status=='Pending'" class="text-blue"&gt;{{info.status}}&lt;/td&gt;
+       &lt;!--
+        &lt;td  ng-class="{'text-red': item.value='Rejected','text-warning': item.value='Removed','text-green': item.value='Granted'}"&gt;{{info.status}}&lt;/td&gt;
+--&gt;      
+&lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;
+&lt;div ng-if="data.otherUsersInfo.length &lt;= 0" class="no-request"&gt;
+  &lt;h2&gt;
+    No request found.
+  &lt;/h2&gt;
+&lt;/div&gt;
+]]&gt;&lt;/template&gt;&lt;/sp_widget&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>-1953075713</payload_hash>
+        <record_name>Copy of Admin - Request History</record_name>
+        <reverted_from/>
+        <source>96d5819c9f6331107f44c737f024ab27</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-01-04 11:35:19</sys_created_on>
+        <sys_id>937895199f6731107f44c737f024abc4</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>18cd4419d7f0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-04 11:35:19</sys_updated_on>
+        <type>Widget</type>
+        <update_guid>97785995b36731102606741770f80e6b</update_guid>
+        <update_guid_history>97785995b36731102606741770f80e6b:-1953075713,40e75dd56367311030964ea5291a45bd:-2094051780,056809199f273110ac6963e40a8c8cf9:1434414624,8236899537273110e11dfa252b81d04f:-1117837196,7516c1159f2731108d09f452cd7dd092:263493716,14e5cd152c27311093f3e3154f31cac3:1744239399,c695811556273110b9a0cd9aaa1f5050:-1260991952,3f854dd1412731101fafe40b683cbe87:1925498940,3764cd159827311058506f73738b74be:-1863207120,6f544d11a7273110c20020cddf0c2199:-1203198136,6693c1158a2731108a70a212c448628c:-470371324,8c834d11f22731109d113f3fd19ada10:-1274908943,ef338dd106273110b38d808da1f7fa96:1773909249,e6230d911227311051c1a38783b144a5:1273279198,27dff45dbbe331104e856cf1c8448623:923580852</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Copy of Admin - Request History">90c184d79f2731107f44c737f024ab70</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-01-10 10:24:12</sys_created_on>
+        <sys_db_object display_value="" name="sp_widget">sp_widget</sys_db_object>
+        <sys_id>288ef9f5568543989763a15c4734e341</sys_id>
+        <sys_metadata>2bdff45d9fe331107f44c737f024ab21</sys_metadata>
+        <sys_name>Copy of Admin - Request History</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_scope_delete display_value="">048d5f0e899f424a8270d790e19b3744</sys_scope_delete>
+        <sys_update_name>sp_widget_2bdff45d9fe331107f44c737f024ab21</sys_update_name>
+        <sys_update_version display_value="sp_widget_2bdff45d9fe331107f44c737f024ab21">937895199f6731107f44c737f024abc4</sys_update_version>
+    </sys_metadata_delete>
+</record_update>

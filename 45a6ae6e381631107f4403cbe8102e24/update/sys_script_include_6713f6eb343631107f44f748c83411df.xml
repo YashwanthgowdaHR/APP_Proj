@@ -27,7 +27,7 @@ AutomationAnywhere_APIs.prototype = {
      * msg[string] - if user creation failed, then msg will holds the error message.
      */
     createUsr: function(user) {
-        var logName = this.log + "CreateUser | ";
+        var logName = this.log + "CreateUser >> ";
         var result = {};
 
         try {
@@ -52,27 +52,27 @@ AutomationAnywhere_APIs.prototype = {
             req.setStringParameterNoEscape('userName', user.uID);
             req.setStringParameterNoEscape('roles', JSON.stringify(roles));
 
-            gs.info(logName + "User Creation | Creating User...");
+            gs.info(logName + " Creating User...");
 
             var response = req.execute();
             var responseBody = response.getBody();
             var httpStatus = response.getStatusCode();
-            gs.info(logName + "User Creation | Result - HTTP status Code: " + httpStatus);
+            gs.info(logName + "Result - HTTP status Code: " + httpStatus);
             var parsed = JSON.parse(responseBody);
             if (httpStatus == 201) {
                 // User Created Successfully
                 result.isCreated = true;
-                gs.info(logName + "User Creation | SUCCESS | New ID is " + parsed.id);
+                gs.info(logName + "SUCCESS | New ID is " + parsed.id);
                 result.id = parsed.id;
 
             } else {
                 //Failed to create user through api
                 result.isCreated = false;
                 result.msg = parsed.message;
-                gs.error(logName + "User Creation | FAILED | Reason is " + parsed.message);
+                gs.error(logName + "FAILED | Reason is " + parsed.message);
             }
         } catch (e) {
-            gs.error(logName + "User Creation | Exception: " + e);
+            gs.error(logName + "Exception: " + e);
             result.isCreated = false;
             result.msg = "An error occurred while creating the user.";
         }
@@ -85,15 +85,16 @@ AutomationAnywhere_APIs.prototype = {
      * @return {json} result - result will have keys i.e. isCreated[bool] - if the user is created, it will be true and msg[string] - if user creation failed, then msg will holds the error message.
      */
     deleteUsr: function(uID, id) {
-        var logName = this.log + "DeleteUser | ";
+        var logName = this.log + "DeleteUser >> ";
         if (id) {
-            gs.info("Checking if user with id " + id + "exists in AA...");
+            gs.info(logName+"Checking if user with id " + id + " exists in AA...");
             var exists = this.getUserByID(id);
             if (!exists) {
                 gs.error(logName + "User doesn't exists in Automation Anywhere.");
                 return 1;
             } else {
-                if (exists.username == uID) {
+                if (exists.username.toLowerCase() == uID.toLowerCase()) {
+					gs.error(logName + "Username matched with uID...");
                     var token = this.getToken();
                     var req = new sn_ws.RESTMessageV2(this.restSrc, 'DeleteUser');
                     req.setStringParameterNoEscape("authorization", token);
@@ -101,12 +102,15 @@ AutomationAnywhere_APIs.prototype = {
                     var response = req.execute();
                     var responseBody = response.getBody();
                     var httpStatus = response.getStatusCode();
-                    gs.info(logName + "Response Status: " + httpStatus);
+                    gs.info(logName + "SUCCESS | Response Status: " + httpStatus);
 
                     if (httpStatus == 204)
                         return 0;
+                    else {
+                            gs.error(logName + "FAILED | Reason is " + responseBody);
+                        }
                 } else {
-                    gs.error(logName + "you are trying to delete another user having UID:" + uID);
+                    gs.error(logName + "You are trying to delete user having UID: " + uID+". But, Username recorded with above ID in AA is "+exists.username);
                     return 1;
                 }
 

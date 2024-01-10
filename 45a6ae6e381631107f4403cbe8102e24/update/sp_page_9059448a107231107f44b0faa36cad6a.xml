@@ -20,7 +20,7 @@
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sp_page_9059448a107231107f44b0faa36cad6a</sys_update_name>
-        <title>User - Access Request</title>
+        <title>User - Request Access</title>
         <use_seo_script>false</use_seo_script>
     </sp_page>
     <sys_translated_text action="delete_multiple" query="documentkey=9059448a107231107f44b0faa36cad6a"/>

@@ -8,7 +8,7 @@
         <container_class_name/>
         <name>Admin - Request for Others - Container 1</name>
         <order>1</order>
-        <sp_page display_value="tsp_admin_page_req_new_access_for_others">929716d2b07631107f4401c7b3c75a62</sp_page>
+        <sp_page display_value="tsp_admin_page_req_access_for_others">929716d2b07631107f4401c7b3c75a62</sp_page>
         <subheader>false</subheader>
         <sys_class_name>sp_container</sys_class_name>
         <sys_created_by>admin</sys_created_by>

@@ -1,50 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
-        <client_script><![CDATA[api.controller=function(spUtil,spModal) {
-    /* widget controller */
-    var c = this;
-      
-      // delete object property if exists
-      function deleteProp(obj, key) {
-          if(obj.hasOwnProperty(key)) { 
-              delete obj[key];
-          }
-          return obj;
-      }
-      
-      // Reset data properties
-      function resetData() {
-          deleteProp("action");
-          deleteProp("userId");
-          deleteProp("sysId");
-      }
-      
-      function handleSuccess(res) {
-          resetData();
-          c.server.refresh();
-      }
-  
-      function handleError(error) {
-          // Handle or log the error as needed
-          console.error('An error occurred:', error);
-          resetData();
-      }
-      c.delete = function(userId, sysId){
-          console.log(sysId);
-          var warn = '<i class="fa fa-warning" aria-hidden="true"></i>';
-          spModal.confirm("Are you sure to <b>remove</b> this user?").then(function(confirmed) {
-              spUtil.addTrivialMessage("Removing user...");
-              c.data.userId = userId;
-          c.data.sysId = sysId;
-          c.data.action = "removeUser";
-          c.server.update().then(handleSuccess).catch(handleError);
-          })
-          
-      }
-      
-      
-  };]]></client_script>
+        <client_script><![CDATA[api.controller = function (spUtil, spModal) {
+	/* widget controller */
+	var c = this;
+
+	// delete object property if exists
+	function deleteProp(obj, key) {
+		if (obj.hasOwnProperty(key)) {
+			delete obj[key];
+		}
+		return obj;
+	}
+
+	// Reset data properties
+	function resetData() {
+		deleteProp("action");
+		deleteProp("userId");
+		deleteProp("sysId");
+	}
+
+	function handleSuccess(res) {
+		resetData();
+		c.server.refresh();
+	}
+
+	function handleError(error) {
+		// Handle or log the error as needed
+		console.error('An error occurred:', error);
+		resetData();
+	}
+	c.delete = function (uID, userId, recordSysID) {
+		var warn = '<i class="fa fa-warning" aria-hidden="true"></i>';
+		spModal.confirm("Are you sure to <b>remove</b> this user?").then(function (confirmed) {
+			spUtil.addTrivialMessage("Removing user...");
+			c.data.uID = uID;
+			c.data.userId = userId;
+			c.data.recordSysID = recordSysID;
+			c.data.action = "removeUser";
+			c.server.update().then(handleSuccess).catch(handleError);
+		})
+
+	}
+
+
+};]]></client_script>
         <controller_as>c</controller_as>
         <css>th, td{
   text-align: center;
@@ -67,12 +67,12 @@
         <docs/>
         <field_list/>
         <has_preview>true</has_preview>
-        <id>tsp_admin_usrs_list</id>
+        <id>tsp_admin_approved_usrs_list</id>
         <internal>false</internal>
         <link><![CDATA[function link(scope, element, attrs, controller) {
   
 }]]></link>
-        <name>Admin - Users List</name>
+        <name>Admin - Approved Users List</name>
         <option_schema/>
         <public>false</public>
         <roles>x_snc_accessprov_0.admin</roles>
@@ -83,9 +83,7 @@
 	if (input) {
 		if (input.action == "removeUser") {
 			try {
-				var userId = input.userId;
-				var sysId = input.sysId;
-				if(apcf.removeUsr(userId, sysId))
+				if(apcf.removeUsr(input.uID, input.userId, input.recordSysID))
 					gs.addErrorMessage('An error occurred while removing user.');
 				else
 					gs.addInfoMessage("User has been removed");
@@ -101,7 +99,7 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-12-05 10:45:46</sys_created_on>
         <sys_id>6f57e223343631107f44f748c83411d2</sys_id>
-        <sys_name>Admin - Users List</sys_name>
+        <sys_name>Admin - Approved Users List</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
@@ -114,10 +112,10 @@
         <th scope="col">#</th>
         <th scope="col">Name</th>
         <th scope="col">MUID / XUID</th>
-        <th scope="col">Mail Id</th>
-        <th scope="col">Roles</th>
-        <!-- <th scope="col">Automation Name</th> -->
+        <th scope="col">Mail ID</th>
+        <th scope="col">Automation Name</th>
         <th scope="col">Environment</th>
+        <th scope="col">Roles</th>
         <th scope="col">Status</th>
         <th scope="col">Action</th>
       </tr>
@@ -126,13 +124,13 @@
       <tr ng-repeat="info in data.userInfo">
         <td scope="row">{{info.no}}</td>
         <td>{{info.name}}</td>
-        <td>{{info.uid}}</td>
-        <td>{{info.mailId}}</td>
-        <td>{{info.role}}</td>
-        <!-- <td>{{info.automationName}}</td> -->
+        <td>{{info.uID}}</td>
+        <td>{{info.mailID}}</td>
+        <td>{{info.automationName}}</td>
         <td>{{info.environment}}</td>
+        <td>{{info.role}}</td>
         <td>{{info.status}}</td>
-        <td><button ng-click="c.delete(info.id, info.sysId)" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button></td>
+        <td><button ng-click="c.delete(info.uID, info.id, info.recordSysID)" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button></td>
       </tr>
     </tbody>
   </table>
