@@ -7,9 +7,9 @@
         <client_callable>false</client_callable>
         <description>Provide functions to interact with AA to create the user, to fetch the user's id etc.</description>
         <name>AutomationAnywhere_APIs</name>
-        <script><![CDATA[var AutomationAnywhere_APIs = Class.create(); 
+        <script><![CDATA[var AutomationAnywhere_APIs = Class.create();
 AutomationAnywhere_APIs.prototype = {
-    initialize: function(defaultPass) {
+    initialize: function(defaultPass = "") {
         this.defaultPass = defaultPass;
         this.log = "SI | AutomationAnywhere_APIs | ";
     },
@@ -31,7 +31,7 @@ AutomationAnywhere_APIs.prototype = {
         var result = {};
 
         try {
-			gs.info(logName+" Received a request to Create a New user with details: "+JSON.stringify(user));
+            gs.info(logName + " Received a request to Create a New user with details: " + JSON.stringify(user));
             // Get Access Token
             var tkn = this.getToken();
             var tmpRoles = user.roleIds.split(",");
@@ -43,7 +43,7 @@ AutomationAnywhere_APIs.prototype = {
             });
 
             //Initialize the required REST Message
-            var req = new sn_ws.RESTMessageV2(this.restSrc, 'Create User');
+            var req = this.makeReq('Create User');
             req.setStringParameterNoEscape("authorization", tkn);
             req.setStringParameterNoEscape('firstName', user.firstName);
             req.setStringParameterNoEscape('lastName', user.lastName);
@@ -78,6 +78,7 @@ AutomationAnywhere_APIs.prototype = {
         }
         return result;
     },
+
     /**
      * Foo takes any argument.
      * The return value is 'baz' in all cases.
@@ -87,16 +88,16 @@ AutomationAnywhere_APIs.prototype = {
     deleteUsr: function(uID, id) {
         var logName = this.log + "DeleteUser >> ";
         if (id) {
-            gs.info(logName+"Checking if user with id " + id + " exists in AA...");
+            gs.info(logName + "Checking if user with id " + id + " exists in AA...");
             var exists = this.getUserByID(id);
             if (!exists) {
                 gs.error(logName + "User doesn't exists in Automation Anywhere.");
                 return 1;
             } else {
                 if (exists.username.toLowerCase() == uID.toLowerCase()) {
-					gs.error(logName + "Username matched with uID...");
+                    gs.error(logName + "Username matched with uID...");
                     var token = this.getToken();
-                    var req = new sn_ws.RESTMessageV2(this.restSrc, 'DeleteUser');
+                    var req = this.makeReq('DeleteUser');
                     req.setStringParameterNoEscape("authorization", token);
                     req.setStringParameterNoEscape('id', id);
                     var response = req.execute();
@@ -107,10 +108,10 @@ AutomationAnywhere_APIs.prototype = {
                     if (httpStatus == 204)
                         return 0;
                     else {
-                            gs.error(logName + "FAILED | Reason is " + responseBody);
-                        }
+                        gs.error(logName + "FAILED | Reason is " + responseBody);
+                    }
                 } else {
-                    gs.error(logName + "You are trying to delete user having UID: " + uID+". But, Username recorded with above ID in AA is "+exists.username);
+                    gs.error(logName + "You are trying to delete user having UID: " + uID + ". But, Username recorded with above ID in AA is " + exists.username);
                     return 1;
                 }
 
@@ -120,7 +121,7 @@ AutomationAnywhere_APIs.prototype = {
 
     getToken: function() {
         // API call made to AA to get the TOKEN
-        var r = new sn_ws.RESTMessageV2(this.restSrc, 'Default Post');
+        var r = this.makeReq('Default Post');
         r.setStringParameterNoEscape('api_key', 'ii5_V`~@t<3oE|0h1XIQqIUc{|yWotEoK3Oryz^n');
         r.setStringParameterNoEscape('username', 'X253816');
         var response = r.execute();
@@ -138,7 +139,7 @@ AutomationAnywhere_APIs.prototype = {
         if (id) {
             gs.info("Checking info for Id: " + id);
             var token = this.getToken();
-            var req = new sn_ws.RESTMessageV2(this.restSrc, 'Get User by ID');
+            var req = this.makeReq('Get User by ID');
             req.setStringParameterNoEscape("authorization", token);
             req.setStringParameterNoEscape('id', id);
             var response = req.execute();
@@ -156,6 +157,40 @@ AutomationAnywhere_APIs.prototype = {
                 return JSON.parse(responseBody);
         }
     },
+
+    insertRoles: function() {
+        var logName = this.log + "insertRoles >> ";
+        var token = this.getToken();
+        var req = this.makeReq('List Roles');
+        req.setStringParameterNoEscape("authorization", token);
+        var response = req.execute();
+        var responseBody = response.getBody();
+        var httpStatus = response.getStatusCode();
+        gs.info(logName + " Response Status: " + httpStatus);
+
+        if (httpStatus == 200) {
+            var rolesList = JSON.parse(responseBody).list;
+            var gr = new GlideRecord("x_snc_accessprov_0_aa_roles");
+            rolesList.forEach(function(role) {
+                gr.addQuery('id', role.id);
+                gr.query();
+                if (!gr.hasNext()) {
+                    gs.info(logName + "Role doesn't exists. Adding it");
+                    gr.initialize();
+                    gr.setValue("id", role.id);
+                    gr.setValue("name", role.name);
+                    gr.setValue("description", role.description);
+                    gr.insert();
+                }
+            });
+        } else {
+            gs.error(logName + " Error Occured. " + responseBody);
+        }
+    },
+
+    makeReq: function(method) {
+        return new sn_ws.RESTMessageV2(this.restSrc, method);
+    }
 };]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>

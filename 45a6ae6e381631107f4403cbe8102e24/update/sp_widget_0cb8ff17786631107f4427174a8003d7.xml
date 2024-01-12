@@ -107,9 +107,7 @@ label{
 if (input) {
 	if (input.action == 'getData') {
 		// Get data once UID is entered by user is valid
-		gs.info("Got request to fetch the data by username");
 		data.userInfo = new CommonMethods().getUserDataByUID(input.uID);
-		gs.info(JSON.stringify(data.userInfo));
 	}
 
 	if (input.action == 'createUser') {
@@ -129,7 +127,6 @@ if (input) {
 			};
 			// Script Includes Class
 			var output = new APCommonFunctions().addAndApproveReq(user);
-			gs.addInfoMessage("Request is made to AutomationAnywhere.");
 			if (output) {
 				if (output.isCreated)
 					gs.addInfoMessage('User has been created. Notification will send to users mail');

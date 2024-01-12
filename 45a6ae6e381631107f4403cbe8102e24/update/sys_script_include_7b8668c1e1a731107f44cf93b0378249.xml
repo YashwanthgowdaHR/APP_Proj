@@ -15,24 +15,28 @@ CommonMethods.prototype = {
 
 	type: 'CommonMethods',
 
-	getRecord: function(table, sysId){
+	getRecord: function(table, sysID){
 		var logName = this.log+"GetRecord >> ";
 		var data = {};
 		data.isValid = false;
-
+		
+		
 		if(!gs.tableExists(table)){
 			gs.error(logName+"Given table: "+table+" doesn't exists.");
 			return data;
+		}else{
+			gs.info(logName + "Table exists");
 		}
 		var gr = new GlideRecord(table);
-		gr.addActiveQuery();
+		gr.addQuery('sys_id', sysID);
 		gr.query();
 
 		if(!gr.hasNext()){
-			gs.error(logName+" Given record with sysId: "+sysId+" doesn't exists in the table:"+table);
+			gs.error(logName+" Given record with sysId: "+sysID+" doesn't exists in the table:"+table);
 			return data;
+		}else{
+			gs.info(logName+"Data exists with sysId. Fetching it...");
 		}
-
 		var result = {};
 		gr.next();
 		for(var key in gr){
@@ -42,7 +46,7 @@ CommonMethods.prototype = {
 		data.getData = function(){
 			return result;
 		};
-		return data;
+		return result;
 	},
 
 	getUserDataByUID(uID){

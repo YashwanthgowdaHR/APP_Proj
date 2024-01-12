@@ -15,9 +15,10 @@
 
 	// Reset data properties
 	function resetData() {
-		deleteProp("action");
-		deleteProp("userId");
-		deleteProp("sysId");
+		deleteProp(c.data,"action");
+		deleteProp(c.data,"userId");
+		deleteProp(c.data,"recordSysID");
+		deleteProp(c.data,"uID");
 	}
 
 	function handleSuccess(res) {
@@ -41,6 +42,14 @@
 			c.server.update().then(handleSuccess).catch(handleError);
 		})
 
+	}
+
+	c.openInfo = function(recordSysID){
+		var pageId = 'tsp_admin_page_users_info';
+		// Construct the URL for the portal page
+		var url = "?id=" +pageId + "&sys_id="+recordSysID;
+		window.location.href = url;
+		
 	}
 
 
@@ -92,6 +101,7 @@
 				gs.addErrorMessage('An error occurred while removing user.'+e);
 			}
 		}
+		
 	}
 })();]]></script>
         <servicenow>false</servicenow>
@@ -130,7 +140,8 @@
         <td>{{info.environment}}</td>
         <td>{{info.role}}</td>
         <td>{{info.status}}</td>
-        <td><button ng-click="c.delete(info.uID, info.id, info.recordSysID)" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button></td>
+        <td><button ng-click="c.openInfo(info.recordSysID)" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
+        <button ng-click="c.delete(info.uID, info.id, info.recordSysID)" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button></td>
       </tr>
     </tbody>
   </table>

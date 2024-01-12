@@ -122,7 +122,7 @@ APCommonFunctions.prototype = {
         };
         var output = this.AA_API.createUsr(userInfo);
         if (output.isCreated) {
-            this.updateRequestTable(record.recordSysID, output.id, "granted");
+            this.updateIDAndStatus(record.recordSysID, output.id, "granted");
         }
         return output;
     },
@@ -149,7 +149,7 @@ APCommonFunctions.prototype = {
     },
 
     getAllApprovedUsers: function() {
-		var logName = this.log + "getAllApprovedUsers >> ";
+        var logName = this.log + "getAllApprovedUsers >> ";
         if (!this.isAdmin()) {
             gs.error(logName + " Unknown Access found");
             // Add Mail Notification when someone other than admin tried to access it.
@@ -195,7 +195,7 @@ APCommonFunctions.prototype = {
             // Add Mail Notification when someone other than admin tried to access it.
             return;
         } else {
-			gs.info(logName + "getting all the pending requests.");
+            gs.info(logName + "getting all the pending requests.");
             var reqData = [];
             var i = 0;
             var gd = new GlideDate();
@@ -230,45 +230,65 @@ APCommonFunctions.prototype = {
         }
     },
 
-	getReqHistory: function(){
-		// Returns the Request History;
-		if (!this.isAdmin()) {
+    getReqRecord: function(recordSysID) {
+        var data = new CommonMethods().getRecord(this.reqAccessGR.getTableName(), recordSysID);
+		var tmpRoles = this.getRoleName(data.roles);
+		var rolesName = tmpRoles.split(";");
+		tmpRoles = data.roles.split(";");
+		roles = {displayValue: rolesName.length > 1 ? rolesName.join("####") : rolesName[0], value: tmpRoles.length > 1?tmpRoles.join(","): tmpRoles[0]};
+        var userInfo = {
+            firstName: data.first_name,
+            lastName: data.last_name,
+            mailID: data.email_id,
+            automationName: data.automation_name,
+            environment: data.environment,
+			roles: roles,
+			uID: data.x_m_uid,
+			rolesTable: 'x_snc_accessprov_0_aa_roles',
+        };
+        return userInfo;
+    },
+
+    getReqHistory: function() {
+        // Returns the Request History;
+		var logName = this.log + "getReqHistory >> ";
+        if (!this.isAdmin()) {
             gs.error(logName + " Unknown Access found");
             // Add Mail Notification when someone other than admin tried to access it.
             return;
-        }else{
-			var reqData = [];
-			var i = 0;
-			var gd = new GlideDate();
-	
-			let table = this.reqAccessGR;
-			table.addEncodedQuery("status!=pending");
-			table.orderByDesc('sys_created_on');
-			table.query();
-	
-			while (table.next()) {
+        } else {
+            var reqData = [];
+            var i = 0;
+            var gd = new GlideDate();
+
+            let table = this.reqAccessGR;
+            table.addEncodedQuery("status!=pending");
+            table.orderByDesc('sys_created_on');
+            table.query();
+
+            while (table.next()) {
                 var tmpRoles = this.getRoleName(table.getValue("roles"));
-				let gdt = new GlideDateTime(table.sys_created_on.toString());
-				gdt.add(19800000);
-				gd.setValue(gdt.getValue());
-	
-				reqData.push({
-					no: ++i,
-					uID: table.getValue('x_m_uid').toString(),
-					firstName: table.getValue('first_name').toString(),
-					lastName: table.getValue('last_name').toString(),
-					name: table.getValue('first_name').toString() + " " + table.getValue('last_name').toString(),
-					mailID: table.getValue('email_id').toString(),
-					automationName: table.getValue('automation_name').toString(),
-					environment: table.getDisplayValue('environment').toString(),
-					status: table.getDisplayValue('status').toString(),
-					requestedOn: gd.getByFormat("dd-MMM-yyyy hh:mm a"),
-					role: tmpRoles,
-				});
-			}
-			return reqData;
-		}
-	},
+                let gdt = new GlideDateTime(table.sys_created_on.toString());
+                gdt.add(19800000);
+                gd.setValue(gdt.getValue());
+
+                reqData.push({
+                    no: ++i,
+                    uID: table.getValue('x_m_uid').toString(),
+                    firstName: table.getValue('first_name').toString(),
+                    lastName: table.getValue('last_name').toString(),
+                    name: table.getValue('first_name').toString() + " " + table.getValue('last_name').toString(),
+                    mailID: table.getValue('email_id').toString(),
+                    automationName: table.getValue('automation_name').toString(),
+                    environment: table.getDisplayValue('environment').toString(),
+                    status: table.getDisplayValue('status').toString(),
+                    requestedOn: gd.getByFormat("dd-MMM-yyyy hh:mm a"),
+                    role: tmpRoles,
+                });
+            }
+            return reqData;
+        }
+    },
 
     getReqHistoryForUser: function(uID) {
         // Returns the Request History of particular user;
@@ -297,6 +317,7 @@ APCommonFunctions.prototype = {
         return reqData;
     },
 
+	
     getRoleName: function(roleIds) {
         var logName = this.log + "GetRoleName >> ";
         gs.info(logName + " Reading roles names using its id...");
@@ -316,6 +337,15 @@ APCommonFunctions.prototype = {
         }
 
     },
+
+	getRoles: function(){
+        var roles = [];
+		var gr = new GlideRecord("x_snc_accessprov_0_aa_roles");
+		gr.query();
+		while(gr.next())
+			roles.push({name:gr.name,sysID:gr.sys_id});
+		return roles;
+	},
 
     getDisplayValueFromRecord: function(table, recordSysID, column) {
         table.addQuery("sys_id", recordSysID);
@@ -345,7 +375,7 @@ APCommonFunctions.prototype = {
      */
     insertRecord: function(input) {
         // Insert Record into RequestAccess table.	
-		var logName = this.log + "insertRecord >> ";	
+        var logName = this.log + "insertRecord >> ";
         let table = this.reqAccessGR;
         table.addEncodedQuery('x_m_uid=' + input.uID + "^automation_name=" + input.automationName + "^environment=" + input.environment + "^status=pending^ORstatus=granted");
         table.query();
@@ -369,7 +399,7 @@ APCommonFunctions.prototype = {
     },
 
     rejectReq: function(record) {
-		var logName = this.log + "rejectReq >> ";
+        var logName = this.log + "rejectReq >> ";
         gs.info(logName + "Rejecting the request...");
         let table = this.reqAccessGR;
         table.addQuery('sys_id', record.recordSysID);
@@ -381,9 +411,9 @@ APCommonFunctions.prototype = {
     },
 
     removeUsr: function(uID, userID, recordSysID) {
-		var logName = this.log + "removeUser >> ";
-		gs.info(logName + "Removing the user with ID: "+userID);
-        if (this.AA_API.deleteUsr( uID,userID)) {
+        var logName = this.log + "removeUser >> ";
+        gs.info(logName + "Removing the user with ID: " + userID);
+        if (this.AA_API.deleteUsr(uID, userID)) {
             gs.error(logName + "User deletion failed.");
             return 1;
         } else {
@@ -392,7 +422,6 @@ APCommonFunctions.prototype = {
             table.query();
             while (table.next()) {
                 table.setValue('id', '');
-                table.setValue('roles', '');
                 table.setValue('status', 'removed');
                 table.update("User has been deleted");
             }
@@ -401,7 +430,7 @@ APCommonFunctions.prototype = {
         }
     },
 
-    updateRequestTable: function(recordSysID, userNewID, status) {
+    updateIDAndStatus: function(recordSysID, userNewID, status) {
         let table = this.reqAccessGR;
         table.addQuery('sys_id', recordSysID);
         table.query();
@@ -411,6 +440,20 @@ APCommonFunctions.prototype = {
             table.update('updated ID of record: ' + recordSysID);
         }
     },
+
+	updateUserInfo: function(recordSysID,updatedRoles){
+		gs.info("Updating roles for the record: "+recordSysID);
+		let record = this.reqAccessGR;
+		record.addQuery('sys_id',recordSysID);
+		record.query();
+		if(record.hasNext()){
+			record.next();
+			record.setValue('roles',updatedRoles);
+			record.update("updated roles of a record: "+recordSysID);
+			gs.info("Updated successfully");
+		}
+
+	}
 };]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
