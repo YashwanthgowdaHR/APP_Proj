@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sys_rest_message_fn_headers">
     <sys_rest_message_fn_headers action="INSERT_OR_UPDATE">
         <name>Content-Type</name>
-        <rest_message_function display_value="Default Post">8815ccfa003231107f449a5d437fabe1</rest_message_function>
+        <rest_message_function display_value="DefaultPost">8815ccfa003231107f449a5d437fabe1</rest_message_function>
         <sys_class_name>sys_rest_message_fn_headers</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-12-02 14:47:57</sys_created_on>

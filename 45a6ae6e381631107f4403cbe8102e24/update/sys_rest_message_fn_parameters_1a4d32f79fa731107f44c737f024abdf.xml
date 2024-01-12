@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sys_rest_message_fn_parameters">
     <sys_rest_message_fn_parameters action="INSERT_OR_UPDATE">
-        <name>id</name>
-        <rest_message_function display_value="GetUserByID">691eae67343631107f44f748c83411ba</rest_message_function>
+        <name>roles</name>
+        <rest_message_function display_value="UpdateUserRoles">6dcb36379fa731107f44c737f024ab37</rest_message_function>
         <sys_class_name>sys_rest_message_fn_parameters</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2023-12-05 10:56:13</sys_created_on>
-        <sys_id>9cdf6aa7343631107f44f748c8341112</sys_id>
-        <sys_name>id</sys_name>
+        <sys_created_on>2024-01-12 13:20:39</sys_created_on>
+        <sys_id>1a4d32f79fa731107f44c737f024abdf</sys_id>
+        <sys_name>roles</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
-        <sys_update_name>sys_rest_message_fn_parameters_9cdf6aa7343631107f44f748c8341112</sys_update_name>
+        <sys_update_name>sys_rest_message_fn_parameters_1a4d32f79fa731107f44c737f024abdf</sys_update_name>
         <type>string</type>
-        <value>502</value>
+        <value>["224","226"]</value>
     </sys_rest_message_fn_parameters>
 </record_update>

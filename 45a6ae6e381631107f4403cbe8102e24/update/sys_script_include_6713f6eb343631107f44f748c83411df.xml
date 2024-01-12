@@ -17,14 +17,12 @@ AutomationAnywhere_APIs.prototype = {
     restSrc: 'x_snc_accessprov_0.AA-API',
 
     /**
-     * Foo takes any argument.
-     * The return value is 'baz' in all cases.
      * @param {json} user - user json should contains keys i.e 
-     * firstName[string],lastName[string],mailId[string],uID[string],roles[string] - roles containing role id separated by comma.
+     * firstName[string],lastName[string],mailId[string],uID[string],roles[list] - list containing role IDs(NOT NAME).
      * @return {json} result - result will have keys i.e. 
-     * isCreated[bool] - if the user is created, it will be true,
-     * id[number] - if isCreated is true, then it will contain id of the user and 
-     * msg[string] - if user creation failed, then msg will holds the error message.
+                    * isCreated[bool] - if the user is created, it will be true, else false
+                    * id[number] - if isCreated is true, then it will contain id of the user and 
+                    * msg[string] - if user creation failed[isCreated=false], then msg will holds the error message.
      */
     createUsr: function(user) {
         var logName = this.log + "CreateUser >> ";
@@ -34,23 +32,23 @@ AutomationAnywhere_APIs.prototype = {
             gs.info(logName + " Received a request to Create a New user with details: " + JSON.stringify(user));
             // Get Access Token
             var tkn = this.getToken();
-            var tmpRoles = user.roleIds.split(",");
-            var roles = [];
-            tmpRoles.forEach(function(id) {
-                roles.push({
-                    "id": id
-                });
-            });
+            // var tmpRoles = user.roleIds.split(",");
+            // var roles = [];
+            // tmpRoles.forEach(function(id) {
+            //     roles.push({
+            //         "id": id
+            //     });
+            // });
 
             //Initialize the required REST Message
-            var req = this.makeReq('Create User');
+            var req = this.makeReq('CreateUser');
             req.setStringParameterNoEscape("authorization", tkn);
             req.setStringParameterNoEscape('firstName', user.firstName);
             req.setStringParameterNoEscape('lastName', user.lastName);
             req.setStringParameterNoEscape('mailID', user.mailID);
             req.setStringParameterNoEscape('pass', this.defaultPass);
             req.setStringParameterNoEscape('userName', user.uID);
-            req.setStringParameterNoEscape('roles', JSON.stringify(roles));
+            req.setStringParameterNoEscape('roles', JSON.stringify(user.roles));
 
             gs.info(logName + " Creating User...");
 
@@ -80,16 +78,15 @@ AutomationAnywhere_APIs.prototype = {
     },
 
     /**
-     * Foo takes any argument.
-     * The return value is 'baz' in all cases.
-     * @param {string} id - id of the user which was received after user has been created.
+     * @param {string} uID - x_m_uid of the user to check whether it matches with existing uID of user who possessing "id". In order to avoid deletion of other users.
+     * @param {string} userID - id of the user which was received after user has been created.
      * @return {json} result - result will have keys i.e. isCreated[bool] - if the user is created, it will be true and msg[string] - if user creation failed, then msg will holds the error message.
      */
-    deleteUsr: function(uID, id) {
+    deleteUsr: function(uID, userID) {
         var logName = this.log + "DeleteUser >> ";
-        if (id) {
-            gs.info(logName + "Checking if user with id " + id + " exists in AA...");
-            var exists = this.getUserByID(id);
+        if (userID) {
+            gs.info(logName + "Checking if user with id " + userID + " exists in AA...");
+            var exists = this.getUserByID(userID);
             if (!exists) {
                 gs.error(logName + "User doesn't exists in Automation Anywhere.");
                 return 1;
@@ -99,7 +96,7 @@ AutomationAnywhere_APIs.prototype = {
                     var token = this.getToken();
                     var req = this.makeReq('DeleteUser');
                     req.setStringParameterNoEscape("authorization", token);
-                    req.setStringParameterNoEscape('id', id);
+                    req.setStringParameterNoEscape('id', userID);
                     var response = req.execute();
                     var responseBody = response.getBody();
                     var httpStatus = response.getStatusCode();
@@ -121,7 +118,7 @@ AutomationAnywhere_APIs.prototype = {
 
     getToken: function() {
         // API call made to AA to get the TOKEN
-        var r = this.makeReq('Default Post');
+        var r = this.makeReq('DefaultPost');
         r.setStringParameterNoEscape('api_key', 'ii5_V`~@t<3oE|0h1XIQqIUc{|yWotEoK3Oryz^n');
         r.setStringParameterNoEscape('username', 'X253816');
         var response = r.execute();
@@ -134,14 +131,18 @@ AutomationAnywhere_APIs.prototype = {
         }
     },
 
-    getUserByID: function(id) {
+    /**
+     * @param {string} id - id of the user which was received after user has been created.
+     * @return {json} result - result will contain all the keys that user has configured or assigned after user has been created.
+     */
+    getUserByID: function(userID) {
         // API Call made to AA to get User info by User ID
         if (id) {
-            gs.info("Checking info for Id: " + id);
+            gs.info("Checking info for Id: " + userID);
             var token = this.getToken();
-            var req = this.makeReq('Get User by ID');
+            var req = this.makeReq('GetUserByID');
             req.setStringParameterNoEscape("authorization", token);
-            req.setStringParameterNoEscape('id', id);
+            req.setStringParameterNoEscape('id', userID);
             var response = req.execute();
             var responseBody = response.getBody();
             var httpStatus = response.getStatusCode();
@@ -151,17 +152,19 @@ AutomationAnywhere_APIs.prototype = {
                 return;
 
             if (httpStatus == 401)
-                return this.getUserByID(id);
+                return this.getUserByID(userID);
 
             if (httpStatus == 200)
                 return JSON.parse(responseBody);
         }
     },
-
+   
     insertRoles: function() {
+        // Insert roles into table named "aa_roles". So, to keep updated whenever a new role is created in AA.
+        // This method is called for every 6 hours from Scheduled Jobs and add the roles, if the "id" doesn't exists.
         var logName = this.log + "insertRoles >> ";
         var token = this.getToken();
-        var req = this.makeReq('List Roles');
+        var req = this.makeReq('ListRoles');
         req.setStringParameterNoEscape("authorization", token);
         var response = req.execute();
         var responseBody = response.getBody();
@@ -170,12 +173,12 @@ AutomationAnywhere_APIs.prototype = {
 
         if (httpStatus == 200) {
             var rolesList = JSON.parse(responseBody).list;
-            var gr = new GlideRecord("x_snc_accessprov_0_aa_roles");
             rolesList.forEach(function(role) {
+                var gr = new GlideRecord("x_snc_accessprov_0_aa_roles");
                 gr.addQuery('id', role.id);
                 gr.query();
                 if (!gr.hasNext()) {
-                    gs.info(logName + "Role doesn't exists. Adding it");
+                    gs.info(logName + "Role doesn't exists. Adding it."+ role.id);
                     gr.initialize();
                     gr.setValue("id", role.id);
                     gr.setValue("name", role.name);
@@ -184,12 +187,63 @@ AutomationAnywhere_APIs.prototype = {
                 }
             });
         } else {
-            gs.error(logName + " Error Occured. " + responseBody);
+            gs.error(logName + " Error Occurred. " + responseBody);
         }
     },
 
     makeReq: function(method) {
         return new sn_ws.RESTMessageV2(this.restSrc, method);
+    },
+    
+    /**
+     * @param {string} userID - id of the user which was received after user has been created.
+     * @param {list} roles - list of roles IDs.
+     * @return {json} result - result will have keys i.e. isUpdated[bool] - if the roles are updated to AA, it will be true, else false and 
+                    * msg[string] - if unable to update roles[isUpdated=false], then msg will holds the error message
+     */
+    updateRoles: function(userID, mailID, roles){
+        var logName = this.log + "UpdateRoles >> ";
+        var result = {};
+
+        try {
+            // var nroles = [];
+            // roles.forEach(function(role){
+            //     nroles.push(Number(role));
+            // })
+            gs.info(logName + " Received a request to update roles for the user id: "+userID+ ", mailID: "+mailID+" and roles are "+JSON.stringify(roles));
+            gs.info(logName + "Updating roles...");
+
+            // Get Access Token
+            var tkn = this.getToken();            
+
+            //Initialize the required REST Message
+            var req = this.makeReq('UpdateUserRoles');
+            req.setStringParameterNoEscape("authorization", tkn);
+            req.setStringParameterNoEscape('id', userID);
+            req.setStringParameterNoEscape('roles', JSON.stringify(roles));
+            req.setStringParameterNoEscape('mailID', mailID.toString());
+            gs.info("Request: "+JSON.stringify(req));
+
+            var response = req.execute();
+            var responseBody = response.getBody();
+            var httpStatus = response.getStatusCode();
+            gs.info(logName + "Result - HTTP status Code: " + httpStatus);
+            var parsed = JSON.parse(responseBody);
+            if (httpStatus == 200) {
+                // roles updated successfully
+                result.isUpdated = true;
+            } else {
+                //Failed to update
+                result.isUpdated = false;
+                result.msg = parsed.message;
+                gs.error(logName + "FAILED | Reason is " + parsed.message);
+            }
+        } catch (e) {
+            gs.error(logName + "Exception: " + e);
+            result.isUpdated = false;
+            result.msg = "An error occurred while creating the user.";
+        }
+        return result;
     }
 };]]></script>
         <sys_class_name>sys_script_include</sys_class_name>

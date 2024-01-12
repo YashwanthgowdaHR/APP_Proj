@@ -8,19 +8,19 @@
    "username":"${username}",&#13;
    "apiKey":"${api_key}"&#13;
 }</content>
-        <function_name>Default Post</function_name>
+        <function_name>DefaultPost</function_name>
         <http_method>post</http_method>
         <lock>false</lock>
         <oauth2_profile/>
         <protocol_name/>
-        <qualified_name>AA-API [ Default Post ]</qualified_name>
+        <qualified_name>AA-API [ DefaultPost ]</qualified_name>
         <rest_endpoint>https://merck-dev.my.automationanywhere.digital/v1/authentication</rest_endpoint>
         <rest_message display_value="AA-API">97e3ccba003231107f449a5d437fabc6</rest_message>
         <sys_class_name>sys_rest_message_fn</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-12-02 14:34:37</sys_created_on>
         <sys_id>8815ccfa003231107f449a5d437fabe1</sys_id>
-        <sys_name>Default Post</sys_name>
+        <sys_name>DefaultPost</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>

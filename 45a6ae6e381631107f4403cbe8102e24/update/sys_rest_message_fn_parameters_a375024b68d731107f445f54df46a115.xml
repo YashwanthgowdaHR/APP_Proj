@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sys_rest_message_fn_parameters">
     <sys_rest_message_fn_parameters action="INSERT_OR_UPDATE">
         <name>authorization</name>
-        <rest_message_function display_value="Get User by ID">691eae67343631107f44f748c83411ba</rest_message_function>
+        <rest_message_function display_value="GetUserByID">691eae67343631107f44f748c83411ba</rest_message_function>
         <sys_class_name>sys_rest_message_fn_parameters</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-12-28 15:05:53</sys_created_on>

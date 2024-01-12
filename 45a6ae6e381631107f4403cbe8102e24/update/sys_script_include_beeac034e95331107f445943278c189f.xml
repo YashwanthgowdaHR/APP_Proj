@@ -116,7 +116,7 @@ APCommonFunctions.prototype = {
         var userInfo = {
             firstName: record.firstName,
             lastName: record.lastName,
-            roleIds: record.roleIds,
+            roleIds: record.roleIds.split(","),
             mailID: record.mailID,
             uID: record.uID
         };
@@ -450,9 +450,11 @@ APCommonFunctions.prototype = {
 			record.next();
 			record.setValue('roles',updatedRoles);
 			record.update("updated roles of a record: "+recordSysID);
+            var roles = this.getDisplayValueFromRecord(this.reqAccessGR, recordSysID, "roles");
+            var result = this.AA_API.updateRoles(record.getValue("id"), record.getValue("email_id").toString(), roles.split(","));
 			gs.info("Updated successfully");
+            return result;
 		}
-
 	}
 };]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
