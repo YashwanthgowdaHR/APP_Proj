@@ -37,7 +37,7 @@
 		c.data.uID = c.data.userInfo.uID;
 		c.data.action = "getData";
 		c.server.update().then(handleResults);
-	}
+	};
 
 
 	c.createUser = function () {
@@ -49,8 +49,8 @@
 		c.data.environment = c.data.temp_env;
 
 		c.data.action = 'createUser';
-		c.server.update().then(handleUpdateResponse).catch(handleError)};
-}
+		c.server.update().then(handleUpdateResponse).catch(handleError);};
+};
 
 ]]></client_script>
         <controller_as>c</controller_as>

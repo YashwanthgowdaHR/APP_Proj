@@ -5,8 +5,10 @@
         <basic_auth_profile/>
         <basic_auth_user/>
         <content>{&#13;
-  "roles": ${roles},&#13;
-"email": ${mailID}&#13;
+"roles": ${roles},&#13;
+"email": ${mailID},&#13;
+"firstName":${firstName},&#13;
+"lastName":${lastName}&#13;
 }&#13;
 </content>
         <function_name>UpdateUserRoles</function_name>

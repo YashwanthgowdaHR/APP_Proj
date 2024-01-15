@@ -119,7 +119,7 @@ AutomationAnywhere_APIs.prototype = {
     getToken: function() {
         // API call made to AA to get the TOKEN
         var r = this.makeReq('DefaultPost');
-        r.setStringParameterNoEscape('api_key', 'ii5_V`~@t<3oE|0h1XIQqIUc{|yWotEoK3Oryz^n');
+        r.setStringParameterNoEscape('api_key', '8<8YeIB36lwtWvm>EhnYy@YW8i3b1gXIaJpZJhr4');
         r.setStringParameterNoEscape('username', 'X253816');
         var response = r.execute();
         var responseBody = response.getBody();
@@ -201,7 +201,7 @@ AutomationAnywhere_APIs.prototype = {
      * @return {json} result - result will have keys i.e. isUpdated[bool] - if the roles are updated to AA, it will be true, else false and 
                     * msg[string] - if unable to update roles[isUpdated=false], then msg will holds the error message
      */
-    updateRoles: function(userID, mailID, roles){
+    updateUserData: function(userData){
         var logName = this.log + "UpdateRoles >> ";
         var result = {};
 
@@ -210,19 +210,19 @@ AutomationAnywhere_APIs.prototype = {
             // roles.forEach(function(role){
             //     nroles.push(Number(role));
             // })
-            gs.info(logName + " Received a request to update roles for the user id: "+userID+ ", mailID: "+mailID+" and roles are "+JSON.stringify(roles));
+            gs.info(logName + " Received a request to update roles for the user id: "+userData.userID+ ", mailID: "+userData.mailID+" and roles are "+JSON.stringify(userData.roles));
             gs.info(logName + "Updating roles...");
 
             // Get Access Token
-            var tkn = this.getToken();            
-
+            var tkn = this.getToken();
             //Initialize the required REST Message
             var req = this.makeReq('UpdateUserRoles');
             req.setStringParameterNoEscape("authorization", tkn);
-            req.setStringParameterNoEscape('id', userID);
-            req.setStringParameterNoEscape('roles', JSON.stringify(roles));
-            req.setStringParameterNoEscape('mailID', mailID.toString());
-            gs.info("Request: "+JSON.stringify(req));
+            req.setStringParameterNoEscape('id', userData.userID);
+            req.setStringParameterNoEscape('roles', JSON.stringify(userData.roles));
+            req.setStringParameterNoEscape('mailID', JSON.stringify(userData.mailID));
+            req.setStringParameterNoEscape('firstName', JSON.stringify(userData.firstName));
+            req.setStringParameterNoEscape('lastName', JSON.stringify(userData.lastName));
 
             var response = req.execute();
             var responseBody = response.getBody();

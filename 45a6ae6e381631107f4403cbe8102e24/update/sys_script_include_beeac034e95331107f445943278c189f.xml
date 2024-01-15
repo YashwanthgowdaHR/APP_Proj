@@ -15,10 +15,11 @@ APCommonFunctions.prototype = {
         this.log = "SI | APCommonFunctions | ";
     },
     type: 'APCommonFunctions',
-    AA_API: new AutomationAnywhere_APIs(this.defaultPass),
     adminGroupID: 'eb488d149fa331107f44c737f024abcf',
     event1: 'x_snc_accessprov_0.send_mail_to_user',
     event2: 'x_snc_accessprov_0.inform_admin',
+    AA_API: new AutomationAnywhere_APIs(this.defaultPass),
+    CmnMethods: new CommonMethods(),
     groupMemberGR: new GlideRecord('sys_user_grmember'),
     reqAccessGR: new GlideRecord('x_snc_accessprov_0_aa_request_access'),
 
@@ -45,7 +46,7 @@ APCommonFunctions.prototype = {
 
         var record = userData;
         record.recordSysID = recordSysID;
-        record.roleIds = this.getDisplayValueFromRecord(this.reqAccessGR, recordSysID, "roles");
+        record.roleIds = this.CmnMethods.getDisplayValueFromRecord(this.reqAccessGR, recordSysID, "roles");
 
         var result = this.createUser(record);
         if (result.isCreated) {
@@ -127,8 +128,8 @@ APCommonFunctions.prototype = {
         return output;
     },
 
-    getGrpMembers: function(gropupSysID) {
-        this.groupMemberGR.addQuery('group', gropupSysID);
+    getGrpMembers: function(groupSysID) {
+        this.groupMemberGR.addQuery('group', groupSysID);
         this.groupMemberGR.query();
         var users = [];
         // Check if there are any members in the group
@@ -231,12 +232,18 @@ APCommonFunctions.prototype = {
     },
 
     getReqRecord: function(recordSysID) {
-        var data = new CommonMethods().getRecord(this.reqAccessGR.getTableName(), recordSysID);
+        var logName = this.log + "getReqRecord >> ";
+        var data = this.CmnMethods.getRecord(this.reqAccessGR.getTableName(), recordSysID);
+        if(!data){
+            gs.info(logName+"Unable to fetch the record.");
+            return;
+        }
 		var tmpRoles = this.getRoleName(data.roles);
 		var rolesName = tmpRoles.split(";");
 		tmpRoles = data.roles.split(";");
 		roles = {displayValue: rolesName.length > 1 ? rolesName.join("####") : rolesName[0], value: tmpRoles.length > 1?tmpRoles.join(","): tmpRoles[0]};
-        var userInfo = {
+
+        return {
             firstName: data.first_name,
             lastName: data.last_name,
             mailID: data.email_id,
@@ -245,8 +252,8 @@ APCommonFunctions.prototype = {
 			roles: roles,
 			uID: data.x_m_uid,
 			rolesTable: 'x_snc_accessprov_0_aa_roles',
+            userID: data.id
         };
-        return userInfo;
     },
 
     getReqHistory: function() {
@@ -347,15 +354,6 @@ APCommonFunctions.prototype = {
 		return roles;
 	},
 
-    getDisplayValueFromRecord: function(table, recordSysID, column) {
-        table.addQuery("sys_id", recordSysID);
-        table.query();
-        if (table.hasNext()) {
-            table.next();
-            return table.getDisplayValue(column).toString();
-        }
-    },
-
     informAdminOnUsrReq: function(userInfo) {
         var adminDetails = this.getGrpMembers(this.adminGroupID); // sys_id of admin group is provided
         var details = {
@@ -431,30 +429,37 @@ APCommonFunctions.prototype = {
     },
 
     updateIDAndStatus: function(recordSysID, userNewID, status) {
-        let table = this.reqAccessGR;
-        table.addQuery('sys_id', recordSysID);
-        table.query();
-        if (table.next()) {
-            table.setValue('id', userNewID);
-            table.setValue('status', status);
-            table.update('updated ID of record: ' + recordSysID);
-        }
+        var logName = this.log + "updateIDAndStatus >> ";
+        var sts = this.CmnMethods.updateRecord(this.reqAccessGR.getTableName(), recordSysID, {id:userNewID, status:status});
+        gs.info(sts ? logName+"updated successfully": logName + " Failed to update the ID and Status of the record.");
     },
 
-	updateUserInfo: function(recordSysID,updatedRoles){
-		gs.info("Updating roles for the record: "+recordSysID);
-		let record = this.reqAccessGR;
-		record.addQuery('sys_id',recordSysID);
-		record.query();
-		if(record.hasNext()){
-			record.next();
-			record.setValue('roles',updatedRoles);
-			record.update("updated roles of a record: "+recordSysID);
-            var roles = this.getDisplayValueFromRecord(this.reqAccessGR, recordSysID, "roles");
-            var result = this.AA_API.updateRoles(record.getValue("id"), record.getValue("email_id").toString(), roles.split(","));
-			gs.info("Updated successfully");
-            return result;
-		}
+    /**
+     * @param {string} recordSysID - sys_id of record which need to be updated.
+     * @param {json} updatedInfo - JSON containing firstName, lastName, mailID, userID, updatedRoles(string of sys_ids).
+     * @return {json} result - result will have keys i.e. isUpdated[bool] - if the roles are updated to AA, it will be true, else false and 
+                    * msg[string] - if unable to update roles[isUpdated=false], then msg will holds the error message
+     */
+	updateUserInfo: function(recordSysID,updatedInfo){
+        var logName = this.log + "updateUserInfo >> ";
+		gs.info(logName + "Updating roles for the record: "+recordSysID);
+        
+        // update the AA Access Record with latest data
+        // var recordData = {first_name: updatedInfo.firstName, last_name: updatedInfo.lastName, roles : updatedInfo.roles, email_id: updatedInfo.mailID};
+        // var sts = this.CmnMethods.updateRecord(this.reqAccessGR.getTableName(), recordSysID, recordData);
+
+        // update the data into the table
+        var sts = this.CmnMethods.updateRecord(this.reqAccessGR.getTableName(), recordSysID, {roles: updatedInfo.roles});
+        gs.info(sts ? logName+"updated successfully": logName + " Failed to update the ID and Status of the record.");
+
+        // update the data into AA
+		//let record = this.CmnMethods.getRecord(this.reqAccessGR.getTableName(), recordSysID);
+        var roles = this.CmnMethods.getDisplayValueFromRecord(this.reqAccessGR.getTableName(), recordSysID, "roles");
+        // replacing existing role's sys_id values with its Displayed values 
+        updatedInfo.roles = roles.split(",");
+        var result = this.AA_API.updateUserData(updatedInfo);
+        gs.info(logName+"Updated User data into AA database successfully");
+        return result;
 	}
 };]]></script>
         <sys_class_name>sys_script_include</sys_class_name>

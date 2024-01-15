@@ -9,13 +9,13 @@
 		c.data.roles = {
 			displayValue: params.displayValue,
 			value: params.newValue
-		}
+		};
 	});
 
 	c.updateRequest = function(){
-		c.data.action = "updateRoles";
+		c.data.action = "updateInfo";
 		c.server.update().then(handleSuccess,handleError);
-	}
+	};
 
 	function deleteProp(obj, key) {
 		if (obj.hasOwnProperty(key)) {
@@ -60,14 +60,26 @@
         <option_schema/>
         <public>false</public>
         <roles>x_snc_accessprov_0.admin</roles>
-        <script><![CDATA[(function() {
-  /* populate the 'data' object */
+        <script><![CDATA[(function () {
+	/* populate the 'data' object */
 	data.userInfo = new APCommonFunctions().getReqRecord(gs.action.getGlideURI().get('sys_id'));
-	
+})();
+
+(function() {
 	if(input){
-		if(input.action == "updateRoles"){
-			new APCommonFunctions().updateUserInfo(gs.action.getGlideURI().get('sys_id'),input.roles.value);
-			gs.addInfoMessage("Updated Successfully")
+		if(input.action == "updateInfo"){
+			var data = {
+				firstName: input.userInfo.firstName,
+				lastName: input.userInfo.lastName,
+				mailID : input.userInfo.mailID,
+				userID: input.userInfo.userID,
+				roles: input.roles.value
+			};
+			var res = new APCommonFunctions().updateUserInfo(gs.action.getGlideURI().get('sys_id'),data);
+			if(res.isUpdated)
+				gs.addInfoMessage("Updated Successfully")
+			else
+				gs.addErrorMessage("Unable to update the requested info. Reason "+res.msg);
 		}
 	}
 })();]]></script>
