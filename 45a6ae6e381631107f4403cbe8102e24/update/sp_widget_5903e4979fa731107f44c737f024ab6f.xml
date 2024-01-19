@@ -32,6 +32,7 @@
 
 	function handleSuccess(res) {
 		resetData();
+		c.server.refresh();
 	}
 
 	function handleError(error) {
@@ -88,14 +89,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-01-10 12:50:14</sys_created_on>
         <sys_id>5903e4979fa731107f44c737f024ab6f</sys_id>
-        <sys_mod_count>0</sys_mod_count>
+        <sys_mod_count>1</sys_mod_count>
         <sys_name>Admin - User Info</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sp_widget_5903e4979fa731107f44c737f024ab6f</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-01-17 10:17:27</sys_updated_on>
+        <sys_updated_on>2024-01-19 13:49:04</sys_updated_on>
         <template><![CDATA[<div>
   <form class="form-horizontal">
     <fieldset>

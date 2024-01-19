@@ -211,25 +211,24 @@ AutomationAnywhere_APIs.prototype = {
         var result = {};
 
         try {
-            gs.info(logName + " Received a request to update roles for the user id: " + userData.userID + ", mailID: " + userData.mailID + " and roles are " + JSON.stringify(tmpRoles));
-            gs.info(logName + "Updating roles...");
-
             // Get Access Token
             var tkn = this.getToken();
-            var tmpRoles = user.roleIDs.split(",");
+            var tmpRoles = userData.roleIDs.split(",");
             var roles = [];
             tmpRoles.forEach(function(id) {
                 roles.push(Number(id));
             });
 
+            gs.info(logName + " Received a request to update roles for the user id: " + userData.userID + ", mailID: " + userData.mailID + " and roles are " + JSON.stringify(roles));
+
             //Initialize the required REST Message
             var req = this.makeReq('UpdateUserRoles');
             req.setStringParameterNoEscape("authorization", tkn);
             req.setStringParameterNoEscape('id', userData.userID);
-            req.setStringParameterNoEscape('roles', JSON.stringify(roles));
-            req.setStringParameterNoEscape('mailID', userData.mailID);
-            req.setStringParameterNoEscape('firstName', userData.firstName);
-            req.setStringParameterNoEscape('lastName', userData.lastName);
+            req.setStringParameterNoEscape('roleIDs', JSON.stringify(roles));
+            req.setStringParameterNoEscape('mailID', JSON.stringify(userData.mailID));
+            req.setStringParameterNoEscape('firstName', JSON.stringify(userData.firstName));
+            req.setStringParameterNoEscape('lastName', JSON.stringify(userData.lastName));
 
             var response = req.execute();
             var responseBody = response.getBody();
@@ -248,7 +247,7 @@ AutomationAnywhere_APIs.prototype = {
         } catch (e) {
             gs.error(logName + "Exception: " + e);
             result.isUpdated = false;
-            result.msg = "An error occurred while creating the user.";
+            result.msg = "An error occurred while updating the user.";
         }
         return result;
     }
@@ -257,13 +256,13 @@ AutomationAnywhere_APIs.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-12-05 11:15:29</sys_created_on>
         <sys_id>6713f6eb343631107f44f748c83411df</sys_id>
-        <sys_mod_count>12</sys_mod_count>
+        <sys_mod_count>14</sys_mod_count>
         <sys_name>AutomationAnywhere_APIs</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sys_script_include_6713f6eb343631107f44f748c83411df</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-01-19 12:19:42</sys_updated_on>
+        <sys_updated_on>2024-01-19 13:46:55</sys_updated_on>
     </sys_script_include>
 </record_update>

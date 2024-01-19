@@ -61,6 +61,7 @@ APCommonFunctions.prototype = {
             };
             this.addEvent(this.event1, this.reqAccessGR, userData.mailID, JSON.stringify(details));
         }else{
+            gs.info(logName + "Unable to create the new user in AA. Reverting changes...");
             this.CmnMethods.deleteRecord(this.reqAccessGR.getTableName(), recordSysID);
         }
         return result;
@@ -441,28 +442,31 @@ APCommonFunctions.prototype = {
 
     /**
      * @param {string} recordSysID - sys_id of record which need to be updated.
-     * @param {json} updatedInfo - JSON containing firstName, lastName, mailID, userID, updatedRoles(string of sys_ids).
+     * @param {json} newInfo - JSON containing firstName, lastName, mailID, userID, updatedRoles(string of sys_ids).
      * @return {json} result - result will have keys i.e. isUpdated[bool] - if the roles are updated to AA, it will be true, else false and 
                     * msg[string] - if unable to update roles[isUpdated=false], then msg will holds the error message
      */
-	updateUserInfo: function(recordSysID,updatedInfo){
+	updateUserInfo: function(recordSysID,newInfo){
         var logName = this.log + "updateUserInfo >> ";
 		gs.info(logName + "Updating roles for the record: "+recordSysID);
-        
-        // update the AA Access Record with latest data
-        // var recordData = {first_name: updatedInfo.firstName, last_name: updatedInfo.lastName, roles : updatedInfo.roles, email_id: updatedInfo.mailID};
-        // var sts = this.CmnMethods.updateRecord(this.reqAccessGR.getTableName(), recordSysID, recordData);
 
+        var preValues = this.CmnMethods.getRecord(this.reqAccessGR.getTableName(), recordSysID);
+        
         // update the data into the table
-        var sts = this.CmnMethods.updateRecord(this.reqAccessGR.getTableName(), recordSysID, {roles: updatedInfo.roles});
+        var sts = this.CmnMethods.updateRecord(this.reqAccessGR.getTableName(), recordSysID, {roles: newInfo.roles});
         gs.info(sts ? logName+"updated successfully": logName + " Failed to update the ID and Status of the record.");
 
+        // fetch display values of roles column
+        newInfo.roleIDs  = this.CmnMethods.getDisplayValueFromRecord(this.reqAccessGR.getTableName(), recordSysID, "roles");
+
         // update the data into AA
-		//let record = this.CmnMethods.getRecord(this.reqAccessGR.getTableName(), recordSysID);
-        var roles = this.CmnMethods.getDisplayValueFromRecord(this.reqAccessGR.getTableName(), recordSysID, "roles");
-        // replacing existing role's sys_id values with its Displayed values 
-        updatedInfo.roleIDs = roles.split(",");
-        var result = this.AA_API.updateUserData(updatedInfo);
+        var result = this.AA_API.updateUserData(newInfo);
+
+        if(!result.isUpdated){
+            gs.info(logName + "Unable to update the new info AA. Reverting changes...");
+            this.CmnMethods.updateRecord(this.reqAccessGR.getTableName(), recordSysID, {roles: preValues.roles});
+        }
+
         gs.info(logName+"Updated User data into AA database successfully");
         return result;
 	}
@@ -471,13 +475,13 @@ APCommonFunctions.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-12-21 06:28:28</sys_created_on>
         <sys_id>beeac034e95331107f445943278c189f</sys_id>
-        <sys_mod_count>15</sys_mod_count>
+        <sys_mod_count>17</sys_mod_count>
         <sys_name>APCommonFunctions</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sys_script_include_beeac034e95331107f445943278c189f</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-01-19 12:19:18</sys_updated_on>
+        <sys_updated_on>2024-01-19 13:29:52</sys_updated_on>
     </sys_script_include>
 </record_update>
