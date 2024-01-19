@@ -15,11 +15,14 @@
         <sys_created_by>system</sys_created_by>
         <sys_created_on>2023-11-20 08:33:29</sys_created_on>
         <sys_id>fe4fb0b6b3a231108e27b62c7a588629</sys_id>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>My Requests - Requested item predicate</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sys_ux_composite_data_template_predicate_fe4fb0b6b3a231108e27b62c7a588629</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:18:06</sys_updated_on>
         <table>sc_req_item</table>
         <ux_template display_value="Custom Portal Landing - My Requests template">b24fb0b63ba2311006adb3a24064762a</ux_template>
     </sys_ux_composite_data_template_predicate>

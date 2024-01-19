@@ -72,6 +72,7 @@
         <sys_db_object display_value="" name="sp_rectangle_menu_item">sp_rectangle_menu_item</sys_db_object>
         <sys_id>2382389c751946f485ba10f1aaa11bc1</sys_id>
         <sys_metadata>f870fabf444b31107f447ec11d2c0c33</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>Approve Request</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_parent/>
@@ -80,5 +81,7 @@
         <sys_scope_delete display_value="">048d5f0e899f424a8270d790e19b3744</sys_scope_delete>
         <sys_update_name>sp_rectangle_menu_item_f870fabf444b31107f447ec11d2c0c33</sys_update_name>
         <sys_update_version display_value="sp_rectangle_menu_item_f870fabf444b31107f447ec11d2c0c33">62807ebf444b31107f447ec11d2c0c72</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:18:21</sys_updated_on>
     </sys_metadata_delete>
 </record_update>

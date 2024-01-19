@@ -38,11 +38,14 @@
         <sys_created_by>system</sys_created_by>
         <sys_created_on>2023-11-20 08:33:27</sys_created_on>
         <sys_id>364fb0b6e8a231106c0485e92973b833</sys_id>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>Boolean reversal transform</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sys_ux_data_broker_transform_364fb0b6e8a231106c0485e92973b833</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:18:07</sys_updated_on>
     </sys_ux_data_broker_transform>
     <sys_translated_text action="delete_multiple" query="documentkey=364fb0b6e8a231106c0485e92973b833"/>
 </record_update>

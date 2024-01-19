@@ -1225,6 +1225,7 @@ button.cert, a.idp {
         <sys_db_object display_value="" name="sp_rel_widget_clone">sp_rel_widget_clone</sys_db_object>
         <sys_id>ac830eb533c9461082ff76a0b1d33c90</sys_id>
         <sys_metadata>2851297fe1a631107f44fa95b6a3cfe6</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>9451297fe1a631107f44fa95b6a3cfe2</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_parent/>
@@ -1233,5 +1234,7 @@ button.cert, a.idp {
         <sys_scope_delete display_value="">048d5f0e899f424a8270d790e19b3744</sys_scope_delete>
         <sys_update_name>sp_rel_widget_clone_2851297fe1a631107f44fa95b6a3cfe6</sys_update_name>
         <sys_update_version display_value="sp_rel_widget_clone_2851297fe1a631107f44fa95b6a3cfe6">7b1bd90008b231107f444714c6e90d79</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:18:21</sys_updated_on>
     </sys_metadata_delete>
 </record_update>

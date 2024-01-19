@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
     <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
         <includes/>
         <macroponent display_value="Order success">724fb0b6efa23110db65da393f8fd32e</macroponent>
         <name>View request redirection</name>
@@ -48,11 +49,14 @@ function handler({
         <sys_created_by>system</sys_created_by>
         <sys_created_on>2023-11-20 08:33:28</sys_created_on>
         <sys_id>324fb0b6d4a23110a2356c7da2ebd92d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>View request redirection</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sys_ux_client_script_324fb0b6d4a23110a2356c7da2ebd92d</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:18:03</sys_updated_on>
         <target/>
         <type/>
     </sys_ux_client_script>

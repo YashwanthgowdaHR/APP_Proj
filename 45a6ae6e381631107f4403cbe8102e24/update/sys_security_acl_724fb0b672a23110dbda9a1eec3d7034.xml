@@ -5,18 +5,23 @@
         <advanced>false</advanced>
         <condition/>
         <description/>
+        <local_or_existing/>
         <name>3e4fb0b6f9a2311030baabfc44055933</name>
         <operation display_value="execute">execute</operation>
         <script/>
+        <security_attribute/>
         <sys_class_name>sys_security_acl</sys_class_name>
         <sys_created_by>system</sys_created_by>
         <sys_created_on>2023-11-20 08:33:30</sys_created_on>
         <sys_id>724fb0b672a23110dbda9a1eec3d7034</sys_id>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>3e4fb0b6f9a2311030baabfc44055933</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sys_security_acl_724fb0b672a23110dbda9a1eec3d7034</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:17:51</sys_updated_on>
         <type display_value="ux_data_broker">6d9c40e9531210101cb3ddeeff7b12f6</type>
     </sys_security_acl>
 </record_update>

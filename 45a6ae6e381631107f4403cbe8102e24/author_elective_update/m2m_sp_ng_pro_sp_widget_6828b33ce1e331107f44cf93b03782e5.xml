@@ -41,13 +41,14 @@
         <update_guid_history>6828b33c7fe331102423efa0d2f5c7e7:798730559</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="spAttachmentManager.CopyWidgetForm">0cc184d79f2731107f44c737f024ab4f</sys_audit_delete>
+        <sys_audit_delete display_value="">0cc184d79f2731107f44c737f024ab4f</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-01-10 10:24:11</sys_created_on>
         <sys_db_object display_value="" name="m2m_sp_ng_pro_sp_widget">m2m_sp_ng_pro_sp_widget</sys_db_object>
         <sys_id>289c6b8a4b4842449974e7b3b05d8b41</sys_id>
         <sys_metadata>6828b33ce1e331107f44cf93b03782e5</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>spAttachmentManager.CopyWidgetForm</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_parent/>
@@ -56,5 +57,7 @@
         <sys_scope_delete display_value="">048d5f0e899f424a8270d790e19b3744</sys_scope_delete>
         <sys_update_name>m2m_sp_ng_pro_sp_widget_6828b33ce1e331107f44cf93b03782e5</sys_update_name>
         <sys_update_version display_value="m2m_sp_ng_pro_sp_widget_6828b33ce1e331107f44cf93b03782e5">2028b33ce1e331107f44cf93b03782e8</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:18:16</sys_updated_on>
     </sys_metadata_delete>
 </record_update>

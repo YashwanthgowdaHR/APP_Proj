@@ -55,6 +55,7 @@
         <sys_db_object display_value="" name="sys_security_acl">sys_security_acl</sys_db_object>
         <sys_id>97f50d8182134c98b98589d526875729</sys_id>
         <sys_metadata>969335289f2331107f44c737f024abfd</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>x_snc_accessprov_0_access_logs</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_parent display_value="">bf83b1289f2331107f44c737f024abb7</sys_parent>
@@ -63,5 +64,7 @@
         <sys_scope_delete display_value="">048d5f0e899f424a8270d790e19b3744</sys_scope_delete>
         <sys_update_name>sys_security_acl_969335289f2331107f44c737f024abfd</sys_update_name>
         <sys_update_version display_value="sys_security_acl_969335289f2331107f44c737f024abfd">569335289f2331107f44c737f024abff</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:18:25</sys_updated_on>
     </sys_metadata_delete>
 </record_update>

@@ -27,12 +27,15 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>35e9f0cb689331107f445f54df46a1e8</sys_id>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>Test AA Connection__</sys_name>
         <sys_overrides/>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sys_hub_action_type_definition_35e9f0cb689331107f445f54df46a1e8</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:17:35</sys_updated_on>
         <system_level>false</system_level>
         <type/>
     </sys_hub_action_type_definition>
@@ -175,6 +178,7 @@
     </sys_hub_step_instance>
     <sys_variable_value action="delete_multiple" query="document_key=227ff44368d331107f445f54df46a189"/>
     <sys_element_mapping action="delete_multiple" query="table=var__m_sys_flow_step_definition_input_7f9ba495cb83b300a2fcb895634c9c38^id=227ff44368d331107f445f54df46a189"/>
+    <sys_translated_text action="delete_multiple" query="documentkey=227ff44368d331107f445f54df46a189"/>
     <sys_hub_step_ext_input action="delete_multiple" query="model=227ff44368d331107f445f54df46a189"/>
     <sys_hub_step_ext_output action="delete_multiple" query="model=227ff44368d331107f445f54df46a189"/>
     <sys_hub_input_scripts action="delete_multiple" query="instance=227ff44368d331107f445f54df46a189"/>
@@ -472,6 +476,7 @@
     </sys_variable_value>
     <sys_element_mapping action="delete_multiple" query="table=var__m_sys_hub_step_ext_output_aa7ff44368d331107f445f54df46a18e^id=aa7ff44368d331107f445f54df46a18e"/>
     <sys_element_mapping action="delete_multiple" query="table=var__m_sys_flow_step_definition_input_07a762fb47222200b4fad7527c9a7129^id=aa7ff44368d331107f445f54df46a18e"/>
+    <sys_translated_text action="delete_multiple" query="documentkey=aa7ff44368d331107f445f54df46a18e"/>
     <sys_hub_step_ext_input action="delete_multiple" query="model=aa7ff44368d331107f445f54df46a18e"/>
     <sys_hub_step_ext_output action="delete_multiple" query="model=aa7ff44368d331107f445f54df46a18e^sys_idNOT IN2e7ff44368d331107f445f54df46a1b0"/>
     <sys_hub_step_ext_output action="INSERT_OR_UPDATE">
@@ -1844,6 +1849,7 @@
     </sys_variable_value>
     <sys_element_mapping action="delete_multiple" query="table=var__m_sys_hub_step_ext_output_276f1183685731107f445f54df46a1f5^id=276f1183685731107f445f54df46a1f5"/>
     <sys_element_mapping action="delete_multiple" query="table=var__m_sys_flow_step_definition_input_07a762fb47222200b4fad7527c9a7129^id=276f1183685731107f445f54df46a1f5"/>
+    <sys_translated_text action="delete_multiple" query="documentkey=276f1183685731107f445f54df46a1f5"/>
     <sys_hub_step_ext_input action="delete_multiple" query="model=276f1183685731107f445f54df46a1f5"/>
     <sys_hub_step_ext_output action="delete_multiple" query="model=276f1183685731107f445f54df46a1f5^sys_idNOT INe76f1183685731107f445f54df46a1fc"/>
     <sys_hub_step_ext_output action="INSERT_OR_UPDATE">
@@ -2003,6 +2009,7 @@
     </sys_hub_step_instance>
     <sys_variable_value action="delete_multiple" query="document_key=a36f1183685731107f445f54df46a1f1"/>
     <sys_element_mapping action="delete_multiple" query="table=var__m_sys_flow_step_definition_input_7f9ba495cb83b300a2fcb895634c9c38^id=a36f1183685731107f445f54df46a1f1"/>
+    <sys_translated_text action="delete_multiple" query="documentkey=a36f1183685731107f445f54df46a1f1"/>
     <sys_hub_step_ext_input action="delete_multiple" query="model=a36f1183685731107f445f54df46a1f1"/>
     <sys_hub_step_ext_output action="delete_multiple" query="model=a36f1183685731107f445f54df46a1f1"/>
     <sys_hub_input_scripts action="delete_multiple" query="instance=a36f1183685731107f445f54df46a1f1"/>

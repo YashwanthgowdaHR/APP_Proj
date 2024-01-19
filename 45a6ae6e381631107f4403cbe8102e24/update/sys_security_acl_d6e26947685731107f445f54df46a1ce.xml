@@ -5,18 +5,23 @@
         <advanced>false</advanced>
         <condition/>
         <description/>
+        <local_or_existing/>
         <name>x_snc_accessprov_0_aa_roles</name>
         <operation display_value="create">create</operation>
         <script/>
+        <security_attribute/>
         <sys_class_name>sys_security_acl</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-12-28 12:34:31</sys_created_on>
         <sys_id>d6e26947685731107f445f54df46a1ce</sys_id>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>x_snc_accessprov_0_aa_roles</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sys_security_acl_d6e26947685731107f445f54df46a1ce</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:17:53</sys_updated_on>
         <type display_value="record">record</type>
     </sys_security_acl>
 </record_update>

@@ -9,122 +9,135 @@
         <name>CommonMethods</name>
         <script><![CDATA[var CommonMethods = Class.create();
 CommonMethods.prototype = {
-	initialize: function() {
+	initialize: function () {
 		this.log = "SI - CommonMethods | ";
 	},
 
 	type: 'CommonMethods',
 
-	isTableExists: function(tableName){
-		return gs.tableExists(tableName);
+	deleteRecord(tableName, recordSysID) {
+		var logName = this.log + "deleteRecord >> ";
+		var gr = new GlideRecord(tableName);
+		gr.addQuery('sys_id', recordSysID);
+		gr.query();
+		if (gr.next()) {
+			gr.deleteRecord();
+			gs.info(logName + "deleted successfully");
+		} else
+			gs.info(logName + "given sys_id " + recordSysID + " is not exists. skipping the operation");
 	},
 
-	getRecord: function(tableName, recordSysID){
-		var logName = this.log+"GetRecord >> ";
+	getRecord: function (tableName, recordSysID) {
+		var logName = this.log + "GetRecord >> ";
 		var data = {};
 
-		if(!this.isTableExists(tableName)){
-			gs.error(logName+"Given table: "+tableName+" doesn't exists.");
+		if (!this.isTableExists(tableName)) {
+			gs.error(logName + "Given table: " + tableName + " doesn't exists.");
 			return data;
 		}
 		var gr = new GlideRecord(tableName);
-		gr.addQuery('sys_id',recordSysID);
+		gr.addQuery('sys_id', recordSysID);
 		gr.query();
-		if(gr.next()){
-			for(var key in gr){
+		if (gr.next()) {
+			for (var key in gr) {
 				data[key] = gr.getValue(key);
 			}
-		}
-		else
-			gs.error(logName+" Given record with sysId: "+recordSysID+" doesn't exists in the table:"+tableName);
-		
+		} else
+			gs.error(logName + " Given record with sysId: " + recordSysID + " doesn't exists in the table:" + tableName);
+
 		return data;
 	},
 
-	getUserDataByUID(uID){
-		var logName = this.log+"getUserDataByUID >> "
-		if(!this.isAdmin){
-			gs.error(log+" Unknown Access found");
+	getUserDataByUID(uID) {
+		var logName = this.log + "getUserDataByUID >> ";
+		if (!this.isAdmin) {
+			gs.error(log + " Unknown Access found");
 			return;
 		}
+		gs.info("Fetching user details of " + uID);
 		gr = new GlideRecord('sys_user');
-		gr.addEncodedQuery('user_name=' + input.uID);
+		gr.addEncodedQuery('user_name=' + uID);
 		gr.query();
 		var result;
 		if (gr.hasNext()) {
 			gr.next();
 			result = {
-				fname: gr.first_name.toString(),
-				lname: gr.last_name.toString(),
-				email: gr.email.toString(),
+				firstName: gr.first_name.toString(),
+				lastName: gr.last_name.toString(),
+				mailID: gr.email.toString(),
 				uID: uID,
 			};
 		}
 		return result;
 	},
-	
-	isAdmin : function(){
+
+	isAdmin: function () {
 		return gs.getUser().isMemberOf(this.adminGroupID);
 	},
-	
+
+	isTableExists: function (tableName) {
+		return gs.tableExists(tableName);
+	},
+
 	/**
-     * @param {string} tableName - Table Name.
-     * @param {string} recordSysID - sys_id of record to filter and update its values .
-     * @param {string} column - column id from which data need to be read.
+	 * @param {string} tableName - Table Name.
+	 * @param {string} recordSysID - sys_id of record to filter and update its values .
+	 * @param {string} column - column id from which data need to be read.
 	 * @return {string} - string of values that read from the column.
-     */
-    getDisplayValueFromRecord: function(tableName, recordSysID, column) {
-		gs.info("TableName: "+tableName);
+	 */
+	getDisplayValueFromRecord: function (tableName, recordSysID, column) {
 		var gr = new GlideRecord(tableName);
-        gr.addQuery("sys_id", recordSysID);
-        gr.query();
-        if (gr.next()) {
-            return gr.getDisplayValue(column).toString();
-        }
-    },
+		gr.addQuery("sys_id", recordSysID);
+		gr.query();
+		if (gr.next()) {
+			return gr.getDisplayValue(column).toString();
+		}
+	},
 
- 	/**
-     * @param {string} tableName - Table Name.
-     * @param {string} recordSysID - sys_id of record to filter and update its values .
-     * @param {json} data - should contain key which is respective column names, in order to update the values correctly.
+	/**
+	 * @param {string} tableName - Table Name.
+	 * @param {string} recordSysID - sys_id of record to filter and update its values .
+	 * @param {json} data - should contain key which is respective column names, in order to update the values correctly.
 	 * @return {boolean} - true if updated successfully, else false
-     */
-	updateRecord: function(tableName, recordSysID, data){
-		var logName = this.log+"updateRecord >> ";
+	 */
+	updateRecord: function (tableName, recordSysID, data) {
+		var logName = this.log + "updateRecord >> ";
 
-		if(!this.isTableExists(tableName)){
-			gs.error(logName+"Given table: "+tableName+" doesn't exists.");
+		if (!this.isTableExists(tableName)) {
+			gs.error(logName + "Given table: " + tableName + " doesn't exists.");
 			return;
 		}
 
 		var gr = new GlideRecord(tableName);
-		gr.addQuery("sys_id",recordSysID);
+		gr.addQuery("sys_id", recordSysID);
 		gr.query();
 
-		if(gr.next()){
-			for(var key in data){
+		if (gr.next()) {
+			for (var key in data) {
 				gr.setValue(key, data[key]);
 			}
 			gr.update('updated record ID: ' + recordSysID);
 			return true;
-		}
-		else{
-			gs.error(logName+" Given record with sysId: "+sysId+" doesn't exists in the table:"+tableName);
+		} else {
+			gs.error(logName + " Given record with sysId: " + sysId + " doesn't exists in the table:" + tableName);
 			return;
 		}
-		
+
 
 	}
-		
+
 };]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-01-03 13:19:00</sys_created_on>
         <sys_id>7b8668c1e1a731107f44cf93b0378249</sys_id>
+        <sys_mod_count>6</sys_mod_count>
         <sys_name>CommonMethods</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sys_script_include_7b8668c1e1a731107f44cf93b0378249</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-19 11:59:04</sys_updated_on>
     </sys_script_include>
 </record_update>

@@ -6,11 +6,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-12-02 14:33:29</sys_created_on>
         <sys_id>c6a484ba003231107f449a5d437fab55</sys_id>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>AA Cred</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sys_auth_profile_basic_c6a484ba003231107f449a5d437fab55</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:17:28</sys_updated_on>
         <username>X253816</username>
     </sys_auth_profile_basic>
 </record_update>

@@ -16,11 +16,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-11-30 08:11:30</sys_created_on>
         <sys_id>191a18ca10b231107f44b0faa36cadbe</sys_id>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>tsp_access_list_instance</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sp_instance_191a18ca10b231107f44b0faa36cadbe</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:17:25</sys_updated_on>
         <title>tsp_access_list_instance</title>
         <url/>
         <widget_parameters/>

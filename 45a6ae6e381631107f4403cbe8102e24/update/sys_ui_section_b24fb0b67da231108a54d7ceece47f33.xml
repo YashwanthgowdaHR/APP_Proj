@@ -39,12 +39,15 @@
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_id>b24fb0b67da231108a54d7ceece47f33</sys_id>
+            <sys_mod_count>0</sys_mod_count>
             <sys_name>sysapproval_approver</sys_name>
             <sys_overrides/>
             <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
             <sys_policy/>
             <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
             <sys_update_name>sys_ui_section_b24fb0b67da231108a54d7ceece47f33</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-01-17 10:18:00</sys_updated_on>
             <sys_user/>
             <title>false</title>
             <view display_value="Custom portal (x_snc_accessprov_0)" name="custom_portal_approval_x_snc_accessprov_0">3e4fb0b6b3a231105c1369d3b9c5fc32</view>

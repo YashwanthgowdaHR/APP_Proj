@@ -48,6 +48,7 @@
         <sys_db_object display_value="" name="sc_cat_item_catalog">sc_cat_item_catalog</sys_db_object>
         <sys_id>12d098f8d73f49acbb37595d6d387764</sys_id>
         <sys_metadata>0c64af81942631107f44a10140143049</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>Service Catalog.Request Access - RP</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_parent display_value="Request Access">54402f8d94e231107f44a101401430d7</sys_parent>
@@ -56,5 +57,7 @@
         <sys_scope_delete display_value="">048d5f0e899f424a8270d790e19b3744</sys_scope_delete>
         <sys_update_name>sc_cat_item_catalog_0c64af81942631107f44a10140143049</sys_update_name>
         <sys_update_version display_value="sc_cat_item_catalog_0c64af81942631107f44a10140143049">c464af81942631107f44a1014014304c</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:18:16</sys_updated_on>
     </sys_metadata_delete>
 </record_update>

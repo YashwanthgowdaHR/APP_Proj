@@ -4,12 +4,15 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-11-22 07:10:58</sys_created_on>
         <sys_id>fb9f3a5f786231107f4427174a8003f9</sys_id>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>x_snc_accessprov_0_environment.x_snc_accessprov_0.user</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_security_acl display_value="x_snc_accessprov_0_environment">3b9f3a5f786231107f4427174a8003f7</sys_security_acl>
         <sys_update_name>sys_security_acl_role_fb9f3a5f786231107f4427174a8003f9</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:17:58</sys_updated_on>
         <sys_user_role display_value="x_snc_accessprov_0.user" name="x_snc_accessprov_0.user">85a6ae6e381631107f4403cbe8102e2e</sys_user_role>
         <transaction_id/>
     </sys_security_acl_role>

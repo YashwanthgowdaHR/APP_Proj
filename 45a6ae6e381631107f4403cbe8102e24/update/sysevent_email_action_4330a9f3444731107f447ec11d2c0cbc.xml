@@ -39,6 +39,8 @@
         <message_html><![CDATA[<p>${mail_script:AP_InformUser}</p>]]></message_html>
         <message_list/>
         <message_text/>
+        <messaging_channels/>
+        <messaging_content/>
         <name>InformUser</name>
         <omit_watermark>false</omit_watermark>
         <order>100</order>
@@ -58,12 +60,15 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>4330a9f3444731107f447ec11d2c0cbc</sys_id>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>InformUser</sys_name>
         <sys_overrides/>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sysevent_email_action_4330a9f3444731107f447ec11d2c0cbc</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:18:14</sys_updated_on>
         <sys_version>2</sys_version>
         <template display_value="Unsubscribe and Preferences">7ed0481f3b0b2200c869c2c703efc487</template>
         <type>email</type>

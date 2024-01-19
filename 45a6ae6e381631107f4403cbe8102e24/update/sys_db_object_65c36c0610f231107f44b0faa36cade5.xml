@@ -22,11 +22,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-11-30 08:56:14</sys_created_on>
         <sys_id>65c36c0610f231107f44b0faa36cade5</sys_id>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>Access Status</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sys_db_object_65c36c0610f231107f44b0faa36cade5</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:16:45</sys_updated_on>
         <update_access>false</update_access>
         <user_role display_value="x_snc_accessprov_0.access_status_user" name="x_snc_accessprov_0.access_status_user">e764204610f231107f44b0faa36cadad</user_role>
         <ws_access>false</ws_access>

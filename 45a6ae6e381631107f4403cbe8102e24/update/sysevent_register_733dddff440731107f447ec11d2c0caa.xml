@@ -1,20 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sysevent_register">
     <sysevent_register action="INSERT_OR_UPDATE">
         <caller_access/>
+        <derived_priority/>
         <description>Send mail for the given subject and body to selected users</description>
         <event_name>x_snc_accessprov_0.send_mail_to_user</event_name>
         <fired_by/>
+        <priority/>
         <queue/>
         <suffix>send_mail_to_user</suffix>
         <sys_class_name>sysevent_register</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-12-18 09:50:05</sys_created_on>
         <sys_id>733dddff440731107f447ec11d2c0caa</sys_id>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>x_snc_accessprov_0.send_mail_to_user</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sysevent_register_733dddff440731107f447ec11d2c0caa</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:18:14</sys_updated_on>
         <table/>
     </sysevent_register>
 </record_update>

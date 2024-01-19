@@ -4,6 +4,7 @@
         <css/>
         <draft>false</draft>
         <dynamic_title_structure/>
+        <human_readable_url_structure/>
         <id>tsp_admin_page_approve_reject_reqs</id>
         <internal>false</internal>
         <omit_watcher>false</omit_watcher>
@@ -15,11 +16,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-12-18 15:50:37</sys_created_on>
         <sys_id>81cfa2bf444b31107f447ec11d2c0c0f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>tsp_admin_page_approve_reject_reqs</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sp_page_81cfa2bf444b31107f447ec11d2c0c0f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:17:26</sys_updated_on>
         <title>Admin - Approve OR Reject Requests</title>
         <use_seo_script>false</use_seo_script>
     </sp_page>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_macroponent">
     <sys_ux_macroponent action="INSERT_OR_UPDATE">
         <associated_types/>
+        <bundles/>
         <category>page</category>
         <component_dependencies/>
         <composition>[ {&#13;
@@ -2679,6 +2680,7 @@
         <dispatched_events>7e4fb0b675a23110a6cc031e18542727,3e4fb0b6cfa23110a418748338866027</dispatched_events>
         <ext_controller_dep/>
         <extends display_value="Page Template">19be392623033300f4b4c50947bf65ba</extends>
+        <extension_point/>
         <handled_events>b64fb0b6aba23110050e817ab5db3531,fa4fb0b6eea23110f85a8ce64bff5231,fe4fb0b6c3a231100dfa1bf483516631,f24fb0b6a7a23110ff37f08b7972fa32,364fb0b6afa231103ce133c120ee1232</handled_events>
         <interactions/>
         <interfaces/>
@@ -3135,11 +3137,14 @@
         <sys_created_by>system</sys_created_by>
         <sys_created_on>2023-11-20 08:33:27</sys_created_on>
         <sys_id>7a4fb0b6bca23110652f8f759fc69132</sys_id>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>Landing Page</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sys_ux_macroponent_7a4fb0b6bca23110652f8f759fc69132</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:18:09</sys_updated_on>
     </sys_ux_macroponent>
     <sys_translated_text action="delete_multiple" query="documentkey=7a4fb0b6bca23110652f8f759fc69132"/>
 </record_update>

@@ -18,11 +18,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-12-28 12:35:44</sys_created_on>
         <sys_id>39f16583685731107f445f54df46a13a</sys_id>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>Test AA Authentication - Transform Map</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sys_transform_map_39f16583685731107f445f54df46a13a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:17:58</sys_updated_on>
         <target_table>x_snc_accessprov_0_randomuserslist</target_table>
     </sys_transform_map>
 </record_update>

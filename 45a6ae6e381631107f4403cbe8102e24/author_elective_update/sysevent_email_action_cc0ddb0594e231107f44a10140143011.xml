@@ -114,13 +114,16 @@
         <sys_db_object display_value="" name="sysevent_email_action">sysevent_email_action</sys_db_object>
         <sys_id>3fce97d4eb8a418c98817e981911b290</sys_id>
         <sys_metadata>cc0ddb0594e231107f44a10140143011</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>Mail Notification </sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
-        <sys_parent display_value="Accessprov 0 Aa Request Access">ad2d3a8d946231107f44a1014014305e</sys_parent>
+        <sys_parent display_value="AA Request Access">ad2d3a8d946231107f44a1014014305e</sys_parent>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_scope_delete display_value="">048d5f0e899f424a8270d790e19b3744</sys_scope_delete>
         <sys_update_name>sysevent_email_action_cc0ddb0594e231107f44a10140143011</sys_update_name>
         <sys_update_version display_value="sysevent_email_action_cc0ddb0594e231107f44a10140143011">01f0105d94a631107f44a10140143095</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:18:26</sys_updated_on>
     </sys_metadata_delete>
 </record_update>

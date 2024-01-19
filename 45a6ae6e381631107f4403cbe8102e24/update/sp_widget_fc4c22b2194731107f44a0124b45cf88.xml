@@ -176,11 +176,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-12-15 13:00:49</sys_created_on>
         <sys_id>fc4c22b2194731107f44a0124b45cf88</sys_id>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>Admin - Approve OR Reject Request</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sp_widget_fc4c22b2194731107f44a0124b45cf88</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:17:27</sys_updated_on>
         <template><![CDATA[<div ng-if="data.usersReq.length > 0" class="table-responsive-sm">
   <h2 class="text-center">Rquests Details:-</h2><br>
   <table class="table table-hover table-bordered">

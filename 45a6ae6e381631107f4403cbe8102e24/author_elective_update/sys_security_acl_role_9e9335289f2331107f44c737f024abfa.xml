@@ -42,13 +42,14 @@
         <update_guid_history>5a933528532331102336e0c2a80a0dfc:-1548305526</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="x_snc_accessprov_0_access_logs.x_snc_accessprov_0.admin">73a732689f2731107f44c737f024abb2</sys_audit_delete>
+        <sys_audit_delete display_value="">73a732689f2731107f44c737f024abb2</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-01-02 10:35:46</sys_created_on>
         <sys_db_object display_value="" name="sys_security_acl_role">sys_security_acl_role</sys_db_object>
         <sys_id>231a13313fdf40dea834e74d2e7504a9</sys_id>
         <sys_metadata>9e9335289f2331107f44c737f024abfa</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>x_snc_accessprov_0_access_logs.x_snc_accessprov_0.admin</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_parent display_value="">529335289f2331107f44c737f024abec</sys_parent>
@@ -57,5 +58,7 @@
         <sys_scope_delete display_value="">048d5f0e899f424a8270d790e19b3744</sys_scope_delete>
         <sys_update_name>sys_security_acl_role_9e9335289f2331107f44c737f024abfa</sys_update_name>
         <sys_update_version display_value="sys_security_acl_role_9e9335289f2331107f44c737f024abfa">129335289f2331107f44c737f024abfd</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:18:25</sys_updated_on>
     </sys_metadata_delete>
 </record_update>

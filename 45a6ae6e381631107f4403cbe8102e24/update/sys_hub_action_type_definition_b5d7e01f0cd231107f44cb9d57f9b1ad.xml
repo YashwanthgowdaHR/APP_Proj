@@ -27,12 +27,15 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>b5d7e01f0cd231107f44cb9d57f9b1ad</sys_id>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>Import Random users list</sys_name>
         <sys_overrides/>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sys_hub_action_type_definition_b5d7e01f0cd231107f44cb9d57f9b1ad</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:17:40</sys_updated_on>
         <system_level>false</system_level>
         <type/>
     </sys_hub_action_type_definition>
@@ -175,6 +178,7 @@
     </sys_hub_step_instance>
     <sys_variable_value action="delete_multiple" query="document_key=0b78e45f0cd231107f44cb9d57f9b1a2"/>
     <sys_element_mapping action="delete_multiple" query="table=var__m_sys_flow_step_definition_input_7f9ba495cb83b300a2fcb895634c9c38^id=0b78e45f0cd231107f44cb9d57f9b1a2"/>
+    <sys_translated_text action="delete_multiple" query="documentkey=0b78e45f0cd231107f44cb9d57f9b1a2"/>
     <sys_hub_step_ext_input action="delete_multiple" query="model=0b78e45f0cd231107f44cb9d57f9b1a2"/>
     <sys_hub_step_ext_output action="delete_multiple" query="model=0b78e45f0cd231107f44cb9d57f9b1a2"/>
     <sys_hub_input_scripts action="delete_multiple" query="instance=0b78e45f0cd231107f44cb9d57f9b1a2"/>
@@ -554,6 +558,7 @@
         <table>var__m_sys_flow_step_definition_input_07a762fb47222200b4fad7527c9a7129</table>
         <value/>
     </sys_element_mapping>
+    <sys_translated_text action="delete_multiple" query="documentkey=4378e45f0cd231107f44cb9d57f9b1a8"/>
     <sys_hub_step_ext_input action="delete_multiple" query="model=4378e45f0cd231107f44cb9d57f9b1a8"/>
     <sys_hub_step_ext_output action="delete_multiple" query="model=4378e45f0cd231107f44cb9d57f9b1a8^sys_idNOT INcf78e45f0cd231107f44cb9d57f9b1c9"/>
     <sys_hub_step_ext_output action="INSERT_OR_UPDATE">
@@ -2531,6 +2536,7 @@
         <table>var__m_sys_flow_step_definition_input_07a762fb47222200b4fad7527c9a7129</table>
         <value/>
     </sys_element_mapping>
+    <sys_translated_text action="delete_multiple" query="documentkey=0b88a85f0cd231107f44cb9d57f9b1ce"/>
     <sys_hub_step_ext_input action="delete_multiple" query="model=0b88a85f0cd231107f44cb9d57f9b1ce"/>
     <sys_hub_step_ext_output action="delete_multiple" query="model=0b88a85f0cd231107f44cb9d57f9b1ce^sys_idNOT INcb88a85f0cd231107f44cb9d57f9b1d5"/>
     <sys_hub_step_ext_output action="INSERT_OR_UPDATE">
@@ -2664,6 +2670,7 @@
     </sys_hub_step_instance>
     <sys_variable_value action="delete_multiple" query="document_key=8788a85f0cd231107f44cb9d57f9b1ca"/>
     <sys_element_mapping action="delete_multiple" query="table=var__m_sys_flow_step_definition_input_7f9ba495cb83b300a2fcb895634c9c38^id=8788a85f0cd231107f44cb9d57f9b1ca"/>
+    <sys_translated_text action="delete_multiple" query="documentkey=8788a85f0cd231107f44cb9d57f9b1ca"/>
     <sys_hub_step_ext_input action="delete_multiple" query="model=8788a85f0cd231107f44cb9d57f9b1ca"/>
     <sys_hub_step_ext_output action="delete_multiple" query="model=8788a85f0cd231107f44cb9d57f9b1ca"/>
     <sys_hub_input_scripts action="delete_multiple" query="instance=8788a85f0cd231107f44cb9d57f9b1ca"/>

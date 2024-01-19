@@ -135,6 +135,7 @@
         <sys_db_object display_value="" name="sys_ws_operation">sys_ws_operation</sys_db_object>
         <sys_id>28fd3de579f94e11a4f9845777a28d91</sys_id>
         <sys_metadata>9923ce648d2231107f4407e68d8b5276</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>Get User</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_parent/>
@@ -143,5 +144,7 @@
         <sys_scope_delete display_value="">048d5f0e899f424a8270d790e19b3744</sys_scope_delete>
         <sys_update_name>sys_ws_operation_9923ce648d2231107f4407e68d8b5276</sys_update_name>
         <sys_update_version display_value="sys_ws_operation_9923ce648d2231107f4407e68d8b5276">55a98ee88d2231107f4407e68d8b52b4</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:18:25</sys_updated_on>
     </sys_metadata_delete>
 </record_update>

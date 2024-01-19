@@ -50,6 +50,7 @@
         <sys_db_object display_value="" name="sp_row">sp_row</sys_db_object>
         <sys_id>18c3eb2bfe51449087f8ecb2da29e610</sys_id>
         <sys_metadata>be51824c08f231107f444714c6e90da9</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>1</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_parent/>
@@ -58,5 +59,7 @@
         <sys_scope_delete display_value="">048d5f0e899f424a8270d790e19b3744</sys_scope_delete>
         <sys_update_name>sp_row_be51824c08f231107f444714c6e90da9</sys_update_name>
         <sys_update_version display_value="sp_row_be51824c08f231107f444714c6e90da9">7e51824c08f231107f444714c6e90dab</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:18:22</sys_updated_on>
     </sys_metadata_delete>
 </record_update>

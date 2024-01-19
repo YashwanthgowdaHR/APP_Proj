@@ -5,18 +5,23 @@
         <advanced>false</advanced>
         <condition/>
         <description>Transform boolean output to configure MFA in Custom portal</description>
+        <local_or_existing/>
         <name>364fb0b6e8a231106c0485e92973b833</name>
         <operation display_value="execute">execute</operation>
         <script/>
+        <security_attribute/>
         <sys_class_name>sys_security_acl</sys_class_name>
         <sys_created_by>system</sys_created_by>
         <sys_created_on>2023-11-20 08:33:29</sys_created_on>
         <sys_id>fa4fb0b620a231100587daf4b6a12f33</sys_id>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>364fb0b6e8a231106c0485e92973b833</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sys_security_acl_fa4fb0b620a231100587daf4b6a12f33</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:17:53</sys_updated_on>
         <type display_value="ux_data_broker">6d9c40e9531210101cb3ddeeff7b12f6</type>
     </sys_security_acl>
 </record_update>

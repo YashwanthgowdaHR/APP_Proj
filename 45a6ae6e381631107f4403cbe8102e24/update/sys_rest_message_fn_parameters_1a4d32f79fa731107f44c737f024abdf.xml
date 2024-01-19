@@ -6,11 +6,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-01-12 13:20:39</sys_created_on>
         <sys_id>1a4d32f79fa731107f44c737f024abdf</sys_id>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>roles</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sys_rest_message_fn_parameters_1a4d32f79fa731107f44c737f024abdf</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:17:47</sys_updated_on>
         <type>string</type>
         <value>["224","226"]</value>
     </sys_rest_message_fn_parameters>

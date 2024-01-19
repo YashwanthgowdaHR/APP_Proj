@@ -8,10 +8,13 @@
         <sys_created_by>system</sys_created_by>
         <sys_created_on>2023-11-20 08:33:28</sys_created_on>
         <sys_id>b64fb0b691a2311062ea65b9b9665f36</sys_id>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>Approve Evam</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sys_declarative_action_payload_mapping_b64fb0b691a2311062ea65b9b9665f36</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:17:29</sys_updated_on>
     </sys_declarative_action_payload_mapping>
 </record_update>

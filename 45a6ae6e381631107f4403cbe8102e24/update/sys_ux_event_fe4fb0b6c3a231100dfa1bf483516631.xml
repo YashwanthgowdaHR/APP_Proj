@@ -2,6 +2,7 @@
     <sys_ux_event action="INSERT_OR_UPDATE">
         <description/>
         <event_name>MY_TASKS</event_name>
+        <explicit_api_name/>
         <interfaces/>
         <label>My tasks</label>
         <props>[&#13;
@@ -30,11 +31,14 @@
         <sys_created_by>system</sys_created_by>
         <sys_created_on>2023-11-20 08:33:26</sys_created_on>
         <sys_id>fe4fb0b6c3a231100dfa1bf483516631</sys_id>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>My tasks</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sys_ux_event_fe4fb0b6c3a231100dfa1bf483516631</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:18:08</sys_updated_on>
     </sys_ux_event>
     <sys_translated_text action="delete_multiple" query="documentkey=fe4fb0b6c3a231100dfa1bf483516631"/>
 </record_update>

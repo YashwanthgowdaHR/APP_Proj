@@ -11,11 +11,14 @@
             <sys_class_name>sys_documentation</sys_class_name>
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2023-12-28 12:19:18</sys_created_on>
+            <sys_mod_count>0</sys_mod_count>
             <sys_name>response_body</sys_name>
             <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
             <sys_policy/>
             <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
             <sys_update_name>sys_documentation_var__m_sys_hub_action_output_d36f1183685731107f445f54df46a1d0_response_body_en</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2023-12-28 12:19:18</sys_updated_on>
             <url/>
             <url_target/>
         </sys_documentation>

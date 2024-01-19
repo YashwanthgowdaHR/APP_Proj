@@ -8,12 +8,15 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>b64fb0b610a231100f5b23e1ead0d437</sys_id>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name/>
         <sys_overrides/>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>m2m_app_config_theme_b64fb0b610a231100f5b23e1ead0d437</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:17:24</sys_updated_on>
         <theme display_value="Light Theme">324fb0b6eea23110b3701b0c6347c237</theme>
         <ux_app_configuration display_value="AccessProvider Config">e64f70b6dca231107f44c19e673262fc</ux_app_configuration>
     </m2m_app_config_theme>

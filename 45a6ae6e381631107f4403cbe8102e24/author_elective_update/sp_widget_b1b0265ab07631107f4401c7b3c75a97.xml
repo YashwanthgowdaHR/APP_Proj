@@ -426,13 +426,14 @@ if(input){
         <update_guid_history>0755011075a3311030b6fd6af821ea3d:-379533975</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="Copy of Admin - Others Request History">d4c184d79f2731107f44c737f024abb6</sys_audit_delete>
+        <sys_audit_delete display_value="">d4c184d79f2731107f44c737f024abb6</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-01-10 10:24:12</sys_created_on>
         <sys_db_object display_value="" name="sp_widget">sp_widget</sys_db_object>
         <sys_id>07b4c8d634e84d76883f35c7b1840824</sys_id>
         <sys_metadata>b1b0265ab07631107f4401c7b3c75a97</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>Copy of Admin - Others Request History</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_parent/>
@@ -441,5 +442,7 @@ if(input){
         <sys_scope_delete display_value="">048d5f0e899f424a8270d790e19b3744</sys_scope_delete>
         <sys_update_name>sp_widget_b1b0265ab07631107f4401c7b3c75a97</sys_update_name>
         <sys_update_version display_value="sp_widget_b1b0265ab07631107f4401c7b3c75a97">475501109fa331107f44c737f024ab3d</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:18:23</sys_updated_on>
     </sys_metadata_delete>
 </record_update>

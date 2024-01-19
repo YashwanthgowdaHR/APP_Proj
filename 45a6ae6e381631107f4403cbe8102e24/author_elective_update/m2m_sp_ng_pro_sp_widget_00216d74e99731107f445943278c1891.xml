@@ -48,6 +48,7 @@
         <sys_db_object display_value="" name="m2m_sp_ng_pro_sp_widget">m2m_sp_ng_pro_sp_widget</sys_db_object>
         <sys_id>1e1f26bab9fd496093e81f8155564900</sys_id>
         <sys_metadata>00216d74e99731107f445943278c1891</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>apReferenceGetter.User Request Access</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_parent/>
@@ -56,5 +57,7 @@
         <sys_scope_delete display_value="">048d5f0e899f424a8270d790e19b3744</sys_scope_delete>
         <sys_update_name>m2m_sp_ng_pro_sp_widget_00216d74e99731107f445943278c1891</sys_update_name>
         <sys_update_version display_value="m2m_sp_ng_pro_sp_widget_00216d74e99731107f445943278c1891">08216d74e99731107f445943278c1893</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:18:16</sys_updated_on>
     </sys_metadata_delete>
 </record_update>

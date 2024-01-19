@@ -19,11 +19,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-11-09 12:14:48</sys_created_on>
         <sys_id>f378051f0c5631107f44cb9d57f9b150</sys_id>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>u_name</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sys_transform_entry_f378051f0c5631107f44cb9d57f9b150</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:17:58</sys_updated_on>
         <target_field>name</target_field>
         <target_table>x_snc_accessprov_0_randomuserslist</target_table>
         <use_source_script>false</use_source_script>

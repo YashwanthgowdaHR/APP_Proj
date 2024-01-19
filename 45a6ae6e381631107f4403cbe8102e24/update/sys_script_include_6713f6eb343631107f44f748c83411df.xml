@@ -20,25 +20,29 @@ AutomationAnywhere_APIs.prototype = {
      * @param {json} user - user json should contains keys i.e 
      * firstName[string],lastName[string],mailId[string],uID[string],roles[list] - list containing role IDs(NOT NAME).
      * @return {json} result - result will have keys i.e. 
-                    * isCreated[bool] - if the user is created, it will be true, else false
-                    * id[number] - if isCreated is true, then it will contain id of the user and 
-                    * msg[string] - if user creation failed[isCreated=false], then msg will holds the error message.
+     * isCreated[bool] - if the user is created, it will be true, else false
+     * id[number] - if isCreated is true, then it will contain id of the user and 
+     * msg[string] - if user creation failed[isCreated=false], then msg will holds the error message.
      */
     createUsr: function(user) {
         var logName = this.log + "CreateUser >> ";
         var result = {};
+        gs.info(logName + " Received a request to Create a New user with details: " + JSON.stringify(user));
+
 
         try {
-            gs.info(logName + " Received a request to Create a New user with details: " + JSON.stringify(user));
-            // Get Access Token
-            var tkn = this.getToken();
-            // var tmpRoles = user.roleIds.split(",");
-            // var roles = [];
+            var tmpRoles = user.roleIDs.split(",");
+            var roles = [];
             // tmpRoles.forEach(function(id) {
             //     roles.push({
             //         "id": id
             //     });
             // });
+            tmpRoles.forEach(function(id) {
+                roles.push(Number(id));
+            });
+            // Get Access Token
+            var tkn = this.getToken();
 
             //Initialize the required REST Message
             var req = this.makeReq('CreateUser');
@@ -48,7 +52,7 @@ AutomationAnywhere_APIs.prototype = {
             req.setStringParameterNoEscape('mailID', user.mailID);
             req.setStringParameterNoEscape('pass', this.defaultPass);
             req.setStringParameterNoEscape('userName', user.uID);
-            req.setStringParameterNoEscape('roles', JSON.stringify(user.roles));
+            req.setStringParameterNoEscape('roleIDs', roles);
 
             gs.info(logName + " Creating User...");
 
@@ -83,7 +87,7 @@ AutomationAnywhere_APIs.prototype = {
      * @return {json} result - result will have keys i.e. isCreated[bool] - if the user is created, it will be true and msg[string] - if user creation failed, then msg will holds the error message.
      */
     deleteUsr: function(uID, userID) {
-        var logName = this.log + "DeleteUser >> ";
+        var logName = this.log + "DeleteUsr >> ";
         if (userID) {
             gs.info(logName + "Checking if user with id " + userID + " exists in AA...");
             var exists = this.getUserByID(userID);
@@ -136,9 +140,10 @@ AutomationAnywhere_APIs.prototype = {
      * @return {json} result - result will contain all the keys that user has configured or assigned after user has been created.
      */
     getUserByID: function(userID) {
+        var logName = this.log + "getUserByID >> ";
         // API Call made to AA to get User info by User ID
-        if (id) {
-            gs.info("Checking info for Id: " + userID);
+        if (userID) {
+            gs.info(logName + "Checking info for Id: " + userID);
             var token = this.getToken();
             var req = this.makeReq('GetUserByID');
             req.setStringParameterNoEscape("authorization", token);
@@ -146,7 +151,7 @@ AutomationAnywhere_APIs.prototype = {
             var response = req.execute();
             var responseBody = response.getBody();
             var httpStatus = response.getStatusCode();
-            gs.info("Script - Response Status: " + httpStatus);
+            gs.info(logName + "Script - Response Status: " + httpStatus);
 
             if (httpStatus == 404)
                 return;
@@ -158,7 +163,7 @@ AutomationAnywhere_APIs.prototype = {
                 return JSON.parse(responseBody);
         }
     },
-   
+
     insertRoles: function() {
         // Insert roles into table named "aa_roles". So, to keep updated whenever a new role is created in AA.
         // This method is called for every 6 hours from Scheduled Jobs and add the roles, if the "id" doesn't exists.
@@ -178,7 +183,7 @@ AutomationAnywhere_APIs.prototype = {
                 gr.addQuery('id', role.id);
                 gr.query();
                 if (!gr.hasNext()) {
-                    gs.info(logName + "Role doesn't exists. Adding it."+ role.id);
+                    gs.info(logName + "Role doesn't exists. Adding it." + role.id);
                     gr.initialize();
                     gr.setValue("id", role.id);
                     gr.setValue("name", role.name);
@@ -194,35 +199,37 @@ AutomationAnywhere_APIs.prototype = {
     makeReq: function(method) {
         return new sn_ws.RESTMessageV2(this.restSrc, method);
     },
-    
+
     /**
      * @param {string} userID - id of the user which was received after user has been created.
      * @param {list} roles - list of roles IDs.
      * @return {json} result - result will have keys i.e. isUpdated[bool] - if the roles are updated to AA, it will be true, else false and 
-                    * msg[string] - if unable to update roles[isUpdated=false], then msg will holds the error message
+     * msg[string] - if unable to update roles[isUpdated=false], then msg will holds the error message
      */
-    updateUserData: function(userData){
+    updateUserData: function(userData) {
         var logName = this.log + "UpdateRoles >> ";
         var result = {};
 
         try {
-            // var nroles = [];
-            // roles.forEach(function(role){
-            //     nroles.push(Number(role));
-            // })
-            gs.info(logName + " Received a request to update roles for the user id: "+userData.userID+ ", mailID: "+userData.mailID+" and roles are "+JSON.stringify(userData.roles));
+            gs.info(logName + " Received a request to update roles for the user id: " + userData.userID + ", mailID: " + userData.mailID + " and roles are " + JSON.stringify(tmpRoles));
             gs.info(logName + "Updating roles...");
 
             // Get Access Token
             var tkn = this.getToken();
+            var tmpRoles = user.roleIDs.split(",");
+            var roles = [];
+            tmpRoles.forEach(function(id) {
+                roles.push(Number(id));
+            });
+
             //Initialize the required REST Message
             var req = this.makeReq('UpdateUserRoles');
             req.setStringParameterNoEscape("authorization", tkn);
             req.setStringParameterNoEscape('id', userData.userID);
-            req.setStringParameterNoEscape('roles', JSON.stringify(userData.roles));
-            req.setStringParameterNoEscape('mailID', JSON.stringify(userData.mailID));
-            req.setStringParameterNoEscape('firstName', JSON.stringify(userData.firstName));
-            req.setStringParameterNoEscape('lastName', JSON.stringify(userData.lastName));
+            req.setStringParameterNoEscape('roles', JSON.stringify(roles));
+            req.setStringParameterNoEscape('mailID', userData.mailID);
+            req.setStringParameterNoEscape('firstName', userData.firstName);
+            req.setStringParameterNoEscape('lastName', userData.lastName);
 
             var response = req.execute();
             var responseBody = response.getBody();
@@ -250,10 +257,13 @@ AutomationAnywhere_APIs.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-12-05 11:15:29</sys_created_on>
         <sys_id>6713f6eb343631107f44f748c83411df</sys_id>
+        <sys_mod_count>12</sys_mod_count>
         <sys_name>AutomationAnywhere_APIs</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sys_script_include_6713f6eb343631107f44f748c83411df</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-19 12:19:42</sys_updated_on>
     </sys_script_include>
 </record_update>

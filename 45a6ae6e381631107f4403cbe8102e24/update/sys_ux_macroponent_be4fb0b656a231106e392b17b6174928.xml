@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_macroponent">
     <sys_ux_macroponent action="INSERT_OR_UPDATE">
         <associated_types/>
+        <bundles/>
         <category>page</category>
         <component_dependencies/>
         <composition>[ {
@@ -582,6 +583,7 @@
         <dispatched_events>fa4fb0b6c0a231107962e70c63181628,764fb0b638a2311099415a88758dac28,3e4fb0b66fa23110101ac0cce57a7528,b64fb0b65ca23110bd297cb5f16d5c28</dispatched_events>
         <ext_controller_dep/>
         <extends display_value="Page Template">19be392623033300f4b4c50947bf65ba</extends>
+        <extension_point/>
         <handled_events/>
         <interactions/>
         <interfaces/>
@@ -644,11 +646,14 @@
         <sys_created_by>system</sys_created_by>
         <sys_created_on>2023-11-20 08:33:26</sys_created_on>
         <sys_id>be4fb0b656a231106e392b17b6174928</sys_id>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>Tasks</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sys_ux_macroponent_be4fb0b656a231106e392b17b6174928</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:18:09</sys_updated_on>
     </sys_ux_macroponent>
     <sys_translated_text action="delete_multiple" query="documentkey=be4fb0b656a231106e392b17b6174928"/>
 </record_update>

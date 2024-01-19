@@ -136,11 +136,14 @@
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_id>8a2c151f0c9631107f44cb9d57f9b140</sys_id>
+            <sys_mod_count>0</sys_mod_count>
             <sys_name>x_snc_accessprov_0_randomuserslist</sys_name>
             <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
             <sys_policy/>
             <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
             <sys_update_name>sys_ui_list_x_snc_accessprov_0_randomuserslist_null</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-01-17 10:17:59</sys_updated_on>
             <sys_user/>
             <view display_value="Default view" name="NULL">Default view</view>
             <view_name/>

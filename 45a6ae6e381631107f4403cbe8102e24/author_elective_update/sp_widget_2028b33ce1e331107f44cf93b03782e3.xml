@@ -1399,13 +1399,14 @@
         <update_guid_history>0539f33c3ee33110fe8db82f763cd95d:539497422,d3d833b80de33110e9a0548bd4cf63bb:323050550,6828b33cbae33110695aeabf02d15fe4:2006641971</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="CopyWidgetForm">c8c184d79f2731107f44c737f024ab67</sys_audit_delete>
+        <sys_audit_delete display_value="">c8c184d79f2731107f44c737f024ab67</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-01-10 10:24:11</sys_created_on>
         <sys_db_object display_value="" name="sp_widget">sp_widget</sys_db_object>
         <sys_id>299b2152e0e7456da3e40a5f1c042d81</sys_id>
         <sys_metadata>2028b33ce1e331107f44cf93b03782e3</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>CopyWidgetForm</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_parent/>
@@ -1414,5 +1415,7 @@
         <sys_scope_delete display_value="">048d5f0e899f424a8270d790e19b3744</sys_scope_delete>
         <sys_update_name>sp_widget_2028b33ce1e331107f44cf93b03782e3</sys_update_name>
         <sys_update_version display_value="sp_widget_2028b33ce1e331107f44cf93b03782e3">0d39f33ce1e331107f44cf93b037825d</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:18:22</sys_updated_on>
     </sys_metadata_delete>
 </record_update>

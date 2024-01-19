@@ -5,18 +5,23 @@
         <advanced>false</advanced>
         <condition/>
         <description>ACL for data broker: Catalog item from RITM</description>
+        <local_or_existing/>
         <name>f24fb0b680a2311069f015a4f4ef4134</name>
         <operation display_value="execute">execute</operation>
         <script/>
+        <security_attribute/>
         <sys_class_name>sys_security_acl</sys_class_name>
         <sys_created_by>system</sys_created_by>
         <sys_created_on>2023-11-20 08:33:29</sys_created_on>
         <sys_id>324fb0b603a23110d97ba879a1d4b634</sys_id>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>f24fb0b680a2311069f015a4f4ef4134</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sys_security_acl_324fb0b603a23110d97ba879a1d4b634</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:17:50</sys_updated_on>
         <type display_value="ux_data_broker">6d9c40e9531210101cb3ddeeff7b12f6</type>
     </sys_security_acl>
 </record_update>

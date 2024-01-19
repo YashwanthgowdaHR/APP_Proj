@@ -5,18 +5,23 @@
         <advanced>false</advanced>
         <condition/>
         <description/>
+        <local_or_existing/>
         <name>x_snc_accessprov_0_randomuserslist</name>
         <operation display_value="create">create</operation>
         <script/>
+        <security_attribute/>
         <sys_class_name>sys_security_acl</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-11-09 11:09:28</sys_created_on>
         <sys_id>f689f89f0c1631107f44cb9d57f9b1a8</sys_id>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>x_snc_accessprov_0_randomuserslist</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sys_security_acl_f689f89f0c1631107f44cb9d57f9b1a8</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:17:53</sys_updated_on>
         <type display_value="record">record</type>
     </sys_security_acl>
 </record_update>

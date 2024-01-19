@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script">
+    <sys_script action="INSERT_OR_UPDATE">
+        <abort_action>false</abort_action>
+        <access>package_private</access>
+        <action_delete>true</action_delete>
+        <action_insert>false</action_insert>
+        <action_query>false</action_query>
+        <action_update>false</action_update>
+        <active>true</active>
+        <add_message>false</add_message>
+        <advanced>true</advanced>
+        <change_fields>false</change_fields>
+        <client_callable>false</client_callable>
+        <collection>x_snc_accessprov_0_aa_request_access</collection>
+        <condition/>
+        <description/>
+        <execute_function>false</execute_function>
+        <filter_condition/>
+        <is_rest>false</is_rest>
+        <message/>
+        <name>Log Requests - D</name>
+        <order>100</order>
+        <priority>100</priority>
+        <rest_method/>
+        <rest_method_text/>
+        <rest_service/>
+        <rest_service_text/>
+        <rest_variables/>
+        <role_conditions>x_snc_accessprov_0.user,x_snc_accessprov_0.admin</role_conditions>
+        <script><![CDATA[(function executeRule(current, previous /*null when async*/) {
+    
+    var logName = "LogRequests: ";
+    var logGR = new GlideRecord('x_snc_accessprov_0_access_logs');
+    gs.info(logName+"logging the request/update");
+    logGR.initialize(); //create an empty record before inserting.
+    logGR.setValue('first_name', current.first_name);
+    logGR.setValue('last_name', current.last_name);
+    logGR.setValue('email_id', current.email_id);
+    logGR.setValue('automation_name', current.automation_name);
+    logGR.setValue('environment', current.environment);
+    logGR.setValue('x_m_uid', current.x_m_uid);
+	logGR.setValue('status', current.status);
+	if(current.id)
+		logGR.setValue('id', current.id);
+	if(current.roles)
+		logGR.setValue('roles', current.roles);
+    logGR.insert();
+	gs.info(logName+"logged successfully");
+
+})(current, previous);]]></script>
+        <sys_class_name>sys_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-01-19 05:59:13</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>d21b5d8a4733f110b7ed2398c26d435f</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>Log Requests - D</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sys_script_d21b5d8a4733f110b7ed2398c26d435f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-19 05:59:33</sys_updated_on>
+        <template/>
+        <when>before</when>
+    </sys_script>
+    <sys_translated_text action="delete_multiple" query="documentkey=d21b5d8a4733f110b7ed2398c26d435f"/>
+</record_update>

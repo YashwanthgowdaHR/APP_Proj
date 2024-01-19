@@ -4,19 +4,22 @@
         <license_condition/>
         <license_model>none</license_model>
         <license_roles/>
-        <name>x_snc_accessprov_0_access_status</name>
+        <name>x_snc_accessprov_0_randomuserslist</name>
         <op_delete>true</op_delete>
         <op_insert>true</op_insert>
         <op_update>true</op_update>
         <owner_condition/>
         <sys_class_name>ua_table_licensing_config</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2023-11-30 08:56:16</sys_created_on>
-        <sys_id>99254d9c9f6331107f44c737f024ab9a</sys_id>
-        <sys_name>x_snc_accessprov_0_access_status</sys_name>
+        <sys_created_on>2023-11-09 11:09:23</sys_created_on>
+        <sys_id>9323c46947b73110b7ed2398c26d433e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_snc_accessprov_0_randomuserslist</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
-        <sys_update_name>ua_table_licensing_config_99254d9c9f6331107f44c737f024ab9a</sys_update_name>
+        <sys_update_name>ua_table_licensing_config_9323c46947b73110b7ed2398c26d433e</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:16:44</sys_updated_on>
     </ua_table_licensing_config>
 </record_update>

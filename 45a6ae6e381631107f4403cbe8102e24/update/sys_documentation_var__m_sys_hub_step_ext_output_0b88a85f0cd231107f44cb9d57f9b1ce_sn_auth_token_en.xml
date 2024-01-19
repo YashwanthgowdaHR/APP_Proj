@@ -11,11 +11,14 @@
             <sys_class_name>sys_documentation</sys_class_name>
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2023-11-09 09:55:12</sys_created_on>
+            <sys_mod_count>0</sys_mod_count>
             <sys_name>Credential Value</sys_name>
             <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
             <sys_policy/>
             <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
             <sys_update_name>sys_documentation_var__m_sys_hub_step_ext_output_0b88a85f0cd231107f44cb9d57f9b1ce_sn_auth_token_en</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2023-11-09 09:55:12</sys_updated_on>
             <url/>
             <url_target/>
         </sys_documentation>

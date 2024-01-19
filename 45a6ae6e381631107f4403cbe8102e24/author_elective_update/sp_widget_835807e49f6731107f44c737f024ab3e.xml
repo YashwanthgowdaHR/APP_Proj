@@ -109,13 +109,14 @@
         <update_guid_history>64469819c26331104a79e96478e64642:197937826,43365895ce633110466d0bb21e63c936:1368623435,b2d514192c633110513abad1fc03ed95:-1198162113,400590d57a63311063c53a66a87cacdd:-1399118534,98e49c55096331107efe1754e2763711:-1067142433,8bb454556363311057e108811d5d93d0:1012857742,0a94949516633110f5c93d8e3cde5326:2054941723,6d349c55bf633110e0ef3c1a4e1eff05:25402322,c714d85533633110f99d1b4a8618aa3a:682899482,5ed31495a463311038e166dac37c20e8:-584128336,a8098099c8233110cf4c4d3e756d0995:1357192268,53e8401d7b233110811659bc2ed790b7:1200656212,e4d928896ea731106dc2571be0721374:201406592,f6b960c158a7311070588abeaaa8c648:-945555770,1369e08962a7311098599c917aadede8:713665394,1d69e089f0a731101374c5919c13a747:-948848652,e559a08920a73110f2dc39fb8b913552:445143310,f9712c81b9a7311013b3a179928f4552:1949258958,9b835f78dd633110dbd02d2ebd4d6612:-476174527,ad23977848633110b2c844daccac8ab9:1997978037,cf579f6089a7311016f1e86950f5b12e:205454961,cb5807e4ed6731106d75611a3c2be23f:540652864</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="UserProfile">ab5f64519fe331107f44c737f024abda</sys_audit_delete>
+        <sys_audit_delete display_value="">ab5f64519fe331107f44c737f024abda</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-01-04 08:35:39</sys_created_on>
         <sys_db_object display_value="" name="sp_widget">sp_widget</sys_db_object>
         <sys_id>b5e055b4bdfd48009636c04f9dff6100</sys_id>
         <sys_metadata>835807e49f6731107f44c737f024ab3e</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>UserProfile</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_parent/>
@@ -124,5 +125,7 @@
         <sys_scope_delete display_value="">048d5f0e899f424a8270d790e19b3744</sys_scope_delete>
         <sys_update_name>sp_widget_835807e49f6731107f44c737f024ab3e</sys_update_name>
         <sys_update_version display_value="sp_widget_835807e49f6731107f44c737f024ab3e">6c4698199f6331107f44c737f024ab42</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:18:23</sys_updated_on>
     </sys_metadata_delete>
 </record_update>

@@ -305,13 +305,14 @@ background: transparent !important;
         <update_guid_history>97785995b36731102606741770f80e6b:-1953075713,40e75dd56367311030964ea5291a45bd:-2094051780,056809199f273110ac6963e40a8c8cf9:1434414624,8236899537273110e11dfa252b81d04f:-1117837196,7516c1159f2731108d09f452cd7dd092:263493716,14e5cd152c27311093f3e3154f31cac3:1744239399,c695811556273110b9a0cd9aaa1f5050:-1260991952,3f854dd1412731101fafe40b683cbe87:1925498940,3764cd159827311058506f73738b74be:-1863207120,6f544d11a7273110c20020cddf0c2199:-1203198136,6693c1158a2731108a70a212c448628c:-470371324,8c834d11f22731109d113f3fd19ada10:-1274908943,ef338dd106273110b38d808da1f7fa96:1773909249,e6230d911227311051c1a38783b144a5:1273279198,27dff45dbbe331104e856cf1c8448623:923580852</update_guid_history>
     </sys_update_version>
     <sys_metadata_delete action="INSERT_OR_UPDATE">
-        <sys_audit_delete display_value="Copy of Admin - Request History">90c184d79f2731107f44c737f024ab70</sys_audit_delete>
+        <sys_audit_delete display_value="">90c184d79f2731107f44c737f024ab70</sys_audit_delete>
         <sys_class_name>sys_metadata_delete</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-01-10 10:24:12</sys_created_on>
         <sys_db_object display_value="" name="sp_widget">sp_widget</sys_db_object>
         <sys_id>288ef9f5568543989763a15c4734e341</sys_id>
         <sys_metadata>2bdff45d9fe331107f44c737f024ab21</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>Copy of Admin - Request History</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_parent/>
@@ -320,5 +321,7 @@ background: transparent !important;
         <sys_scope_delete display_value="">048d5f0e899f424a8270d790e19b3744</sys_scope_delete>
         <sys_update_name>sp_widget_2bdff45d9fe331107f44c737f024ab21</sys_update_name>
         <sys_update_version display_value="sp_widget_2bdff45d9fe331107f44c737f024ab21">937895199f6731107f44c737f024abc4</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:18:23</sys_updated_on>
     </sys_metadata_delete>
 </record_update>

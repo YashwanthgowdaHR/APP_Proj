@@ -6,12 +6,15 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-12-28 15:07:30</sys_created_on>
         <sys_id>ede5864b68d731107f445f54df46a188</sys_id>
+        <sys_mod_count>2</sys_mod_count>
         <sys_name>authorization</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sys_rest_message_fn_parameters_ede5864b68d731107f445f54df46a188</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-19 10:43:32</sys_updated_on>
         <type>string</type>
-        <value/>
+        <value>eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiI0OTgiLCJjbGllbnRUeXBlIjoiV0VCIiwidGVuYW50VXVpZCI6IjBhNjY1NGRkLTgwNGItMTg0My04MTgxLTQyYTI5NWQ0MDI1NCIsImh5YnJpZFRlbmFudCI6IiIsIm11bHRpcGxlTG9naW4iOmZhbHNlLCJpYXQiOjE3MDU2NjA4NjEsImV4cCI6MTcwNTY2MjA2MSwiaXNzIjoiQXV0b21hdGlvbkFueXdoZXJlIiwibmFub1RpbWUiOjM3NjU2MzA1MjUwNzUxMjh9.EFxcr2hAtPg45rDSUamAt6XAyQBXw3JnNWNdgXDMd2VanZPknHvXdqkDs4BhJN-W7IQOWbSzLNAxJTLUOBHCqqMJF2E-XNXWo9VWEndgaws7sftE7JzR7YLQBJiK3G0WL072d7FDNanqKhYhjpL8cCia4maIgMv83zznki3XV0_IFPQ1XprtrYxvRSuhkFtGiHDmEsm_AGrZriopI6ZERn5XsKXAKufGwTfHOqeD0wbKXhs2eFf57pvKsK9YYv965I0_X8vo6fvVOJHMxQShi0zix6YTVVbQyfMkVMEGEkZ6PihKWzqroY4De21fx2sWhUf3SVSMRRU4HERQD3Z0kg</value>
     </sys_rest_message_fn_parameters>
 </record_update>

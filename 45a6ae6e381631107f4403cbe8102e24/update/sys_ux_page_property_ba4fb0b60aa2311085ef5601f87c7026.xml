@@ -13,11 +13,14 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>global</sys_domain_path>
         <sys_id>ba4fb0b60aa2311085ef5601f87c7026</sys_id>
+        <sys_mod_count>0</sys_mod_count>
         <sys_name>chrome_header</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy/>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sys_ux_page_property_ba4fb0b60aa2311085ef5601f87c7026</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 10:18:10</sys_updated_on>
         <type>json</type>
         <unique_name>x_snc_accessprov_0.b64fb0b689a23110e519d0f1048d7924.route.chrome_header.3e4fb0b6bca23110bcdf910d1a855d2f</unique_name>
         <value>{&#13;
