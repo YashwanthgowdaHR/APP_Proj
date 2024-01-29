@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="542b390847088250b7ed2398c26d438f" label="Licences" max_length="40" name="x_snc_accessprov_0_licences" type="collection">
+        <element label="Name" max_length="40" name="name" read_only="true" type="string"/>
+    </element>
+</database>

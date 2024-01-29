@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="1c6f6d4047c48250b7ed2398c26d4388" label="Users" max_length="40" name="x_snc_accessprov_0_users" type="collection">
+        <element label="Email" mandatory="true" max_length="100" name="email" type="string"/>
+        <element default="True" function_definition="True" label="EnableAutoLogin" max_length="40" name="enableautologin" type="boolean"/>
+        <element label="First Name" max_length="40" name="first_name" type="string"/>
+        <element label="Last Name" max_length="40" name="last_name" type="string"/>
+        <element label="License Features" max_length="4000" name="license_features" reference="x_snc_accessprov_0_licences" type="glide_list"/>
+        <element default="a1a85c65473b3110b7ed2398c26d4368" function_definition="a1a85c65473b3110b7ed2398c26d4368" label="Roles" max_length="4000" name="roles" type="glide_list"/>
+        <element label="User Name" max_length="40" name="user_name" type="string"/>
+    </element>
+</database>
