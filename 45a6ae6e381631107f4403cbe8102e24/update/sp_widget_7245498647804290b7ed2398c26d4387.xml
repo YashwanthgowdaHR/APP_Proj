@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function (spUtil, spModal) {
+	/* widget controller */
+	var c = this;
+
+	// delete object property if exists
+	function deleteProp(obj, key) {
+		if (obj.hasOwnProperty(key)) {
+			delete obj[key];
+		}
+		return obj;
+	}
+
+	// Reset data properties
+	function resetData() {
+		deleteProp(c.data,"action");
+		deleteProp(c.data,"userId");
+		deleteProp(c.data,"recordSysID");
+		deleteProp(c.data,"uID");
+	}
+
+	function handleSuccess(res) {
+		resetData();
+		c.server.refresh();
+	}
+
+	function handleError(error) {
+		// Handle or log the error as needed
+		console.error('An error occurred:', error);
+		resetData();
+	}
+	c.delete = function (uID, userId, recordSysID) {
+		var warn = '<i class="fa fa-warning" aria-hidden="true"></i>';
+		spModal.confirm("Are you sure to <b>remove</b> this user?").then(function (confirmed) {
+			spUtil.addTrivialMessage("Removing user...");
+			c.data.uID = uID;
+			c.data.userId = userId;
+			c.data.recordSysID = recordSysID;
+			c.data.action = "removeUser";
+			c.server.update().then(handleSuccess).catch(handleError);
+		})
+
+	}
+
+	c.openInfo = function(recordSysID){
+		var pageId = 'tsp_admin_page_users_info';
+		// Construct the URL for the portal page
+		var url = "?id=" +pageId + "&sys_id="+recordSysID;
+		window.location.href = url;
+		
+	}
+
+
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>th, td{
+  text-align: center;
+  vertical-align: middle !important;
+}
+
+
+.no-request{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  text-align: center;
+  color: black;
+  text-transform: uppercase;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>true</has_preview>
+        <id/>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>AAPortal-Admin-ApprovedUsersList</name>
+        <option_schema/>
+        <public>false</public>
+        <roles>x_snc_accessprov_0.admin</roles>
+        <script><![CDATA[(function () {
+	var apcf = new APCommonFunctions();
+	data.userInfo = apcf.getAllApprovedUsers();
+
+	if (input) {
+		if (input.action == "removeUser") {
+			try {
+				if(apcf.removeUsr(input.uID, input.userId, input.recordSysID))
+					gs.addErrorMessage('An error occurred while removing user.');
+				else
+					gs.addInfoMessage("User has been removed");
+			} catch (e) {
+				gs.error('Error deleting user:', e);
+				gs.addErrorMessage('An error occurred while removing user.'+e);
+			}
+		}
+		
+	}
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-01-31 14:38:16</sys_created_on>
+        <sys_id>7245498647804290b7ed2398c26d4387</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>AAPortal-Admin-ApprovedUsersList</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sp_widget_7245498647804290b7ed2398c26d4387</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-02-06 08:24:11</sys_updated_on>
+        <template><![CDATA[<div class="table-responsive-sm" ng-if="data.userInfo.length > 0">
+  <h2>User Details</h2>
+  <table class="table table-hover table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">MUID / XUID</th>
+        <th scope="col">Mail ID</th>
+        <th scope="col">Automation Name</th>
+        <th scope="col">Environment</th>
+        <th scope="col">Roles</th>
+        <th scope="col">Status</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="info in data.userInfo">
+        <td scope="row">{{info.no}}</td>
+        <td>{{info.name}}</td>
+        <td>{{info.uID}}</td>
+        <td>{{info.mailID}}</td>
+        <td>{{info.automationName}}</td>
+        <td>{{info.environment}}</td>
+        <td>{{info.role}}</td>
+        <td>{{info.status}}</td>
+        <td><button ng-click="c.openInfo(info.recordSysID)" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
+        <button ng-click="c.delete(info.uID, info.id, info.recordSysID)" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div ng-if="data.userInfo.length <= 0" class="no-request">
+  <h2>
+    No records found.
+  </h2>
+</div>
+]]></template>
+    </sp_widget>
+</record_update>

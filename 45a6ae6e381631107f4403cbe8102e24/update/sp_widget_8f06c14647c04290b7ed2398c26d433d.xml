@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function() {
+    /* widget controller */
+    var c = this;
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>table td, table th{
+  text-align: center;
+}
+
+td[class^="text"] {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.text-red{
+  color: #dc3545!important;
+}
+
+.text-blue{
+  color: #007bff!important;
+}
+
+.text-warning{
+  color: orange!important;
+}
+
+.text-green{
+  color: #28a745!important;
+}
+
+
+.no-request{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  text-align: center;
+  color: black;
+  text-transform: uppercase;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description>Displays the Access requested info of respective user</description>
+        <docs/>
+        <field_list/>
+        <has_preview>true</has_preview>
+        <id/>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>AA Portal - User - Request History</name>
+        <option_schema/>
+        <public>false</public>
+        <roles>x_snc_accessprov_0.user</roles>
+        <script><![CDATA[(function() {
+	/* populate the 'data' object */
+	/* e.g., data.table = $sp.getValue('table'); */
+	data.reqHistory = new APCommonFunctions().getReqHistoryForUser(gs.getUserName());
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-01-31 14:41:34</sys_created_on>
+        <sys_id>8f06c14647c04290b7ed2398c26d433d</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>AA Portal - User - Request History</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sp_widget_8f06c14647c04290b7ed2398c26d433d</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-02-06 08:18:22</sys_updated_on>
+        <template><![CDATA[<div>
+	<div ng-if="data.reqHistory.length > 0">
+    <!-- If Any Request Found -->
+  	 <legend class="text-center">
+        <h2>Rquests Details</h2>
+   </legend>
+  	<table class="table table-hover table-bordered">
+      <thead>
+        <tr>
+          <th scope="col" class="align-middle">#</th>
+          <th scope="col" class="align-middle">Requested On</th>
+          <th scope="col" class="align-middle">Automation Name</th>
+          <th scope="col" class="align-middle">Environment</th>
+          <th scope="col" class="align-middle">Status</th>
+        </tr>
+      </thead>
+    	<tbody>
+    		<tr ng-repeat="info in data.reqHistory">
+          <th scope="row" class="align-middle">{{info.no}}</th>
+          <td class="align-middle">{{info.requestedOn}}</td>
+          <td class="align-middle">{{info.automationName}}</td>
+          <td class="align-middle">{{info.environment}}</td>
+          <td ng-if="info.status=='Granted'"class="text-green align-middle">{{info.status}}</td>
+        <td ng-if="info.status=='Removed'" class="text-warning align-middle">{{info.status}}</td>
+        <td ng-if="info.status=='Rejected'" class="text-red align-middle">{{info.status}}</td>
+        <td ng-if="info.status=='Pending'" class="text-blue align-middle">{{info.status}}</td>
+
+    		</tr>
+     	</tbody>
+  	</table>
+	</div>
+  
+  <div ng-if="data.reqHistory.length <= 0" class="no-request">
+    <!-- If there is No Request Found -->
+    <h2>
+      no request found.
+    </h2>
+  </div>
+</div>
+
+]]></template>
+    </sp_widget>
+</record_update>

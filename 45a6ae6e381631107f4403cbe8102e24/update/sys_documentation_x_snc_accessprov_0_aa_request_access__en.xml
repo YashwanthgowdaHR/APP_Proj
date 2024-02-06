@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update>
-    <sys_documentation element="" label="AA Request Access" language="en" table="x_snc_accessprov_0_aa_request_access">
+    <sys_documentation element="" label="User Requests" language="en" table="x_snc_accessprov_0_aa_request_access">
         <sys_documentation action="INSERT_OR_UPDATE">
             <element/>
             <help/>
             <hint/>
-            <label>AA Request Access</label>
+            <label>User Requests</label>
             <language>en</language>
             <name>x_snc_accessprov_0_aa_request_access</name>
-            <plural>AA Request Access</plural>
+            <plural>User Requests</plural>
             <sys_class_name>sys_documentation</sys_class_name>
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2023-11-15 07:13:49</sys_created_on>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_name>AA Request Access</sys_name>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_name>User Requests</sys_name>
             <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
             <sys_policy/>
             <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
             <sys_update_name>sys_documentation_x_snc_accessprov_0_aa_request_access__en</sys_update_name>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-01-17 10:16:47</sys_updated_on>
+            <sys_updated_on>2024-01-30 06:50:25</sys_updated_on>
             <url/>
             <url_target/>
         </sys_documentation>

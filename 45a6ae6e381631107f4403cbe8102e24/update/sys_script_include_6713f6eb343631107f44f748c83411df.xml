@@ -164,6 +164,46 @@ AutomationAnywhere_APIs.prototype = {
         }
     },
 
+    insertLicenses: function () {
+        // Insert roles into table named "aa_roles". So, to keep updated whenever a new role is created in AA.
+        // This method is called for every 6 hours from Scheduled Jobs and add the roles, if the "id" doesn't exists.
+        var logName = this.log + "insertLicenses >> ";
+        var token = this.getToken();
+        var req = this.makeReq('FetchLicenses');
+        req.setStringParameterNoEscape("authorization", token);
+        var response = req.execute();
+        var responseBody = response.getBody();
+        var httpStatus = response.getStatusCode();
+        gs.info(logName + " Response Status: " + httpStatus);
+
+        if (httpStatus == 200) {
+            var licenseList = JSON.parse(responseBody).list;
+            licenseList.forEach(function (license) {
+                if('feature' in license){
+                    var parent = license.name;
+                    var feature = license.feature;
+                    var gr = new GlideRecord("x_snc_accessprov_0_licenses");
+                    gr.addQuery('id', feature.id);
+                    gr.query();
+                    if (!gr.hasNext()) {
+                        gs.info(logName + "License doesn't exists. Adding it." + license.id);
+                        gr.initialize();
+                        gr.setValue('id', feature.id);
+                        gr.setValue('name', feature.name);
+                        gr.setValue('parent', parent);
+                        gr.setValue('available_count', feature.availableCount);
+                        gr.setValue('purchased_count', feature.purchasedCount);
+                        gr.setValue('used_in_this_cr', feature.usedCountByThisCr);
+                        gr.setValue('used_in_other_cr', feature.usedCountByAllCr);
+                        gr.insert();
+                    }
+                }
+            });
+        } else {
+            gs.error(logName + " Error Occurred. " + responseBody);
+        }
+    },
+	
     insertRoles: function() {
         // Insert roles into table named "aa_roles". So, to keep updated whenever a new role is created in AA.
         // This method is called for every 6 hours from Scheduled Jobs and add the roles, if the "id" doesn't exists.
@@ -256,13 +296,13 @@ AutomationAnywhere_APIs.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-12-05 11:15:29</sys_created_on>
         <sys_id>6713f6eb343631107f44f748c83411df</sys_id>
-        <sys_mod_count>14</sys_mod_count>
+        <sys_mod_count>16</sys_mod_count>
         <sys_name>AutomationAnywhere_APIs</sys_name>
         <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
         <sys_update_name>sys_script_include_6713f6eb343631107f44f748c83411df</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-01-19 13:46:55</sys_updated_on>
+        <sys_updated_on>2024-01-31 07:37:05</sys_updated_on>
     </sys_script_include>
 </record_update>

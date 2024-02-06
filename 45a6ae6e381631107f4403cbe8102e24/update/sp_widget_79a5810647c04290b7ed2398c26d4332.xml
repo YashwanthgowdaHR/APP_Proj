@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function (spUtil, spModal) {
+	/* widget controller */
+	var c = this;
+
+	// delete object property if exists
+	function deleteProp(obj, key) {
+		if(obj.hasOwnProperty(key)) { 
+			delete obj[key];
+		}
+		return obj;
+	}
+
+	// Reset data properties
+	function resetData() {
+		deleteProp("action");
+		deleteProp("info");
+		deleteProp("rejectReason");
+	}
+
+	c.getData = function () {
+		c.data.uid = c.data.usersReq.uID;
+		c.data.action = "getData";
+		c.server.update().then(resetData).catch(handleError);
+	};
+
+	function handleUpdateResponse(res) {
+		resetData();
+		c.server.refresh();
+	}
+
+	function handleError(error) {
+		// Handle or log the error as needed
+		console.error('An error occurred:', error);
+		resetData();
+	}
+
+	c.approve = function (record) {
+		var warn = '<i class="fa fa-warning" aria-hidden="true"></i>';
+		spModal.confirm("Are you sure to <b>approve</b> this request?").then(function(confirmed) {
+			spUtil.addTrivialMessage("Approving the request...");
+			c.data.info = record;
+			c.data.action = 'approve';
+			c.server.update().then(handleUpdateResponse).catch(handleError);
+		})
+
+	};
+
+	c.reject = function (record) {
+		spModal.open({
+			title: 'Reason for rejecting',
+			message: 'Please <b>provide the comments</b> for rejecting the request.',
+			buttons: [
+				{ label: '✘ ${Cancel}', cancel: true },
+				{ label: '✔ ${Reject}', primary: true }
+			],
+			input: true,
+			size: 'md'
+		}).then(function (reason) {
+			c.data.rejectReason = reason;
+			c.data.info = record;
+			c.data.action = 'reject';
+			c.server.update().then(handleUpdateResponse).catch(handleError)
+		}, function () { }).catch(handleError);
+	};
+};
+]]></client_script>
+        <controller_as>c</controller_as>
+        <css>@font-face {
+  font-display: block;
+  font-family: "bootstrap-icons";
+  src: url("./fonts/bootstrap-icons.woff2?8d200481aa7f02a2d63a331fc782cfaf") format("woff2"),
+	url("./fonts/bootstrap-icons.woff?8d200481aa7f02a2d63a331fc782cfaf") format("woff");
+}
+
+.table td, .table th{
+  text-align: center;
+  vertical-align: middle;
+}
+
+.btn{
+	background: transparent;
+  border-radius: 0px;
+  vertical-align: middle;
+}
+
+.btn-approve{
+	border: 1px solid green;
+}
+
+.btn-approve:hover{
+  color: white;
+  background: green;
+}
+
+.btn-reject{
+	border: 1px solid red;
+}
+  
+.btn-reject:hover{
+  color: white;
+  background: red;
+}
+
+.no-request{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  text-align: center;
+  color: black;
+  text-transform: uppercase;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>true</has_preview>
+        <id/>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>AAPortal-Admin-ApproveORRejectReq</name>
+        <option_schema/>
+        <public>false</public>
+        <roles>x_snc_accessprov_0.admin</roles>
+        <script><![CDATA[(function () {
+	/* populate the 'data' object */
+	data.otherUsersInfo = []; // list stores the user information who request's status is pending
+	var reqGR = new GlideRecord('x_snc_accessprov_0_aa_request_access');
+	reqGR.orderByDesc('sys_created_on');
+	reqGR.query();
+
+	var apcf = new APCommonFunctions();
+	data.usersReq = apcf.getAllPendingReq();
+
+
+	if (input) {
+		var record = input.info;
+
+		// APPROVE action
+		if (input.action === "approve") {
+			try {
+				var output = apcf.approveOrRejectUser("approve",record);
+				if (output.isCreated)
+					gs.addInfoMessage("User has been created");
+				else
+					gs.addErrorMessage('Error while creating user.\n<b>Reason:</b> ' + output.msg);
+			} catch (e) {
+				gs.error('Error approving request:', e);
+				gs.addErrorMessage('An error occurred while approving the request.');
+			}
+		}
+
+		// REJECT action
+		if (input.action === 'reject') {
+			try {
+				record.rejectReason = input.rejectReason;
+				// Script Includes function
+				apcf.approveOrRejectUser("reject", record);
+				gs.addInfoMessage("User has been rejected");
+			} catch (e) {
+				gs.error('Error rejecting request:', e);
+				gs.addErrorMessage('An error occurred while rejecting the request.');
+			}
+		}
+	}
+})();
+]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-01-31 14:39:51</sys_created_on>
+        <sys_id>79a5810647c04290b7ed2398c26d4332</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>AAPortal-Admin-ApproveORRejectReq</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sp_widget_79a5810647c04290b7ed2398c26d4332</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-02-06 08:23:51</sys_updated_on>
+        <template><![CDATA[<div ng-if="data.usersReq.length > 0" class="table-responsive-sm">
+  <h2 class="text-center">Rquests Details:-</h2><br>
+  <table class="table table-hover table-bordered">
+    <thead>
+      <tr>
+        <th scope="col" class="align-middle">#</th>
+        <th scope="col" class="align-middle">Name</th>
+        <th scope="col" class="align-middle">MUID / XUID</th>
+        <th scope="col" class="align-middle">Mail Id</th>
+        <th scope="col" class="align-middle">Automation Name</th>
+        <th scope="col" class="align-middle">Environment</th>
+        <th scope="col" class="align-middle">Role</th>
+        <th scope="col" class="align-middle">Requested On</th>
+        <th scope="col" class="align-middle">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="info in data.usersReq">
+        <th scope="row">{{info.no}}</th>
+        <td>{{info.name}}</td>
+        <td>{{info.uID}}</td>
+        <td>{{info.mailID}}</td>
+        <td>{{info.automationName}}</td>
+        <td>{{info.environment}}</td>
+        <td>{{info.role}}</td>
+        <td>{{info.requestedOn}}</td>
+        <td>
+        	<button class="btn btn-approve" ng-click="c.approve(info)">Approve</button>
+          <button class="btn btn-reject" ng-click="c.reject(info)">Reject</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div ng-if="data.usersReq.length <= 0" class="no-request">
+  <h2>No Request Found.</h2>
+</div>
+]]></template>
+    </sp_widget>
+</record_update>

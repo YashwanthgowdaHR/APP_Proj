@@ -4,8 +4,10 @@
         <element default="True" function_definition="True" label="EnableAutoLogin" max_length="40" name="enableautologin" type="boolean"/>
         <element label="First Name" max_length="40" name="first_name" type="string"/>
         <element label="Last Name" max_length="40" name="last_name" type="string"/>
-        <element label="License Features" max_length="4000" name="license_features" reference="x_snc_accessprov_0_licences" type="glide_list"/>
-        <element default="a1a85c65473b3110b7ed2398c26d4368" function_definition="a1a85c65473b3110b7ed2398c26d4368" label="Roles" max_length="4000" name="roles" type="glide_list"/>
+        <element choice="1" label="License" max_length="32" name="license" reference="x_snc_accessprov_0_licenses" type="reference">
+            <choice/>
+        </element>
+        <element default="a1a85c65473b3110b7ed2398c26d4368" function_definition="a1a85c65473b3110b7ed2398c26d4368" label="Roles" max_length="4000" name="roles" reference="x_snc_accessprov_0_aa_roles" type="glide_list"/>
         <element label="User Name" max_length="40" name="user_name" type="string"/>
     </element>
 </database>

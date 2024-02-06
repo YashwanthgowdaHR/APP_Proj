@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_rest_message_fn_parameters">
+    <sys_rest_message_fn_parameters action="INSERT_OR_UPDATE">
+        <name>authorization</name>
+        <rest_message_function display_value="FetchLicenses">acdc7ae947048e50b7ed2398c26d4335</rest_message_function>
+        <sys_class_name>sys_rest_message_fn_parameters</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-01-30 10:06:23</sys_created_on>
+        <sys_id>e47d326d47048e50b7ed2398c26d436e</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>authorization</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sys_rest_message_fn_parameters_e47d326d47048e50b7ed2398c26d436e</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-30 10:06:55</sys_updated_on>
+        <type>string</type>
+        <value>eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiI0OTgiLCJjbGllbnRUeXBlIjoiV0VCIiwidGVuYW50VXVpZCI6IjBhNjY1NGRkLTgwNGItMTg0My04MTgxLTQyYTI5NWQ0MDI1NCIsImh5YnJpZFRlbmFudCI6IiIsIm11bHRpcGxlTG9naW4iOmZhbHNlLCJpYXQiOjE3MDY2MDkyMDUsImV4cCI6MTcwNjYxMDQwNSwiaXNzIjoiQXV0b21hdGlvbkFueXdoZXJlIiwibmFub1RpbWUiOjQ3MTM5NzQwNDA0MjEzNDR9.bLWcSoXCyx-218__7q-tfOVQqPTCsyeWmNOSU9fGgg3rvypxXUTpViEP7pRgSkiS7MNbE0Ykx9Vfv-qqxIfHNRATnR2x8AAg2ZGcs__0rTbHw1o83CoukMbgiZX9AURkjshOsToVq3T2A-iNnOGdH5HQwq25qEV_kZu-WRgc79OwXBzQ_NoZMJtG6NUBajmbWalOnM9MsBTmHYqh8jTwBQOEPvJPEmPPTeYeLC0a9AeDOwZQM4oPi0rQAydUHmdvsq3I9FmCnFkAzH1r2IP35vxt-NEKoEL2sAc66XsUhuCPcLOkSkI_8Lbq4z_hbrf3LMbCvSWXoooOugqBIhdvmA</value>
+    </sys_rest_message_fn_parameters>
+</record_update>

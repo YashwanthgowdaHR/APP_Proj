@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_form_sections action="DELETE" form_id="c150ff6d47888e50b7ed2398c26d4342" sys_domain="global" table="x_snc_accessprov_0_licences" version="3">
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>0</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-01-30 13:48:34</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>8550ff6d47888e50b7ed2398c26d4345</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_snc_accessprov_0_licences" name="x_snc_accessprov_0_licences" sys_domain="global" view="Default view">c150ff6d47888e50b7ed2398c26d4342</sys_ui_form>
+            <sys_ui_section caption="NULL" display_value="" name="x_snc_accessprov_0_licences" sys_domain="global" view="Default view">9d2b310047088250b7ed2398c26d43ff</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-01-30 13:48:34</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>1</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-01-30 13:48:34</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>0550ff6d47888e50b7ed2398c26d4346</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_snc_accessprov_0_licences" name="x_snc_accessprov_0_licences" sys_domain="global" view="Default view">c150ff6d47888e50b7ed2398c26d4342</sys_ui_form>
+            <sys_ui_section caption="Count" display_value="Count" name="x_snc_accessprov_0_licences" sys_domain="global" view="Default view">0d50ff6d47888e50b7ed2398c26d4333</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-01-30 13:48:34</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>2</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-01-30 13:48:34</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>4150ff6d47888e50b7ed2398c26d434a</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_snc_accessprov_0_licences" name="x_snc_accessprov_0_licences" sys_domain="global" view="Default view">c150ff6d47888e50b7ed2398c26d4342</sys_ui_form>
+            <sys_ui_section caption="Others" display_value="Others" name="x_snc_accessprov_0_licences" sys_domain="global" view="Default view">8950ff6d47888e50b7ed2398c26d4341</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-01-30 13:48:34</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form action="INSERT_OR_UPDATE">
+            <name>x_snc_accessprov_0_licences</name>
+            <roles/>
+            <sys_class_name>sys_ui_form</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-01-30 13:48:34</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>c150ff6d47888e50b7ed2398c26d4342</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_snc_accessprov_0_licences</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+            <sys_update_name>sys_ui_form_sections_c150ff6d47888e50b7ed2398c26d4342</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-01-30 13:48:34</sys_updated_on>
+            <sys_user/>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_form>
+    </sys_ui_form_sections>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</application>
+        <file_path/>
+        <instance_id>c3f53583dbe213004f035d00cf9619fb</instance_id>
+        <instance_name>dev60881</instance_name>
+        <name>sys_ui_form_sections_c150ff6d47888e50b7ed2398c26d4342</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update><sys_ui_form_sections form_id="c150ff6d47888e50b7ed2398c26d4342" sys_domain="global" table="x_snc_accessprov_0_licences" version="3"><sys_ui_form_section action="INSERT_OR_UPDATE"><position>0</position><sys_created_by>admin</sys_created_by><sys_created_on>2024-01-30 13:48:34</sys_created_on><sys_domain>global</sys_domain><sys_domain_path>/</sys_domain_path><sys_id>8550ff6d47888e50b7ed2398c26d4345</sys_id><sys_mod_count>0</sys_mod_count><sys_overrides/><sys_ui_form display_value="x_snc_accessprov_0_licences" name="x_snc_accessprov_0_licences" sys_domain="global" view="Default view">c150ff6d47888e50b7ed2398c26d4342</sys_ui_form><sys_ui_section caption="NULL" display_value="" name="x_snc_accessprov_0_licences" sys_domain="global" view="Default view">9d2b310047088250b7ed2398c26d43ff</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2024-01-30 13:48:34</sys_updated_on></sys_ui_form_section><sys_ui_form_section action="INSERT_OR_UPDATE"><position>1</position><sys_created_by>admin</sys_created_by><sys_created_on>2024-01-30 13:48:34</sys_created_on><sys_domain>global</sys_domain><sys_domain_path>/</sys_domain_path><sys_id>0550ff6d47888e50b7ed2398c26d4346</sys_id><sys_mod_count>0</sys_mod_count><sys_overrides/><sys_ui_form display_value="x_snc_accessprov_0_licences" name="x_snc_accessprov_0_licences" sys_domain="global" view="Default view">c150ff6d47888e50b7ed2398c26d4342</sys_ui_form><sys_ui_section caption="Count" display_value="Count" name="x_snc_accessprov_0_licences" sys_domain="global" view="Default view">0d50ff6d47888e50b7ed2398c26d4333</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2024-01-30 13:48:34</sys_updated_on></sys_ui_form_section><sys_ui_form_section action="INSERT_OR_UPDATE"><position>2</position><sys_created_by>admin</sys_created_by><sys_created_on>2024-01-30 13:48:34</sys_created_on><sys_domain>global</sys_domain><sys_domain_path>/</sys_domain_path><sys_id>4150ff6d47888e50b7ed2398c26d434a</sys_id><sys_mod_count>0</sys_mod_count><sys_overrides/><sys_ui_form display_value="x_snc_accessprov_0_licences" name="x_snc_accessprov_0_licences" sys_domain="global" view="Default view">c150ff6d47888e50b7ed2398c26d4342</sys_ui_form><sys_ui_section caption="Others" display_value="Others" name="x_snc_accessprov_0_licences" sys_domain="global" view="Default view">8950ff6d47888e50b7ed2398c26d4341</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2024-01-30 13:48:34</sys_updated_on></sys_ui_form_section><sys_ui_form action="INSERT_OR_UPDATE"><name>x_snc_accessprov_0_licences</name><roles/><sys_class_name>sys_ui_form</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2024-01-30 13:48:34</sys_created_on><sys_domain>global</sys_domain><sys_domain_path>/</sys_domain_path><sys_id>c150ff6d47888e50b7ed2398c26d4342</sys_id><sys_mod_count>0</sys_mod_count><sys_name>x_snc_accessprov_0_licences</sys_name><sys_overrides/><sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package><sys_policy/><sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope><sys_update_name>sys_ui_form_sections_c150ff6d47888e50b7ed2398c26d4342</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2024-01-30 13:48:34</sys_updated_on><sys_user/><view display_value="Default view" name="NULL">Default view</view><view_name/></sys_ui_form></sys_ui_form_sections></record_update>]]></payload>
+        <payload_hash>414880209</payload_hash>
+        <record_name>Licences</record_name>
+        <reverted_from/>
+        <source>4bd3c02547b73110b7ed2398c26d43cd</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-01-30 13:48:34</sys_created_on>
+        <sys_id>0550ff6d47888e50b7ed2398c26d434c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>18d5aa0f6060000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-30 13:48:34</sys_updated_on>
+        <type>Form Sections</type>
+        <update_guid>c950ff6d4b888e50f474a6771105204b</update_guid>
+        <update_guid_history>c950ff6d4b888e50f474a6771105204b:414880209,8d50ff6d95888e50317140caabe69c47:687693337,cd50ff6deb888e50449a38b34ec1fb43:1759348170</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-01-30 15:27:59</sys_created_on>
+        <sys_db_object display_value="" name="sys_ui_form">sys_ui_form</sys_db_object>
+        <sys_id>2bfb26bd6620433197a36e5e13606d41</sys_id>
+        <sys_metadata>c150ff6d47888e50b7ed2398c26d4342</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_snc_accessprov_0_licences</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_parent display_value="">542b390847088250b7ed2398c26d438f</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_scope_delete display_value="">048d5f0e899f424a8270d790e19b3744</sys_scope_delete>
+        <sys_update_name>sys_ui_form_sections_c150ff6d47888e50b7ed2398c26d4342</sys_update_name>
+        <sys_update_version display_value="sys_ui_form_sections_c150ff6d47888e50b7ed2398c26d4342">0550ff6d47888e50b7ed2398c26d434c</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-30 15:27:59</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

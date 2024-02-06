@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function() {
+    /* widget controller */
+    var c = this;
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>table td, table th{&#13;
+  text-align: center;&#13;
+  vertical-align: middle !important;&#13;
+}&#13;
+&#13;
+.no-request{&#13;
+  display: flex;&#13;
+  justify-content: center;&#13;
+  align-items: center;&#13;
+  height: 300px;&#13;
+  text-align: center;&#13;
+  color: black;&#13;
+  text-transform: uppercase;&#13;
+}&#13;
+&#13;
+span.sts:has([value="Granted"])  {&#13;
+  color: #2543be;&#13;
+}&#13;
+&#13;
+td[class^="text"] {&#13;
+  font-weight: bold;&#13;
+  text-transform: uppercase;&#13;
+}&#13;
+&#13;
+.text-red{&#13;
+  color: #dc3545!important;&#13;
+}&#13;
+&#13;
+.text-blue{&#13;
+  color: #007bff!important;&#13;
+}&#13;
+&#13;
+.text-warning{&#13;
+  color: orange!important;&#13;
+}&#13;
+&#13;
+.text-green{&#13;
+  color: #28a745!important;&#13;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>true</has_preview>
+        <id/>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>AAPortal-Admin-ReqHistory</name>
+        <option_schema/>
+        <public>false</public>
+        <roles>x_snc_accessprov_0.admin</roles>
+        <script><![CDATA[(function() {
+	/* populate the 'data' object */	
+	data.reqHistory =  new APCommonFunctions().getReqHistory();
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-01-31 14:37:34</sys_created_on>
+        <sys_id>9425094a47804290b7ed2398c26d4394</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>AAPortal-Admin-ReqHistory</sys_name>
+        <sys_package display_value="AccessProvider" source="x_snc_accessprov_0">45a6ae6e381631107f4403cbe8102e24</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AccessProvider">45a6ae6e381631107f4403cbe8102e24</sys_scope>
+        <sys_update_name>sp_widget_9425094a47804290b7ed2398c26d4394</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-02-06 08:24:40</sys_updated_on>
+        <template><![CDATA[<div ng-if="data.reqHistory.length > 0" class="table-responsive-sm">
+  <h2>Find the requests details here.</h2>
+  <table class="table table-hover table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">MUID / XUID</th>
+        <th scope="col">Mail Id</th>
+        <th scope="col">Automation Name</th>
+        <th scope="col">Environment</th>
+        <th scope="col">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="info in data.reqHistory">
+        <th scope="row">{{info.no}}</th>
+        <td>{{info.name}}</td>
+        <td>{{info.uID}}</td>
+        <td>{{info.mailID}}</td>
+        <td>{{info.automationName}}</td>
+        <td>{{info.environment}}</td>
+        <td ng-if="info.status=='Granted'"class="text-green">{{info.status}}</td>
+        <td ng-if="info.status=='Removed'" class="text-warning">{{info.status}}</td>
+        <td ng-if="info.status=='Rejected'" class="text-red">{{info.status}}</td>
+        <td ng-if="info.status=='Pending'" class="text-blue">{{info.status}}</td>
+       <!--
+        <td  ng-class="{'text-red': item.value='Rejected','text-warning': item.value='Removed','text-green': item.value='Granted'}">{{info.status}}</td>
+-->      
+</tr>
+    </tbody>
+  </table>
+</div>
+<div ng-if="data.reqHistory.length <= 0" class="no-request">
+  <h2>
+    No request found.
+  </h2>
+</div>
+]]></template>
+    </sp_widget>
+</record_update>
