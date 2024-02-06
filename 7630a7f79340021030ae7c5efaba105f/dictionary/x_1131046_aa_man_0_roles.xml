@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="f67c2bb79380021030ae7c5efaba101b" label="Roles" max_length="40" name="x_1131046_aa_man_0_roles" type="collection">
+        <element label="Description" max_length="1000" name="description" type="string"/>
+        <element label="ID" max_length="255" name="id" type="integer"/>
+        <element display="true" label="Name" max_length="40" name="name" type="string"/>
+    </element>
+</database>

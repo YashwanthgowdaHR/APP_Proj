@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="3ab36ffb9340021030ae7c5efaba10cc" label="Users" max_length="40" name="x_1131046_aa_man_0_users" type="collection">
+        <element label="Enable Auto Login" max_length="40" name="enable_auto_login" type="boolean"/>
+        <element label="First Name" max_length="40" name="first_name" type="string"/>
+        <element label="Last Name" max_length="40" name="last_name" type="string"/>
+        <element label="Licenses" max_length="1024" name="licenses" reference="x_1131046_aa_man_0_licenses" type="glide_list"/>
+        <element label="Mail ID" max_length="40" name="mail_id" type="string"/>
+        <element label="Roles" max_length="1024" name="roles" reference="x_1131046_aa_man_0_roles" type="glide_list"/>
+        <element label="Username" max_length="40" name="username" type="string"/>
+    </element>
+</database>

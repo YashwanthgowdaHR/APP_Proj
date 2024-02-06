@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="cd91fb3f9380021030ae7c5efaba1070" label="Licenses" max_length="40" name="x_1131046_aa_man_0_licenses" type="collection">
+        <element label="Available Count" max_length="255" name="available_count" type="integer"/>
+        <element calculation="(function calculatedFieldValue(current) {&#13;&#10;&#13;&#10;&#9;// Add your code here&#13;&#10;&#9;return ''+current.name + ' ('+current.parent+')';  // return the calculated value&#13;&#10;&#13;&#10;})(current);" display="true" label="Detail" max_length="100" name="detail" type="string" virtual="true"/>
+        <element label="ID" max_length="255" name="id" type="integer"/>
+        <element label="Name" max_length="40" name="name" type="string"/>
+        <element label="Parent" max_length="40" name="parent" type="string"/>
+        <element label="Purchased Count" max_length="255" name="purchased_count" type="integer"/>
+        <element label="Used in Other Control room" max_length="255" name="used_in_other_control_room" type="integer"/>
+        <element label="Used in This Control room" max_length="255" name="used_in_this_control_room" type="integer"/>
+    </element>
+</database>
