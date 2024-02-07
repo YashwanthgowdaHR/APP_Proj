@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sys_rest_message_fn_parameters">
     <sys_rest_message_fn_parameters action="INSERT_OR_UPDATE">
         <name>firstName</name>
-        <rest_message_function display_value="Create User">fa4f7b7f93c0021030ae7c5efaba1066</rest_message_function>
+        <rest_message_function display_value="CreateUser">fa4f7b7f93c0021030ae7c5efaba1066</rest_message_function>
         <sys_class_name>sys_rest_message_fn_parameters</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-02-06 14:46:15</sys_created_on>

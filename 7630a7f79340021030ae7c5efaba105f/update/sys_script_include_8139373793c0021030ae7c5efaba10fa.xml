@@ -5,16 +5,17 @@
         <api_name>x_1131046_aa_man_0.AutomationAnywhere_API</api_name>
         <caller_access/>
         <client_callable>false</client_callable>
-        <description/>
+        <description>Provides methods to interact with Automation Anywhere</description>
         <name>AutomationAnywhere_API</name>
         <script><![CDATA[var AutomationAnywhere_API = Class.create();
 AutomationAnywhere_API.prototype = {
     initialize: function (defaultPass = "") {
         this.defaultPass = defaultPass;
-        this.log = "SI | AutomationAnywhere_API | ";
     },
     type: 'AutomationAnywhere_API',
-    restSrc: 'x_snc_accessprov_0.AA-API',
+    restSrc: 'x_1131046_aa_man_0.AA_API',
+    log: "SI | AutomationAnywhere_API | ",
+
     /**
      * @param {json} user - user json should contains keys i.e 
      * firstName[string],lastName[string],mailId[string],uID[string],roles[list] - list containing role IDs(NOT NAME).
@@ -74,6 +75,7 @@ AutomationAnywhere_API.prototype = {
         }
         return result;
     },
+
     /**
      * @param {string} uID - x_m_uid of the user to check whether it matches with existing uID of user who possessing "id". In order to avoid deletion of other users.
      * @param {string} userID - id of the user which was received after user has been created.
@@ -110,10 +112,12 @@ AutomationAnywhere_API.prototype = {
             }
         }
     },
+
     getToken: function () {
+		var logName = this.log + "getToken >> ";
         // API call made to AA to get the TOKEN
-        var r = this.makeReq('DefaultPost');
-        r.setStringParameterNoEscape('api_key', '8<8YeIB36lwtWvm>EhnYy@YW8i3b1gXIaJpZJhr4');
+        var r = this.makeReq('Authentication');
+        r.setStringParameterNoEscape('api_key', 'L|fJA>l}P@>kyY|W;n]j3vxeJ__aF`hXUr|hG22w');
         r.setStringParameterNoEscape('username', 'X253816');
         var response = r.execute();
         var responseBody = response.getBody();
@@ -121,8 +125,11 @@ AutomationAnywhere_API.prototype = {
         if (httpStatus == 200) {
             // Get the Access Token
             return JSON.parse(responseBody).token;
-        }
+        }else{
+			gs.error(logName + " Error occured. "+JSON.stringify(responseBody));
+		}
     },
+
     /**
      * @param {string} id - id of the user which was received after user has been created.
      * @return {json} result - result will contain all the keys that user has configured or assigned after user has been created.
@@ -148,13 +155,14 @@ AutomationAnywhere_API.prototype = {
                 return JSON.parse(responseBody);
         }
     },
+
     insertLicenses: function () {
         // Insert roles into table named "aa_roles". So, to keep updated whenever a new role is created in AA.
         // This method is called for every 6 hours from Scheduled Jobs and add the roles, if the "id" doesn't exists.
         var logName = this.log + "insertLicenses >> ";
         var token = this.getToken();
-        var req = this.makeReq('FetchLicenses');
-        req.setStringParameterNoEscape("authorization", token);
+        var req = this.makeReq('GetLicenseList');
+        req.setStringParameterNoEscape("token", token);
         var response = req.execute();
         var responseBody = response.getBody();
         var httpStatus = response.getStatusCode();
@@ -163,9 +171,9 @@ AutomationAnywhere_API.prototype = {
             var licenseList = JSON.parse(responseBody).list;
             licenseList.forEach(function (license) {
                 if('feature' in license){
-                    var parent = license.name
-                    var feature = license.feature
-                    var gr = new GlideRecord("x_snc_accessprov_0_licenses");
+                    var parent = license.name;
+                    var feature = license.feature;
+                    var gr = new GlideRecord("x_1131046_aa_man_0_licenses");
                     gr.addQuery('id', feature.id);
                     gr.query();
                     if (!gr.hasNext()) {
@@ -186,29 +194,32 @@ AutomationAnywhere_API.prototype = {
             gs.error(logName + " Error Occurred. " + responseBody);
         }
     },
+
     insertRoles: function () {
         // Insert roles into table named "aa_roles". So, to keep updated whenever a new role is created in AA.
-        // This method is called for every 6 hours from Scheduled Jobs and add the roles, if the "id" doesn't exists.
+        // This method is called for every 6 hours from Scheduled Jobs and add the roles, if the particular role "id" doesn't exists.
         var logName = this.log + "insertRoles >> ";
-        var token = this.getToken();
-        var req = this.makeReq('ListRoles');
-        req.setStringParameterNoEscape("authorization", token);
-        var response = req.execute();
-        var responseBody = response.getBody();
-        var httpStatus = response.getStatusCode();
-        gs.info(logName + " Response Status: " + httpStatus);
+        
+        var token = this.getToken(); // Generate Token
+        var req = this.makeReq('FetchRoles'); // Create REST Request
+        req.setStringParameterNoEscape("token", token); // Set the Variable value
+        var response = req.execute(); // Execute the REST request
+        var responseBody = response.getBody(); // Read the RESPONSE BODY
+        var httpStatus = response.getStatusCode(); // Read the RESPONSE status Code
+        gs.info(logName + " Response Status: " + httpStatus); // Log the status code
+
         if (httpStatus == 200) {
             var rolesList = JSON.parse(responseBody).list;
             rolesList.forEach(function (role) {
-                var gr = new GlideRecord("x_snc_accessprov_0_aa_roles");
+                var gr = new GlideRecord("x_1131046_aa_man_0_roles");
                 gr.addQuery('id', role.id);
                 gr.query();
                 if (!gr.hasNext()) {
                     gs.info(logName + "Role doesn't exists. Adding it." + role.id);
-                    gr.initialize();
-                    gr.setValue("id", role.id);
-                    gr.setValue("name", role.name);
-                    gr.setValue("description", role.description);
+                    gr.initialize(); // Empty table (key, no values) Roles(id="", name="", description="", created="")
+                    gr.setValue("id", role.id); //id=20
+                    gr.setValue("name", role.name); // name = "AA_DEV_Others"
+                    gr.setValue("description", role.description); //description = "Provides the development role to user"
                     gr.insert();
                 }
             });
@@ -216,9 +227,11 @@ AutomationAnywhere_API.prototype = {
             gs.error(logName + " Error Occurred. " + responseBody);
         }
     },
+
     makeReq: function (method) {
         return new sn_ws.RESTMessageV2(this.restSrc, method);
     },
+	
     /**
      * @param {string} userID - id of the user which was received after user has been created.
      * @param {list} roles - list of roles IDs.
@@ -271,13 +284,13 @@ AutomationAnywhere_API.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-02-06 14:14:59</sys_created_on>
         <sys_id>8139373793c0021030ae7c5efaba10fa</sys_id>
-        <sys_mod_count>0</sys_mod_count>
+        <sys_mod_count>8</sys_mod_count>
         <sys_name>AutomationAnywhere_API</sys_name>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
         <sys_update_name>sys_script_include_8139373793c0021030ae7c5efaba10fa</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-02-06 14:14:59</sys_updated_on>
+        <sys_updated_on>2024-02-07 12:50:51</sys_updated_on>
     </sys_script_include>
 </record_update>

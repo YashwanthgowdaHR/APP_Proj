@@ -7,5 +7,6 @@
         <element label="Mail ID" max_length="40" name="mail_id" type="string"/>
         <element label="Roles" max_length="1024" name="roles" reference="x_1131046_aa_man_0_roles" type="glide_list"/>
         <element label="Username" max_length="40" name="username" type="string"/>
+        <element label="User ID" max_length="40" name="user_id" type="integer"/>
     </element>
 </database>
