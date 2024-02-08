@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element db_object_id="3ab36ffb9340021030ae7c5efaba10cc" label="Users" max_length="40" name="x_1131046_aa_man_0_users" type="collection">
         <element label="Enable Auto Login" max_length="40" name="enable_auto_login" type="boolean"/>
+        <element choice="1" label="Environment" max_length="40" name="environment" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="DEV" sequence="0" value="DEV"/>
+                <element inactive_on_update="false" label="UAT" sequence="1" value="UAT"/>
+                <element inactive_on_update="false" label="PROD" sequence="2" value="PROD"/>
+            </choice>
+        </element>
         <element label="First Name" max_length="40" name="first_name" type="string"/>
         <element label="Last Name" max_length="40" name="last_name" type="string"/>
         <element label="Licenses" max_length="1024" name="licenses" reference="x_1131046_aa_man_0_licenses" type="glide_list"/>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl">
+    <sys_security_acl action="DELETE">
+        <active>true</active>
+        <admin_overrides>true</admin_overrides>
+        <advanced>true</advanced>
+        <condition/>
+        <description/>
+        <local_or_existing>Local</local_or_existing>
+        <name>x_1131046_aa_man_0_environment</name>
+        <operation display_value="write">write</operation>
+        <script/>
+        <security_attribute/>
+        <sys_class_name>sys_security_acl</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-02-08 13:43:03</sys_created_on>
+        <sys_id>7b554e6c9350821030ae7c5efaba109b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_1131046_aa_man_0_environment</sys_name>
+        <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
+        <sys_update_name>sys_security_acl_7b554e6c9350821030ae7c5efaba109b</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-02-08 13:43:03</sys_updated_on>
+        <type display_value="record">record</type>
+    </sys_security_acl>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AA Management">7630a7f79340021030ae7c5efaba105f</application>
+        <file_path/>
+        <instance_id>faafb836db0a7150ba7f684e139619c5</instance_id>
+        <instance_name>dev194404</instance_name>
+        <name>sys_security_acl_7b554e6c9350821030ae7c5efaba109b</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl"><sys_security_acl action="INSERT_OR_UPDATE"><active>true</active><admin_overrides>true</admin_overrides><advanced>true</advanced><condition/><description/><local_or_existing>Local</local_or_existing><name>x_1131046_aa_man_0_environment</name><operation display_value="write">write</operation><script/><security_attribute/><sys_class_name>sys_security_acl</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2024-02-08 13:43:03</sys_created_on><sys_id>7b554e6c9350821030ae7c5efaba109b</sys_id><sys_mod_count>0</sys_mod_count><sys_name>x_1131046_aa_man_0_environment</sys_name><sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package><sys_policy/><sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope><sys_update_name>sys_security_acl_7b554e6c9350821030ae7c5efaba109b</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2024-02-08 13:43:03</sys_updated_on><type display_value="record">record</type></sys_security_acl></record_update>]]></payload>
+        <payload_hash>889087004</payload_hash>
+        <record_name>x_1131046_aa_man_0_environment</record_name>
+        <reverted_from/>
+        <source>9d067b7393c0021030ae7c5efaba10c1</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-02-08 13:43:03</sys_created_on>
+        <sys_id>73554e6c9350821030ae7c5efaba109e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>18d88f522b00000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-02-08 13:43:03</sys_updated_on>
+        <type>Access Control</type>
+        <update_guid>77554e6c2750821033ed81477968869d</update_guid>
+        <update_guid_history>77554e6c2750821033ed81477968869d:889087004</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-02-08 13:48:37</sys_created_on>
+        <sys_db_object display_value="" name="sys_security_acl">sys_security_acl</sys_db_object>
+        <sys_id>0dac354dc6fd4e40bf52f0fc84f56400</sys_id>
+        <sys_metadata>7b554e6c9350821030ae7c5efaba109b</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_1131046_aa_man_0_environment</sys_name>
+        <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
+        <sys_parent display_value="">9a550e6c9350821030ae7c5efaba1036</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
+        <sys_scope_delete display_value="">2be73dab4eaf4736a09a5739e1636be9</sys_scope_delete>
+        <sys_update_name>sys_security_acl_7b554e6c9350821030ae7c5efaba109b</sys_update_name>
+        <sys_update_version display_value="sys_security_acl_7b554e6c9350821030ae7c5efaba109b">73554e6c9350821030ae7c5efaba109e</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-02-08 13:48:37</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>
