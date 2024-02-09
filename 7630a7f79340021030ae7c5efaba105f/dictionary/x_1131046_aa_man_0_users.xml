@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element db_object_id="3ab36ffb9340021030ae7c5efaba10cc" label="Users" max_length="40" name="x_1131046_aa_man_0_users" type="collection">
-        <element label="Enable Auto Login" max_length="40" name="enable_auto_login" type="boolean"/>
+        <element default="True" label="Enable Auto Login" max_length="40" name="enable_auto_login" type="boolean"/>
         <element choice="1" label="Environment" max_length="40" name="environment" type="choice">
             <choice>
                 <element inactive_on_update="false" label="DEV" sequence="0" value="DEV"/>
@@ -13,6 +13,9 @@
         <element label="Licenses" max_length="1024" name="licenses" reference="x_1131046_aa_man_0_licenses" type="glide_list"/>
         <element label="Mail ID" max_length="40" name="mail_id" type="string"/>
         <element label="Roles" max_length="1024" name="roles" reference="x_1131046_aa_man_0_roles" type="glide_list"/>
+        <element choice="1" label="Temp" max_length="40" name="temp" type="choice">
+            <choice/>
+        </element>
         <element label="Username" max_length="40" name="username" type="string"/>
         <element label="User ID" max_length="40" name="user_id" type="integer"/>
     </element>

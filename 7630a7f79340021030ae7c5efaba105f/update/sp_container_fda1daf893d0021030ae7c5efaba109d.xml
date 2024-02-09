@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_container">
+    <sp_container action="INSERT_OR_UPDATE">
+        <background_color/>
+        <background_image/>
+        <background_style>default</background_style>
+        <bootstrap_alt>false</bootstrap_alt>
+        <class_name/>
+        <container_class_name/>
+        <name>Access Request Page - Container 1</name>
+        <order>1</order>
+        <semantic_tag/>
+        <sp_page display_value="aam_access_requests_page">3511da7c93d0021030ae7c5efaba10eb</sp_page>
+        <subheader>false</subheader>
+        <sys_class_name>sp_container</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-02-09 09:15:12</sys_created_on>
+        <sys_id>fda1daf893d0021030ae7c5efaba109d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Access Request Page - Container 1</sys_name>
+        <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
+        <sys_update_name>sp_container_fda1daf893d0021030ae7c5efaba109d</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-02-09 09:15:12</sys_updated_on>
+        <title/>
+        <width>container</width>
+    </sp_container>
+</record_update>
