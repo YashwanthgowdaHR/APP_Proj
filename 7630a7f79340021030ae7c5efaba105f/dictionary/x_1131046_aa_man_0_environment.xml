@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="6fe4da4a075402101808fe4f7c1ed00b" label="Environment" max_length="40" name="x_1131046_aa_man_0_environment" type="collection">
+        <element choice="1" label="Name" max_length="40" name="name" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="DEV" sequence="0" value="DEV"/>
+                <element inactive_on_update="false" label="UAT" sequence="1" value="UAT"/>
+                <element inactive_on_update="false" label="PROD" sequence="2" value="PROD"/>
+            </choice>
+        </element>
+    </element>
+</database>
