@@ -11,20 +11,20 @@
         <oauth2_profile/>
         <protocol_name/>
         <qualified_name>AA_API [ RemoveUser ]</qualified_name>
-        <rest_endpoint>https://merck-dev.my.automationanywhere.digital/v2/usermanagement/users/${user_id}</rest_endpoint>
+        <rest_endpoint>${endpoint}</rest_endpoint>
         <rest_message display_value="AA_API">b7ab3f7b93c0021030ae7c5efaba10d8</rest_message>
         <sys_class_name>sys_rest_message_fn</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-02-07 05:37:14</sys_created_on>
         <sys_id>6b4c47c89310021030ae7c5efaba10cf</sys_id>
-        <sys_mod_count>3</sys_mod_count>
+        <sys_mod_count>4</sys_mod_count>
         <sys_name>RemoveUser</sys_name>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy/>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
         <sys_update_name>sys_rest_message_fn_6b4c47c89310021030ae7c5efaba10cf</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-02-07 06:42:06</sys_updated_on>
+        <sys_updated_on>2024-02-13 11:38:55</sys_updated_on>
         <use_basic_auth>false</use_basic_auth>
         <use_mid_server/>
         <use_mutual_auth>false</use_mutual_auth>

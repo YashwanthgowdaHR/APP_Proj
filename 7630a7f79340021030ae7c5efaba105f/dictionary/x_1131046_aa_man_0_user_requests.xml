@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element db_object_id="6d851a8a075402101808fe4f7c1ed06d" label="User Requests" max_length="40" name="x_1131046_aa_man_0_user_requests" type="collection">
-        <element label="Email" max_length="200" name="email" type="string"/>
         <element choice="1" choice_field="name" choice_table="x_1131046_aa_man_0_environment" label="Environment" max_length="40" name="environment" type="choice">
             <choice/>
         </element>
+        <element label="Mail ID" max_length="200" name="mail_id" type="string"/>
         <element label="Name" max_length="200" name="name" type="string"/>
         <element choice="1" label="Status" max_length="40" name="status" type="choice">
             <choice>
