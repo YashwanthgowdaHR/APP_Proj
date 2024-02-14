@@ -5,27 +5,27 @@
         <draft>false</draft>
         <dynamic_title_structure/>
         <human_readable_url_structure/>
-        <id>aam_user_access_requests_page</id>
+        <id>aam_user_request_history_page</id>
         <internal>false</internal>
         <omit_watcher>false</omit_watcher>
         <public>false</public>
         <roles>x_1131046_aa_man_0.user</roles>
         <seo_script/>
-        <short_description>Raise request for the access to AA</short_description>
+        <short_description>Displays the list of requests raised by a user</short_description>
         <sys_class_name>sp_page</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2024-02-09 09:14:17</sys_created_on>
-        <sys_id>3511da7c93d0021030ae7c5efaba10eb</sys_id>
+        <sys_created_on>2024-02-14 10:58:55</sys_created_on>
+        <sys_id>2e3914a607d082101808fe4f7c1ed023</sys_id>
         <sys_mod_count>2</sys_mod_count>
-        <sys_name>aam_user_access_requests_page</sys_name>
+        <sys_name>aam_user_request_history_page</sys_name>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy/>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
-        <sys_update_name>sp_page_3511da7c93d0021030ae7c5efaba10eb</sys_update_name>
+        <sys_update_name>sp_page_2e3914a607d082101808fe4f7c1ed023</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-02-14 10:59:07</sys_updated_on>
-        <title>Access Request Page</title>
+        <sys_updated_on>2024-02-14 11:00:02</sys_updated_on>
+        <title>User - Request History Page</title>
         <use_seo_script>false</use_seo_script>
     </sp_page>
-    <sys_translated_text action="delete_multiple" query="documentkey=3511da7c93d0021030ae7c5efaba10eb"/>
+    <sys_translated_text action="delete_multiple" query="documentkey=2e3914a607d082101808fe4f7c1ed023"/>
 </record_update>

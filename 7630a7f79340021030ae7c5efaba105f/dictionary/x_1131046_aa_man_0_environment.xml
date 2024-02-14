@@ -3,8 +3,6 @@
         <element choice="1" label="Name" max_length="40" name="name" type="choice">
             <choice>
                 <element inactive_on_update="false" label="DEV" sequence="0" value="DEV"/>
-                <element inactive_on_update="false" label="UAT" sequence="1" value="UAT"/>
-                <element inactive_on_update="false" label="PROD" sequence="2" value="PROD"/>
             </choice>
         </element>
     </element>

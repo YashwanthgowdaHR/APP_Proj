@@ -5,7 +5,7 @@
         <element label="First Name" max_length="50" name="first_name" type="string"/>
         <element label="Last Name" max_length="50" name="last_name" type="string"/>
         <element label="Licenses" max_length="1024" name="licenses" reference="x_1131046_aa_man_0_licenses" type="glide_list"/>
-        <element label="Email" max_length="200" name="mail_id" type="string"/>
+        <element label="MailID" max_length="200" name="mail_id" type="string"/>
         <element label="Roles" max_length="1024" name="roles" reference="x_1131046_aa_man_0_roles" type="glide_list"/>
         <element label="Username" max_length="50" name="username" type="string"/>
         <element label="User ID" max_length="40" name="user_id" type="integer"/>
