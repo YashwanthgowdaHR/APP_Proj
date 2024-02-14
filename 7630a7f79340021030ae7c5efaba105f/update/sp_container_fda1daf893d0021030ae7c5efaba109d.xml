@@ -9,7 +9,7 @@
         <name>Access Request Page - Container 1</name>
         <order>1</order>
         <semantic_tag/>
-        <sp_page display_value="aam_user_access_requests_page">3511da7c93d0021030ae7c5efaba10eb</sp_page>
+        <sp_page display_value="aam_user_access_page_requests">3511da7c93d0021030ae7c5efaba10eb</sp_page>
         <subheader>false</subheader>
         <sys_class_name>sp_container</sys_class_name>
         <sys_created_by>admin</sys_created_by>

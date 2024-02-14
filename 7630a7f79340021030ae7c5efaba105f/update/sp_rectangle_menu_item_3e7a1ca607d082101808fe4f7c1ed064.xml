@@ -18,7 +18,7 @@
         <sc_cat_item/>
         <sc_category/>
         <short_description/>
-        <sp_page display_value="aam_user_access_requests_page">3511da7c93d0021030ae7c5efaba10eb</sp_page>
+        <sp_page display_value="aam_user_access_page_requests">3511da7c93d0021030ae7c5efaba10eb</sp_page>
         <sp_rectangle_menu/>
         <sp_rectangle_menu_item display_value="Access">5b22d2fc93d0021030ae7c5efaba10d6</sp_rectangle_menu_item>
         <sys_class_name>sp_rectangle_menu_item</sys_class_name>

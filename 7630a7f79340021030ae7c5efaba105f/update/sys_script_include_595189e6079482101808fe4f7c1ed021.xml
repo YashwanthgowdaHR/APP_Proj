@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_1131046_aa_man_0.CommonClass</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description>Provides a methods used across all the scripts.</description>
+        <name>CommonClass</name>
+        <script><![CDATA[var CommonClass = Class.create();
+CommonClass.prototype = {
+    initialize: function() {
+        this.defaultPass = "abc@123123";
+        this.log = "SI | CommonClass | ";
+    },
+    type: 'CommonClass',
+    adminGroupID: 'c5eafb9e071082101808fe4f7c1ed014',
+    IST: 19800000,
+    groupMemberGR: new GlideRecord('sys_user_grmember'),
+    userRequestsGR: new GlideRecord('x_1131046_aa_man_0_user_requests'),
+    usersGR: new GlideRecord('x_1131046_aa_man_0_users'),
+    addEvent: function(event, rec, p1, p2) {
+        gs.info(this.log + " addEvent >> " + event);
+        gs.eventQueue(name = event, record = rec, parm1 = p1, parm2 = p2);
+    },
+    getAllPendingReq: function() {
+        var logName = this.log + "getAllPendingReq >> ";
+        if (!this.isAdmin()) {
+            gs.error(logName + " Unknown Access found");
+            // Add Mail Notification when someone other than admin tried to access it.
+            return;
+        } else {
+            gs.info(logName + "getting all the pending requests.");
+            var reqData = [];
+            var i = 0;
+            var gd = new GlideDate();
+            let table = this.userRequestsGR;
+            table.addQuery('status', 'pending');
+            table.orderByDesc('sys_created_on');
+            table.query();
+            while (table.next()) {
+                let gdt = new GlideDateTime(table.sys_created_on.toString());
+                gdt.add(this.IST);
+                gd.setValue(gdt.getValue());
+                reqData.push({
+                    no: ++i,
+                    recordSysID: table.getUniqueValue(),
+                    name: table.getValue('name').toString(),
+                    username: table.getValue('username').toString(),
+                    environment: table.getDisplayValue('environment').toString(),
+                    requestedOn: gd.getByFormat("dd-MMM-yyyy hh:mm a"),
+                });
+            }
+            gs.info(logName + " Pending requests are: "+JSON.stringify(reqData));
+            return reqData;
+        }
+    },
+    isAdmin: function() {
+        return gs.getUser().isMemberOf(this.adminGroupID);
+    },
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-02-14 13:55:03</sys_created_on>
+        <sys_id>595189e6079482101808fe4f7c1ed021</sys_id>
+        <sys_mod_count>7</sys_mod_count>
+        <sys_name>CommonClass</sys_name>
+        <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
+        <sys_update_name>sys_script_include_595189e6079482101808fe4f7c1ed021</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-02-14 15:11:25</sys_updated_on>
+    </sys_script_include>
+</record_update>

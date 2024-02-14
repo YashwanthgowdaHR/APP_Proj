@@ -17,19 +17,19 @@
         <run_start>2024-02-07 07:56:40</run_start>
         <run_time>1970-01-01 08:00:00</run_time>
         <run_type>on_demand</run_type>
-        <script><![CDATA[new AutomationAnywhere_API().insertLicenses();]]></script>
+        <script><![CDATA[new APIClass().insertLicenses();]]></script>
         <sys_class_name>sysauto_script</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-02-07 08:08:51</sys_created_on>
         <sys_id>048cab8093d0021030ae7c5efaba1012</sys_id>
-        <sys_mod_count>2</sys_mod_count>
+        <sys_mod_count>4</sys_mod_count>
         <sys_name>InsertLicenses</sys_name>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy/>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
         <sys_update_name>sysauto_script_048cab8093d0021030ae7c5efaba1012</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-02-13 08:27:20</sys_updated_on>
+        <sys_updated_on>2024-02-14 14:19:29</sys_updated_on>
         <time_zone/>
         <upgrade_safe>false</upgrade_safe>
     </sysauto_script>
