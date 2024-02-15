@@ -2,69 +2,100 @@
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
         <client_script><![CDATA[api.controller = function (spUtil, spModal) {
-/* widget controller */
-var c = this;
+    /* widget controller */
+    var c = this;
+    c.data.viewRequests = false;
 
-// delete object property if exists
-function deleteProp(obj, key) {
-if(obj.hasOwnProperty(key)) { 
-delete obj[key];
-}
-return obj;
-}
+    // delete object property if exists
+    function deleteProp(obj, key) {
+        if (obj.hasOwnProperty(key)) {
+            delete obj[key];
+        }
+        return obj;
+    }
 
-// Reset data properties
-function resetData() {
-deleteProp("action");
-deleteProp("info");
-deleteProp("rejectReason");
-}
+    // Reset data properties
+    function resetData() {
+        deleteProp("action");
+        deleteProp("info");
+        deleteProp("rejectReason");
+    }
 
-c.getData = function () {
-c.data.uid = c.data.usersReq.uID;
-c.data.action = "getData";
-c.server.update().then(resetData).catch(handleError);
-};
+    c.getData = function () {
+        c.data.uid = c.data.usersReq.uID;
+        c.data.action = "getData";
+        c.server.update().then(resetData).catch(handleError);
+    };
 
-function handleUpdateResponse(res) {
-resetData();
-c.server.refresh();
-}
+    function handleUpdateResponse(res) {
+        resetData();
+        c.server.refresh();
+    }
 
-function handleError(error) {
-// Handle or log the error as needed
-console.error('An error occurred:', error);
-resetData();
-}
+    function handleError(error) {
+        // Handle or log the error as needed
+        console.error('An error occurred:', error);
+        resetData();
+    }
 
-c.approve = function (record) {
-var warn = '<i class="fa fa-warning" aria-hidden="true"></i>';
-spModal.confirm("Are you sure to <b>approve</b> this request?").then(function(confirmed) {
-spUtil.addTrivialMessage("Approving the request...");
-c.data.info = record;
-c.data.action = 'approve';
-c.server.update().then(handleUpdateResponse).catch(handleError);
-})
+    c.approve = function (record) {
+        var warn = '<i class="fa fa-warning" aria-hidden="true"></i>';
+        spModal.confirm("Are you sure to <b>approve</b> this request?").then(function (confirmed) {
+            spUtil.addTrivialMessage("Approving the request...");
+            c.data.info = record;
+            c.data.action = 'approve';
+            c.server.update().then(handleUpdateResponse).catch(handleError);
+        })
 
-};
+    };
 
-c.reject = function (record) {
-spModal.open({
-title: 'Reason for rejecting',
-message: 'Please <b>provide the comments</b> for rejecting the request.',
-buttons: [
-{ label: '✘ ${Cancel}', cancel: true },
-{ label: '✔ ${Reject}', primary: true }
-],
-input: true,
-size: 'md'
-}).then(function (reason) {
-c.data.rejectReason = reason;
-c.data.info = record;
-c.data.action = 'reject';
-c.server.update().then(handleUpdateResponse).catch(handleError)
-}, function () { }).catch(handleError);
-};
+    c.reject = function (record) {
+        spModal.open({
+            title: 'Reason for rejecting',
+            message: 'Please <b>provide the comments</b> for rejecting the request.',
+            buttons: [
+                { label: '✘ ${Cancel}', cancel: true },
+                { label: '✔ ${Reject}', primary: true }
+            ],
+            input: true,
+            size: 'md'
+        }).then(function (reason) {
+            c.data.rejectReason = reason;
+            c.data.info = record;
+            c.data.action = 'reject';
+            c.server.update().then(handleUpdateResponse).catch(handleError)
+        }, function () { }).catch(handleError);
+    };
+
+    c.viewRequest = function () {
+        if (!$("#leftList").hasClass("col-lg-6 leftList")) {
+            console.log("Adding class");
+            $('#leftList').addClass("col-lg-6 leftList");
+            setTimeout(function () {
+                c.data.viewRequests = true;
+                $('#rightList').addClass("col-lg-6 rightList");
+                $('#rightList').removeClass("d-none");
+            }, 1000);
+
+        }
+    }
+
+    c.closeViewRequest = function () {
+        c.data.viewRequests = false;
+        $('#rightList').addClass("d-none");
+
+        // $('#leftList').removeClass("left-side");
+        // $('#rightList').removeClass("right-side");
+        if ($("#leftList").hasClass("col-lg-6 leftList")) {
+            console.log("removing class");
+            setTimeout(function () {
+                
+            $('#rightList').removeClass("col-lg-6 rightList");
+            $('#leftList').removeClass("col-lg-6  leftList");
+            }, 500);
+
+        }
+    }
 };
 ]]></client_script>
         <controller_as>c</controller_as>
@@ -75,13 +106,22 @@ c.server.update().then(handleUpdateResponse).catch(handleError)
 url("./fonts/bootstrap-icons.woff?8d200481aa7f02a2d63a331fc782cfaf") format("woff");
 }
 
+div, table{
+  transition: all 2s;
+}
+
 .table td, .table th{
   text-align: center;
   vertical-align: middle;
 }
 
+.rightList{
+	border-left: 1px solid black;
+  margin-left: 10px;
+}
+
 .btn{
-background: transparent;
+	background: transparent;
   border-radius: 0px;
   vertical-align: middle;
 }
@@ -113,6 +153,8 @@ border: 1px solid red;
   color: black;
   text-transform: uppercase;
 }
+
+
 </css>
         <data_table>sp_instance</data_table>
         <demo_data/>
@@ -133,6 +175,8 @@ border: 1px solid red;
 	/* populate the 'data' object */
 	var cls = new CommonClass();
 	data.requests = cls.getAllPendingReq();
+	data.rolesTable = cls.rolesTableName;
+	data.licensesTable = cls.licensesTableName;
 
 	if (input) {
 		var record = input.info;
@@ -170,43 +214,70 @@ border: 1px solid red;
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-02-14 11:16:41</sys_created_on>
         <sys_id>53ebd82a07d082101808fe4f7c1ed07b</sys_id>
-        <sys_mod_count>8</sys_mod_count>
+        <sys_mod_count>72</sys_mod_count>
         <sys_name>Admin - Approve or Reject</sys_name>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy/>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
         <sys_update_name>sp_widget_53ebd82a07d082101808fe4f7c1ed07b</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-02-14 15:11:24</sys_updated_on>
-        <template><![CDATA[<div ng-if="data.requests.length > 0" class="table-responsive-sm">
-  <h2 class="text-center">Rquests Details:-</h2><br>
-  <table class="table table-hover table-bordered">
-    <thead>
-      <tr>
-        <th scope="col" class="align-middle">#</th>
-        <th scope="col" class="align-middle">Username</th>
-        <th scope="col" class="align-middle">Name</th>
-        <th scope="col" class="align-middle">Environment</th>
-        <th scope="col" class="align-middle">Requested On</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="info in data.requests">
-        <th scope="row">{{info.no}}</th>
-        <td>{{info.username}}</td>
-        <td>{{info.name}}</td>
-        <td>{{info.environment}}</td>
-        <td>{{info.requestedOn}}</td>
-        <td>
-        <button class="btn btn-approve" ng-click="c.approve(info)">View</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+        <sys_updated_on>2024-02-15 15:23:40</sys_updated_on>
+        <template><![CDATA[<div class="col-lg-12">
+    <div ng-if="data.requests.length > 0" class="table-responsive-sm" id="leftList">
+        <h2 class="text-center">Requests Details:-</h2><br>
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col" class="align-middle">#</th>
+                    <th scope="col" class="align-middle">Username</th>
+                    <th scope="col" class="align-middle">Name</th>
+                    <th scope="col" class="align-middle">Environment</th>
+                    <th scope="col" class="align-middle">Requested On</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="info in data.requests">
+                    <th scope="row">{{info.no}}</th>
+                    <td>{{info.username}}</td>
+                    <td>{{info.name}}</td>
+                    <td>{{info.environment}}</td>
+                    <td>{{info.requestedOn}}</td>
+                    <td>
+                        <button class="btn btn-approve" ng-click="c.viewRequest()">View</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-<div ng-if="data.requests.length <= 0" class="no-request">
-  <h2>No Request Found.</h2>
+
+    <div ng-if="data.requests.length <= 0" class="no-request">
+        <h2>No Request Found.</h2>
+    </div>
+
+    <div ng-if="data.viewRequests" id="rightList" class="d-none">
+        <div>
+            <button class="btn btn-reject" ng-click="c.closeViewRequest()">Close</button>
+        </div>
+        <div>
+            <label class="col-md-4 control-label" for="txt_roles">Roles</label>
+            <div class="col-md-">
+                <sn-record-picker id="txt_roles" table="data.rolesTable" field="data.roles" display-field="'name'"
+                    value-field="'sys_id'" search-fields="'name'" page-size="50" multiple="true"></sn-record-picker>
+            </div>
+        </div>
+        <div>
+            <label class="col-md-2 control-label" for="txt_license">License</label>
+            <div class="col-md-4">
+                <sn-record-picker id="txt_license" table="data.licensesTable" field="data.licenses"
+                    display-field="'detail'" value-field="'sys_id'" search-fields="'name'" page-size="50"
+                    multiple="true"></sn-record-picker>
+            </div>
+        </div>
+        <div>
+            <button class="btn btn-approve" ng-click="c.viewRequest()">Approve</button>
+        </div>
+    </div>
 </div>]]></template>
     </sp_widget>
 </record_update>
