@@ -75,29 +75,48 @@
 		c.data.mailID = c.data.requests[no - 1].mailID;
 
 		if (!$("#leftList").hasClass("leftList")) {
-			console.log("Adding class");
 			$('#leftList').addClass('leftList');
 
-			$('#leftList').css('float', 'left');
+			setTimeout(() => {
+				$('#leftList').css('translate', '-40.95%');
+				$('#leftList').width('55%');
+			},100);
 
-			$('#rightList').width('50%');
-			$('#leftList').width('48%');
-			setTimeout(() => $('#rightList').show().css('flex', '1'), 380);
+			setTimeout(() => $('#leftList').css('transition', 'none'), 550);
+
+			setTimeout(() => {
+				$('#leftList').css('margin', '0');
+				//$('#leftList').css('transition', '');
+				$('#leftList').css('translate', '0%');
+			}, 650);
+
+			setTimeout(() => 	$('#leftList').css('float', 'left'), 700);
+
+			setTimeout(() => {
+				$('#rightList').show().css('flex', '1');
+				$('#leftList').css('transition','all 0.5s ease');
+			},850);
 		}
 	}
 
 	c.closeViewRequest = function () {
 		if ($("#leftList").hasClass("leftList")) {
-			console.log("removing class");
-			
-			$('#rightList').css('flex', '0');
+
+			$('#rightList').css('flex', '1');
 			$('#rightList').css('display', 'none');
+
 
 			setTimeout(() => {
 				$('#leftList').removeClass('leftList');
-				$('#leftList').width('100%');
-				$('#leftList').css('float', 'none');
+				$('#leftList').width('70%');
+				$('#leftList').css('float', '');
+				//$('#leftList').css('translate', '0%');
+				$('#leftList').css('margin-left', '15%');
 			}, 250);
+
+			setTimeout(() => {$('#leftList').css('margin', '0 auto')}, 750);
+
+
 		}
 	}
 };
@@ -107,18 +126,18 @@
   font-display: block;
   font-family: "bootstrap-icons";
   src: url("./fonts/bootstrap-icons.woff2?8d200481aa7f02a2d63a331fc782cfaf") format("woff2"),
-url("./fonts/bootstrap-icons.woff?8d200481aa7f02a2d63a331fc782cfaf") format("woff");
+  url("./fonts/bootstrap-icons.woff?8d200481aa7f02a2d63a331fc782cfaf") format("woff");
+}
+
+#leftList{
+  width: 70%;
+  transition: all 0.5s ease;
+  margin: 0 auto;
 }
 
 
 .row{
-  margin-left: 20px;
-  margin-right: 20px;
-}
-
-#leftList{
-  width: 100%;
-  transition: width 0.5s ease;
+  margin: 0 10px;
 }
 
 #rightList{
@@ -126,8 +145,33 @@ url("./fonts/bootstrap-icons.woff?8d200481aa7f02a2d63a331fc782cfaf") format("wof
   flex: 1;
   transition: flex 5s ease;
   float: left;
+  width: 40%;
 }
 
+.right-section{
+  margin: 0 10px;
+  display: flex;
+}
+
+.content{
+  padding-right: 0px;
+}
+
+content .row{
+  margin-right: 0px;
+}
+
+.close-section{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+}
+
+.form-container{
+  align-items: stretch;
+  display: flex;
+}
 
 .table td, .table th{
   text-align: center;
@@ -135,13 +179,13 @@ url("./fonts/bootstrap-icons.woff?8d200481aa7f02a2d63a331fc782cfaf") format("wof
 }
 
 .btn{
-	background: transparent;
+  background: transparent;
   border-radius: 0px;
   vertical-align: middle;
 }
 
 .btn-approve{
-border: 1px solid green;
+  border: 1px solid green;
 }
 
 .btn-approve:hover{
@@ -150,9 +194,10 @@ border: 1px solid green;
 }
 
 .btn-reject{
-border: 1px solid red;
+  border: 1px solid red;
+  min-height: 100%;
 }
-  
+
 .btn-reject:hover{
   color: white;
   background: red;
@@ -228,16 +273,16 @@ border: 1px solid red;
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-02-14 11:16:41</sys_created_on>
         <sys_id>53ebd82a07d082101808fe4f7c1ed07b</sys_id>
-        <sys_mod_count>218</sys_mod_count>
+        <sys_mod_count>396</sys_mod_count>
         <sys_name>Admin - Approve or Reject</sys_name>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy/>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
         <sys_update_name>sp_widget_53ebd82a07d082101808fe4f7c1ed07b</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-02-16 15:30:19</sys_updated_on>
+        <sys_updated_on>2024-02-17 18:11:49</sys_updated_on>
         <template><![CDATA[<div class="row">
-    <div ng-if="data.requests.length > 0" class="table-responsive-sm justify-content-md-center" id="leftList">
+    <div ng-if="data.requests.length > 0" class="table-responsive-sm" id="leftList">
         <h2 class="text-center">Requests Details:-</h2><br>
         <table class="table table-hover table-bordered">
             <thead>
@@ -264,56 +309,58 @@ border: 1px solid red;
         </table>
     </div>
 
-    
     <div id="rightList">
-        <div class="row">
-            <button class="col-auto btn btn-reject" style="float: right;" ng-click="c.closeViewRequest()"><span aria-hidden="true">&times;</span></button>
-        </div>
-        <div class="row">
-            <label class="col-sm-3 control-label" for="txt_username">Username</label>
-            <div class="col-sm-9">
-                <input id="txt_username" ng-model="data.username" type="text" class="form-control input-md" disabled>
+        <div class="row right-section">
+            <div class="col-sm-11 content">
+                <div class="row">
+                    <label class="col-sm-2 control-label" for="txt_username">Username</label>
+                    <div class="col-sm-10">
+                        <input id="txt_username" ng-model="data.username" type="text" class="form-control input-md" disabled>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-sm-2 control-label" for="txt_name">Name</label>
+                    <div class="col-sm-10">
+                        <input id="txt_name" ng-model="data.name" type="text" class="form-control input-md" disabled>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-sm-2 control-label" for="txt_mailID">Mail ID</label>
+                    <div class="col-sm-10">
+                        <input id="txt_mailID" ng-model="data.mailID" type="text" class="form-control input-md" disabled>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-sm-2 control-label" for="txt_environment">Environment </label>
+                    <div class="col-sm-10">
+                        <input id="txt_environment" ng-model="data.environment" type="text" class="form-control input-md" disabled>
+                    </div>
+                </div>
+        
+                <div class="row">
+                    <label class="col-sm-2 control-label" for="txt_roles">Roles</label>
+                    <div class="col-sm-10">
+                        <sn-record-picker id="txt_roles" table="data.rolesTable" field="data.roles" display-field="'name'"
+                            value-field="'sys_id'" search-fields="'name'" page-size="50" multiple="true"></sn-record-picker>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-sm-2 control-label" for="txt_license">License</label>
+                    <div class="col-sm-10">
+                        <sn-record-picker id="txt_license" table="data.licensesTable" field="data.licenses"
+                            display-field="'detail'" value-field="'sys_id'" search-fields="'name'" page-size="50"
+                            multiple="true"></sn-record-picker>
+                    </div>
+                </div>
+                <div class="row">
+                    <button class="col-sm-4 btn btn-approve" ng-click="c.approveRequest()">Approve</button>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <label class="col-sm-3 control-label" for="txt_name">Name</label>
-            <div class="col-sm-9">
-                <input id="txt_name" ng-model="data.name" type="text" class="form-control input-md" disabled>
-            </div>
-        </div>
-        <div class="row">
-            <label class="col-sm-3 control-label" for="txt_mailID">Mail ID</label>
-            <div class="col-sm-9">
-                <input id="txt_mailID" ng-model="data.mailID" type="text" class="form-control input-md" disabled>
-            </div>
-        </div>
-        <div class="row">
-            <label class="col-sm-3 control-label" for="txt_environment">Environment </label>
-            <div class="col-sm-9">
-                <input id="txt_environment" ng-model="data.environment" type="text" class="form-control input-md" disabled>
-            </div>
-        </div>
-
-        <div class="row">
-            <label class="col-sm-3 control-label" for="txt_roles">Roles</label>
-            <div class="col-sm-9">
-                <sn-record-picker id="txt_roles" table="data.rolesTable" field="data.roles" display-field="'name'"
-                    value-field="'sys_id'" search-fields="'name'" page-size="50" multiple="true"></sn-record-picker>
-            </div>
-        </div>
-        <div class="row">
-            <label class="col-sm-3 control-label" for="txt_license">License</label>
-            <div class="col-sm-9">
-                <sn-record-picker id="txt_license" table="data.licensesTable" field="data.licenses"
-                    display-field="'detail'" value-field="'sys_id'" search-fields="'name'" page-size="50"
-                    multiple="true"></sn-record-picker>
-            </div>
-        </div>
-        <div class="row">
-            <button class="col-sm-12 btn btn-approve" ng-click="c.approveRequest()">Approve</button>
+            <div class="col-sm-1 close-section">
+                <button class="btn btn-reject close-btn" ng-click="c.closeViewRequest()"><span aria-hidden="true">&times;</span></button>
+            </div> 
         </div>
     </div>
-
 
     <div ng-if="data.requests.length <= 0" class="col-sm-12 no-request">
         <h2>No Request Found.</h2>
