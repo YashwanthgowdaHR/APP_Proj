@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
-        <client_script><![CDATA[api.controller = function (spUtil, spModal) {
+        <client_script><![CDATA[api.controller = function ($scope, spUtil, spModal) {
 	/* widget controller */
 	var c = this;
 	c.data.viewRequests = false;
+	
+	$scope.updateSelectedRoles = function(info) {
+    // Update the selected roles for the respective row 'info'
+		console.log("info");
+};
 
 	// delete object property if exists
 	function deleteProp(obj, key) {
@@ -21,11 +26,6 @@
 		deleteProp("rejectReason");
 	}
 
-	c.getData = function () {
-		c.data.uid = c.data.usersReq.uID;
-		c.data.action = "getData";
-		c.server.update().then(resetData).catch(handleError);
-	};
 
 	function handleUpdateResponse(res) {
 		resetData();
@@ -38,8 +38,10 @@
 		resetData();
 	}
 
-	c.approveRequest = function (record) {
-		if(c.data.roles.length){
+	c.approveRequest = function (record, role) {
+		console.log(record);
+		console.log(role);
+		/*if(c.data.){
 			spUtil.addErrorMessage("Please select the input for the role.");
 		}else{
 			var warn = '<i class="fa fa-warning" aria-hidden="true"></i>';
@@ -55,7 +57,7 @@
 				c.server.update().then(handleUpdateResponse).catch(handleError);
 			});
 
-		}
+		}*/
 	};
 
 	c.rejectRequest = function (record) {
@@ -76,64 +78,64 @@
 		}, function () { }).catch(handleError);
 	};
 
-};
-]]></client_script>
+};]]></client_script>
         <controller_as>c</controller_as>
-        <css>.container{
-  margin: 0 auto;
-  padding: 0;
-}
+        <css>
 
 #leftList {
-  transition: all 0.5s ease;
-  margin: 0 auto;
-  padding: 0 10px;
-}
+    transition: all 0.5s ease;
+    margin: 0 auto;
+    padding: 0 10px;
+  }
+  
+  .table{
+    width: 100%;
+  }
+  
 
-.table{
 
-  width: 100%;
-}
-.table td,
-.table th {
-  text-align: center;
-  vertical-align: middle;
-}
-
-.btn {
-  background: transparent;
-  border-radius: 0px;
-  vertical-align: middle;
-}
-
-.btn-approve {
-  border: 1px solid green;
-}
-
-.btn-approve:hover {
-  color: white;
-  background: green;
-}
-
-.btn-reject {
-  border: 1px solid red;
-  min-height: 100%;
-}
-
-.btn-reject:hover {
-  color: white;
-  background: red;
-}
-
-.no-request {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 300px;
-  text-align: center;
-  color: black;
-  text-transform: uppercase;
-}</css>
+  .table td,
+  .table th {
+    text-align: center;
+    vertical-align: middle;
+    width: fit-content;
+    white-space: nowrap;
+  }
+  
+  .btn {
+    background: transparent;
+    border-radius: 0px;
+    vertical-align: middle;
+  }
+  
+  .btn-approve {
+    border: 1px solid green;
+  }
+  
+  .btn-approve:hover {
+    color: white;
+    background: green;
+  }
+  
+  .btn-reject {
+    border: 1px solid red;
+    min-height: 100%;
+  }
+  
+  .btn-reject:hover {
+    color: white;
+    background: red;
+  }
+  
+  .no-request {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    text-align: center;
+    color: black;
+    text-transform: uppercase;
+  }</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
         <description>Shows the requests list and allow admin to either approve or reject a request</description>
@@ -162,7 +164,7 @@
 		// APPROVE action
 		if (input.action === "approve") {
 			try {
-				var output = cls.approveOrRejectUser("approve", record);
+				var output = cls.approveUser(record);
 				if (output.isCreated)
 					gs.addInfoMessage("User has been created");
 				else
@@ -178,7 +180,7 @@
 			try {
 				record.rejectReason = input.rejectReason;
 				// Script Includes function
-				cls.approveOrRejectUser("reject", record);
+				cls.rejectUser(record);
 				gs.addInfoMessage("User has been rejected");
 			} catch (e) {
 				gs.error('Error rejecting request:', e);
@@ -192,53 +194,55 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-02-14 11:16:41</sys_created_on>
         <sys_id>53ebd82a07d082101808fe4f7c1ed07b</sys_id>
-        <sys_mod_count>502</sys_mod_count>
+        <sys_mod_count>655</sys_mod_count>
         <sys_name>Admin - Approve or Reject</sys_name>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy/>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
         <sys_update_name>sp_widget_53ebd82a07d082101808fe4f7c1ed07b</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-02-20 06:28:56</sys_updated_on>
-        <template><![CDATA[<div class="container">
-    <div ng-if="data.requests.length > 0" class="table-responsive-sm" id="leftList">
-        <h2 class="text-center">Requests Details:-</h2><br>
-        <table class="table table-hover table-bordered">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Username *</th>
-                    <th scope="col">Name *</th>
-                    <th scope="col">Environment *</th>
-                    <th scope="col">Requested On</th>
-                    <th scope="col">Role *</th>
-                    <th scope="col">License</th>
-                  <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="info in data.requests">
-                    <th scope="row">{{info.no}}</th>
-                    <td>{{info.username}}</td>
-                    <td>{{info.name}}</td>
-                    <td>{{info.environment}}</td>
-                    <td>{{info.requestedOn}}</td>
-                    <td><sn-record-picker id="txt_roles" table="data.rolesTable" field="data.roles" display-field="'name'"
-                        value-field="'sys_id'" search-fields="'name'" page-size="50" multiple="true"></sn-record-picker></td>
-                    <td><sn-record-picker id="txt_license" table="data.licensesTable" field="data.licenses"
-                        display-field="'detail'" value-field="'sys_id'" search-fields="'name'" page-size="50"
-                        multiple="true"></sn-record-picker></td>
-                    <td>
-                     <button class="btn btn-approve" ng-click="c.approveRequest(info)">Approve</button>
-                    <button class="btn btn-reject" ng-click="c.rejectRequest(info)">Reject</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <sys_updated_on>2024-02-20 13:58:01</sys_updated_on>
+        <template><![CDATA[<div class="container-fluid">
+  <div ng-if="data.requests.length > 0" class="table-responsive" id="leftList">
+    <h2 class="text-center">Requests Details:-</h2><br>
+    <table class="table table-hover table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Username *</th>
+          <th scope="col">Name *</th>
+          <th scope="col">Environment *</th>
+          <th scope="col">Requested On</th>
+          <th scope="col">Role *</th>
+          <th scope="col">License</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="info in data.requests track by $index">
+          <th scope="row">{{info.no}}</th>
+          <td>{{info.username}}</td>
+          <td>{{info.name}}</td>
+          <td>{{info.environment}}</td>
+          <td>{{info.requestedOn}}</td>
+          <td><sn-record-picker id="txt_roles" table="data.rolesTable" field="roles[$index]" display-field="'name'"
+                                value-field="'id'" search-fields="'name'" page-size="50" multiple="true"></sn-record-picker></td>
+          <td><sn-record-picker id="txt_license" table="data.licensesTable" field="data.licenses"
+                                display-field="'detail'" value-field="'sys_id'" search-fields="'name'" page-size="50"
+                                multiple="true"></sn-record-picker></td>
+          <td>
 
-<div ng-if="data.requests.length <= 0" class="col-sm-12 no-request">
+            <button class="btn btn-approve" ng-click="c.approveRequest(data.requests[$index],roles[$index].value)">Approve</button>
+            <button class="btn btn-reject" ng-click="c.rejectRequest(info)">Reject</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div ng-if="data.requests.length <= 0" class="col-sm-12 no-request">
     <h2>No Request Found.</h2>
-</div>
+  </div>
 
 </div>]]></template>
     </sp_widget>
