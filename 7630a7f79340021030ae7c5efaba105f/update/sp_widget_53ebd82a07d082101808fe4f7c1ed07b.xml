@@ -38,18 +38,27 @@
 		resetData();
 	}
 
-	c.approve = function (record) {
-		var warn = '<i class="fa fa-warning" aria-hidden="true"></i>';
-		spModal.confirm("Are you sure to <b>approve</b> this request?").then(function (confirmed) {
-			spUtil.addTrivialMessage("Approving the request...");
-			c.data.info = record;
-			c.data.action = 'approve';
-			c.server.update().then(handleUpdateResponse).catch(handleError);
-		})
+	c.approveRequest = function (record) {
+		if(c.data.roles.length){
+			spUtil.addErrorMessage("Please select the input for the role.");
+		}else{
+			var warn = '<i class="fa fa-warning" aria-hidden="true"></i>';
+			spModal.confirm("Are you sure to <b>approve</b> this request?").then(function (confirmed) {
+				spUtil.addTrivialMessage("Approving the request...");
+				record.roles = c.data.roles.value;
+				if(c.data.licenses.length > 0)
+					record.licenses = c.data.licenses.value;
+				else
+					record.licenses = {};
+				c.data.info = record;
+				c.data.action = 'approve';
+				c.server.update().then(handleUpdateResponse).catch(handleError);
+			});
 
+		}
 	};
 
-	c.reject = function (record) {
+	c.rejectRequest = function (record) {
 		spModal.open({
 			title: 'Reason for rejecting',
 			message: 'Please <b>provide the comments</b> for rejecting the request.',
@@ -67,143 +76,56 @@
 		}, function () { }).catch(handleError);
 	};
 
-	c.viewRequest = function (no) {
-		console.log(c.data.requests[no - 1]);
-		c.data.username = c.data.requests[no - 1].username;
-		c.data.name = c.data.requests[no - 1].name;
-		c.data.environment = c.data.requests[no - 1].environment;
-		c.data.mailID = c.data.requests[no - 1].mailID;
-
-		if (!$("#leftList").hasClass("leftList")) {
-			$('#leftList').addClass('leftList');
-
-			setTimeout(() => {
-				$('#leftList').css('translate', '-40.95%');
-				$('#leftList').width('55%');
-			},100);
-
-			setTimeout(() => $('#leftList').css('transition', 'none'), 550);
-
-			setTimeout(() => {
-				$('#leftList').css('margin', '0');
-				//$('#leftList').css('transition', '');
-				$('#leftList').css('translate', '0%');
-			}, 650);
-
-			setTimeout(() => 	$('#leftList').css('float', 'left'), 700);
-
-			setTimeout(() => {
-				$('#rightList').show().css('flex', '1');
-				$('#leftList').css('transition','all 0.5s ease');
-			},850);
-		}
-	}
-
-	c.closeViewRequest = function () {
-		if ($("#leftList").hasClass("leftList")) {
-
-			$('#rightList').css('flex', '1');
-			$('#rightList').css('display', 'none');
-
-
-			setTimeout(() => {
-				$('#leftList').removeClass('leftList');
-				$('#leftList').width('70%');
-				$('#leftList').css('float', '');
-				//$('#leftList').css('translate', '0%');
-				$('#leftList').css('margin-left', '15%');
-			}, 250);
-
-			setTimeout(() => {$('#leftList').css('margin', '0 auto')}, 750);
-
-
-		}
-	}
 };
 ]]></client_script>
         <controller_as>c</controller_as>
-        <css>@face {
-  font-display: block;
-  font-family: "bootstrap-icons";
-  src: url("./fonts/bootstrap-icons.woff2?8d200481aa7f02a2d63a331fc782cfaf") format("woff2"),
-  url("./fonts/bootstrap-icons.woff?8d200481aa7f02a2d63a331fc782cfaf") format("woff");
+        <css>.container{
+  margin: 0 auto;
+  padding: 0;
 }
 
-#leftList{
-  width: 70%;
+#leftList {
   transition: all 0.5s ease;
   margin: 0 auto;
+  padding: 0 10px;
 }
 
+.table{
 
-.row{
-  margin: 0 10px;
+  width: 100%;
 }
-
-#rightList{
-  display: none;
-  flex: 1;
-  transition: flex 5s ease;
-  float: left;
-  width: 40%;
-}
-
-.right-section{
-  margin: 0 10px;
-  display: flex;
-}
-
-.content{
-  padding-right: 0px;
-}
-
-content .row{
-  margin-right: 0px;
-}
-
-.close-section{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0px;
-}
-
-.form-container{
-  align-items: stretch;
-  display: flex;
-}
-
-.table td, .table th{
+.table td,
+.table th {
   text-align: center;
   vertical-align: middle;
 }
 
-.btn{
+.btn {
   background: transparent;
   border-radius: 0px;
   vertical-align: middle;
 }
 
-.btn-approve{
+.btn-approve {
   border: 1px solid green;
 }
 
-.btn-approve:hover{
+.btn-approve:hover {
   color: white;
   background: green;
 }
 
-.btn-reject{
+.btn-reject {
   border: 1px solid red;
   min-height: 100%;
 }
 
-.btn-reject:hover{
+.btn-reject:hover {
   color: white;
   background: red;
 }
 
-.no-request{
+.no-request {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -211,10 +133,7 @@ content .row{
   text-align: center;
   color: black;
   text-transform: uppercase;
-}
-
-
-</css>
+}</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
         <description>Shows the requests list and allow admin to either approve or reject a request</description>
@@ -273,25 +192,28 @@ content .row{
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-02-14 11:16:41</sys_created_on>
         <sys_id>53ebd82a07d082101808fe4f7c1ed07b</sys_id>
-        <sys_mod_count>396</sys_mod_count>
+        <sys_mod_count>502</sys_mod_count>
         <sys_name>Admin - Approve or Reject</sys_name>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy/>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
         <sys_update_name>sp_widget_53ebd82a07d082101808fe4f7c1ed07b</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-02-17 18:11:49</sys_updated_on>
-        <template><![CDATA[<div class="row">
+        <sys_updated_on>2024-02-20 06:28:56</sys_updated_on>
+        <template><![CDATA[<div class="container">
     <div ng-if="data.requests.length > 0" class="table-responsive-sm" id="leftList">
         <h2 class="text-center">Requests Details:-</h2><br>
         <table class="table table-hover table-bordered">
             <thead>
                 <tr>
-                    <th scope="col" class="align-middle">#</th>
-                    <th scope="col" class="align-middle">Username</th>
-                    <th scope="col" class="align-middle">Name</th>
-                    <th scope="col" class="align-middle">Environment</th>
-                    <th scope="col" class="align-middle">Requested On</th>
+                    <th scope="col">#</th>
+                    <th scope="col">Username *</th>
+                    <th scope="col">Name *</th>
+                    <th scope="col">Environment *</th>
+                    <th scope="col">Requested On</th>
+                    <th scope="col">Role *</th>
+                    <th scope="col">License</th>
+                  <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -301,70 +223,22 @@ content .row{
                     <td>{{info.name}}</td>
                     <td>{{info.environment}}</td>
                     <td>{{info.requestedOn}}</td>
+                    <td><sn-record-picker id="txt_roles" table="data.rolesTable" field="data.roles" display-field="'name'"
+                        value-field="'sys_id'" search-fields="'name'" page-size="50" multiple="true"></sn-record-picker></td>
+                    <td><sn-record-picker id="txt_license" table="data.licensesTable" field="data.licenses"
+                        display-field="'detail'" value-field="'sys_id'" search-fields="'name'" page-size="50"
+                        multiple="true"></sn-record-picker></td>
                     <td>
-                        <button class="btn btn-approve" ng-click="c.viewRequest(info.no)">View</button>
+                     <button class="btn btn-approve" ng-click="c.approveRequest(info)">Approve</button>
+                    <button class="btn btn-reject" ng-click="c.rejectRequest(info)">Reject</button>
                     </td>
                 </tr>
             </tbody>
         </table>
-    </div>
 
-    <div id="rightList">
-        <div class="row right-section">
-            <div class="col-sm-11 content">
-                <div class="row">
-                    <label class="col-sm-2 control-label" for="txt_username">Username</label>
-                    <div class="col-sm-10">
-                        <input id="txt_username" ng-model="data.username" type="text" class="form-control input-md" disabled>
-                    </div>
-                </div>
-                <div class="row">
-                    <label class="col-sm-2 control-label" for="txt_name">Name</label>
-                    <div class="col-sm-10">
-                        <input id="txt_name" ng-model="data.name" type="text" class="form-control input-md" disabled>
-                    </div>
-                </div>
-                <div class="row">
-                    <label class="col-sm-2 control-label" for="txt_mailID">Mail ID</label>
-                    <div class="col-sm-10">
-                        <input id="txt_mailID" ng-model="data.mailID" type="text" class="form-control input-md" disabled>
-                    </div>
-                </div>
-                <div class="row">
-                    <label class="col-sm-2 control-label" for="txt_environment">Environment </label>
-                    <div class="col-sm-10">
-                        <input id="txt_environment" ng-model="data.environment" type="text" class="form-control input-md" disabled>
-                    </div>
-                </div>
-        
-                <div class="row">
-                    <label class="col-sm-2 control-label" for="txt_roles">Roles</label>
-                    <div class="col-sm-10">
-                        <sn-record-picker id="txt_roles" table="data.rolesTable" field="data.roles" display-field="'name'"
-                            value-field="'sys_id'" search-fields="'name'" page-size="50" multiple="true"></sn-record-picker>
-                    </div>
-                </div>
-                <div class="row">
-                    <label class="col-sm-2 control-label" for="txt_license">License</label>
-                    <div class="col-sm-10">
-                        <sn-record-picker id="txt_license" table="data.licensesTable" field="data.licenses"
-                            display-field="'detail'" value-field="'sys_id'" search-fields="'name'" page-size="50"
-                            multiple="true"></sn-record-picker>
-                    </div>
-                </div>
-                <div class="row">
-                    <button class="col-sm-4 btn btn-approve" ng-click="c.approveRequest()">Approve</button>
-                </div>
-            </div>
-            <div class="col-sm-1 close-section">
-                <button class="btn btn-reject close-btn" ng-click="c.closeViewRequest()"><span aria-hidden="true">&times;</span></button>
-            </div> 
-        </div>
-    </div>
-
-    <div ng-if="data.requests.length <= 0" class="col-sm-12 no-request">
-        <h2>No Request Found.</h2>
-    </div>
+<div ng-if="data.requests.length <= 0" class="col-sm-12 no-request">
+    <h2>No Request Found.</h2>
+</div>
 
 </div>]]></template>
     </sp_widget>
