@@ -3,6 +3,8 @@
         <element choice="1" choice_field="name" choice_table="x_1131046_aa_man_0_environment" label="Environment" max_length="40" name="environment" type="choice">
             <choice/>
         </element>
+        <element label="First Name" max_length="40" name="first_name" type="string"/>
+        <element label="Last Name" max_length="40" name="last_name" type="string"/>
         <element label="Mail ID" max_length="200" name="mail_id" type="string"/>
         <element label="Name" max_length="200" name="name" type="string"/>
         <element choice="1" label="Status" max_length="40" name="status" type="choice">

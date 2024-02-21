@@ -15,6 +15,7 @@ CommonClass.prototype = {
     },
     type: 'CommonClass',
     apiClass: new APIClass(this.defaultPass),
+    recordClass: new RecordClass(),
     adminGroupID: 'c5eafb9e071082101808fe4f7c1ed014',
     IST: 19800000,
     groupMemberGR: new GlideRecord('sys_user_grmember'),
@@ -26,33 +27,43 @@ CommonClass.prototype = {
         gs.info(this.log + " addEvent >> " + event);
         gs.eventQueue(name = event, record = rec, parm1 = p1, parm2 = p2);
     },
-    approveUser: function(record) {
-        gs.info(JSON.stringify(record));
-        return;
-        // var logName = this.log + "approveUser >> ";
-        // if (!this.isAdmin()) {
-        //     gs.error(logName + " Unknown Access found");
-        //     // Add Mail Notification when someone other than admin tried to access it.
-        //     return;
-        // }
-        // var sts = "pending";
+    approveUser: function(input) {
+        gs.info(JSON.stringify(input));
+        var logName = this.log + "approveUser >> ";
 
-        // // approve the req and create the user in AA
-        // var result = this.createUser(record);
-        // if (result.isCreated)
-        //     sts = "granted";
-        // else
-        //     return result;
+        var isCreated = false;
+        var errorMsg = "";
 
-        // // var details = {
-        // //     sts: sts,
-        // //     name: record.name,
-        // //     pass: this.defaultPass,
-        // //     reason: record.rejectReason || ""
-        // // };
-        // //this.addEvent(this.event1, this.reqAccessGR, record.mailID, JSON.stringify(details));
-        // if (result)
-        //     return result;
+        if (!this.isAdmin()) {
+            gs.error(logName + " Unknown Access found");
+            // Add Mail Notification when someone other than admin tried to access it.
+            errorMsg = "You don't have access to perform this action.";
+        } else {
+            var sts = "pending";
+
+            gs.info(this.log + "Creating the user.");
+
+            // approve the req and create the user in AA
+            var result = this.createUser(input);
+            if (result.isCreated) {
+                sts = "granted";
+                isCreated = true
+            } else
+                errorMsg = result.msg
+
+            // var details = {
+            //     sts: sts,
+            //     name: input.name,
+            //     pass: this.defaultPass,
+            //     reason: input.rejectReason || ""
+            // };
+            //this.addEvent(this.event1, this.reqAccessGR, input.mailID, JSON.stringify(details));
+
+        }
+        return {
+            isCreated,
+            errorMsg
+        };
     },
     createUser: function(record) {
         var userInfo = {
@@ -60,36 +71,15 @@ CommonClass.prototype = {
             lastName: record.lastName,
             roleIDs: record.rolesIDs,
             mailID: record.mailID,
-            uID: record.uID
+            username: record.username,
+            licenses: record.licenses,
         };
-        var output = this.AA_API.createUsr(userInfo);
+        gs.info(this.log + "Request sent to Automation Anywhere for the User creation.");
+        var output = this.apiClass.createUsr(userInfo);
         if (output.isCreated) {
             this.updateIDAndStatus(record.recordSysID, output.id, "granted");
         }
         return output;
-    },
-
-    rejectUser: function(record) {
-        var logName = this.log + "approveOrRejectUser >> ";
-        if (!this.isAdmin()) {
-            gs.error(logName + " Unknown Access found");
-            // Add Mail Notification when someone other than admin tried to access it.
-            return;
-        }
-        var sts = "pending";
-        //reject the req
-        if (action == "reject") {
-            sts = "rejected";
-            this.rejectReq(record);
-        }
-        // var details = {
-        //     sts: sts,
-        //     name: record.name,
-        //     pass: this.defaultPass,
-        //     reason: record.rejectReason || ""
-        // };
-        // this.addEvent(this.event1, this.reqAccessGR, record.mailID, JSON.stringify(details));
-
     },
     getAllPendingReq: function() {
         var logName = this.log + "getAllPendingReq >> ";
@@ -112,6 +102,8 @@ CommonClass.prototype = {
                 gd.setValue(gdt.getValue());
                 reqData.push({
                     no: ++i,
+                    firstName: table.getValue('first_name'),
+                    lastName: table.getValue('last_name'),
                     recordSysID: table.getUniqueValue(),
                     name: table.getValue('name').toString(),
                     username: table.getValue('username').toString(),
@@ -126,18 +118,62 @@ CommonClass.prototype = {
     isAdmin: function() {
         return gs.getUser().isMemberOf(this.adminGroupID);
     },
+    rejectUser: function(record) {
+        var logName = this.log + "approveOrRejectUser >> ";
+        if (!this.isAdmin()) {
+            gs.error(logName + " Unknown Access found");
+            // Add Mail Notification when someone other than admin tried to access it.
+            return;
+        }
+        var sts = "pending";
+        //reject the req
+        if (action == "reject") {
+            sts = "rejected";
+            this.rejectReq(record);
+        }
+        // var details = {
+        //     sts: sts,
+        //     name: record.name,
+        //     pass: this.defaultPass,
+        //     reason: record.rejectReason || ""
+        // };
+        // this.addEvent(this.event1, this.reqAccessGR, record.mailID, JSON.stringify(details));
+
+    },
+    updateIDAndStatus: function(recordSysID, newUserID, status) {
+        var logName = this.log + "updateIDAndStatus >> ";
+        var sts = this.CmnMethods.updateRecord(this.userRequestsGR.getTableName(), recordSysID, {
+            status: status
+        });
+        gs.info("Updating Users database");
+		this.triggerScheduledJob("InsertUsers");
+        gs.info(sts ? logName + "updated successfully" : logName + " Failed to update the ID and Status of the record.");
+    },
+    triggerScheduledJob: function(jobName) {
+        // Get the instance of the ScheduledJobManager
+        var jobManager = new GlideScheduleManager();
+
+        // Check if the scheduled job exists
+        if (jobManager.getSchedule(jobName)) {
+            // Execute the scheduled job
+            jobManager.executeNow(jobName);
+            gs.info("Scheduled job '" + jobName + "' executed successfully.");
+        } else {
+            gs.error("Scheduled job '" + jobName + "' does not exist.");
+        }
+    },
 };]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-02-14 13:55:03</sys_created_on>
         <sys_id>595189e6079482101808fe4f7c1ed021</sys_id>
-        <sys_mod_count>16</sys_mod_count>
+        <sys_mod_count>18</sys_mod_count>
         <sys_name>CommonClass</sys_name>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
         <sys_update_name>sys_script_include_595189e6079482101808fe4f7c1ed021</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-02-20 13:54:44</sys_updated_on>
+        <sys_updated_on>2024-02-21 13:30:49</sys_updated_on>
     </sys_script_include>
 </record_update>

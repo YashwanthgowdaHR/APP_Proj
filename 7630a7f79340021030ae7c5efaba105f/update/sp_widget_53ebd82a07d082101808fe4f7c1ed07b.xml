@@ -1,31 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
-        <client_script><![CDATA[api.controller = function ($scope, spUtil, spModal) {
+        <client_script><![CDATA[
+api.controller = function ($scope, spUtil, spModal) {
 	/* widget controller */
 	var c = this;
-	c.data.viewRequests = false;
-	
-	$scope.updateSelectedRoles = function(info) {
-    // Update the selected roles for the respective row 'info'
-		console.log("info");
-};
+	editRow = function (button) {
+		var row = button.closest('tr');
+		//row.find('sn-record-picker').attr('sn-disabled', 'false');
+
+		var editBtn = row.find(".btn-edit");
+
+		//enable sn-record-picker and approve and reject btns.
+		row.find('input').attr('disabled', false);
+		row.find('button').attr('disabled', false);
+
+		// Disable input elements in other rows along with approve and reject btns
+		//$('table tbody tr').not(row).find('sn-record-picker').attr('sn-disabled', 'true');
+		$('table tbody tr').not(row).find('input').attr('disabled', true);
+		$('table tbody tr').not(row).find('.btn:not(.btn-edit)').attr('disabled', true);
+	}
 
 	// delete object property if exists
 	function deleteProp(obj, key) {
-		if (obj.hasOwnProperty(key)) {
+		if (obj.hasOwnProperty(key))
 			delete obj[key];
-		}
 		return obj;
 	}
 
 	// Reset data properties
 	function resetData() {
+		deleteProp("inputData");
 		deleteProp("action");
-		deleteProp("info");
 		deleteProp("rejectReason");
 	}
-
 
 	function handleUpdateResponse(res) {
 		resetData();
@@ -38,26 +46,23 @@
 		resetData();
 	}
 
-	c.approveRequest = function (record, role) {
-		console.log(record);
-		console.log(role);
-		/*if(c.data.){
-			spUtil.addErrorMessage("Please select the input for the role.");
-		}else{
-			var warn = '<i class="fa fa-warning" aria-hidden="true"></i>';
+	c.approveRequest = function (record, roles, licenses) {
+		roles = roles==undefined ? "" : roles;
+		licenses = licenses==undefined ? "" : licenses;
+		console.log(typeof(roles));
+
+		if (roles != "" && roles != undefined) {
 			spModal.confirm("Are you sure to <b>approve</b> this request?").then(function (confirmed) {
 				spUtil.addTrivialMessage("Approving the request...");
-				record.roles = c.data.roles.value;
-				if(c.data.licenses.length > 0)
-					record.licenses = c.data.licenses.value;
-				else
-					record.licenses = {};
-				c.data.info = record;
-				c.data.action = 'approve';
+				record.roleIDs = roles;
+				record.licenses = licenses;
+				c.data.inputData = record;
+				c.data.action = "approve";
 				c.server.update().then(handleUpdateResponse).catch(handleError);
 			});
-
-		}*/
+		}
+		else
+			spUtil.addErrorMessage("Please select the input for the role.");
 	};
 
 	c.rejectRequest = function (record) {
@@ -71,9 +76,9 @@
 			input: true,
 			size: 'md'
 		}).then(function (reason) {
-			c.data.rejectReason = reason;
-			c.data.info = record;
-			c.data.action = 'reject';
+			record.rejectReason = reason;
+			c.data.inputData = record;
+			c.data.action = "reject";
 			c.server.update().then(handleUpdateResponse).catch(handleError)
 		}, function () { }).catch(handleError);
 	};
@@ -83,59 +88,71 @@
         <css>
 
 #leftList {
-    transition: all 0.5s ease;
-    margin: 0 auto;
-    padding: 0 10px;
-  }
-  
-  .table{
-    width: 100%;
-  }
-  
+  transition: all 0.5s ease;
+  margin: 0 auto;
+  padding: 0 10px;
+}
 
+.table{
+  width: 100vw;
+}
 
-  .table td,
-  .table th {
-    text-align: center;
-    vertical-align: middle;
-    width: fit-content;
-    white-space: nowrap;
-  }
-  
-  .btn {
-    background: transparent;
-    border-radius: 0px;
-    vertical-align: middle;
-  }
-  
-  .btn-approve {
-    border: 1px solid green;
-  }
-  
-  .btn-approve:hover {
-    color: white;
-    background: green;
-  }
-  
-  .btn-reject {
-    border: 1px solid red;
-    min-height: 100%;
-  }
-  
-  .btn-reject:hover {
-    color: white;
-    background: red;
-  }
-  
-  .no-request {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 300px;
-    text-align: center;
-    color: black;
-    text-transform: uppercase;
-  }</css>
+.table td,
+.table th {
+  text-align: center;
+  vertical-align: middle;
+  width: fit-content;
+  white-space: nowrap;
+}
+
+.btn {
+  background: transparent;
+  border-radius: 0px;
+  vertical-align: middle;
+  text-transform: upppercase;
+}
+
+.btn:hover{
+  color: white;
+}
+
+.btn-edit{
+	color: #337ab7;
+  border: 1px solid #337ab7;
+}
+
+.btn-edit:hover{
+background: #337ab7;
+}
+
+.btn-approve {
+  color: green;
+  border: 1px solid green;
+}
+
+.btn-approve:hover {
+  background: green;
+}
+
+.btn-reject {
+  color: red;
+  border: 1px solid red;
+  min-height: 100%;
+}
+
+.btn-reject:hover {
+  background: red;
+}
+
+.no-request {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  text-align: center;
+  color: black;
+  text-transform: uppercase;
+}</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
         <description>Shows the requests list and allow admin to either approve or reject a request</description>
@@ -159,28 +176,27 @@
 	data.licensesTable = cls.licensesTableName;
 
 	if (input) {
-		var record = input.info;
-
 		// APPROVE action
 		if (input.action === "approve") {
-			try {
-				var output = cls.approveUser(record);
-				if (output.isCreated)
-					gs.addInfoMessage("User has been created");
-				else
-					gs.addErrorMessage('Error while creating user.\n<b>Reason:</b> ' + output.msg);
-			} catch (e) {
-				gs.error('Error approving request:', e);
-				gs.addErrorMessage('An error occurred while approving the request.');
-			}
+			if(input.inputData.roleIDs != "" && input.inputData.roleIDs != undefined)
+				try {
+					var output = cls.approveUser(input.inputData);
+					if(output.isCreated)
+						gs.addInfoMessage("User has been created")
+					else
+						gs.addErrorMessage('Error while creating user.\n<b>Reason:</b> ' + output.msg);
+				} catch (e) {
+					gs.error('Error approving request:', e);
+					gs.addErrorMessage('An error occurred while approving the request.');
+				}
+			else
+				gs.addErrorMessage("Please Fill the (*) fields which are mandatory.");
 		}
 
 		// REJECT action
 		if (input.action === 'reject') {
 			try {
-				record.rejectReason = input.rejectReason;
-				// Script Includes function
-				cls.rejectUser(record);
+				cls.rejectUser(input.inputData);
 				gs.addInfoMessage("User has been rejected");
 			} catch (e) {
 				gs.error('Error rejecting request:', e);
@@ -194,55 +210,64 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-02-14 11:16:41</sys_created_on>
         <sys_id>53ebd82a07d082101808fe4f7c1ed07b</sys_id>
-        <sys_mod_count>655</sys_mod_count>
+        <sys_mod_count>834</sys_mod_count>
         <sys_name>Admin - Approve or Reject</sys_name>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy/>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
         <sys_update_name>sp_widget_53ebd82a07d082101808fe4f7c1ed07b</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-02-20 13:58:01</sys_updated_on>
-        <template><![CDATA[<div class="container-fluid">
-  <div ng-if="data.requests.length > 0" class="table-responsive" id="leftList">
-    <h2 class="text-center">Requests Details:-</h2><br>
-    <table class="table table-hover table-bordered">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Username *</th>
-          <th scope="col">Name *</th>
-          <th scope="col">Environment *</th>
-          <th scope="col">Requested On</th>
-          <th scope="col">Role *</th>
-          <th scope="col">License</th>
-          <th scope="col">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="info in data.requests track by $index">
-          <th scope="row">{{info.no}}</th>
-          <td>{{info.username}}</td>
-          <td>{{info.name}}</td>
-          <td>{{info.environment}}</td>
-          <td>{{info.requestedOn}}</td>
-          <td><sn-record-picker id="txt_roles" table="data.rolesTable" field="roles[$index]" display-field="'name'"
-                                value-field="'id'" search-fields="'name'" page-size="50" multiple="true"></sn-record-picker></td>
-          <td><sn-record-picker id="txt_license" table="data.licensesTable" field="data.licenses"
-                                display-field="'detail'" value-field="'sys_id'" search-fields="'name'" page-size="50"
-                                multiple="true"></sn-record-picker></td>
-          <td>
+        <sys_updated_on>2024-02-21 13:11:12</sys_updated_on>
+        <template><![CDATA[<div class="container-fluid" id="main_section">
+    <div ng-if="data.requests.length > 0" class="table-responsive" id="leftList">
+        <h2 class="text-center">Requests Details:-</h2><br>
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Username *</th>
+                    <th scope="col">Name *</th>
+                    <th scope="col">Environment *</th>
+                    <th scope="col">Requested On</th>
+                    <th scope="col">Role *</th>
+                    <th scope="col">License</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="info in data.requests track by $index" id="trows_{{info.no}}">
+                    <th scope="row">{{info.no}}</th>
+                    <td>{{info.username}}</td>
+                    <td>{{info.name}}</td>
+                    <td>{{info.environment}}</td>
+                    <td>{{info.requestedOn}}</td>
+                    <td>
+                        <sn-record-picker id="txt_roles" table="c.data.rolesTable" field="roles[$index]"
+                            display-field="'name'" value-field="'id'" search-fields="'name'" page-size="50"
+                            multiple="true" sn-disabled="true"></sn-record-picker>
+                    </td>
+                    <td>
+                        <sn-record-picker id="txt_license" table="data.licensesTable" field="licenses[$index]"
+                            display-field="'detail'" value-field="'name'" search-fields="'name'" page-size="50"
+                            multiple="true" sn-disabled="true"></sn-record-picker>
+                    </td>
+                    <td>
+                        <button class="btn btn-edit btn-default" onclick="editRow($(this));"><span
+                                class="glyphicon glyphicon-edit" /> Edit</button>
+                        <button class="btn btn-approve"
+                            ng-click="c.approveRequest(data.requests[$index],roles[$index].value,licenses[$index].value)" disabled><span
+                                class="glyphicon glyphicon-ok" /> Approve</button>
+                        <button class="btn btn-reject" ng-click="c.rejectRequest(info)" disabled><span
+                                class="glyphicon glyphicon-remove" /> Reject</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-            <button class="btn btn-approve" ng-click="c.approveRequest(data.requests[$index],roles[$index].value)">Approve</button>
-            <button class="btn btn-reject" ng-click="c.rejectRequest(info)">Reject</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div ng-if="data.requests.length <= 0" class="col-sm-12 no-request">
-    <h2>No Request Found.</h2>
-  </div>
+    <div ng-if="data.requests.length <= 0" class="col-sm-12 no-request">
+        <h2>No Request Found.</h2>
+    </div>
 
 </div>]]></template>
     </sp_widget>
