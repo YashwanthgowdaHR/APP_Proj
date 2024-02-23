@@ -9,7 +9,7 @@
         <name>APIClass</name>
         <script><![CDATA[var APIClass = Class.create();
 APIClass.prototype = {
-    initialize: function (defaultPass = "") {
+    initialize: function(defaultPass = "") {
         this.defaultPass = defaultPass;
     },
     type: 'APIClass',
@@ -20,42 +20,64 @@ APIClass.prototype = {
 
     /**
      * @param {json} user - user json should contains keys i.e 
-     * firstName[string],lastName[string],mailId[string],uID[string],roles[list] - list containing role IDs(NOT NAME).
+     *      firstName(string),
+     *      lastName(string),
+     *      mailId(string),
+     *      username(string),
+     *      roleIDs(string) - role IDs(NOT NAME) separated by ",". Ex: If only one: "334" or More than one: "334,335,336",
+     *      licenses(string) - License names separated by "," as specified for the roles.
      * @return {json} result - result will have keys i.e. 
      * isCreated[bool] - if the user is created, it will be true, else false
      * id[number] - if isCreated is true, then it will contain id of the user and 
-     * msg[string] - if user creation failed[isCreated=false], then msg will holds the error message.
+     * msg(string) - if user creation failed[isCreated=false], then msg will holds the error message.
      */
-    createUser: function (user) {
+
+    createUser: function(user) {
         var logName = this.log + "CreateUser >> ";
         var endpoint = this.endpoint + "v2/usermanagement/users";
         var result = {};
+        result.isCreated = false;
+        var roles = [], licenses = [];
 
         gs.info(logName + " Received a request to Create a New user with details: " + JSON.stringify(user));
 
         try {
-            var tmpRoles = user.roleIDs.split(","),
-                tmpLicenses = user.licenses.split(",");
-
-            var roles = [],
-                licenses = [];
+            var tmpRoles = user.roleIDs.length > 0 ? user.roleIDs.split(",") : [],
+                tmpLicenses = user.licenses.length > 0 ? user.licenses.split(",") : [];
             // tmpRoles.forEach((id) => roles.push({"id": id}));
+            // var roles = [],
+            //     licenses = [];
 
-            tmpRoles.forEach((id) => roles.push(Number(id)));
+            //tmpRoles = tmpRoles.map(Number);
+            // tmpLicenses.forEach((name) => licenses.push(name));
 
-            tmpLicenses.forEach((name) => licenses.push(name));
-
+            tmpRoles = JSON.stringify(tmpRoles);
+            tmpLicenses = JSON.stringify(tmpLicenses);
             //Initialize the required REST Message
             var req = this.makeReq('CreateUser');
-            req.setStringParameterNoEscape("endpoint", endpoint);
-            req.setStringParameterNoEscape("authorization", this.getToken());
-            req.setStringParameterNoEscape('firstName', user.firstName);
-            req.setStringParameterNoEscape('lastName', user.lastName);
-            req.setStringParameterNoEscape('mailID', user.mailID);
-            req.setStringParameterNoEscape('pass', this.defaultPass);
-            req.setStringParameterNoEscape('userName', user.uID);
-            req.setStringParameterNoEscape('roles', roles);
-            req.setStringParameterNoEscape('licenses', licenses);
+            gs.info("Roles("+typeof(tmpRoles)+"): "+JSON.stringify(tmpRoles)+" || Licenses("+typeof(tmpLicenses)+"): "+tmpLicenses);
+            //req.forEach((key)=> gs.info("Key: "+key+" Value: "+req[key]));
+            req.setStringParameterNoEscape("endpoint",JSON.stringify(endpoint));
+            req.setStringParameterNoEscape("token", this.getToken());
+            req.setStringParameterNoEscape('username', JSON.stringify(user.username));
+            req.setStringParameterNoEscape('firstName', JSON.stringify(user.firstName));
+            req.setStringParameterNoEscape('lastName', JSON.stringify(user.lastName));
+            req.setStringParameterNoEscape('mailID', JSON.stringify(user.mailID));
+            //req.setStringParameterNoEscape('pass', this.defaultPass);
+            req.setStringParameterNoEscape('enableAutoLogin', true);
+            req.setStringParameterNoEscape('roles', tmpRoles);
+            req.setStringParameterNoEscape('licenses', tmpLicenses);
+
+            
+            // req.setStringParameterNoEscape('username', "snow_u1");
+            // req.setStringParameterNoEscape('firstName', "Shatvik");
+            // req.setStringParameterNoEscape('lastName', "Pandey");
+            // req.setStringParameterNoEscape('mailID', "yashwanthgowda.hr@external.merckgroup.com");
+            // //req.setStringParameterNoEscape('pass', this.defaultPass);
+            // req.setStringParameterNoEscape('enableAutoLogin', true);
+            // req.setStringParameterNoEscape('roles', '["337"]');
+            // req.setStringParameterNoEscape('licenses', '[]');
+
             gs.info(logName + " Creating User...");
 
             var response = req.execute();
@@ -70,13 +92,11 @@ APIClass.prototype = {
                 result.id = parsed.id;
             } else {
                 //Failed to create user through api
-                result.isCreated = false;
                 result.msg = parsed.message;
                 gs.error(logName + "FAILED | Reason is " + parsed.message);
             }
         } catch (e) {
             gs.error(logName + "Exception: " + e);
-            result.isCreated = false;
             result.msg = "An error occurred while creating the user.";
         }
         return result;
@@ -85,9 +105,9 @@ APIClass.prototype = {
     /**
      * @param {string} uID - x_m_uid of the user to check whether it matches with existing uID of user who possessing "id". In order to avoid deletion of other users.
      * @param {string} userID - id of the user which was received after user has been created.
-     * @return {json} result - result will have keys i.e. isCreated[bool] - if the user is created, it will be true and msg[string] - if user creation failed, then msg will holds the error message.
+     * @return {json} result - result will have keys i.e. isCreated[bool] - if the user is created, it will be true and msg(string) - if user creation failed, then msg will holds the error message.
      */
-    deleteUsr: function (uID, userID) {
+    deleteUsr: function(uID, userID) {
         var logName = this.log + "DeleteUsr >> ";
         var endpoint = this.endpoint + "v2/usermanagement/users/";
 
@@ -128,7 +148,7 @@ APIClass.prototype = {
      * @param {string} columnValue - columnValue
      * @return {string/number} sysID - returns sysID if found, else 0.
      */
-    fetchSysID: function (tableName, columnName, columnValue) {
+    fetchSysID: function(tableName, columnName, columnValue) {
         var gr = new GlideRecord(tableName);
         gr.addQuery(columnName, columnValue);
         gr.query();
@@ -146,11 +166,11 @@ APIClass.prototype = {
      * @param {list} valueList - list that contains the ids using which their respective sysId will be extracted from the table
      * @return {string} sysIds - sysIds of respective IDs passed in idList.
      */
-    fetchAllSysIDFromGivenList: function (tableName, columnName, valueList) {
+    fetchAllSysIDFromGivenList: function(tableName, columnName, valueList) {
         var logName = this.log + "fetchAllSysIDFromGivenList >> ";
         var sysIDs = "";
 
-        gs.info(" Fetching the sys_ids from table: "+ tableName + " under the column: "+columnName);
+        gs.info(" Fetching the sys_ids from table: " + tableName + " under the column: " + columnName);
         valueList.forEach((value) => {
             var sysID = this.fetchSysID(tableName, columnName, value);
             if (sysID) {
@@ -163,7 +183,7 @@ APIClass.prototype = {
         return sysIDs;
     },
 
-    getToken: function () {
+    getToken: function() {
         // API call made to AA to get the TOKEN
 
         var endpoint = this.endpoint + "v2/authentication";
@@ -184,7 +204,7 @@ APIClass.prototype = {
      * @param {string} id - id of the user which was received after user has been created.
      * @return {json} result - result will contain all the keys that user has configured or assigned after user has been created.
      */
-    getUserByID: function (userID) {
+    getUserByID: function(userID) {
         var logName = this.log + "getUserByID >> ";
 
         // API Call made to AA to get User info by User ID
@@ -209,7 +229,7 @@ APIClass.prototype = {
         }
     },
 
-    insertLicenses: function () {
+    insertLicenses: function() {
         // Insert roles into table named "aa_roles". So, to keep updated whenever a new role is created in AA.
         // This method is called for every 6 hours from Scheduled Jobs and add the roles, if the "id" doesn't exists.
         var logName = this.log + "insertLicenses >> ";
@@ -250,7 +270,7 @@ APIClass.prototype = {
         }
     },
 
-    insertRoles: function () {
+    insertRoles: function() {
         // Insert roles into table named "aa_roles". So, to keep updated whenever a new role is created in AA.
         // This method is called for every 6 hours from Scheduled Jobs and add the roles, if the "id" doesn't exists.
         var logName = this.log + "insertRoles >> ";
@@ -283,10 +303,10 @@ APIClass.prototype = {
         }
     },
 
-    insertUsers: function () {
+    insertUsers: function() {
         var logName = this.log + "insertUsers >> ";
         var endpoint = this.endpoint + "v2/usermanagement/users/list";
-        gs.info(logName + "Endpoint: "+endpoint);
+        gs.info(logName + "Endpoint: " + endpoint);
 
         var req = this.makeReq('FetchUsers'); // Create REST Request
         req.setStringParameterNoEscape("endpoint", endpoint);
@@ -297,7 +317,7 @@ APIClass.prototype = {
         var httpStatus = response.getStatusCode(); // Read the RESPONSE status Code
         gs.info(logName + " Response Status: " + httpStatus);
         if (httpStatus == 200) {
-            
+
             var userList = JSON.parse(responseBody).list;
             userList.forEach((user) => {
                 var gr = new GlideRecord("x_1131046_aa_man_0_users");
@@ -325,7 +345,7 @@ APIClass.prototype = {
 
                     if (user.licenseFeatures.length > 0) {
                         var tmpLicenses = [];
-                        user.licenseFeatures.forEach( (license) => {
+                        user.licenseFeatures.forEach((license) => {
                             tmpLicenses.push(license);
                         });
                         var licenses = this.fetchAllSysIDFromGivenList('x_1131046_aa_man_0_licenses', 'name', tmpLicenses);
@@ -339,7 +359,7 @@ APIClass.prototype = {
         }
     },
 
-    makeReq: function (method) {
+    makeReq: function(method) {
         return new sn_ws.RESTMessageV2(this.restSrc, method);
     },
 
@@ -347,9 +367,9 @@ APIClass.prototype = {
      * @param {string} userID - id of the user which was received after user has been created.
      * @param {list} roles - list of roles IDs.
      * @return {json} result - result will have keys i.e. isUpdated[bool] - if the roles are updated to AA, it will be true, else false and 
-     * msg[string] - if unable to update roles[isUpdated=false], then msg will holds the error message
+     * msg(string) - if unable to update roles[isUpdated=false], then msg will holds the error message
      */
-    updateUserData: function (userData) {
+    updateUserData: function(userData) {
         var logName = this.log + "UpdateRoles >> ";
         var endpoint = this.endpoint + "v2/usermanagement/roles/list";
         var result = {};
@@ -357,7 +377,7 @@ APIClass.prototype = {
         try {
             var tmpRoles = userData.roleIDs.split(",");
             var roles = [];
-            tmpRoles.forEach((id) =>{
+            tmpRoles.forEach((id) => {
                 roles.push(Number(id));
             });
 
@@ -398,13 +418,13 @@ APIClass.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-02-14 13:48:14</sys_created_on>
         <sys_id>127a306e075482101808fe4f7c1ed0dd</sys_id>
-        <sys_mod_count>1</sys_mod_count>
+        <sys_mod_count>41</sys_mod_count>
         <sys_name>APIClass</sys_name>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
         <sys_update_name>sys_script_include_127a306e075482101808fe4f7c1ed0dd</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-02-14 14:18:46</sys_updated_on>
+        <sys_updated_on>2024-02-22 13:50:39</sys_updated_on>
     </sys_script_include>
 </record_update>

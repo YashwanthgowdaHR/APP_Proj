@@ -49,7 +49,6 @@ api.controller = function ($scope, spUtil, spModal) {
 	c.approveRequest = function (record, roles, licenses) {
 		roles = roles==undefined ? "" : roles;
 		licenses = licenses==undefined ? "" : licenses;
-		console.log(typeof(roles));
 
 		if (roles != "" && roles != undefined) {
 			spModal.confirm("Are you sure to <b>approve</b> this request?").then(function (confirmed) {
@@ -184,7 +183,7 @@ background: #337ab7;
 					if(output.isCreated)
 						gs.addInfoMessage("User has been created")
 					else
-						gs.addErrorMessage('Error while creating user.\n<b>Reason:</b> ' + output.msg);
+						gs.addErrorMessage('Error while creating user.\n<b>Reason:</b> ' + output.errorMsg);
 				} catch (e) {
 					gs.error('Error approving request:', e);
 					gs.addErrorMessage('An error occurred while approving the request.');
@@ -210,14 +209,14 @@ background: #337ab7;
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-02-14 11:16:41</sys_created_on>
         <sys_id>53ebd82a07d082101808fe4f7c1ed07b</sys_id>
-        <sys_mod_count>834</sys_mod_count>
+        <sys_mod_count>837</sys_mod_count>
         <sys_name>Admin - Approve or Reject</sys_name>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy/>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
         <sys_update_name>sp_widget_53ebd82a07d082101808fe4f7c1ed07b</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-02-21 13:11:12</sys_updated_on>
+        <sys_updated_on>2024-02-22 10:31:58</sys_updated_on>
         <template><![CDATA[<div class="container-fluid" id="main_section">
     <div ng-if="data.requests.length > 0" class="table-responsive" id="leftList">
         <h2 class="text-center">Requests Details:-</h2><br>

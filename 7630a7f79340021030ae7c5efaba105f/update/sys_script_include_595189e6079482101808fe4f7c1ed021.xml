@@ -28,9 +28,7 @@ CommonClass.prototype = {
         gs.eventQueue(name = event, record = rec, parm1 = p1, parm2 = p2);
     },
     approveUser: function(input) {
-        gs.info(JSON.stringify(input));
         var logName = this.log + "approveUser >> ";
-
         var isCreated = false;
         var errorMsg = "";
 
@@ -50,7 +48,7 @@ CommonClass.prototype = {
                 isCreated = true
             } else
                 errorMsg = result.msg
-
+            gs.info(this.log + " Status: " + sts)
             // var details = {
             //     sts: sts,
             //     name: input.name,
@@ -69,13 +67,13 @@ CommonClass.prototype = {
         var userInfo = {
             firstName: record.firstName,
             lastName: record.lastName,
-            roleIDs: record.rolesIDs,
+            roleIDs: record.roleIDs,
             mailID: record.mailID,
             username: record.username,
             licenses: record.licenses,
         };
         gs.info(this.log + "Request sent to Automation Anywhere for the User creation.");
-        var output = this.apiClass.createUsr(userInfo);
+        var output = this.apiClass.createUser(userInfo);
         if (output.isCreated) {
             this.updateIDAndStatus(record.recordSysID, output.id, "granted");
         }
@@ -146,7 +144,8 @@ CommonClass.prototype = {
             status: status
         });
         gs.info("Updating Users database");
-		this.triggerScheduledJob("InsertUsers");
+        SncTriggerSynchronizer.executeNow("InsertUsers");
+        //this.triggerScheduledJob("InsertUsers");
         gs.info(sts ? logName + "updated successfully" : logName + " Failed to update the ID and Status of the record.");
     },
     triggerScheduledJob: function(jobName) {
@@ -167,13 +166,13 @@ CommonClass.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-02-14 13:55:03</sys_created_on>
         <sys_id>595189e6079482101808fe4f7c1ed021</sys_id>
-        <sys_mod_count>18</sys_mod_count>
+        <sys_mod_count>28</sys_mod_count>
         <sys_name>CommonClass</sys_name>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
         <sys_update_name>sys_script_include_595189e6079482101808fe4f7c1ed021</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-02-21 13:30:49</sys_updated_on>
+        <sys_updated_on>2024-02-22 10:56:10</sys_updated_on>
     </sys_script_include>
 </record_update>
