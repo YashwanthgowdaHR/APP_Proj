@@ -19,7 +19,30 @@ APIClass.prototype = {
     environment: "DEV",
 
     /**
-     * @param {json} user - user json should contains keys i.e 
+     * @param {json} obj - An object whose values needs to be transformed from Javascript STRING into JSON.STRING.
+     * @return {json} result - result will contains values of datatype JSON.STRING
+     */
+    convertToJSONString: function(obj) {
+        var newObj = {};
+        for (const [key, value] of Object.entries(data)) {
+            newObj[key] = JSON.stringify(value);
+        }
+        return newObj;
+    },
+
+    /**
+     * @param {json} data - An object whose values need to be verified for NON-EMPTY string.
+     * @return {boolean} true/false - returns true if data values are non-empty else returns false.
+     */
+    checkAllAreNonEmpty: function(data) {
+        for (const [key, value] of Object.entries(data)) {
+            if (data[key].length <= 0) return false;
+        }
+        return true;
+    },
+
+    /**
+     * @param {json} inputData - inputData json should contains keys i.e 
      *      firstName(string),
      *      lastName(string),
      *      mailId(string),
@@ -31,70 +54,77 @@ APIClass.prototype = {
      * id[number] - if isCreated is true, then it will contain id of the user and 
      * msg(string) - if user creation failed[isCreated=false], then msg will holds the error message.
      */
-
-    createUser: function(user) {
+    createUser: function(inputData) {
         var logName = this.log + "CreateUser >> ";
         var endpoint = this.endpoint + "v2/usermanagement/users";
         var result = {};
         result.isCreated = false;
-        var roles = [], licenses = [];
 
-        gs.info(logName + " Received a request to Create a New user with details: " + JSON.stringify(user));
+        gs.info(logName + " Received a request to Create a New user with details: " + JSON.stringify(inputData));
 
         try {
-            var tmpRoles = user.roleIDs.length > 0 ? user.roleIDs.split(",") : [],
-                tmpLicenses = user.licenses.length > 0 ? user.licenses.split(",") : [];
-            // tmpRoles.forEach((id) => roles.push({"id": id}));
-            // var roles = [],
-            //     licenses = [];
+            let tempData = {
+                ...inputData
+            };
+            delete tempData.licenses;
 
-            //tmpRoles = tmpRoles.map(Number);
-            // tmpLicenses.forEach((name) => licenses.push(name));
+            gs.info(logName + "Checking for NON Empty value");
+            if (this.checkAllAreNonEmpty(tempData)) {
+                tempData = {
+                    ...inputData
+                };
+                tempData.endpoint = endpoint;
+                tempData.roleIDs = inputData.roleIDs.length > 0 ? inputData.roleIDs.split(",") : [];
+                tempData.licenses = inputData.licenses.length > 0 ? inputData.licenses.split(",") : [];
+                // tmpRoles.forEach((id) => roles.push({"id": id}));
+                // var roles = [],
+                //     licenses = [];
 
-            tmpRoles = JSON.stringify(tmpRoles);
-            tmpLicenses = JSON.stringify(tmpLicenses);
-            //Initialize the required REST Message
-            var req = this.makeReq('CreateUser');
-            gs.info("Roles("+typeof(tmpRoles)+"): "+JSON.stringify(tmpRoles)+" || Licenses("+typeof(tmpLicenses)+"): "+tmpLicenses);
-            //req.forEach((key)=> gs.info("Key: "+key+" Value: "+req[key]));
-            req.setStringParameterNoEscape("endpoint",JSON.stringify(endpoint));
-            req.setStringParameterNoEscape("token", this.getToken());
-            req.setStringParameterNoEscape('username', JSON.stringify(user.username));
-            req.setStringParameterNoEscape('firstName', JSON.stringify(user.firstName));
-            req.setStringParameterNoEscape('lastName', JSON.stringify(user.lastName));
-            req.setStringParameterNoEscape('mailID', JSON.stringify(user.mailID));
-            //req.setStringParameterNoEscape('pass', this.defaultPass);
-            req.setStringParameterNoEscape('enableAutoLogin', true);
-            req.setStringParameterNoEscape('roles', tmpRoles);
-            req.setStringParameterNoEscape('licenses', tmpLicenses);
+                //tmpRoles = tmpRoles.map(Number);
+                // tmpLicenses.forEach((name) => licenses.push(name));
 
-            
-            // req.setStringParameterNoEscape('username', "snow_u1");
-            // req.setStringParameterNoEscape('firstName', "Shatvik");
-            // req.setStringParameterNoEscape('lastName', "Pandey");
-            // req.setStringParameterNoEscape('mailID', "yashwanthgowda.hr@external.merckgroup.com");
-            // //req.setStringParameterNoEscape('pass', this.defaultPass);
-            // req.setStringParameterNoEscape('enableAutoLogin', true);
-            // req.setStringParameterNoEscape('roles', '["337"]');
-            // req.setStringParameterNoEscape('licenses', '[]');
+                // tmpRoles = JSON.stringify(tmpRoles);
+                // tmpLicenses = JSON.stringify(tmpLicenses);
 
-            gs.info(logName + " Creating User...");
+                gs.info(logName + "Converting values into JSON String");
+                let newData = this.convertToJSONString(tempData);
+                gs.info("New Data: "+JSON.stringify(newData));
 
-            var response = req.execute();
-            var responseBody = response.getBody();
-            var httpStatus = response.getStatusCode();
-            gs.info(logName + "Result - HTTP status Code: " + httpStatus);
-            var parsed = JSON.parse(responseBody);
-            if (httpStatus == 201) {
-                // User Created Successfully
-                result.isCreated = true;
-                gs.info(logName + "SUCCESS | New ID is " + parsed.id);
-                result.id = parsed.id;
+                //Initialize the required REST Message
+                var req = this.makeReq('CreateUser');
+                req.setStringParameterNoEscape("endpoint", newData.endpoint);
+                req.setStringParameterNoEscape("token", this.getToken());
+                req.setStringParameterNoEscape('username', newData.username);
+                req.setStringParameterNoEscape('firstName', newData.firstName);
+                req.setStringParameterNoEscape('lastName', newData.lastName);
+                req.setStringParameterNoEscape('mailID', newData.mailID);
+                //req.setStringParameterNoEscape('pass', this.defaultPass);
+                req.setStringParameterNoEscape('enableAutoLogin', true);
+                req.setStringParameterNoEscape('roles', newData.roleIDs);
+                req.setStringParameterNoEscape('licenses', newData.licenses);
+
+                gs.info(logName + " Creating User...");
+                var response = req.execute();
+                var responseBody = response.getBody();
+                var httpStatus = response.getStatusCode();
+                gs.info(logName + "Result - HTTP status Code: " + httpStatus);
+                var parsed = JSON.parse(responseBody);
+                if (httpStatus == 201) {
+                    // User Created Successfully
+                    result.isCreated = true;
+                    gs.info(logName + "SUCCESS | New ID is " + parsed.id);
+                    result.id = parsed.id;
+                } else {
+                    //Failed to create user through api
+                    result.msg = parsed.message;
+                    gs.error(logName + "FAILED | Reason is " + parsed.message);
+                }
             } else {
-                //Failed to create user through api
-                result.msg = parsed.message;
-                gs.error(logName + "FAILED | Reason is " + parsed.message);
+                let msg = "One of the required field for user creation is EMPTY."
+                gs.error(logName + msg);
+                result.msg = msg;
             }
+
         } catch (e) {
             gs.error(logName + "Exception: " + e);
             result.msg = "An error occurred while creating the user.";
@@ -418,13 +448,13 @@ APIClass.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-02-14 13:48:14</sys_created_on>
         <sys_id>127a306e075482101808fe4f7c1ed0dd</sys_id>
-        <sys_mod_count>41</sys_mod_count>
+        <sys_mod_count>51</sys_mod_count>
         <sys_name>APIClass</sys_name>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
         <sys_update_name>sys_script_include_127a306e075482101808fe4f7c1ed0dd</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-02-22 13:50:39</sys_updated_on>
+        <sys_updated_on>2024-02-26 16:04:56</sys_updated_on>
     </sys_script_include>
 </record_update>
