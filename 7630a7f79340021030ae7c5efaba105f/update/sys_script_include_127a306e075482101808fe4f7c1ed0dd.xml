@@ -316,7 +316,7 @@ APIClass.prototype = {
         if (httpStatus == 200) {
             var rolesList = JSON.parse(responseBody).list;
             rolesList.forEach((role) => {
-                var gr = new GlideRecord("x_snc_accessprov_0_aa_roles");
+                var gr = new GlideRecord("x_1131046_aa_man_0_roles");
                 gr.addQuery('id', role.id);
                 gr.query();
                 if (!gr.hasNext()) {
@@ -448,13 +448,13 @@ APIClass.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-02-14 13:48:14</sys_created_on>
         <sys_id>127a306e075482101808fe4f7c1ed0dd</sys_id>
-        <sys_mod_count>51</sys_mod_count>
+        <sys_mod_count>52</sys_mod_count>
         <sys_name>APIClass</sys_name>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
         <sys_update_name>sys_script_include_127a306e075482101808fe4f7c1ed0dd</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-02-26 16:04:56</sys_updated_on>
+        <sys_updated_on>2024-02-29 13:30:41</sys_updated_on>
     </sys_script_include>
 </record_update>
