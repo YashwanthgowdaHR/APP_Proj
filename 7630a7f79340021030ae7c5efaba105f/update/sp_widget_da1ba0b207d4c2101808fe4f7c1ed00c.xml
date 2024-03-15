@@ -1,30 +1,184 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
-        <client_script><![CDATA[api.controller=function() {
-  /* widget controller */
-  var c = this;
-};]]></client_script>
+        <client_script><![CDATA[api.controller=function(spModal) {
+	/* widget controller */
+	var c = this;
+		  // delete object property if exists
+	  function deleteProp(obj, key) {
+		  if (obj.hasOwnProperty(key))
+			  delete obj[key];
+		  return obj;
+	  }
+  
+	  // Reset data properties
+	  function resetData() {
+		  deleteProp("inputData");
+		  deleteProp("action");
+		  deleteProp("rejectReason");
+	  }
+  
+	  function handleUpdateResponse(res) {
+		  resetData();
+		  c.server.refresh();
+	  }
+  
+	  function handleError(error) {
+		  // Handle or log the error as needed
+		  console.error('An error occurred:', error);
+		  resetData();
+	  }
+  
+	  c.approveRequest = function (roles, licenses) {
+		  roles = roles==undefined ? "" : roles;
+		  licenses = licenses==undefined ? "" : licenses;
+  
+		  if (roles != "" && roles != undefined) {
+			  spModal.confirm("Are you sure to <b>approve</b> this request?").then(function (confirmed) {
+				  spUtil.addTrivialMessage("Approving the request...");
+				  c.data.inputData = {"roleIDs": roles, "recordSysID": c.data.recordSysID, licenses};
+				  c.data.action = "approve";
+				  c.server.update().then(handleUpdateResponse).catch(handleError);
+			  });
+		  }
+		  else
+			  spUtil.addErrorMessage("Please select the input for the role.");
+	  };
+  
+	  c.rejectRequest = function () {
+		  spModal.open({
+			  title: 'Reason for rejecting',
+			  message: 'Please <b>provide the comments</b> for rejecting the request.',
+			  buttons: [
+				  { label: '✘ ${Cancel}', cancel: true },
+				  { label: '✔ ${Reject}', primary: true }
+			  ],
+			  input: true,
+			  size: 'md'
+		  }).then(function (reason) {
+			  c.data.inputData = {"rejectReason": reason,"recordSysID": c.data.recordSysID};
+			  c.data.action = "reject";
+			  c.server.update().then(handleUpdateResponse).catch(handleError)
+		  }, function () { }).catch(handleError);
+	  };
+  };]]></client_script>
         <controller_as>c</controller_as>
-        <css/>
+        <css>.customized{
+	display: flex;
+  justify-content: center;
+  margin: 10px 0px;
+}
+
+.btn {
+  background: transparent;
+  border-radius: 0px;
+  vertical-align: middle;
+  text-transform: upppercase;
+}
+
+.btn:hover{
+  color: white;
+}
+
+.btn-approve {
+  color: green;
+  border: 1px solid green;
+}
+
+.btn-approve:hover {
+  background: green;
+}
+
+.btn-reject {
+  color: red;
+  border: 1px solid red;
+}
+
+.btn-reject:hover {
+  background: red;
+}
+
+.no-request {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  text-align: center;
+  color: black;
+  text-transform: uppercase;
+}</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
         <description/>
         <docs/>
         <field_list/>
-        <has_preview>false</has_preview>
+        <has_preview>true</has_preview>
         <id>aam_admin_widget-approve_popup</id>
         <internal>false</internal>
         <link><![CDATA[function link(scope, element, attrs, controller) {
   
 }]]></link>
         <name>Approve popup</name>
-        <option_schema/>
+        <option_schema>[]</option_schema>
         <public>false</public>
         <roles>x_1131046_aa_man_0.admin</roles>
-        <script><![CDATA[(function() {
-  /* populate the 'data' object */
-  /* e.g., data.table = $sp.getValue('table'); */
+        <script><![CDATA[(function () {
+	/* populate the 'data' object */
+	/* e.g., data.table = $sp.getValue('table'); */
+	var requestSysID = $sp.getParameter('requestID');
+	
+	//gs.info(requestSysID);
+	var requestGR = new GlideRecord('x_1131046_aa_man_0_user_requests');
+	requestGR.addQuery('sys_id', requestSysID);
+	requestGR.query();
+	if (requestGR.hasNext()) {
+		requestGR.next();
+		data.recordExists = true;
+		gs.info(JSON.stringify(requestGR));
+		data.username = requestGR.getValue('username');
+		data.firstName = requestGR.getValue('first_name');
+		data.lastName = requestGR.getValue('last_name');
+		data.name = requestGR.getValue('name');
+		data.mailID = requestGR.getValue('mail_id');
+		data.environment = requestGR.getValue('environment');
+		data.recordSysID = requestSysID;
+	} else {
+		data.recordExists = false;
+	}
+
+	var cls = new CommonClass();
+	data.rolesTable = cls.rolesTableName;
+	data.licensesTable = cls.licensesTableName;
+
+	if (input) {
+		// APPROVE action
+		if (input.action === "approve") {
+			if (input.inputData.roleIDs != "" && input.inputData.roleIDs != undefined)
+				try {
+					var output = cls.approveUser(input.inputData);
+					if (output.isCreated)
+						gs.addInfoMessage("User has been created")
+					else
+						gs.addErrorMessage('Error while creating user.\n<b>Reason:</b> ' + output.errorMsg);
+				} catch (e) {
+					gs.error('Error approving request:', e);
+					gs.addErrorMessage('An error occurred while approving the request.');
+				}
+			else
+				gs.addErrorMessage("Please Fill the (*) fields which are mandatory.");
+		}
+
+		// REJECT action
+		if (input.action === 'reject') {
+			try {
+				cls.rejectUser(input.inputData);
+				gs.addInfoMessage("User has been rejected");
+			} catch (e) {
+				gs.error('Error rejecting request:', e);
+				gs.addErrorMessage('An error occurred while rejecting the request.');
+			}
+		}
+	}
 
 })();]]></script>
         <servicenow>false</servicenow>
@@ -32,16 +186,91 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-02-15 06:56:13</sys_created_on>
         <sys_id>da1ba0b207d4c2101808fe4f7c1ed00c</sys_id>
-        <sys_mod_count>0</sys_mod_count>
+        <sys_mod_count>46</sys_mod_count>
         <sys_name>Approve popup</sys_name>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy/>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
         <sys_update_name>sp_widget_da1ba0b207d4c2101808fe4f7c1ed00c</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-02-15 06:56:13</sys_updated_on>
+        <sys_updated_on>2024-03-13 14:06:16</sys_updated_on>
         <template><![CDATA[<div>
-<!-- your widget template -->
+    <div ng-if="data.recordExists">
+        <form class="form-horizontal">
+            <fieldset>
+                <!-- Form Name -->
+                <h3 class="text-center">Raise Request</h3>
+
+                <!-- MUID/XUID -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="txt_uid">Username / UID</label>
+                    <div class="col-md-6">
+                        <input id="txt_uid" ng-model="c.data.username" type="text" class="form-control input-md"
+                            disabled>
+                    </div>
+                </div>
+
+                <!-- Name -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="txt_name">Name</label>
+                    <div class="col-md-6">
+                        <input id="txt_name" ng-model="c.data.name" type="text" class="form-control input-md" disabled>
+                    </div>
+                </div>
+
+                <!-- Email ID -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="txt_email">Mail ID</label>
+                    <div class="col-md-6">
+                        <input id="txt_email" ng-model="c.data.mailID" type="email" class="form-control input-md"
+                            disabled>
+                    </div>
+                </div>
+
+                <!-- Environment -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="txt_env">Environment</label>
+                    <div class="col-md-6">
+                        <input id="txt_env" ng-model="c.data.environment" type="text" class="form-control input-md"
+                            disabled>
+                    </div>
+                </div>
+
+                <!-- Environment -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="txt_env">Roles</label>
+                    <div class="col-md-6">
+                        <sn-record-picker id="txt_roles" table="c.data.rolesTable" field="roles[$index]"
+                            display-field="'name'" value-field="'id'" search-fields="'name'" page-size="50"
+                            multiple="true"></sn-record-picker>
+                    </div>
+                </div>
+                <!-- Environment -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="txt_env">License</label>
+                    <div class="col-md-6">
+                        <sn-record-picker id="txt_license" table="data.licensesTable" field="licenses[$index]"
+                            display-field="'detail'" value-field="'name'" search-fields="'name'" page-size="50"
+                            multiple="true"></sn-record-picker>
+                    </div>
+                </div>
+            </fieldset>
+            <!-- Submit Button -->
+            <div class="customized">
+                    <button class="btn btn-approve col-sm-6"
+                        ng-click="c.approveRequest(c.data.recordSysID,roles[$index].value,licenses[$index].value)"><span
+                            class="glyphicon glyphicon-ok" />Approve</button>
+              </div>
+              <div class="customized">
+                    <button class="btn btn-reject col-sm-6" ng-click="c.rejectRequest(c.data.recordSysID)"><span
+                            class="glyphicon glyphicon-remove" />Reject</button>
+            </div>
+        </form>
+
+    </div>
+    <div class="no-request" ng-if="!data.recordExists">
+        No Data found for this request.
+    </div>
 </div>]]></template>
     </sp_widget>
 </record_update>
