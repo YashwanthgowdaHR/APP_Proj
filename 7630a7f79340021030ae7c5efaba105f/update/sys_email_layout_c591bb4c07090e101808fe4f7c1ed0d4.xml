@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sys_email_layout">
     <sys_email_layout action="INSERT_OR_UPDATE">
         <advanced>true</advanced>
-        <advanced_layout><![CDATA[<html lang="en"><head>
+        <advanced_layout><![CDATA[<html lang="en">
+
+<head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<style type="text/css">
@@ -23,20 +25,6 @@
 			color: #ffffff;
 		}
 
-		#snc_notification_unsubscribe , #snc_notification_preference {
-			color: #3C59E7;
-			font-size: 16px;
-			line-height: 19px;
-		}
-
-		#snc_notification_unsubscribe {
-			padding-right: 8px;
-		}
-
-		#snc_notification_preference {
-			padding-left: 8px;
-		}
-
 		body,
 		table,
 		td,
@@ -46,21 +34,11 @@
 			-webkit-text-size-adjust: 100% !important;
 		}
 
-		.link{
-			text-decoration: none;
-			font-family: 'Segoe UI',sans-serif;
-			min-width: 100px;
-			padding: 15px;
-		}
-
-		table,
-		tr,
-		td {
-			border-spacing: 0 !important;
-			mso-table-lspace: 0 !important;
-			mso-table-rspace: 0 !important;
-			border-collapse: collapse !important;
-			mso-line-height-rule: exactly !important;
+		.link {
+			text-decoration: none !important;
+			font-family: 'Segoe UI', sans-serif !important;
+			min-width: 100px !important;
+			padding: 15px !important;
 		}
 
 		.ExternalClass * {
@@ -77,47 +55,15 @@
 </head>
 
 <body style="margin: 0 auto !important;">
-	<table width="100%" style="max-width: 600px; background-color:#F7F7F9;" cellspacing="0" cellpadding="0" border="0" align="center">
-		<tbody>
-			<tr>
-				<!-- Left-->
-				<td valign="top" width="10%">
-					<table width="100%">
-						<tbody><tr height="36" style="background: #27284A;">
-							<td></td>
-						</tr>
-					</tbody></table>
-				</td>
-				<!-- CONTAINER -->
-				<td>
-					<table class="w100" cellspacing="0" cellpadding="0" border="0" align="center" width="100%" style="background-image: linear-gradient(to bottom , rgba(39,40,74,1), rgba(247,247,249,0));margin:0px; padding:0px; box-shadow: 0px 2px 10px rgba(23, 40, 52, 0.08);">
-						<tbody>
-							<!-- Main Container -->
-							<tr>
-								<td class="pad-sides-20" align="center" style="border-radius:6px;text-align:left;padding-left:24px;padding-right:24px;padding-top:18px;padding-bottom:18px; background-color: #FFFFFF;">
-									${notification:body}
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</td>
-				<!-- END CONTAINER -->
+	<div style="background: #27284A;color: white;padding: 10px;text-align: center;">
+		${notification:subject}
+	</div>
+	<div style="border-radius: 0px 0px 6px 6px;text-align:justify;padding: 18px 24px;background: #fff !important;">
+		${notification:body}
+	</div>
+</body>
 
-				<!-- Right-->
-				<td width="10%" valign="top">
-					<table width="100%">
-						<tbody><tr height="36" style="background: #27284A;">
-							<td></td>
-						</tr>
-					</tbody></table>
-				</td>
-			</tr>
-			<tr>
-			</tr>
-		</tbody>
-	</table>
-
-</body></html>]]></advanced_layout>
+</html>]]></advanced_layout>
         <description>A layout for all employee facing notifications that contains theme, header, footer</description>
         <layout/>
         <name>AAM - Default Notification</name>
@@ -125,13 +71,13 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-03-15 15:20:11</sys_created_on>
         <sys_id>c591bb4c07090e101808fe4f7c1ed0d4</sys_id>
-        <sys_mod_count>4</sys_mod_count>
+        <sys_mod_count>5</sys_mod_count>
         <sys_name>AAM - Default Notification</sys_name>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy/>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
         <sys_update_name>sys_email_layout_c591bb4c07090e101808fe4f7c1ed0d4</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-15 16:16:13</sys_updated_on>
+        <sys_updated_on>2024-03-16 05:05:26</sys_updated_on>
     </sys_email_layout>
 </record_update>

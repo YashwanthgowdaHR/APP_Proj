@@ -10,23 +10,23 @@
         <roles>x_1131046_aa_man_0.admin</roles>
         <short_description/>
         <size>md</size>
-        <sp_column display_value="1">83881c5b07bcc6101808fe4f7c1ed047</sp_column>
-        <sp_widget display_value="Admin - Access Request Mail Link">da1ba0b207d4c2101808fe4f7c1ed00c</sp_widget>
+        <sp_column display_value="1">ba6a43d497010210788572d6f053af0f</sp_column>
+        <sp_widget display_value="Admin - Request History">52d3c813077cc6101808fe4f7c1ed0e5</sp_widget>
         <sys_class_name>sp_instance</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2024-03-12 15:23:54</sys_created_on>
-        <sys_id>06b8109b07bcc6101808fe4f7c1ed0ef</sys_id>
+        <sys_created_on>2024-03-16 06:54:13</sys_created_on>
+        <sys_id>8d7a83d497010210788572d6f053af8b</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name>AAM Admin - Approve or Reject  Link</sys_name>
+        <sys_name>Admin - Request History Instance</sys_name>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy/>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
-        <sys_update_name>sp_instance_06b8109b07bcc6101808fe4f7c1ed0ef</sys_update_name>
+        <sys_update_name>sp_instance_8d7a83d497010210788572d6f053af8b</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-12 15:23:54</sys_updated_on>
-        <title>AAM Admin - Approve or Reject  Link</title>
+        <sys_updated_on>2024-03-16 06:54:13</sys_updated_on>
+        <title>Admin - Request History Instance</title>
         <url/>
         <widget_parameters/>
     </sp_instance>
-    <sys_translated_text action="delete_multiple" query="documentkey=06b8109b07bcc6101808fe4f7c1ed0ef"/>
+    <sys_translated_text action="delete_multiple" query="documentkey=8d7a83d497010210788572d6f053af8b"/>
 </record_update>

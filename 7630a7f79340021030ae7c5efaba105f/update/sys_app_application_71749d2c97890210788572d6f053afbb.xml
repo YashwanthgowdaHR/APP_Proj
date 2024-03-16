@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_app_application">
+    <sys_app_application action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category display_value="Custom Applications">e0355b31ef303000a61d5a3615c0fb78</category>
+        <description>Provides interface to Interact with RPA tool</description>
+        <device_type>browser</device_type>
+        <hint/>
+        <name/>
+        <order>100</order>
+        <roles>x_1131046_aa_man_0.admin,x_1131046_aa_man_0.user</roles>
+        <sys_class_name>sys_app_application</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-03-16 16:57:30</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>71749d2c97890210788572d6f053afbb</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Automation Anywhere</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
+        <sys_update_name>sys_app_application_71749d2c97890210788572d6f053afbb</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-03-16 16:57:30</sys_updated_on>
+        <title>Automation Anywhere</title>
+        <view_name/>
+    </sys_app_application>
+</record_update>

@@ -48,7 +48,7 @@ CommonClass.prototype = {
                 isCreated = true;
             } else
                 errorMsg = result.msg;
-				gs.info(logName + " Status: " + sts);
+            gs.info(logName + " Status: " + sts);
             // var details = {
             //     sts: sts,
             //     name: input.name,
@@ -85,6 +85,37 @@ CommonClass.prototype = {
             gs.info(sts ? logName + "updated successfully" : logName + " Failed to update the ID and Status of the record.");
         }
         return output;
+    },
+    getAllReq: function() {
+        var logName = this.log + "getAllReq >> ";
+        if (!this.isAdmin()) {
+            gs.error(logName + " Unknown Access found");
+            // Add Mail Notification when someone other than admin tried to access it.
+            return;
+        } else {
+            gs.info(logName + "get all the requests.");
+            var reqData = [];
+            var i = 0;
+            var gd = new GlideDate();
+            let table = this.userRequestsGR;
+            table.orderByDesc('sys_created_on');
+            table.query();
+            while (table.next()) {
+                let gdt = new GlideDateTime(table.sys_created_on.toString());
+                gdt.add(this.IST);
+                gd.setValue(gdt.getValue());
+                reqData.push({
+                    no: ++i,
+                    name: table.getValue('name').toString(),
+                    username: table.getValue('username').toString(),
+                    mailID: table.getValue('mail_id').toString(),
+                    environment: table.getDisplayValue('environment').toString(),
+                    requestedOn: gd.getByFormat("dd-MMM-yyyy hh:mm a"),
+                    status: table.getDisplayValue('status').toString(),
+                });
+            }
+            return reqData;
+        }
     },
     getAllPendingReq: function() {
         var logName = this.log + "getAllPendingReq >> ";
@@ -131,10 +162,12 @@ CommonClass.prototype = {
             return;
         }
 
-        let status = "rejected", reason_to_reject = record.reason;
+        let status = "rejected",
+            reason_to_reject = record.reason;
 
         var sts = this.recordClass.updateRecord(this.userRequestsGR.getTableName(), recordSysID, {
-            status, reason_to_reject
+            status,
+            reason_to_reject
         });
 
         gs.info(sts ? logName + "updated successfully" : logName + " Failed to update the status &  reason for rejection of the record.");
@@ -175,13 +208,13 @@ CommonClass.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-02-14 13:55:03</sys_created_on>
         <sys_id>595189e6079482101808fe4f7c1ed021</sys_id>
-        <sys_mod_count>32</sys_mod_count>
+        <sys_mod_count>35</sys_mod_count>
         <sys_name>CommonClass</sys_name>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
         <sys_update_name>sys_script_include_595189e6079482101808fe4f7c1ed021</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-13 16:19:53</sys_updated_on>
+        <sys_updated_on>2024-03-16 06:50:15</sys_updated_on>
     </sys_script_include>
 </record_update>

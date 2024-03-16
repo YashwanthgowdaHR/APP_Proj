@@ -10,7 +10,7 @@
         <condition/>
         <content_type>text/html</content_type>
         <default_interval/>
-        <description/>
+        <description>Notify the users if their request is approved</description>
         <digest_from/>
         <digest_html/>
         <digest_reply_to/>
@@ -36,12 +36,18 @@
         <item_table/>
         <mandatory>false</mandatory>
         <message/>
-        <message_html><![CDATA[<p>Hi ${name},</p>
-<p>You request has been approved.</p>
-<p>Thanks &amp; Regards</p>]]></message_html>
+        <message_html><![CDATA[<p><span style="font-size: 10pt;">Hi ${name},</span></p>
+<p>&nbsp;</p>
+<p><span style="font-size: 10pt;">You request has been approved.</span></p>
+<p><span style="font-size: 10pt;">Details:</span></p>
+<ul style="list-style-position: inside;">
+<li style="font-size: 10pt;"><span style="font-size: 10pt;">Environment: ${environment}</span></li>
+</ul>
+<p>&nbsp;</p>
+<p><span style="font-size: 10pt;">Thanks &amp; Regards</span></p>]]></message_html>
         <message_list/>
         <message_text/>
-        <name>InformUserOnRequestApproved</name>
+        <name>Notify User On Request Approved</name>
         <omit_watermark>false</omit_watermark>
         <order>100</order>
         <push_message_only>false</push_message_only>
@@ -60,15 +66,15 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>cc33060807010e101808fe4f7c1ed048</sys_id>
-        <sys_mod_count>2</sys_mod_count>
-        <sys_name>InformUserOnRequestApproved</sys_name>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>Notify User On Request Approved</sys_name>
         <sys_overrides/>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy/>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
         <sys_update_name>sysevent_email_action_cc33060807010e101808fe4f7c1ed048</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-15 15:33:45</sys_updated_on>
+        <sys_updated_on>2024-03-16 05:43:09</sys_updated_on>
         <sys_version>2</sys_version>
         <template display_value="AAM General Email Template">f105734007490e101808fe4f7c1ed031</template>
         <type>email</type>
