@@ -14,7 +14,7 @@
         <mobile_view_name>Mobile</mobile_view_name>
         <name/>
         <order>100</order>
-        <override_menu_roles>false</override_menu_roles>
+        <override_menu_roles>true</override_menu_roles>
         <query/>
         <report/>
         <require_confirmation>true</require_confirmation>
@@ -25,7 +25,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>81e4196c97890210788572d6f053afec</sys_id>
-        <sys_mod_count>0</sys_mod_count>
+        <sys_mod_count>3</sys_mod_count>
         <sys_name>Access</sys_name>
         <sys_overrides/>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
@@ -33,7 +33,7 @@
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
         <sys_update_name>sys_app_module_81e4196c97890210788572d6f053afec</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-16 17:03:36</sys_updated_on>
+        <sys_updated_on>2024-03-17 17:07:10</sys_updated_on>
         <timeline_page/>
         <title>Access</title>
         <uncancelable>false</uncancelable>

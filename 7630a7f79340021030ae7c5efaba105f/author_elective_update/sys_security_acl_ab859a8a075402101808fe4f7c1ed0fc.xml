@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl">
+    <sys_security_acl action="DELETE">
+        <active>true</active>
+        <admin_overrides>true</admin_overrides>
+        <advanced>true</advanced>
+        <condition/>
+        <description>Allow read for records in x_1131046_aa_man_0_user_requests, for users with role x_1131046_aa_man_0.admin.</description>
+        <local_or_existing>Local</local_or_existing>
+        <name>x_1131046_aa_man_0_user_requests</name>
+        <operation display_value="read">read</operation>
+        <script/>
+        <security_attribute display_value="x_1131046_aa_man_0__ACL_ab859a8a075402101808fe4f7c1ed0fc">5a7c15e497c90210788572d6f053afd5</security_attribute>
+        <sys_class_name>sys_security_acl</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-02-13 06:44:38</sys_created_on>
+        <sys_id>ab859a8a075402101808fe4f7c1ed0fc</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>x_1131046_aa_man_0_user_requests</sys_name>
+        <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
+        <sys_update_name>sys_security_acl_ab859a8a075402101808fe4f7c1ed0fc</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-03-16 17:39:02</sys_updated_on>
+        <type display_value="record">record</type>
+    </sys_security_acl>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AA Management">7630a7f79340021030ae7c5efaba105f</application>
+        <file_path/>
+        <instance_id>3d112a36db4337449df22f17d4961918</instance_id>
+        <instance_name>dev90973</instance_name>
+        <name>sys_security_acl_ab859a8a075402101808fe4f7c1ed0fc</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl"><sys_security_acl action="INSERT_OR_UPDATE"><active>true</active><admin_overrides>true</admin_overrides><advanced>true</advanced><condition/><description>Allow read for records in x_1131046_aa_man_0_user_requests, for users with role x_1131046_aa_man_0.admin.</description><local_or_existing>Local</local_or_existing><name>x_1131046_aa_man_0_user_requests</name><operation display_value="read">read</operation><script/><security_attribute display_value="x_1131046_aa_man_0__ACL_ab859a8a075402101808fe4f7c1ed0fc">5a7c15e497c90210788572d6f053afd5</security_attribute><sys_class_name>sys_security_acl</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2024-02-13 06:44:38</sys_created_on><sys_id>ab859a8a075402101808fe4f7c1ed0fc</sys_id><sys_mod_count>2</sys_mod_count><sys_name>x_1131046_aa_man_0_user_requests</sys_name><sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package><sys_policy/><sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope><sys_update_name>sys_security_acl_ab859a8a075402101808fe4f7c1ed0fc</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2024-03-16 17:39:02</sys_updated_on><type display_value="record">record</type></sys_security_acl></record_update>]]></payload>
+        <payload_hash>1814019889</payload_hash>
+        <record_name>x_1131046_aa_man_0_user_requests</record_name>
+        <reverted_from/>
+        <source>4ae8b55b076402101808fe4f7c1ed027</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-03-16 17:39:02</sys_created_on>
+        <sys_id>153e996897c90210788572d6f053af0e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>18e48587ddd0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-03-16 17:39:02</sys_updated_on>
+        <type>Access Control</type>
+        <update_guid>993e9968e6c90210c218f326ca0eea0d</update_guid>
+        <update_guid_history>993e9968e6c90210c218f326ca0eea0d:1814019889,dc8cd5e4e1c902109538e8182f26c48a:-902892933,d1d8b5db8464021037911ce2defeb78c:-2069225852</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-03-17 16:39:46</sys_created_on>
+        <sys_db_object display_value="" name="sys_security_acl">sys_security_acl</sys_db_object>
+        <sys_id>02c79e1db3c34b7c8036f0a243904929</sys_id>
+        <sys_metadata>ab859a8a075402101808fe4f7c1ed0fc</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_1131046_aa_man_0_user_requests</sys_name>
+        <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
+        <sys_parent display_value="x_1131046_aa_man_0_user_requests">8dc871db076402101808fe4f7c1ed045</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
+        <sys_scope_delete display_value="">2be73dab4eaf4736a09a5739e1636be9</sys_scope_delete>
+        <sys_update_name>sys_security_acl_ab859a8a075402101808fe4f7c1ed0fc</sys_update_name>
+        <sys_update_version display_value="sys_security_acl_ab859a8a075402101808fe4f7c1ed0fc">153e996897c90210788572d6f053af0e</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-03-17 16:39:46</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

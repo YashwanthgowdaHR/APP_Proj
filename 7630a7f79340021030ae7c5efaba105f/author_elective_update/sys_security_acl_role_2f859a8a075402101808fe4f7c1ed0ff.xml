@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl_role">
+    <sys_security_acl_role action="DELETE">
+        <sys_class_name>sys_security_acl_role</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-02-13 06:44:38</sys_created_on>
+        <sys_id>2f859a8a075402101808fe4f7c1ed0ff</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_1131046_aa_man_0_user_requests.x_1131046_aa_man_0.admin</sys_name>
+        <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
+        <sys_security_acl display_value="x_1131046_aa_man_0_user_requests">ab859a8a075402101808fe4f7c1ed0fc</sys_security_acl>
+        <sys_update_name>sys_security_acl_role_2f859a8a075402101808fe4f7c1ed0ff</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-02-13 06:44:38</sys_updated_on>
+        <sys_user_role display_value="x_1131046_aa_man_0.admin" name="x_1131046_aa_man_0.admin">0730ebf79340021030ae7c5efaba1068</sys_user_role>
+    </sys_security_acl_role>
+<sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AA Management">7630a7f79340021030ae7c5efaba105f</application>
+        <file_path/>
+        <instance_id>3d112a36db4337449df22f17d4961918</instance_id>
+        <instance_name>dev90973</instance_name>
+        <name>sys_security_acl_role_2f859a8a075402101808fe4f7c1ed0ff</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl_role">
+    <sys_security_acl_role action="INSERT_OR_UPDATE">
+        <sys_class_name>sys_security_acl_role</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-02-13 06:44:38</sys_created_on>
+        <sys_id>2f859a8a075402101808fe4f7c1ed0ff</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_1131046_aa_man_0_user_requests.x_1131046_aa_man_0.admin</sys_name>
+        <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
+        <sys_security_acl display_value="x_1131046_aa_man_0_user_requests">ab859a8a075402101808fe4f7c1ed0fc</sys_security_acl>
+        <sys_update_name>sys_security_acl_role_2f859a8a075402101808fe4f7c1ed0ff</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-02-13 06:44:38</sys_updated_on>
+        <sys_user_role display_value="x_1131046_aa_man_0.admin" name="x_1131046_aa_man_0.admin">0730ebf79340021030ae7c5efaba1068</sys_user_role>
+    </sys_security_acl_role>
+</record_update>]]></payload>
+        <payload_hash>-145815050</payload_hash>
+        <record_name>x_1131046_aa_man_0_user_requests.x_1131046_aa_man_0.admin</record_name>
+        <reverted_from/>
+        <source>50c831db076402101808fe4f7c1ed059</source>
+        <source_table>sys_upgrade_history</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-02-29 12:07:15</sys_created_on>
+        <sys_id>9dd8b5db076402101808fe4f7c1ed0d6</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>18df4c2fa8b0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-02-29 12:07:15</sys_updated_on>
+        <type>Access Roles</type>
+        <update_guid>5dd8b5db8d640210b5e5697c97bfa0d6</update_guid>
+        <update_guid_history>5dd8b5db8d640210b5e5697c97bfa0d6:-145815050</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="x_1131046_aa_man_0_user_requests.x_1131046_aa_man_0.admin">f63a1af097c18210788572d6f053af97</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-03-17 16:39:46</sys_created_on>
+        <sys_db_object display_value="" name="sys_security_acl_role">sys_security_acl_role</sys_db_object>
+        <sys_id>615a5004eb404575bddd247526abb811</sys_id>
+        <sys_metadata>2f859a8a075402101808fe4f7c1ed0ff</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_1131046_aa_man_0_user_requests.x_1131046_aa_man_0.admin</sys_name>
+        <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
+        <sys_scope_delete display_value="">2be73dab4eaf4736a09a5739e1636be9</sys_scope_delete>
+        <sys_update_name>sys_security_acl_role_2f859a8a075402101808fe4f7c1ed0ff</sys_update_name>
+        <sys_update_version display_value="sys_security_acl_role_2f859a8a075402101808fe4f7c1ed0ff">9dd8b5db076402101808fe4f7c1ed0d6</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-03-17 16:39:46</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>
