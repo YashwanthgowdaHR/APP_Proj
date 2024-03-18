@@ -19,24 +19,26 @@ APIClass.prototype = {
     environment: "DEV",
 
     /**
+     * Converts Javascript STRING object to JSON string
      * @param {json} obj - An object whose values needs to be transformed from Javascript STRING into JSON.STRING.
      * @return {json} result - result will contains values of datatype JSON.STRING
      */
     convertToJSONString: function(obj) {
         var newObj = {};
-        for (const [key, value] of Object.entries(data)) {
+        for (const [key, value] of Object.entries(obj)) {
             newObj[key] = JSON.stringify(value);
         }
         return newObj;
     },
 
     /**
-     * @param {json} data - An object whose values need to be verified for NON-EMPTY string.
-     * @return {boolean} true/false - returns true if data values are non-empty else returns false.
+     * Checks if the object doesn't have empty values.
+     * @param {json} rawInput - An object whose values are STRING type and need to be verified for NON-EMPTY.
+     * @return {boolean} true/false - returns true if values are non-empty else returns false.
      */
-    checkAllAreNonEmpty: function(data) {
-        for (const [key, value] of Object.entries(data)) {
-            if (data[key].length <= 0) return false;
+    checkAllAreNonEmpty: function(rawInput) {
+        for (const [key, value] of Object.entries(rawInput)) {
+            if (rawInput[key].length <= 0) return false;
         }
         return true;
     },
@@ -60,7 +62,7 @@ APIClass.prototype = {
         var result = {};
         result.isCreated = false;
 
-        gs.info(logName + " Received a request to Create a New user with details: " + JSON.stringify(inputData));
+        gs.info(logName + "Received a request to Create a New user with details: " + JSON.stringify(inputData));
 
         try {
             let tempData = {
@@ -68,7 +70,6 @@ APIClass.prototype = {
             };
             delete tempData.licenses;
 
-            gs.info(logName + "Checking for NON Empty value");
             if (this.checkAllAreNonEmpty(tempData)) {
                 tempData = {
                     ...inputData
@@ -86,9 +87,7 @@ APIClass.prototype = {
                 // tmpRoles = JSON.stringify(tmpRoles);
                 // tmpLicenses = JSON.stringify(tmpLicenses);
 
-                gs.info(logName + "Converting values into JSON String");
                 let newData = this.convertToJSONString(tempData);
-                gs.info("New Data: "+JSON.stringify(newData));
 
                 //Initialize the required REST Message
                 var req = this.makeReq('CreateUser');
@@ -103,11 +102,11 @@ APIClass.prototype = {
                 req.setStringParameterNoEscape('roles', newData.roleIDs);
                 req.setStringParameterNoEscape('licenses', newData.licenses);
 
-                gs.info(logName + " Creating User...");
                 var response = req.execute();
                 var responseBody = response.getBody();
                 var httpStatus = response.getStatusCode();
                 gs.info(logName + "Result - HTTP status Code: " + httpStatus);
+
                 var parsed = JSON.parse(responseBody);
                 if (httpStatus == 201) {
                     // User Created Successfully
@@ -120,7 +119,7 @@ APIClass.prototype = {
                     gs.error(logName + "FAILED | Reason is " + parsed.message);
                 }
             } else {
-                let msg = "One of the required field for user creation is EMPTY."
+                let msg = "One of the required field for user creation is EMPTY.";
                 gs.error(logName + msg);
                 result.msg = msg;
             }
@@ -152,9 +151,9 @@ APIClass.prototype = {
                     gs.error(logName + "Username matched with uID...");
                     endpoint = endpoint + userID;
 
-                    var req = this.makeReq('DeleteUser');
+                    var req = this.makeReq('RemoveUser');
                     req.setStringParameterNoEscape("endpoint", endpoint);
-                    req.setStringParameterNoEscape("authorization", this.getToken());
+                    req.setStringParameterNoEscape("token", this.getToken());
                     var response = req.execute();
                     var responseBody = response.getBody();
                     var httpStatus = response.getStatusCode();
@@ -200,13 +199,13 @@ APIClass.prototype = {
         var logName = this.log + "fetchAllSysIDFromGivenList >> ";
         var sysIDs = "";
 
-        gs.info(" Fetching the sys_ids from table: " + tableName + " under the column: " + columnName);
+        gs.info(logName + "Fetching the sys_ids from table: " + tableName + " under the column: " + columnName);
         valueList.forEach((value) => {
             var sysID = this.fetchSysID(tableName, columnName, value);
             if (sysID) {
                 sysIDs = sysIDs + "," + String(sysID);
             } else {
-                gs.info("Sys ID doesn't exists for the value:" + value + "under the column: " + columnName + " in table: " + tableName);
+                gs.info(logName + "Sys ID doesn't exists for the value:" + value + "under the column: " + columnName + " in table: " + tableName);
             }
         });
 
@@ -234,22 +233,24 @@ APIClass.prototype = {
      * @param {string} id - id of the user which was received after user has been created.
      * @return {json} result - result will contain all the keys that user has configured or assigned after user has been created.
      */
-    getUserByID: function(userID) {
-        var logName = this.log + "getUserByID >> ";
+    GetUserDetailsByID: function(userID) {
+        var logName = this.log + "GetUserDetailsByID >> ";
 
         // API Call made to AA to get User info by User ID
         if (userID) {
             gs.info(logName + "Checking info for Id: " + userID);
             var endpoint = this.endpoint + "v2/usermanagement/users/" + userID;
 
-            var req = this.makeReq('GetUserByID');
+            var req = this.makeReq('GetUserDetailsByID');
             req.setStringParameterNoEscape("endpoint", endpoint);
-            req.setStringParameterNoEscape("authorization", this.getToken());
+            req.setStringParameterNoEscape("token", this.getToken());
             req.setStringParameterNoEscape('id', userID);
+
             var response = req.execute();
             var responseBody = response.getBody();
             var httpStatus = response.getStatusCode();
-            gs.info(logName + "Script - Response Status: " + httpStatus);
+
+            gs.info(logName + "Response Status: " + httpStatus);
             if (httpStatus == 404)
                 return;
             if (httpStatus == 401)
@@ -267,11 +268,13 @@ APIClass.prototype = {
 
         var req = this.makeReq('GetLicenseList');
         req.setStringParameterNoEscape("endpoint", endpoint);
-        req.setStringParameterNoEscape("authorization", this.getToken());
+        req.setStringParameterNoEscape("token", this.getToken());
+
         var response = req.execute();
         var responseBody = response.getBody();
         var httpStatus = response.getStatusCode();
-        gs.info(logName + " Response Status: " + httpStatus);
+        gs.info(logName + "Response Status: " + httpStatus);
+
         if (httpStatus == 200) {
             var licenseList = JSON.parse(responseBody).list;
             licenseList.forEach((license) => {
@@ -296,7 +299,7 @@ APIClass.prototype = {
                 }
             });
         } else {
-            gs.error(logName + " Error Occurred. " + responseBody);
+            gs.error(logName + "Error Occurred. " + responseBody);
         }
     },
 
@@ -312,7 +315,7 @@ APIClass.prototype = {
         var response = req.execute(); // Execute the REST request
         var responseBody = response.getBody(); // Read the RESPONSE
         var httpStatus = response.getStatusCode(); // Read the RESPONSE status Code
-        gs.info(logName + " Response Status: " + httpStatus);
+        gs.info(logName + "Response Status: " + httpStatus);
         if (httpStatus == 200) {
             var rolesList = JSON.parse(responseBody).list;
             rolesList.forEach((role) => {
@@ -329,7 +332,7 @@ APIClass.prototype = {
                 }
             });
         } else {
-            gs.error(logName + " Error Occurred. " + responseBody);
+            gs.error(logName + "Error Occurred. " + responseBody);
         }
     },
 
@@ -345,9 +348,9 @@ APIClass.prototype = {
         var response = req.execute(); // Execute the REST request
         var responseBody = response.getBody(); // Read the RESPONSE
         var httpStatus = response.getStatusCode(); // Read the RESPONSE status Code
-        gs.info(logName + " Response Status: " + httpStatus);
-        if (httpStatus == 200) {
+        gs.info(logName + "Response Status: " + httpStatus);
 
+        if (httpStatus == 200) {
             var userList = JSON.parse(responseBody).list;
             userList.forEach((user) => {
                 var gr = new GlideRecord("x_1131046_aa_man_0_users");
@@ -385,7 +388,7 @@ APIClass.prototype = {
                 }
             });
         } else {
-            gs.error(logName + " Error Occurred. " + responseBody);
+            gs.error(logName + "Error Occurred. " + responseBody);
         }
     },
 
@@ -399,42 +402,65 @@ APIClass.prototype = {
      * @return {json} result - result will have keys i.e. isUpdated[bool] - if the roles are updated to AA, it will be true, else false and 
      * msg(string) - if unable to update roles[isUpdated=false], then msg will holds the error message
      */
-    updateUserData: function(userData) {
-        var logName = this.log + "UpdateRoles >> ";
-        var endpoint = this.endpoint + "v2/usermanagement/roles/list";
+    updateUser: function(inputData) {
+        var logName = this.log + "updateUser >> ";
+        var endpoint = this.endpoint + "v2/usermanagement/users/" + inputData.userID;
         var result = {};
 
         try {
-            var tmpRoles = userData.roleIDs.split(",");
-            var roles = [];
-            tmpRoles.forEach((id) => {
-                roles.push(Number(id));
-            });
+            let tempData = {
+                ...inputData
+            };
+            delete tempData.licenses;
 
-            gs.info(logName + " Received a request to update roles for the user id: " + userData.userID + ", mailID: " + userData.mailID + " and roles are " + JSON.stringify(roles));
+            if (this.checkAllAreNonEmpty(tempData)) {
+                tempData = {
+                    ...inputData
+                };
+                tempData.endpoint = endpoint;
+                tempData.roleIDs = inputData.roleIDs.length > 0 ? inputData.roleIDs.split(",") : [];
+                tempData.licenses = inputData.licenses.length > 0 ? inputData.licenses.split(",") : [];
 
-            //Initialize the required REST Message
-            var req = this.makeReq('UpdateUserRoles');
-            req.setStringParameterNoEscape("endpoint", endpoint);
-            req.setStringParameterNoEscape("authorization", this.getToken());
-            req.setStringParameterNoEscape('id', userData.userID);
-            req.setStringParameterNoEscape('roleIDs', JSON.stringify(roles));
-            req.setStringParameterNoEscape('mailID', JSON.stringify(userData.mailID));
-            req.setStringParameterNoEscape('firstName', JSON.stringify(userData.firstName));
-            req.setStringParameterNoEscape('lastName', JSON.stringify(userData.lastName));
-            var response = req.execute();
-            var responseBody = response.getBody();
-            var httpStatus = response.getStatusCode();
-            gs.info(logName + "Result - HTTP status Code: " + httpStatus);
-            var parsed = JSON.parse(responseBody);
-            if (httpStatus == 200) {
-                // roles updated successfully
-                result.isUpdated = true;
+                // var tmpRoles = inputData.roleIDs.split(",");
+                // var roles = [];
+                // tmpRoles.forEach((id) => {
+                //     roles.push(Number(id));
+                // });
+
+                let newData = this.convertToJSONString(tempData);
+
+                //Initialize the required REST Message
+                var req = this.makeReq('CreateUser');
+                req.setStringParameterNoEscape("endpoint", newData.endpoint);
+                req.setStringParameterNoEscape("token", this.getToken());
+                req.setStringParameterNoEscape('username', newData.username);
+                req.setStringParameterNoEscape('firstName', newData.firstName);
+                req.setStringParameterNoEscape('lastName', newData.lastName);
+                req.setStringParameterNoEscape('mailID', newData.mailID);
+                //req.setStringParameterNoEscape('pass', this.defaultPass);
+                req.setStringParameterNoEscape('enableAutoLogin', true);
+                req.setStringParameterNoEscape('roles', newData.roleIDs);
+                req.setStringParameterNoEscape('licenses', newData.licenses);
+
+
+                var response = req.execute();
+                var responseBody = response.getBody();
+                var httpStatus = response.getStatusCode();
+                gs.info(logName + "Result - HTTP status Code: " + httpStatus);
+                var parsed = JSON.parse(responseBody);
+                if (httpStatus == 200) {
+                    // roles updated successfully
+                    result.isUpdated = true;
+                } else {
+                    //Failed to update
+                    result.isUpdated = false;
+                    result.msg = parsed.message;
+                    gs.error(logName + "FAILED | Reason is " + parsed.message);
+                }
             } else {
-                //Failed to update
-                result.isUpdated = false;
-                result.msg = parsed.message;
-                gs.error(logName + "FAILED | Reason is " + parsed.message);
+                let msg = "One of the required field for user creation is EMPTY.";
+                gs.error(logName + msg);
+                result.msg = msg;
             }
         } catch (e) {
             gs.error(logName + "Exception: " + e);
@@ -448,13 +474,13 @@ APIClass.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-02-14 13:48:14</sys_created_on>
         <sys_id>127a306e075482101808fe4f7c1ed0dd</sys_id>
-        <sys_mod_count>52</sys_mod_count>
+        <sys_mod_count>54</sys_mod_count>
         <sys_name>APIClass</sys_name>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
         <sys_update_name>sys_script_include_127a306e075482101808fe4f7c1ed0dd</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-02-29 13:30:41</sys_updated_on>
+        <sys_updated_on>2024-03-18 17:33:06</sys_updated_on>
     </sys_script_include>
 </record_update>
