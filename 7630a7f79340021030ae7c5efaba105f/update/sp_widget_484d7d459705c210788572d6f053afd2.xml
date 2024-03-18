@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function(spModal, $scope) {
+	/* widget controller */
+	var c = this;
+	console.log(c.data);
+	c.data.roles = {
+		displayValue: c.data.tmpRoleNames,
+		value:c.data.tmpRoleSysIDs
+	}
+	$scope.$on("field.change", function (evt, params) {
+		c.data.roles = {
+			displayValue: params.displayValue,
+			value: params.newValue
+		};
+	});
+	
+	
+	// delete object property if exists
+	function deleteProp(obj, key) {
+		if (obj.hasOwnProperty(key))
+			delete obj[key];
+		return obj;
+	}
+
+	// Reset data properties
+	function resetData() {
+		deleteProp("inputData");
+		deleteProp("action");
+		deleteProp("rejectReason");
+	}
+
+	function handleUpdateResponse(res) {
+		resetData();
+		c.server.refresh();
+	}
+
+	function handleError(error) {
+		// Handle or log the error as needed
+		console.error('An error occurred:', error);
+		resetData();
+	}
+
+	c.approveRequest = function () {
+		console.log(c);
+		// roles = roles==undefined ? "" : roles;
+		// licenses = licenses==undefined ? "" : licenses;
+
+		// if (roles != "" && roles != undefined) {
+		// 	spModal.confirm("Are you sure to <b>approve</b> this request?").then(function (confirmed) {
+		// 		spUtil.addTrivialMessage("Approving the request...");
+		// 		c.data.inputData = {"roleIDs": roles, "recordSysID": c.data.recordSysID, licenses};
+		// 		c.data.action = "approve";
+		// 		c.server.update().then(handleUpdateResponse).catch(handleError);
+		// 	});
+		// }
+		// else
+		// 	spUtil.addErrorMessage("Please select the input for the role.");
+	};
+
+	c.rejectRequest = function () {
+		spModal.open({
+			title: 'Reason for rejecting',
+			message: 'Please <b>provide the comments</b> for rejecting the request.',
+			buttons: [
+				{ label: '✘ ${Cancel}', cancel: true },
+				{ label: '✔ ${Reject}', primary: true }
+			],
+			input: true,
+			size: 'md'
+		}).then(function (reason) {
+			c.data.inputData = {"rejectReason": reason,"recordSysID": c.data.recordSysID};
+			c.data.action = "reject";
+			c.server.update().then(handleUpdateResponse).catch(handleError)
+		}, function () { }).catch(handleError);
+	};
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.customized{
+	display: flex;
+  justify-content: center;
+  margin: 10px 0px;
+}
+
+.btn {
+  background: transparent;
+  border-radius: 0px;
+  vertical-align: middle;
+  text-transform: upppercase;
+}
+
+.btn:hover{
+  color: white;
+}
+
+.btn-approve {
+  color: green;
+  border: 1px solid green;
+}
+
+.btn-approve:hover {
+  background: green;
+}
+
+.btn-reject {
+  color: red;
+  border: 1px solid red;
+}
+
+.btn-reject:hover {
+  background: red;
+}
+
+.no-request {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  text-align: center;
+  color: black;
+  text-transform: uppercase;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description>View or Update a User record</description>
+        <docs/>
+        <field_list/>
+        <has_preview>true</has_preview>
+        <id>aam_admin_widget-user_record</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Admin - View User Record</name>
+        <option_schema>[]</option_schema>
+        <public>false</public>
+        <roles>x_1131046_aa_man_0.admin</roles>
+        <script><![CDATA[(function () {
+	/* populate the 'data' object */
+	/* e.g., data.table = $sp.getValue('table'); */
+	data.recordExists = false;
+	
+	var requestSysID = '00e9066307a842101808fe4f7c1ed0f7';//$sp.getParameter('requestID');
+	var cls = new CommonClass();
+	data.userInfo = cls.getUserByID(requestSysID);
+	if(data.userInfo){
+		data.recordExists = true;
+	}
+	
+	var tmpRoleNames = [];
+	var tmpRoleSysIDs = [];
+	data.userInfo.roles.forEach(function(role){
+		tmpRoleNames.push(role.name);
+		tmpRoleSysIDs.push(role.sysID);
+	});
+	
+	data.tmpRoleNames = tmpRoleNames.join('####');
+	data.tmpRoleSysIDs = tmpRoleSysIDs.join(',');
+	
+	
+	var baseCls = new BaseClass();
+	data.rolesTable = baseCls.getRolesTableName();
+	data.licensesTable = baseCls.getLicenseTableName();
+	
+
+	if (input) {
+		// APPROVE action
+		if (input.action === "approve") {
+			if (input.inputData.roleIDs != "" && input.inputData.roleIDs != undefined)
+				try {
+					var output = cls.approveUser(input.inputData);
+					if (output.isCreated)
+						gs.addInfoMessage("User has been created")
+					else
+						gs.addErrorMessage('Error while creating user.\n<b>Reason:</b> ' + output.errorMsg);
+				} catch (e) {
+					gs.error('Error approving request:', e);
+					gs.addErrorMessage('An error occurred while approving the request.');
+				}
+			else
+				gs.addErrorMessage("Please Fill the (*) fields which are mandatory.");
+		}
+
+		// REJECT action
+		if (input.action === 'reject') {
+			try {
+				cls.rejectUser(input.inputData);
+				gs.addInfoMessage("User has been rejected");
+			} catch (e) {
+				gs.error('Error rejecting request:', e);
+				gs.addErrorMessage('An error occurred while rejecting the request.');
+			}
+		}
+	}
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-03-18 09:11:38</sys_created_on>
+        <sys_id>484d7d459705c210788572d6f053afd2</sys_id>
+        <sys_mod_count>22</sys_mod_count>
+        <sys_name>Admin - View User Record</sys_name>
+        <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
+        <sys_update_name>sp_widget_484d7d459705c210788572d6f053afd2</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-03-18 15:52:19</sys_updated_on>
+        <template><![CDATA[<div>
+    <div ng-if="data.recordExists">
+      <form class="form-horizontal">
+        <fieldset>
+          <!-- Form Name -->
+          <h3 class="text-center"></h3>
+  
+          <!-- MUID/XUID -->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="txt_uid">Username / UID</label>
+            <div class="col-md-6">
+              <input id="txt_uid" ng-model="c.data.userInfo.username" type="text" class="form-control input-md"
+                     disabled>
+            </div>
+          </div>
+  
+          <!-- First Name -->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="txt_fname">First Name</label>
+            <div class="col-md-6">
+              <input id="txt_fname" ng-model="c.data.userInfo.firstName" type="text" class="form-control input-md" disabled>
+            </div>
+          </div>
+  
+          <!-- Last Name -->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="txt_lname">Last Name</label>
+            <div class="col-md-6">
+              <input id="txt_lname" ng-model="c.data.userInfo.lastName" type="text" class="form-control input-md" disabled>
+            </div>
+          </div>
+  
+          <!-- Email ID -->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="txt_email">Mail ID</label>
+            <div class="col-md-6">
+              <input id="txt_email" ng-model="c.data.userInfo.mailID" type="email" class="form-control input-md"
+                     disabled>
+            </div>
+          </div>
+  
+          <!-- Roles -->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="txt_roles">Roles</label>
+            <div class="col-md-6">
+              <sn-record-picker id="txt_roles" table="data.rolesTable" field="c.data.roles"
+                                display-field="'name'" value-field="'sys_id'" search-fields="'name'" page-size="50"
+                                multiple="true"></sn-record-picker>
+            </div>
+          </div>
+          <!-- License -->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="txt_license">License</label>
+            <div class="col-md-6">
+              <sn-record-picker id="txt_license" table="data.licensesTable" field="licenses[$index]"
+                                display-field="'detail'" value-field="'sys_id'" search-fields="'name'" page-size="50"
+                                multiple="true"></sn-record-picker>
+            </div>
+          </div>
+        </fieldset>
+        <!-- Submit Button -->
+        <div class="customized">
+          <button class="btn btn-approve col-sm-6"
+                  ng-click="c.approveRequest(c.data.userInfo.recordSysID,roles[$index].value,licenses[$index].value)"><span
+                                                                                                                   class="glyphicon glyphicon-ok" />Approve</button>
+        </div>
+        <div class="customized">
+          <button class="btn btn-reject col-sm-6" ng-click="c.rejectRequest(c.data.userInfo.recordSysID)"><span
+                                                                                                       class="glyphicon glyphicon-remove" />Reject</button>
+        </div>
+      </form>
+  
+    </div>
+    <div class="no-request" ng-if="!data.recordExists">
+      No Data found for this request.
+    </div>
+  </div>]]></template>
+    </sp_widget>
+</record_update>

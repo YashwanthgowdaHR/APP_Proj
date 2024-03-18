@@ -6,23 +6,23 @@
         <bootstrap_alt>false</bootstrap_alt>
         <class_name/>
         <container_class_name/>
-        <name>Admin - Request Record Mail Link - Container 1</name>
+        <name>Admin - View User Reqcord - Container 1</name>
         <order>1</order>
         <semantic_tag/>
-        <sp_page display_value="aam_admin_page_reqrec_link">49d598df077cc6101808fe4f7c1ed0b0</sp_page>
+        <sp_page display_value="aam_admin_page_view_user_record">381843419789c210788572d6f053af6b</sp_page>
         <subheader>false</subheader>
         <sys_class_name>sp_container</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2024-03-12 15:22:17</sys_created_on>
-        <sys_id>cb8810d707bcc6101808fe4f7c1ed0d1</sys_id>
+        <sys_created_on>2024-03-18 14:39:37</sys_created_on>
+        <sys_id>ac5847019789c210788572d6f053af0a</sys_id>
         <sys_mod_count>0</sys_mod_count>
-        <sys_name>Admin - Request Record Mail Link - Container 1</sys_name>
+        <sys_name>Admin - View User Reqcord - Container 1</sys_name>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy/>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
-        <sys_update_name>sp_container_cb8810d707bcc6101808fe4f7c1ed0d1</sys_update_name>
+        <sys_update_name>sp_container_ac5847019789c210788572d6f053af0a</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-12 15:22:17</sys_updated_on>
+        <sys_updated_on>2024-03-18 14:39:37</sys_updated_on>
         <title/>
         <width>container</width>
     </sp_container>

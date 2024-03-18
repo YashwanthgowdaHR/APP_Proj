@@ -11,40 +11,48 @@
 UserScript.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
     type: 'UserScript',
     userRole: 'x_1131046_aa_man_0.user',
-
-    isValidUser: function() {
-        return JSON.stringify(gs.getUser().hasRole(this.userRole));
-    },
+    cmnCls: new CommonClass(),
+	recordCls: new RecordClass(),
+	log: "SI | UserScript | ",
 
     getUserInfo: function() {
-        var logName = "SI | UserScript >> ";
+        var logName = this.log + "getUserInfo >> ";
         gs.info(logName + "Verify User having access");
-        if (this.isValidUser) {
-            var userInfo = {};
+        if (cmnCls.isValiduser()) {
             gs.info(logName + "User: " + gs.getUserName() + " have access");
-            userInfo.name = gs.getUser().getDisplayName();
-            userInfo.mailID = gs.getUser().getEmail();
-            userInfo.username = gs.getUserName();
             gs.info(logName + "Getting user details");
-            gs.info(JSON.stringify(userInfo));
 
-            return JSON.stringify(userInfo);
+            // var userInfo = {};
+            // userInfo.mailID = gs.getUser().getEmail();
+            // gs.info(logName + "Returned the user details");
+            // return JSON.stringify(userInfo);
+
+            return gs.getUser().getEmail();
         }
+    },
 
+    getUserDetailsByUserName: function() {
+        var logName = this.log + "getUserDetailsByUserName >> ";
+        gs.info(logName + "Verify User having access");
 
+        var userName = this.getParameter('username');
+        gs.info(logName + "Fetching user data of "+userName+" from RecordClass");
+		var user = this.recordCls.getUserDataByUserName(userName);
+		gs.info(JSON.stringify(user));
+        return JSON.stringify(user);
     }
 });]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-03-17 08:05:33</sys_created_on>
         <sys_id>5f5f14fc97494210788572d6f053af93</sys_id>
-        <sys_mod_count>16</sys_mod_count>
+        <sys_mod_count>24</sys_mod_count>
         <sys_name>UserScript</sys_name>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
         <sys_update_name>sys_script_include_5f5f14fc97494210788572d6f053af93</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-17 15:42:41</sys_updated_on>
+        <sys_updated_on>2024-03-18 07:53:32</sys_updated_on>
     </sys_script_include>
 </record_update>

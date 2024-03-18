@@ -10,11 +10,16 @@
         <script><![CDATA[var RecordClass = Class.create();
 RecordClass.prototype = {
     initialize: function() {
-		this.log = "SI - RecordClass | ";
+        this.log = "SI - RecordClass | ";
     },
 
     type: 'RecordClass',
-	deleteRecord(tableName, recordSysID) {
+
+
+    baseClass: new BaseClass(),
+
+
+    deleteRecord(tableName, recordSysID) {
         var logName = this.log + "deleteRecord >> ";
         var gr = new GlideRecord(tableName);
         gr.addQuery('sys_id', recordSysID);
@@ -25,7 +30,12 @@ RecordClass.prototype = {
         } else
             gs.info(logName + "given sys_id " + recordSysID + " is not exists. skipping the operation");
     },
-    getRecord: function (tableName, recordSysID) {
+    /**
+     * @param {string} tableName - Table Name.
+     * @param {string} recordSysID - sys_id of record to filter and update its values .
+     * @return {object} - returns the record that matches with recordSysID containing all the fields.
+     */
+    getRecord: function(tableName, recordSysID) {
         var logName = this.log + "GetRecord >> ";
         var data = {};
         if (!this.isTableExists(tableName)) {
@@ -43,15 +53,20 @@ RecordClass.prototype = {
             gs.error(logName + " Given record with sysId: " + recordSysID + " doesn't exists in the table:" + tableName);
         return data;
     },
-    getUserDataByUID(uID) {
-        var logName = this.log + "getUserDataByUID >> ";
+
+    /**
+     * @param {string} username - username of the user.
+     * @return {object} - returns the object containing {firstName, lastName, fullName, mailID} extracted from users table which matches with username containing all the fields.
+     */
+    getUserDataByUserName(username) {
+        var logName = this.log + "getUserDataByUserName >> ";
         if (!this.isAdmin) {
             gs.error(log + " Unknown Access found");
             return;
         }
-        gs.info("Fetching user details of " + uID);
+        gs.info("Fetching user details of " + username);
         gr = new GlideRecord('sys_user');
-        gr.addEncodedQuery('user_name=' + uID);
+        gr.addEncodedQuery('user_name=' + username);
         gr.query();
         var result;
         if (gr.hasNext()) {
@@ -59,16 +74,16 @@ RecordClass.prototype = {
             result = {
                 firstName: gr.first_name.toString(),
                 lastName: gr.last_name.toString(),
+                fullName: gr.name.toString(),
                 mailID: gr.email.toString(),
-                uID: uID,
             };
         }
         return result;
     },
-    isAdmin: function () {
-        return gs.getUser().isMemberOf(this.adminGroupID);
+    isAdmin: function() {
+        return gs.getUser().isMemberOf(baseClass.getAdminGroupID());
     },
-    isTableExists: function (tableName) {
+    isTableExists: function(tableName) {
         return gs.tableExists(tableName);
     },
     /**
@@ -77,7 +92,7 @@ RecordClass.prototype = {
      * @param {string} column - column id from which data need to be read.
      * @return {string} - string of values that read from the column.
      */
-    getDisplayValueFromRecord: function (tableName, recordSysID, column) {
+    getDisplayValueFromRecord: function(tableName, recordSysID, column) {
         var gr = new GlideRecord(tableName);
         gr.addQuery("sys_id", recordSysID);
         gr.query();
@@ -91,7 +106,7 @@ RecordClass.prototype = {
      * @param {json} data - should contain key which is respective column names, in order to update the values correctly.
      * @return {boolean} - true if updated successfully, else false
      */
-    updateRecord: function (tableName, recordSysID, data) {
+    updateRecord: function(tableName, recordSysID, data) {
         var logName = this.log + "updateRecord >> ";
         if (!this.isTableExists(tableName)) {
             gs.error(logName + "Given table: " + tableName + " doesn't exists.");
@@ -117,13 +132,13 @@ RecordClass.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-02-14 13:52:54</sys_created_on>
         <sys_id>d5d08da6079482101808fe4f7c1ed0fe</sys_id>
-        <sys_mod_count>1</sys_mod_count>
+        <sys_mod_count>2</sys_mod_count>
         <sys_name>RecordClass</sys_name>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
         <sys_update_name>sys_script_include_d5d08da6079482101808fe4f7c1ed0fe</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-02-14 14:18:29</sys_updated_on>
+        <sys_updated_on>2024-03-18 06:15:20</sys_updated_on>
     </sys_script_include>
 </record_update>

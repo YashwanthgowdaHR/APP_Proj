@@ -7,8 +7,10 @@
         <element label="Last Name" max_length="40" name="last_name" type="string"/>
         <element label="Mail ID" max_length="200" name="mail_id" type="string"/>
         <element label="Name" max_length="200" name="name" type="string"/>
-        <element label="Reason to Reject" max_length="200" name="reason_to_reject" type="string"/>
-        <element choice="1" label="Status" max_length="40" name="status" type="choice">
+        <element choice="1" label="Reason to Reject" max_length="200" name="reason_to_reject" type="string">
+            <choice/>
+        </element>
+        <element choice="1" default="pending" label="Status" max_length="40" name="status" type="choice">
             <choice>
                 <element inactive_on_update="false" label="Pending" sequence="0" value="pending"/>
                 <element inactive_on_update="false" label="Approved" sequence="1" value="approved"/>

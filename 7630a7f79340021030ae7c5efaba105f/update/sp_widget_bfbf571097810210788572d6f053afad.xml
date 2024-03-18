@@ -1,15 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
-        <client_script><![CDATA[api.controller=function() {  /* widget controller */  var c = this;};]]></client_script>
+        <client_script><![CDATA[api.controller=function() {
+  /* widget controller */
+  var c = this;
+};]]></client_script>
         <controller_as>c</controller_as>
-        <css/>
+        <css>
+#leftList {
+  transition: all 0.5s ease;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+
+.table{
+  width: 100vw;
+}
+
+.table td,
+.table th {
+  text-align: start;
+  vertical-align: middle;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+.tooltip_container button{
+	font-size: 11px;
+  padding: 0px 5px;
+}
+
+.btn {
+  background: transparent;
+  border-radius: 0px;
+  vertical-align: middle;
+  text-transform: upppercase;
+}
+
+.btn:hover{
+  color: white;
+}
+
+.btn-edit{
+	color: #337ab7;
+  border: 1px solid #337ab7;
+}
+
+.btn-edit:hover{
+background: #337ab7;
+}
+
+.btn-approve {
+  color: green;
+  border: 1px solid green;
+}
+
+.btn-approve:hover {
+  background: green;
+}
+
+.btn-reject {
+  color: red;
+  border: 1px solid red;
+  min-height: 100%;
+}
+
+.btn-reject:hover {
+  background: red;
+}
+
+.no-request {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  text-align: center;
+  color: black;
+  text-transform: uppercase;
+}</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
-        <description/>
+        <description>Display existing users in Automation Anywhere</description>
         <docs/>
         <field_list/>
-        <has_preview>false</has_preview>
+        <has_preview>true</has_preview>
         <id>aam_admin_widget-user_list</id>
         <internal>false</internal>
         <link><![CDATA[function link(scope, element, attrs, controller) {  }]]></link>
@@ -17,20 +93,65 @@
         <option_schema/>
         <public>false</public>
         <roles/>
-        <script><![CDATA[(function() {  /* populate the 'data' object */  /* e.g., data.table = $sp.getValue('table'); */})();]]></script>
+        <script><![CDATA[(function() {
+  /* populate the 'data' object */
+  /* e.g., data.table = $sp.getValue('table'); */
+	data.users = new CommonClass().getUsersList();
+})();]]></script>
         <servicenow>false</servicenow>
         <sys_class_name>sp_widget</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-03-16 08:26:32</sys_created_on>
         <sys_id>bfbf571097810210788572d6f053afad</sys_id>
-        <sys_mod_count>0</sys_mod_count>
+        <sys_mod_count>37</sys_mod_count>
         <sys_name>Admin - Users List</sys_name>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy/>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
         <sys_update_name>sp_widget_bfbf571097810210788572d6f053afad</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-16 08:26:32</sys_updated_on>
-        <template><![CDATA[<div><!-- your widget template --></div>]]></template>
+        <sys_updated_on>2024-03-18 14:41:18</sys_updated_on>
+        <template><![CDATA[<div class="container-fluid" id="main_section">
+  <div ng-if="data.users.length > 0" class="table-responsive" id="leftList">
+    <h2 class="text-center">Users List:-</h2><br>
+    <table class="table table-hover table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Username *</th>
+          <th scope="col">First Name</th>
+          <th scope="col">Last Name</th>
+          <th scope="col">Mail ID</th>
+          <th scope="col">Roles</th>
+          <th scope="col">Licenses</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="info in data.users track by $index" id="trows_{{info.no}}">
+          <th scope="row">{{info.no}}</th>
+          <td>{{info.username}}</td>
+          <td>{{info.firstName}}</td>
+          <td>{{info.lastName}}</td>
+          <td>{{info.mailID}}</td>
+          <td>
+            {{info.roles.split(';').join(' | ')}}
+          <div>
+            <span class="tooltip_container" data-toggle="tooltip" data-placement="top" title="{{info.roles.split(';').join('\n')}}"><button>More</button></span>
+            </div></td>
+          <td>{{info.licenses}}</td>
+          <td>
+            <a class="btn btn-edit btn-default" href="https://dev90973.service-now.com/aam?id=aam_admin_page_view_user_record&amp;requestID={{info.recordSysID}}"><span class="glyphicon glyphicon-edit" />Edit</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div ng-if="data.users.length <= 0" class="col-sm-12 no-request">
+    <h2>No Request Found.</h2>
+  </div>
+
+</div>]]></template>
     </sp_widget>
 </record_update>

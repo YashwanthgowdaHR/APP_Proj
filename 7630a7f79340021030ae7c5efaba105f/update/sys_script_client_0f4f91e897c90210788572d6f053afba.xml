@@ -3,33 +3,39 @@
         <active>true</active>
         <applies_extended>false</applies_extended>
         <condition/>
-        <description>Hide some of fields to user and make fields read only and auto fill the fields</description>
-        <field/>
+        <description>Fetch the userdata once the username is entered</description>
+        <field>username</field>
         <global>true</global>
         <isolate_script>true</isolate_script>
         <messages/>
-        <name>Hide a field to User</name>
+        <name>UserScripts: onChange</name>
         <order/>
-        <script><![CDATA[function onLoad() {
-    //Type appropriate comment here, and begin script below
-
-    g_form.setReadOnly('environment', false);
-    g_form.setReadOnly("username", true);
-    g_form.setReadOnly("name", true);
-    g_form.setReadOnly("mail_id", true);
-    g_form.setDisplay('reason_to_reject', 'false');
-    g_form.setDisplay('status', 'false');
-
+        <script><![CDATA[function onChange(control, oldValue, newValue, isLoading, isTemplate) {
     var ga = new GlideAjax('UserScript');
-    ga.addParam("sysparm_name", "getUserInfo");
-	ga.getXMLAnswer(getResponse);
+
+    if (isLoading || newValue === '') {
+        return;
+    } else if (!isLoading && newValue != "") {
+        if (g_user.hasRole('x_1131046_aa_man_0.admin')) {
+			console.log("Getting value of User which matches with Username");
+            ga.addParam('sysparm_name', 'getUserDetailsByUserName');
+            ga.addParam('username', g_form.getValue('username'));
+            ga.getXML(getResponse);
+        }
+    }
 
     function getResponse(response) {
-		var res = JSON.parse(response);
-		// console.log(res);
-        g_form.setValue('username', res.username);
-        g_form.setValue('name', res.name);
-        g_form.setValue('mail_id', res.mailID);
+        var paramName = response.responseXML.documentElement.getAttribute('sysparm_name');
+        var ans = response.responseXML.documentElement.getAttribute('answer');
+
+		console.log(response);
+        if (paramName == 'getUserDetailsByUserName') {
+			var res = JSON.parse(ans);
+            g_form.setValue('mail_id', res.mailID);
+            g_form.setValue('name', res.fullName);
+            g_form.setValue('first_name', res.firstName);
+            g_form.setValue('last_name', res.lastName);
+        }
     }
 }]]></script>
         <sys_class_name>sys_script_client</sys_class_name>
@@ -38,17 +44,17 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>0f4f91e897c90210788572d6f053afba</sys_id>
-        <sys_mod_count>35</sys_mod_count>
-        <sys_name>Hide a field to User</sys_name>
+        <sys_mod_count>62</sys_mod_count>
+        <sys_name>UserScripts: onChange</sys_name>
         <sys_overrides/>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy/>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
         <sys_update_name>sys_script_client_0f4f91e897c90210788572d6f053afba</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-17 16:36:40</sys_updated_on>
+        <sys_updated_on>2024-03-18 07:55:47</sys_updated_on>
         <table>x_1131046_aa_man_0_user_requests</table>
-        <type>onLoad</type>
+        <type>onChange</type>
         <ui_type>10</ui_type>
         <view/>
     </sys_script_client>

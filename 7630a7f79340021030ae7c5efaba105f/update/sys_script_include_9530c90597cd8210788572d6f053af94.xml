@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_1131046_aa_man_0.BaseClass</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description>Provides the SYS ID &amp; Table names</description>
+        <name>BaseClass</name>
+        <script><![CDATA[var BaseClass = Class.create();
+BaseClass.prototype = {
+    initialize: function() {},
+
+    type: 'BaseClass',
+
+    //Group sys_id
+    adminGroupID: 'cd8806df07a402101808fe4f7c1ed04c',
+    userGroupID: '8ea88adb07a402101808fe4f7c1ed096',
+
+    //Table Name
+    sysGroupTableName: 'sys_user_grmember',
+    licensesTableName: 'x_1131046_aa_man_0_licenses',
+    rolesTableName: 'x_1131046_aa_man_0_roles',
+    userReqTableName: 'x_1131046_aa_man_0_user_requests',
+    usersTableName: 'x_1131046_aa_man_0_users',
+
+    // Return Sys ID
+    getAdminGroupID: function() {
+        return this.adminGroupID;
+    },
+
+    getUserGroupID: function() {
+        return this.userGroupID;
+    },
+
+    // Return TableName
+    getRolesTableName: function() {
+        return this.rolesTableName;
+    },
+
+    getSysGroupTableName: function() {
+        return this.sysGroupTableName;
+    },
+
+    getLicenseTableName: function() {
+        return this.licensesTableName;
+    },
+
+    getUsersTableName: function() {
+        return this.usersTableName;
+    },
+
+    getUserRequestsTableName: function() {
+        return this.userReqTableName;
+    }
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-03-18 04:46:38</sys_created_on>
+        <sys_id>9530c90597cd8210788572d6f053af94</sys_id>
+        <sys_mod_count>9</sys_mod_count>
+        <sys_name>BaseClass</sys_name>
+        <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
+        <sys_update_name>sys_script_include_9530c90597cd8210788572d6f053af94</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-03-18 15:37:52</sys_updated_on>
+    </sys_script_include>
+</record_update>
