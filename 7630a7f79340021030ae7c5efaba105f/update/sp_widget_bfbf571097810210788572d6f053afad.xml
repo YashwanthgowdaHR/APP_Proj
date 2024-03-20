@@ -103,14 +103,14 @@ background: #337ab7;
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-03-16 08:26:32</sys_created_on>
         <sys_id>bfbf571097810210788572d6f053afad</sys_id>
-        <sys_mod_count>37</sys_mod_count>
+        <sys_mod_count>42</sys_mod_count>
         <sys_name>Admin - Users List</sys_name>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy/>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
         <sys_update_name>sp_widget_bfbf571097810210788572d6f053afad</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-18 14:41:18</sys_updated_on>
+        <sys_updated_on>2024-03-20 12:22:03</sys_updated_on>
         <template><![CDATA[<div class="container-fluid" id="main_section">
   <div ng-if="data.users.length > 0" class="table-responsive" id="leftList">
     <h2 class="text-center">Users List:-</h2><br>
@@ -118,7 +118,7 @@ background: #337ab7;
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Username *</th>
+          <th scope="col">Username</th>
           <th scope="col">First Name</th>
           <th scope="col">Last Name</th>
           <th scope="col">Mail ID</th>
@@ -131,7 +131,7 @@ background: #337ab7;
         <tr ng-repeat="info in data.users track by $index" id="trows_{{info.no}}">
           <th scope="row">{{info.no}}</th>
           <td>{{info.username}}</td>
-          <td>{{info.firstName}}</td>
+          <td style="text-align: right;">{{info.firstName}}</td>
           <td>{{info.lastName}}</td>
           <td>{{info.mailID}}</td>
           <td>

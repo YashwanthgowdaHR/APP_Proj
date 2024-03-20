@@ -9,7 +9,7 @@
         <name>APIClass</name>
         <script><![CDATA[var APIClass = Class.create();
 APIClass.prototype = {
-    initialize: function(defaultPass = "") {
+    initialize: function (defaultPass = "") {
         this.defaultPass = defaultPass;
     },
     type: 'APIClass',
@@ -23,7 +23,7 @@ APIClass.prototype = {
      * @param {json} obj - An object whose values needs to be transformed from Javascript STRING into JSON.STRING.
      * @return {json} result - result will contains values of datatype JSON.STRING
      */
-    convertToJSONString: function(obj) {
+    convertToJSONString: function (obj) {
         var newObj = {};
         for (const [key, value] of Object.entries(obj)) {
             newObj[key] = JSON.stringify(value);
@@ -36,7 +36,7 @@ APIClass.prototype = {
      * @param {json} rawInput - An object whose values are STRING type and need to be verified for NON-EMPTY.
      * @return {boolean} true/false - returns true if values are non-empty else returns false.
      */
-    checkAllAreNonEmpty: function(rawInput) {
+    checkAllAreNonEmpty: function (rawInput) {
         for (const [key, value] of Object.entries(rawInput)) {
             if (rawInput[key].length <= 0) return false;
         }
@@ -56,7 +56,7 @@ APIClass.prototype = {
      * id[number] - if isCreated is true, then it will contain id of the user and 
      * msg(string) - if user creation failed[isCreated=false], then msg will holds the error message.
      */
-    createUser: function(inputData) {
+    createUser: function (inputData) {
         var logName = this.log + "CreateUser >> ";
         var endpoint = this.endpoint + "v2/usermanagement/users";
         var result = {};
@@ -136,7 +136,7 @@ APIClass.prototype = {
      * @param {string} userID - id of the user which was received after user has been created.
      * @return {json} result - result will have keys i.e. isCreated[bool] - if the user is created, it will be true and msg(string) - if user creation failed, then msg will holds the error message.
      */
-    deleteUsr: function(uID, userID) {
+    deleteUsr: function (uID, userID) {
         var logName = this.log + "DeleteUsr >> ";
         var endpoint = this.endpoint + "v2/usermanagement/users/";
 
@@ -177,7 +177,7 @@ APIClass.prototype = {
      * @param {string} columnValue - columnValue
      * @return {string/number} sysID - returns sysID if found, else 0.
      */
-    fetchSysID: function(tableName, columnName, columnValue) {
+    fetchSysID: function (tableName, columnName, columnValue) {
         var gr = new GlideRecord(tableName);
         gr.addQuery(columnName, columnValue);
         gr.query();
@@ -195,7 +195,7 @@ APIClass.prototype = {
      * @param {list} valueList - list that contains the ids using which their respective sysId will be extracted from the table
      * @return {string} sysIds - sysIds of respective IDs passed in idList.
      */
-    fetchAllSysIDFromGivenList: function(tableName, columnName, valueList) {
+    fetchAllSysIDFromGivenList: function (tableName, columnName, valueList) {
         var logName = this.log + "fetchAllSysIDFromGivenList >> ";
         var sysIDs = "";
 
@@ -212,7 +212,7 @@ APIClass.prototype = {
         return sysIDs;
     },
 
-    getToken: function() {
+    getToken: function () {
         // API call made to AA to get the TOKEN
 
         var endpoint = this.endpoint + "v2/authentication";
@@ -233,7 +233,7 @@ APIClass.prototype = {
      * @param {string} id - id of the user which was received after user has been created.
      * @return {json} result - result will contain all the keys that user has configured or assigned after user has been created.
      */
-    GetUserDetailsByID: function(userID) {
+    GetUserDetailsByID: function (userID) {
         var logName = this.log + "GetUserDetailsByID >> ";
 
         // API Call made to AA to get User info by User ID
@@ -260,7 +260,27 @@ APIClass.prototype = {
         }
     },
 
-    insertLicenses: function() {
+    getLicenseFrontName: function(name){
+        var fname = "";
+        switch(name){
+            case 'Development':
+                fname = "Bot Creator";
+                break; 
+            case 'Runtime':
+                fname = "Unattended Bot Runner";
+                break;
+            case 'AttendedRuntime':
+                    fname = "Attended Bot Runner";
+                    break;
+            case 'CitizenDeveloper':
+                fname = "Citizen Bot Developer";
+                break;
+        }
+
+        return fname;
+    },
+
+    insertLicenses: function () {
         // Insert roles into table named "aa_roles". So, to keep updated whenever a new role is created in AA.
         // This method is called for every 6 hours from Scheduled Jobs and add the roles, if the "id" doesn't exists.
         var logName = this.log + "insertLicenses >> ";
@@ -294,6 +314,7 @@ APIClass.prototype = {
                         gr.setValue('purchased_count', feature.purchasedCount);
                         gr.setValue('used_in_this_cr', feature.usedCountByThisCr);
                         gr.setValue('used_in_other_cr', feature.usedCountByAllCr);
+                        gr.setValue('front_name', this.getLicenseFrontName(feature.name));
                         gr.insert();
                     }
                 }
@@ -303,7 +324,7 @@ APIClass.prototype = {
         }
     },
 
-    insertRoles: function() {
+    insertRoles: function () {
         // Insert roles into table named "aa_roles". So, to keep updated whenever a new role is created in AA.
         // This method is called for every 6 hours from Scheduled Jobs and add the roles, if the "id" doesn't exists.
         var logName = this.log + "insertRoles >> ";
@@ -336,7 +357,7 @@ APIClass.prototype = {
         }
     },
 
-    insertUsers: function() {
+    insertUsers: function () {
         var logName = this.log + "insertUsers >> ";
         var endpoint = this.endpoint + "v2/usermanagement/users/list";
         gs.info(logName + "Endpoint: " + endpoint);
@@ -392,7 +413,7 @@ APIClass.prototype = {
         }
     },
 
-    makeReq: function(method) {
+    makeReq: function (method) {
         return new sn_ws.RESTMessageV2(this.restSrc, method);
     },
 
@@ -402,7 +423,7 @@ APIClass.prototype = {
      * @return {json} result - result will have keys i.e. isUpdated[bool] - if the roles are updated to AA, it will be true, else false and 
      * msg(string) - if unable to update roles[isUpdated=false], then msg will holds the error message
      */
-    updateUser: function(inputData) {
+    updateUser: function (inputData) {
         var logName = this.log + "updateUser >> ";
         var endpoint = this.endpoint + "v2/usermanagement/users/" + inputData.userID;
         var result = {};
@@ -474,13 +495,13 @@ APIClass.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-02-14 13:48:14</sys_created_on>
         <sys_id>127a306e075482101808fe4f7c1ed0dd</sys_id>
-        <sys_mod_count>54</sys_mod_count>
+        <sys_mod_count>57</sys_mod_count>
         <sys_name>APIClass</sys_name>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
         <sys_update_name>sys_script_include_127a306e075482101808fe4f7c1ed0dd</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-18 17:33:06</sys_updated_on>
+        <sys_updated_on>2024-03-20 13:14:33</sys_updated_on>
     </sys_script_include>
 </record_update>

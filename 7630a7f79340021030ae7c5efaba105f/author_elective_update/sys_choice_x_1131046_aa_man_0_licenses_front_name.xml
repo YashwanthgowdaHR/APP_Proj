@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="front_name" table="x_1131046_aa_man_0_licenses" version="3">
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>front_name</element>
+            <name>x_1131046_aa_man_0_licenses</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-03-20 13:04:15</sys_created_on>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>front_name</sys_name>
+            <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
+            <sys_update_name>sys_choice_x_1131046_aa_man_0_licenses_front_name</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-03-20 13:04:15</sys_updated_on>
+        </sys_choice_set>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value>Developement</dependent_value>
+            <element>front_name</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Bot Creator</label>
+            <language>en</language>
+            <name>x_1131046_aa_man_0_licenses</name>
+            <sequence>0</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-03-20 13:04:15</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-03-20 13:04:15</sys_updated_on>
+            <value>Bot Creator</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value>AttendedRuntime</dependent_value>
+            <element>front_name</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Attended Bot Runner</label>
+            <language>en</language>
+            <name>x_1131046_aa_man_0_licenses</name>
+            <sequence>1</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-03-20 13:04:15</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>7</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-03-20 13:17:21</sys_updated_on>
+            <value>Attended Bot Runner</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value>Runtime</dependent_value>
+            <element>front_name</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Unattended Bot Runner</label>
+            <language>en</language>
+            <name>x_1131046_aa_man_0_licenses</name>
+            <sequence>2</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-03-20 13:04:15</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>7</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-03-20 13:17:21</sys_updated_on>
+            <value>Attended Bot Runner</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value>CitizenDeveloper</dependent_value>
+            <element>front_name</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Citizen Developer</label>
+            <language>en</language>
+            <name>x_1131046_aa_man_0_licenses</name>
+            <sequence>3</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-03-20 13:04:15</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>7</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-03-20 13:17:21</sys_updated_on>
+            <value>Citizen Developer</value>
+        </sys_choice>
+    </sys_choice>
+</record_update>

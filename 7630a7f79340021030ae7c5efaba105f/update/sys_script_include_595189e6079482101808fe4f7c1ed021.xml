@@ -9,7 +9,7 @@
         <name>CommonClass</name>
         <script><![CDATA[var CommonClass = Class.create();
 CommonClass.prototype = {
-    initialize: function () {
+    initialize: function() {
         this.defaultPass = "abc@123123";
         this.log = "SI | CommonClass | ";
     },
@@ -26,11 +26,11 @@ CommonClass.prototype = {
     usersGR: new GlideRecord(new BaseClass().getUsersTableName()),
     rolesGR: new GlideRecord(new BaseClass().getRolesTableName()),
     //Methods
-    addEvent: function (event, rec, p1, p2) {
+    addEvent: function(event, rec, p1, p2) {
         gs.info(this.log + " addEvent >> " + event);
         gs.eventQueue(name = event, record = rec, parm1 = p1, parm2 = p2);
     },
-    approveUser: function (input) {
+    approveUser: function(input) {
         var logName = this.log + "approveUser >> ";
         var isCreated = false;
         var errorMsg = "";
@@ -66,7 +66,7 @@ CommonClass.prototype = {
             errorMsg
         };
     },
-    createUser: function (record) {
+    createUser: function(record) {
         var userInfo = {
             username: record.username,
             firstName: record.firstName,
@@ -89,7 +89,7 @@ CommonClass.prototype = {
         }
         return output;
     },
-    getAllReq: function () {
+    getAllReq: function() {
         var logName = this.log + "getAllReq >> ";
         if (!this.isAdmin()) {
             gs.error(logName + " Unknown Access found");
@@ -120,7 +120,7 @@ CommonClass.prototype = {
             return reqData;
         }
     },
-    getAllPendingReq: function () {
+    getAllPendingReq: function() {
         var logName = this.log + "getAllPendingReq >> ";
         if (!this.isAdmin()) {
             gs.error(logName + " Unknown Access found");
@@ -154,12 +154,14 @@ CommonClass.prototype = {
             return reqData;
         }
     },
-    getRoleName: function (rolesIDs) {
+    getRoleName: function(rolesIDs) {
+        if (this.isEmpty(rolesIDs))
+            return;
         var table = new GlideRecord(new BaseClass().getRolesTableName());
         var tmpRoles = Array.isArray(rolesIDs) ? rolesIDs : rolesIDs.split(",");
         var roles = [];
 
-        tmpRoles.forEach(function (id) {
+        tmpRoles.forEach(function(id) {
             table.get(id.toString());
             roles.push(table.getValue('name'));
         });
@@ -170,18 +172,39 @@ CommonClass.prototype = {
         }
     },
 
-    getUserRoles: function (rolesIDs) {
+    getLicenseName: function(licenseIDs) {
+        if (this.isEmpty(licenseIDs))
+            return;
+        var table = new GlideRecord(new BaseClass().getLicenseTableName());
+        var tmpLicenses = Array.isArray(licenseIDs) ? licenseIDs : licenseIDs.split(",");
+        var licenses = [];
+
+        tmpLicenses.forEach(function(id) {
+            table.get(id.toString());
+            licenses.push(table.getValue('name'));
+        });
+        if (Array.isArray(licenseIDs)) {
+            return licenses;
+        } else {
+            return licenses.length > 0 ? licenses.join(";") : null;
+        }
+    },
+
+    getUserRoles: function(rolesIDs) {
         var table = new GlideRecord(new BaseClass().getRolesTableName());
         var tmpRoles = Array.isArray(rolesIDs) ? rolesIDs : rolesIDs.split(",");
         var roles = [];
 
-        tmpRoles.forEach(function (id) {
+        tmpRoles.forEach(function(id) {
             table.get(id.toString());
-            roles.push({ name: table.getValue('name'), sysID: table.getValue('sys_id') });
+            roles.push({
+                name: table.getValue('name'),
+                sysID: table.getValue('sys_id')
+            });
         });
         return roles;
     },
-    getRoles: function () {
+    getRoles: function() {
         var roles = [];
         var gr = this.rolesGR;
         gr.query();
@@ -192,7 +215,7 @@ CommonClass.prototype = {
             });
         return roles;
     },
-    getUsersList: function () {
+    getUsersList: function() {
         var logName = this.log + "getUsersList >> ";
         if (!this.isAdmin()) {
             gs.error(logName + " Unknown Access found");
@@ -203,9 +226,11 @@ CommonClass.prototype = {
             var userData = [];
             var i = 0;
             let table = this.usersGR;
+            table.orderBy('first_name');
             table.query();
             while (table.next()) {
                 var tmpRoles = this.getRoleName(table.getValue("roles"));
+                var tmpLicenses = this.getLicenseName(table.getValue("licenses"));
                 userData.push({
                     no: ++i,
                     firstName: table.getValue('first_name'),
@@ -214,14 +239,14 @@ CommonClass.prototype = {
                     mailID: table.getValue('mail_id'),
                     environment: table.getDisplayValue('environment').toString(),
                     roles: tmpRoles,
-                    licenses: table.getValue('licenses'),
+                    licenses: tmpLicenses,
                     recordSysID: table.getValue('sys_id'),
                 });
             }
             return userData;
         }
     },
-    getUserByID: function (sysID) {
+    getUserByID: function(sysID) {
         var logName = this.log + "getUserbyID >> ";
         if (!this.isAdmin()) {
             gs.error(logName + " Unknown Access found");
@@ -243,16 +268,19 @@ CommonClass.prototype = {
                 licenses: userData.licenses,
                 recordSysID: userData.sys_id,
                 // enableAutoLogin: userData.'enable_auto_login'),
-            }
+            };
         }
     },
-    isAdmin: function () {
+    isAdmin: function() {
         return gs.getUser().isMemberOf(this.baseClass.getAdminGroupID());
     },
-    isValidUser: function () {
+    isEmpty: function(obj) {
+        return obj == null || obj == "";
+    },
+    isValidUser: function() {
         return gs.getUser().isMemberOf(this.baseClass.getUserGroupID());
     },
-    rejectUser: function (record) {
+    rejectUser: function(record) {
         var logName = this.log + "approveOrRejectUser >> ";
         if (!this.isAdmin()) {
             gs.error(logName + " Unknown Access found");
@@ -278,7 +306,7 @@ CommonClass.prototype = {
         // this.addEvent(this.event1, this.reqAccessGR, record.mailID, JSON.stringify(details));
 
     },
-    updateIDAndStatus: function (recordSysID, status) {
+    updateIDAndStatus: function(recordSysID, status) {
         var logName = this.log + "updateIDAndStatus >> ";
         var sts = this.recordClass.updateRecord(this.userRequestsGR.getTableName(), recordSysID, {
             status
@@ -288,7 +316,7 @@ CommonClass.prototype = {
         //this.triggerScheduledJob("InsertUsers");
         gs.info(sts ? logName + "updated successfully" : logName + " Failed to update the ID and Status of the record.");
     },
-    triggerScheduledJob: function (jobName) {
+    triggerScheduledJob: function(jobName) {
         // Get the instance of the ScheduledJobManager
         var jobManager = new GlideScheduleManager();
 
@@ -306,13 +334,13 @@ CommonClass.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-02-14 13:55:03</sys_created_on>
         <sys_id>595189e6079482101808fe4f7c1ed021</sys_id>
-        <sys_mod_count>77</sys_mod_count>
+        <sys_mod_count>84</sys_mod_count>
         <sys_name>CommonClass</sys_name>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
         <sys_update_name>sys_script_include_595189e6079482101808fe4f7c1ed021</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-18 15:16:32</sys_updated_on>
+        <sys_updated_on>2024-03-20 12:19:57</sys_updated_on>
     </sys_script_include>
 </record_update>

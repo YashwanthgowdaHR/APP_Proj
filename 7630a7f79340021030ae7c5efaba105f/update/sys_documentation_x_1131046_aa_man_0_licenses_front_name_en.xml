@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update>
-    <sys_documentation element="used_in_this_control_room" label="Used in This Control room" language="en" table="x_1131046_aa_man_0_licenses">
+    <sys_documentation element="front_name" label="Front Name" language="en" table="x_1131046_aa_man_0_licenses">
         <sys_documentation action="INSERT_OR_UPDATE">
-            <element>used_in_this_control_room</element>
+            <element>front_name</element>
             <help/>
             <hint/>
-            <label>Used in This Control room</label>
+            <label>Front Name</label>
             <language>en</language>
             <name>x_1131046_aa_man_0_licenses</name>
             <plural/>
             <sys_class_name>sys_documentation</sys_class_name>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2024-02-06 13:44:42</sys_created_on>
-            <sys_mod_count>5</sys_mod_count>
-            <sys_name>Used in This Control room</sys_name>
+            <sys_created_on>2024-03-20 13:04:15</sys_created_on>
+            <sys_mod_count>9</sys_mod_count>
+            <sys_name>Front Name</sys_name>
             <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
             <sys_policy/>
             <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
-            <sys_update_name>sys_documentation_x_1131046_aa_man_0_licenses_used_in_this_control_room_en</sys_update_name>
+            <sys_update_name>sys_documentation_x_1131046_aa_man_0_licenses_front_name_en</sys_update_name>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2024-03-20 13:18:08</sys_updated_on>
+            <sys_updated_on>2024-03-20 13:17:21</sys_updated_on>
             <url/>
             <url_target/>
         </sys_documentation>
