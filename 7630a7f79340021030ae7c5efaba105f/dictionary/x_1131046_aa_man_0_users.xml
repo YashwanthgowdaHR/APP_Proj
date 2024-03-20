@@ -4,7 +4,9 @@
         <element label="Environment" max_length="4" name="environment" type="string"/>
         <element label="First Name" max_length="50" name="first_name" type="string"/>
         <element label="Last Name" max_length="50" name="last_name" type="string"/>
-        <element label="Licenses" max_length="1024" name="licenses" reference="x_1131046_aa_man_0_licenses" type="glide_list"/>
+        <element choice="1" choice_table="x_1131046_aa_man_0_licenses" label="Licenses" max_length="50" name="licenses" reference_qual="available_count&gt;0^EQ" reference_qual_condition="available_count&gt;0^EQ" type="string">
+            <choice/>
+        </element>
         <element label="MailID" max_length="200" name="mail_id" type="string"/>
         <element label="Roles" max_length="1024" name="roles" reference="x_1131046_aa_man_0_roles" type="glide_list"/>
         <element label="Username" max_length="50" name="username" type="string"/>
