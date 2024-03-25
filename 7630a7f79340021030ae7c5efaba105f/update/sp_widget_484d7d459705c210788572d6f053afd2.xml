@@ -143,7 +143,7 @@
 	/* e.g., data.table = $sp.getValue('table'); */
 	data.recordExists = false;
 	
-	var requestSysID = 'af907781974dc210788572d6f053afc0';//$sp.getParameter('requestID');
+	var requestSysID = 'db6075ce97cdc610788572d6f053afdd';//$sp.getParameter('requestID');
 	var cls = new CommonClass();
 	data.userInfo = cls.getUserByID(requestSysID);
 	
@@ -164,14 +164,14 @@
 	
 	// Licenses
 	var tmpLicenseNames = [];
-	var tmpLicensesSysIDs = [];
+	var tmpLicenseIDs = [];
 	data.userInfo.roles.forEach(function(license){
 		tmpLicenseNames.push(license.name);
-		tmpLicensesSysIDs.push(license.sysID);
+		tmpLicenseIDs.push(license.id);
 	});
 	
-	data.tmpRoleNames = tmpRoleNames.join('####');
-	data.tmpRoleSysIDs = tmpRoleSysIDs.join(',');
+	data.tmpLicenseNames = tmpLicenseNames.join('####');
+	data.tmpLicenseIDs = tmpLicenseIDs.join(',');
 	
 	
 	var baseCls = new BaseClass();
@@ -215,14 +215,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-03-18 09:11:38</sys_created_on>
         <sys_id>484d7d459705c210788572d6f053afd2</sys_id>
-        <sys_mod_count>27</sys_mod_count>
+        <sys_mod_count>31</sys_mod_count>
         <sys_name>Admin - View User Record</sys_name>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy/>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
         <sys_update_name>sp_widget_484d7d459705c210788572d6f053afd2</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-20 12:35:38</sys_updated_on>
+        <sys_updated_on>2024-03-21 13:15:57</sys_updated_on>
         <template><![CDATA[<div>
     <div ng-if="data.recordExists">
       <form class="form-horizontal">

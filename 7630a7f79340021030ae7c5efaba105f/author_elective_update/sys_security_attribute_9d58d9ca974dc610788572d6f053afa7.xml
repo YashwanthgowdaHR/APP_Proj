@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_attribute">
+    <sys_security_attribute action="DELETE">
+        <active>false</active>
+        <condition>Group=cd8806df07a402101808fe4f7c1ed04c^ORGroup=8ea88adb07a402101808fe4f7c1ed096</condition>
+        <description>Auto Created Attribute - ACL_f6639d4e970dc610788572d6f053afa7</description>
+        <is_dynamic>true</is_dynamic>
+        <is_localized>true</is_localized>
+        <is_system>false</is_system>
+        <label>ACL_f6639d4e970dc610788572d6f053afa7</label>
+        <lookup_table/>
+        <lookup_table_column/>
+        <name>x_1131046_aa_man_0__ACL_f6639d4e970dc610788572d6f053afa7</name>
+        <script/>
+        <sys_class_name>sys_security_attribute</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-03-21 09:04:15</sys_created_on>
+        <sys_id>9d58d9ca974dc610788572d6f053afa7</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>x_1131046_aa_man_0__ACL_f6639d4e970dc610788572d6f053afa7</sys_name>
+        <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
+        <sys_update_name>sys_security_attribute_9d58d9ca974dc610788572d6f053afa7</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-03-21 09:30:25</sys_updated_on>
+        <type>compound</type>
+    </sys_security_attribute>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AA Management">7630a7f79340021030ae7c5efaba105f</application>
+        <file_path/>
+        <instance_id>3d112a36db4337449df22f17d4961918</instance_id>
+        <instance_name>dev90973</instance_name>
+        <name>sys_security_attribute_9d58d9ca974dc610788572d6f053afa7</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_attribute"><sys_security_attribute action="INSERT_OR_UPDATE"><active>false</active><condition>Group=cd8806df07a402101808fe4f7c1ed04c^ORGroup=8ea88adb07a402101808fe4f7c1ed096</condition><description>Auto Created Attribute - ACL_f6639d4e970dc610788572d6f053afa7</description><is_dynamic>true</is_dynamic><is_localized>true</is_localized><is_system>false</is_system><label>ACL_f6639d4e970dc610788572d6f053afa7</label><lookup_table/><lookup_table_column/><name>x_1131046_aa_man_0__ACL_f6639d4e970dc610788572d6f053afa7</name><script/><sys_class_name>sys_security_attribute</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2024-03-21 09:04:15</sys_created_on><sys_id>9d58d9ca974dc610788572d6f053afa7</sys_id><sys_mod_count>1</sys_mod_count><sys_name>x_1131046_aa_man_0__ACL_f6639d4e970dc610788572d6f053afa7</sys_name><sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package><sys_policy/><sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope><sys_update_name>sys_security_attribute_9d58d9ca974dc610788572d6f053afa7</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2024-03-21 09:30:25</sys_updated_on><type>compound</type></sys_security_attribute></record_update>]]></payload>
+        <payload_hash>1628534151</payload_hash>
+        <record_name>x_1131046_aa_man_0__ACL_f6639d4e970dc610788572d6f053afa7</record_name>
+        <reverted_from/>
+        <source>4ae8b55b076402101808fe4f7c1ed027</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-03-21 09:30:25</sys_created_on>
+        <sys_id>a05edd0a978dc610788572d6f053af85</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>18e6058f2510000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-03-21 09:30:25</sys_updated_on>
+        <type>Security Attribute</type>
+        <update_guid>285edd0acf8dc610a53ebc29dba75984</update_guid>
+        <update_guid_history>285edd0acf8dc610a53ebc29dba75984:1628534151,5958d9ca5b4dc610e6b6a5cc3c0f24aa:1182100046</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-03-21 09:30:32</sys_created_on>
+        <sys_db_object display_value="" name="sys_security_attribute">sys_security_attribute</sys_db_object>
+        <sys_id>0f6b01f98640459e83aae6f7a15df9e4</sys_id>
+        <sys_metadata>9d58d9ca974dc610788572d6f053afa7</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_1131046_aa_man_0__ACL_f6639d4e970dc610788572d6f053afa7</sys_name>
+        <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
+        <sys_scope_delete display_value="">2be73dab4eaf4736a09a5739e1636be9</sys_scope_delete>
+        <sys_update_name>sys_security_attribute_9d58d9ca974dc610788572d6f053afa7</sys_update_name>
+        <sys_update_version display_value="sys_security_attribute_9d58d9ca974dc610788572d6f053afa7">a05edd0a978dc610788572d6f053af85</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-03-21 09:30:32</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

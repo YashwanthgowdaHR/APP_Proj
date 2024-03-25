@@ -171,17 +171,19 @@ CommonClass.prototype = {
             return roles.length > 0 ? roles.join(";") : null;
         }
     },
-
     getLicenseName: function(licenseIDs) {
         if (this.isEmpty(licenseIDs))
             return;
-        var table = new GlideRecord(new BaseClass().getLicenseTableName());
+
         var tmpLicenses = Array.isArray(licenseIDs) ? licenseIDs : licenseIDs.split(",");
         var licenses = [];
 
         tmpLicenses.forEach(function(id) {
-            table.get(id.toString());
-            licenses.push(table.getValue('name'));
+            var table = new GlideRecord(new BaseClass().getLicenseTableName());
+            table.addQuery('id', id);
+            table.query();
+            table.next();
+            licenses.push(table.getValue('detail'));
         });
         if (Array.isArray(licenseIDs)) {
             return licenses;
@@ -190,7 +192,28 @@ CommonClass.prototype = {
         }
     },
 
+    getUserLicenses: function(licenseIDs) {
+        if (this.isEmpty(licenseIDs))
+            return;
+        var tmpLicenses = Array.isArray(licenseIDs) ? licenseIDs : licenseIDs.split(",");
+        var licenses = [];
+
+        tmpLicenses.forEach(function(id) {
+            var table = new GlideRecord(new BaseClass().getLicenseTableName());
+            table.addQuery('id', id);
+            table.query();
+            table.next();
+            licenses.push({
+                'detail': table.getValue('detail'),
+                'id': id
+            });
+        });
+        return licenses;
+    },
+
     getUserRoles: function(rolesIDs) {
+        if (this.isEmpty(rolesIDs))
+            return;
         var table = new GlideRecord(new BaseClass().getRolesTableName());
         var tmpRoles = Array.isArray(rolesIDs) ? rolesIDs : rolesIDs.split(",");
         var roles = [];
@@ -257,6 +280,7 @@ CommonClass.prototype = {
             var userData = this.recordClass.getRecord(new BaseClass().getUsersTableName(), sysID);
             gs.info(logName + "Fetched successfully");
             var tmpRoles = this.getUserRoles(userData.roles);
+            var tmpLicenses = this.getUserLicenses(userData.licenses);
             return {
                 userID: userData.user_id,
                 firstName: userData.first_name,
@@ -265,7 +289,7 @@ CommonClass.prototype = {
                 mailID: userData.mail_id,
                 environment: userData.environment,
                 roles: tmpRoles,
-                licenses: userData.licenses,
+                licenses: tmpLicenses,
                 recordSysID: userData.sys_id,
                 // enableAutoLogin: userData.'enable_auto_login'),
             };
@@ -334,13 +358,13 @@ CommonClass.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-02-14 13:55:03</sys_created_on>
         <sys_id>595189e6079482101808fe4f7c1ed021</sys_id>
-        <sys_mod_count>84</sys_mod_count>
+        <sys_mod_count>89</sys_mod_count>
         <sys_name>CommonClass</sys_name>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
         <sys_update_name>sys_script_include_595189e6079482101808fe4f7c1ed021</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-20 12:19:57</sys_updated_on>
+        <sys_updated_on>2024-03-21 13:16:44</sys_updated_on>
     </sys_script_include>
 </record_update>
