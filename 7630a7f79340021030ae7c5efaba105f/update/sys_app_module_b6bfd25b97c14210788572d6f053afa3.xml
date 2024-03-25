@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_app_module">
     <sys_app_module action="INSERT_OR_UPDATE">
         <active>true</active>
-        <application display_value="Automation Anywhere">71749d2c97890210788572d6f053afbb</application>
+        <application display_value="Automation Anywhere">5b1f561b97c14210788572d6f053afd6</application>
         <assessment/>
         <device_type/>
         <filter/>
-        <hint>Fill up the form for the access</hint>
+        <hint/>
         <homepage/>
         <image/>
-        <link_type>NEW</link_type>
+        <link_type>SEPARATOR</link_type>
         <map_page/>
-        <mobile_title>New Request</mobile_title>
+        <mobile_title>Access</mobile_title>
         <mobile_view_name>Mobile</mobile_view_name>
-        <name>x_1131046_aa_man_0_user_requests</name>
-        <order>101</order>
-        <override_menu_roles>true</override_menu_roles>
+        <name/>
+        <order>100</order>
+        <override_menu_roles>false</override_menu_roles>
         <query/>
         <report/>
         <require_confirmation>true</require_confirmation>
         <roles>x_1131046_aa_man_0.user</roles>
         <sys_class_name>sys_app_module</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2024-03-16 17:14:06</sys_created_on>
+        <sys_created_on>2024-03-25 11:29:04</sys_created_on>
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
-        <sys_id>49d7d92097c90210788572d6f053af5c</sys_id>
-        <sys_mod_count>1</sys_mod_count>
-        <sys_name>New Request</sys_name>
+        <sys_id>b6bfd25b97c14210788572d6f053afa3</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Access</sys_name>
         <sys_overrides/>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy/>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
-        <sys_update_name>sys_app_module_49d7d92097c90210788572d6f053af5c</sys_update_name>
+        <sys_update_name>sys_app_module_b6bfd25b97c14210788572d6f053afa3</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-17 17:05:28</sys_updated_on>
+        <sys_updated_on>2024-03-25 11:29:04</sys_updated_on>
         <timeline_page/>
-        <title>New Request</title>
+        <title>Access</title>
         <uncancelable>false</uncancelable>
-        <view_name>Raise a new request</view_name>
+        <view_name/>
         <window_name/>
     </sys_app_module>
 </record_update>

@@ -13,6 +13,7 @@ CommonClass.prototype = {
         this.defaultPass = "abc@123123";
         this.log = "SI | CommonClass | ";
     },
+
     type: 'CommonClass',
 
     //Constants
@@ -22,6 +23,7 @@ CommonClass.prototype = {
     apiClass: new APIClass(this.defaultPass),
     baseClass: new BaseClass(),
     recordClass: new RecordClass(),
+    licensesGR: new GlideRecord(new BaseClass().getLicenseTableName()),
     userRequestsGR: new GlideRecord(new BaseClass().getUserRequestsTableName()),
     usersGR: new GlideRecord(new BaseClass().getUsersTableName()),
     rolesGR: new GlideRecord(new BaseClass().getRolesTableName()),
@@ -30,6 +32,7 @@ CommonClass.prototype = {
         gs.info(this.log + " addEvent >> " + event);
         gs.eventQueue(name = event, record = rec, parm1 = p1, parm2 = p2);
     },
+
     approveUser: function(input) {
         var logName = this.log + "approveUser >> ";
         var isCreated = false;
@@ -66,6 +69,7 @@ CommonClass.prototype = {
             errorMsg
         };
     },
+
     createUser: function(record) {
         var userInfo = {
             username: record.username,
@@ -81,7 +85,7 @@ CommonClass.prototype = {
         if (output.isCreated) {
             //this.updateIDAndStatus(record.recordSysID, "approved");
             let status = "approved";
-            var sts = this.recordClass.updateRecord(this.userRequestsGR.getTableName(), recordSysID, {
+            var sts = this.recordClass.updateRecord(new BaseClass().getUserRequestsTableName(), recordSysID, {
                 status
             });
             //this.triggerScheduledJob("InsertUsers");
@@ -89,6 +93,7 @@ CommonClass.prototype = {
         }
         return output;
     },
+
     getAllReq: function() {
         var logName = this.log + "getAllReq >> ";
         if (!this.isAdmin()) {
@@ -100,7 +105,7 @@ CommonClass.prototype = {
             var reqData = [];
             var i = 0;
             var gd = new GlideDate();
-            let table = this.userRequestsGR;
+            let table = new GlideRecord(new BaseClass().getUserRequestsTableName());
             table.orderByDesc('sys_created_on');
             table.query();
             while (table.next()) {
@@ -120,6 +125,7 @@ CommonClass.prototype = {
             return reqData;
         }
     },
+
     getAllPendingReq: function() {
         var logName = this.log + "getAllPendingReq >> ";
         if (!this.isAdmin()) {
@@ -131,7 +137,7 @@ CommonClass.prototype = {
             var reqData = [];
             var i = 0;
             var gd = new GlideDate();
-            let table = this.userRequestsGR;
+            let table = new BaseClass().getUserRequestsTableName();
             table.addQuery('status', 'pending');
             table.orderByDesc('sys_created_on');
             table.query();
@@ -154,6 +160,27 @@ CommonClass.prototype = {
             return reqData;
         }
     },
+
+    getAvailableCRLicenses: function() {
+        var log = this.log + "getAvailableCRLicenses >> ";
+        gs.info(log + " Fetching available control room licenses");
+        var availLicenseList = [{
+            detail: "None",
+            id: ""
+        }];
+        var table = new GlideRecord(new BaseClass().getLicenseTableName());
+        table.addEncodedQuery('parent=ControlRoom');
+        table.addEncodedQuery('available_count>0');
+        table.query();
+        if (table.next()) {
+            availLicenseList.push({
+                id: table.getValue('id'),
+                detail: table.getValue('detail')
+            });
+        }
+        return availLicenseList;
+    },
+
     getRoleName: function(rolesIDs) {
         if (this.isEmpty(rolesIDs))
             return;
@@ -171,6 +198,7 @@ CommonClass.prototype = {
             return roles.length > 0 ? roles.join(";") : null;
         }
     },
+
     getLicenseName: function(licenseIDs) {
         if (this.isEmpty(licenseIDs))
             return;
@@ -204,7 +232,7 @@ CommonClass.prototype = {
             table.query();
             table.next();
             licenses.push({
-                'detail': table.getValue('detail'),
+                detail: table.getValue('detail'),
                 'id': id
             });
         });
@@ -227,9 +255,10 @@ CommonClass.prototype = {
         });
         return roles;
     },
+
     getRoles: function() {
         var roles = [];
-        var gr = this.rolesGR;
+        var gr = new GlideRecord(new BaseClass().getRolesTableName());
         gr.query();
         while (gr.next())
             roles.push({
@@ -238,6 +267,7 @@ CommonClass.prototype = {
             });
         return roles;
     },
+
     getUsersList: function() {
         var logName = this.log + "getUsersList >> ";
         if (!this.isAdmin()) {
@@ -248,7 +278,7 @@ CommonClass.prototype = {
             gs.info(logName + "get the existing users.");
             var userData = [];
             var i = 0;
-            let table = this.usersGR;
+            let table = new GlideRecord(new BaseClass().getUsersTableName());
             table.orderBy('first_name');
             table.query();
             while (table.next()) {
@@ -269,8 +299,9 @@ CommonClass.prototype = {
             return userData;
         }
     },
+
     getUserByID: function(sysID) {
-        var logName = this.log + "getUserbyID >> ";
+        var logName = this.log + "getUserByID >> ";
         if (!this.isAdmin()) {
             gs.error(logName + " Unknown Access found");
             // Add Mail Notification when someone other than admin tried to access it.
@@ -291,19 +322,24 @@ CommonClass.prototype = {
                 roles: tmpRoles,
                 licenses: tmpLicenses,
                 recordSysID: userData.sys_id,
+                isDevice: tmpLicenses.length > 0 ? true : false,
                 // enableAutoLogin: userData.'enable_auto_login'),
             };
         }
     },
+
     isAdmin: function() {
         return gs.getUser().isMemberOf(this.baseClass.getAdminGroupID());
     },
+
     isEmpty: function(obj) {
         return obj == null || obj == "";
     },
+
     isValidUser: function() {
         return gs.getUser().isMemberOf(this.baseClass.getUserGroupID());
     },
+
     rejectUser: function(record) {
         var logName = this.log + "approveOrRejectUser >> ";
         if (!this.isAdmin()) {
@@ -315,7 +351,7 @@ CommonClass.prototype = {
         let status = "rejected",
             reason_to_reject = record.reason;
 
-        var sts = this.recordClass.updateRecord(this.userRequestsGR.getTableName(), recordSysID, {
+        var sts = this.recordClass.updateRecord(new BaseClass().getUserRequestsTableName(), recordSysID, {
             status,
             reason_to_reject
         });
@@ -330,9 +366,10 @@ CommonClass.prototype = {
         // this.addEvent(this.event1, this.reqAccessGR, record.mailID, JSON.stringify(details));
 
     },
+
     updateIDAndStatus: function(recordSysID, status) {
         var logName = this.log + "updateIDAndStatus >> ";
-        var sts = this.recordClass.updateRecord(this.userRequestsGR.getTableName(), recordSysID, {
+        var sts = this.recordClass.updateRecord(new BaseClass().getUserRequestsTableName(), recordSysID, {
             status
         });
         // gs.info("Updating Users database");
@@ -340,6 +377,7 @@ CommonClass.prototype = {
         //this.triggerScheduledJob("InsertUsers");
         gs.info(sts ? logName + "updated successfully" : logName + " Failed to update the ID and Status of the record.");
     },
+
     triggerScheduledJob: function(jobName) {
         // Get the instance of the ScheduledJobManager
         var jobManager = new GlideScheduleManager();
@@ -358,13 +396,13 @@ CommonClass.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-02-14 13:55:03</sys_created_on>
         <sys_id>595189e6079482101808fe4f7c1ed021</sys_id>
-        <sys_mod_count>89</sys_mod_count>
+        <sys_mod_count>103</sys_mod_count>
         <sys_name>CommonClass</sys_name>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
         <sys_update_name>sys_script_include_595189e6079482101808fe4f7c1ed021</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-21 13:16:44</sys_updated_on>
+        <sys_updated_on>2024-03-25 17:35:52</sys_updated_on>
     </sys_script_include>
 </record_update>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_dictionary action="DELETE" element="used_in_other_control_room" table="x_1131046_aa_man_0_licenses">
+        <active>true</active>
+        <array>false</array>
+        <attributes/>
+        <audit>false</audit>
+        <calculation/>
+        <choice>0</choice>
+        <choice_field/>
+        <choice_table/>
+        <column_label>Used in All Control room</column_label>
+        <comments/>
+        <create_roles/>
+        <default_value/>
+        <defaultsort/>
+        <delete_roles/>
+        <dependent/>
+        <dependent_on_field/>
+        <display>false</display>
+        <dynamic_creation>false</dynamic_creation>
+        <dynamic_creation_script/>
+        <dynamic_default_value/>
+        <dynamic_ref_qual/>
+        <element>used_in_other_control_room</element>
+        <element_reference>false</element_reference>
+        <foreign_database/>
+        <formula/>
+        <function_definition/>
+        <function_field>false</function_field>
+        <internal_type display_value="Integer">integer</internal_type>
+        <mandatory>false</mandatory>
+        <max_length>255</max_length>
+        <name>x_1131046_aa_man_0_licenses</name>
+        <next_element/>
+        <primary>false</primary>
+        <read_only>true</read_only>
+        <read_roles/>
+        <reference/>
+        <reference_cascade_rule/>
+        <reference_floats>false</reference_floats>
+        <reference_key/>
+        <reference_qual/>
+        <reference_qual_condition/>
+        <reference_type/>
+        <spell_check>false</spell_check>
+        <staged>false</staged>
+        <sys_class_name>sys_dictionary</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-02-06 13:44:42</sys_created_on>
+        <sys_id>4dc871db076402101808fe4f7c1ed08a</sys_id>
+        <sys_name>Used in All Control room</sys_name>
+        <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
+        <sys_update_name>sys_dictionary_x_1131046_aa_man_0_licenses_used_in_other_control_room</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-03-25 14:42:42</sys_updated_on>
+        <table_reference>false</table_reference>
+        <text_index>false</text_index>
+        <unique>false</unique>
+        <use_dependent_field>false</use_dependent_field>
+        <use_dynamic_default>false</use_dynamic_default>
+        <use_reference_qualifier>simple</use_reference_qualifier>
+        <virtual>false</virtual>
+        <virtual_type>script</virtual_type>
+        <widget/>
+        <write_roles/>
+        <xml_view>false</xml_view>
+    </sys_dictionary>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AA Management">7630a7f79340021030ae7c5efaba105f</application>
+        <file_path/>
+        <instance_id>3d112a36db4337449df22f17d4961918</instance_id>
+        <instance_name>dev90973</instance_name>
+        <name>sys_dictionary_x_1131046_aa_man_0_licenses_used_in_other_control_room</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update><sys_dictionary action="INSERT_OR_UPDATE" element="used_in_other_control_room" table="x_1131046_aa_man_0_licenses"><active>true</active><array>false</array><attributes/><audit>false</audit><calculation/><choice>0</choice><choice_field/><choice_table/><column_label>Used in All Control room</column_label><comments/><create_roles/><default_value/><defaultsort/><delete_roles/><dependent/><dependent_on_field/><display>false</display><dynamic_creation>false</dynamic_creation><dynamic_creation_script/><dynamic_default_value/><dynamic_ref_qual/><element>used_in_other_control_room</element><element_reference>false</element_reference><foreign_database/><formula/><function_definition/><function_field>false</function_field><internal_type display_value="Integer">integer</internal_type><mandatory>false</mandatory><max_length>255</max_length><name>x_1131046_aa_man_0_licenses</name><next_element/><primary>false</primary><read_only>true</read_only><read_roles/><reference/><reference_cascade_rule/><reference_floats>false</reference_floats><reference_key/><reference_qual/><reference_qual_condition/><reference_type/><spell_check>false</spell_check><staged>false</staged><sys_class_name>sys_dictionary</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2024-02-06 13:44:42</sys_created_on><sys_id>4dc871db076402101808fe4f7c1ed08a</sys_id><sys_name>Used in All Control room</sys_name><sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package><sys_policy/><sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope><sys_update_name>sys_dictionary_x_1131046_aa_man_0_licenses_used_in_other_control_room</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2024-03-25 14:42:42</sys_updated_on><table_reference>false</table_reference><text_index>false</text_index><unique>false</unique><use_dependent_field>false</use_dependent_field><use_dynamic_default>false</use_dynamic_default><use_reference_qualifier>simple</use_reference_qualifier><virtual>false</virtual><virtual_type>script</virtual_type><widget/><write_roles/><xml_view>false</xml_view></sys_dictionary></record_update>]]></payload>
+        <payload_hash>984686854</payload_hash>
+        <record_name>Licenses.Used in All Control room</record_name>
+        <reverted_from/>
+        <source>4ae8b55b076402101808fe4f7c1ed027</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-03-25 14:42:42</sys_created_on>
+        <sys_id>022cc31397c54210788572d6f053afa9</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>18e761048eb0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-03-25 14:42:42</sys_updated_on>
+        <type>Dictionary</type>
+        <update_guid>862cc31329c54210e7a6df229b7cf9a8</update_guid>
+        <update_guid_history>862cc31329c54210e7a6df229b7cf9a8:984686854,52d84d3d20498610c3af025c2bfcc904:-27637148,76c835db5f640210324fde26239fe825:0,3ac835db3f64021079dda6db3150cd14:-797002449</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-03-25 14:52:21</sys_created_on>
+        <sys_db_object display_value="" name="sys_dictionary">sys_dictionary</sys_db_object>
+        <sys_id>005fbe491430490083a9482a6828a344</sys_id>
+        <sys_metadata>4dc871db076402101808fe4f7c1ed08a</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Used in All Control room</sys_name>
+        <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
+        <sys_parent display_value="Licenses">cd91fb3f9380021030ae7c5efaba1070</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
+        <sys_scope_delete display_value="">2be73dab4eaf4736a09a5739e1636be9</sys_scope_delete>
+        <sys_update_name>sys_dictionary_x_1131046_aa_man_0_licenses_used_in_other_control_room</sys_update_name>
+        <sys_update_version display_value="sys_dictionary_x_1131046_aa_man_0_licenses_used_in_other_control_room">022cc31397c54210788572d6f053afa9</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-03-25 14:52:21</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

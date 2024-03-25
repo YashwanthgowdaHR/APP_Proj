@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_app_module">
+    <sys_app_module action="DELETE">
+        <active>true</active>
+        <application display_value="Automation Anywhere">71749d2c97890210788572d6f053afbb</application>
+        <assessment/>
+        <device_type/>
+        <filter/>
+        <hint>Fill up the form for the access</hint>
+        <homepage/>
+        <image/>
+        <link_type>NEW</link_type>
+        <map_page/>
+        <mobile_title>New Request</mobile_title>
+        <mobile_view_name>Mobile</mobile_view_name>
+        <name>x_1131046_aa_man_0_user_requests</name>
+        <order>101</order>
+        <override_menu_roles>false</override_menu_roles>
+        <query/>
+        <report/>
+        <require_confirmation>true</require_confirmation>
+        <roles>x_1131046_aa_man_0.user</roles>
+        <sys_class_name>sys_app_module</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-03-16 17:14:06</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>49d7d92097c90210788572d6f053af5c</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>New Request</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
+        <sys_update_name>sys_app_module_49d7d92097c90210788572d6f053af5c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-03-25 11:11:52</sys_updated_on>
+        <timeline_page/>
+        <title>New Request</title>
+        <uncancelable>false</uncancelable>
+        <view_name>Raise a new request</view_name>
+        <window_name/>
+    </sys_app_module>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AA Management">7630a7f79340021030ae7c5efaba105f</application>
+        <file_path/>
+        <instance_id>3d112a36db4337449df22f17d4961918</instance_id>
+        <instance_name>dev90973</instance_name>
+        <name>sys_app_module_49d7d92097c90210788572d6f053af5c</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_app_module"><sys_app_module action="INSERT_OR_UPDATE"><active>true</active><application display_value="Automation Anywhere">71749d2c97890210788572d6f053afbb</application><assessment/><device_type/><filter/><hint>Fill up the form for the access</hint><homepage/><image/><link_type>NEW</link_type><map_page/><mobile_title>New Request</mobile_title><mobile_view_name>Mobile</mobile_view_name><name>x_1131046_aa_man_0_user_requests</name><order>101</order><override_menu_roles>false</override_menu_roles><query/><report/><require_confirmation>true</require_confirmation><roles>x_1131046_aa_man_0.user</roles><sys_class_name>sys_app_module</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2024-03-16 17:14:06</sys_created_on><sys_domain>global</sys_domain><sys_domain_path>/</sys_domain_path><sys_id>49d7d92097c90210788572d6f053af5c</sys_id><sys_mod_count>2</sys_mod_count><sys_name>New Request</sys_name><sys_overrides/><sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package><sys_policy/><sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope><sys_update_name>sys_app_module_49d7d92097c90210788572d6f053af5c</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2024-03-25 11:11:52</sys_updated_on><timeline_page/><title>New Request</title><uncancelable>false</uncancelable><view_name>Raise a new request</view_name><window_name/></sys_app_module></record_update>]]></payload>
+        <payload_hash>-1446728378</payload_hash>
+        <record_name>New Request</record_name>
+        <reverted_from/>
+        <source>4ae8b55b076402101808fe4f7c1ed027</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-03-25 11:11:52</sys_created_on>
+        <sys_id>3deb121797c14210788572d6f053afe7</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>18e754f433d0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-03-25 11:11:52</sys_updated_on>
+        <type>Module</type>
+        <update_guid>b1eb12171ec142105a2717698d7d10e7</update_guid>
+        <update_guid_history>b1eb12171ec142105a2717698d7d10e7:-1446728378,571066b8d9c182101efe5a4f0d104677:1074164067,c08851a054c90210104e2ad5955dff44:-1446728378</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="New Request">e97fda1b97c14210788572d6f053af24</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-03-25 11:27:25</sys_created_on>
+        <sys_db_object display_value="" name="sys_app_module">sys_app_module</sys_db_object>
+        <sys_id>1834d95f78a34935846f97f9e90a9719</sys_id>
+        <sys_metadata>49d7d92097c90210788572d6f053af5c</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>New Request</sys_name>
+        <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
+        <sys_scope_delete display_value="">2be73dab4eaf4736a09a5739e1636be9</sys_scope_delete>
+        <sys_update_name>sys_app_module_49d7d92097c90210788572d6f053af5c</sys_update_name>
+        <sys_update_version display_value="sys_app_module_49d7d92097c90210788572d6f053af5c">3deb121797c14210788572d6f053afe7</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-03-25 11:27:25</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

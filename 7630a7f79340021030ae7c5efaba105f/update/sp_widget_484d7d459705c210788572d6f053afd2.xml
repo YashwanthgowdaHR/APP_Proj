@@ -4,10 +4,10 @@
         <client_script><![CDATA[api.controller=function(spModal, $scope) {
 	/* widget controller */
 	var c = this;
-	console.log(c.data);
+	
 	c.data.roles = {
-		displayValue: c.data.tmpRoleNames,
-		value:c.data.tmpRoleSysIDs
+		displayValue: c.data.iTmpRoleNames,
+		value:c.data.iTmpRoleSysIDs
 	}
 	$scope.$on("field.change", function (evt, params) {
 		c.data.roles = {
@@ -16,8 +16,13 @@
 		};
 	});
 	
+	c.data.licenseOptions = c.data.iAvailableLicenses;
+	c.data.licenseOptions = c.data.licenseOptions.concat(c.data.iUserInfo.licenses[0]);
+	if(c.data.iUserInfo.isDevice)
+		c.data.licenseSelected = c.data.iUserInfo.licenses[0].detail;
 	
 	
+	console.log(c.data);
 	
 	// delete object property if exists
 	function deleteProp(obj, key) {
@@ -59,23 +64,6 @@
 		// }
 		// else
 		// 	spUtil.addErrorMessage("Please select the input for the role.");
-	};
-
-	c.rejectRequest = function () {
-		spModal.open({
-			title: 'Reason for rejecting',
-			message: 'Please <b>provide the comments</b> for rejecting the request.',
-			buttons: [
-				{ label: '✘ ${Cancel}', cancel: true },
-				{ label: '✔ ${Reject}', primary: true }
-			],
-			input: true,
-			size: 'md'
-		}).then(function (reason) {
-			c.data.inputData = {"rejectReason": reason,"recordSysID": c.data.recordSysID};
-			c.data.action = "reject";
-			c.server.update().then(handleUpdateResponse).catch(handleError)
-		}, function () { }).catch(handleError);
 	};
 };]]></client_script>
         <controller_as>c</controller_as>
@@ -141,46 +129,48 @@
         <script><![CDATA[(function () {
 	/* populate the 'data' object */
 	/* e.g., data.table = $sp.getValue('table'); */
-	data.recordExists = false;
+	data.isRecordExists = false;
 	
-	var requestSysID = 'db6075ce97cdc610788572d6f053afdd';//$sp.getParameter('requestID');
+	var requestSysID = '7ab0fa9f97054210788572d6f053afb7';//$sp.getParameter('requestID');
+	
+	var baseCls = new BaseClass();
+	data.iRolesTable = baseCls.getRolesTableName();
+	// data.licensesTable = baseCls.getLicenseTableName();
+	
 	var cls = new CommonClass();
-	data.userInfo = cls.getUserByID(requestSysID);
+	data.iUserInfo = cls.getUserByID(requestSysID);
+	data.iAvailableLicenses = cls.getAvailableCRLicenses();
 	
-	if(data.userInfo){
-		data.recordExists = true;
+	if(data.iUserInfo){
+		data.isRecordExists = true;
 	}
 	
 	// Roles
 	var tmpRoleNames = [];
 	var tmpRoleSysIDs = [];
-	data.userInfo.roles.forEach(function(role){
+	data.iUserInfo.roles.forEach(function(role){
 		tmpRoleNames.push(role.name);
 		tmpRoleSysIDs.push(role.sysID);
 	});
 	
-	data.tmpRoleNames = tmpRoleNames.join('####');
-	data.tmpRoleSysIDs = tmpRoleSysIDs.join(',');
+	data.iTmpRoleNames = tmpRoleNames.join('####');
+	data.iTmpRoleSysIDs = tmpRoleSysIDs.join(',');
 	
-	// Licenses
-	var tmpLicenseNames = [];
-	var tmpLicenseIDs = [];
-	data.userInfo.roles.forEach(function(license){
-		tmpLicenseNames.push(license.name);
-		tmpLicenseIDs.push(license.id);
-	});
+	// // Licenses
+	// var tmpLicenseNames = [];
+	// var tmpLicenseIDs = [];
+	// data.iUserInfo.roles.forEach(function(license){
+	// 	tmpLicenseNames.push(license.name);
+	// 	tmpLicenseIDs.push(license.id);
+	// });
 	
-	data.tmpLicenseNames = tmpLicenseNames.join('####');
-	data.tmpLicenseIDs = tmpLicenseIDs.join(',');
+	// data.iTmpLicenseNames = tmpLicenseNames.join('####');
+	// data.iTmpLicenseIDs = tmpLicenseIDs.join(',');
 	
-	
-	var baseCls = new BaseClass();
-	data.rolesTable = baseCls.getRolesTableName();
-	data.licensesTable = baseCls.getLicenseTableName();
 	
 
 	if (input) {
-		// APPROVE action
+		// Update action
 		if (input.action === "approve") {
 			if (input.inputData.roleIDs != "" && input.inputData.roleIDs != undefined)
 				try {
@@ -196,17 +186,6 @@
 			else
 				gs.addErrorMessage("Please Fill the (*) fields which are mandatory.");
 		}
-
-		// REJECT action
-		if (input.action === 'reject') {
-			try {
-				cls.rejectUser(input.inputData);
-				gs.addInfoMessage("User has been rejected");
-			} catch (e) {
-				gs.error('Error rejecting request:', e);
-				gs.addErrorMessage('An error occurred while rejecting the request.');
-			}
-		}
 	}
 
 })();]]></script>
@@ -215,83 +194,82 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-03-18 09:11:38</sys_created_on>
         <sys_id>484d7d459705c210788572d6f053afd2</sys_id>
-        <sys_mod_count>31</sys_mod_count>
+        <sys_mod_count>61</sys_mod_count>
         <sys_name>Admin - View User Record</sys_name>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy/>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
         <sys_update_name>sp_widget_484d7d459705c210788572d6f053afd2</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-21 13:15:57</sys_updated_on>
+        <sys_updated_on>2024-03-25 17:43:07</sys_updated_on>
         <template><![CDATA[<div>
-    <div ng-if="data.recordExists">
-      <form class="form-horizontal">
-        <fieldset>
-          <!-- Form Name -->
-          <h3 class="text-center"></h3>
-  
-          <!-- MUID/XUID -->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="txt_uid">Username / UID</label>
-            <div class="col-md-6">
-              <input id="txt_uid" ng-model="c.data.userInfo.username" type="text" class="form-control input-md">
-            </div>
+  <div ng-if="data.isRecordExists">
+    <form class="form-horizontal">
+      <fieldset>
+        <!-- Form Name -->
+        <h3 class="text-center"></h3>
+
+        <!-- MUID/XUID -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="txt_uid">Username / UID</label>
+          <div class="col-md-6">
+            <input id="txt_uid" ng-model="c.data.iUserInfo.username" type="text" class="form-control input-md">
           </div>
-  
-          <!-- First Name -->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="txt_fname">First Name</label>
-            <div class="col-md-6">
-              <input id="txt_fname" ng-model="c.data.userInfo.firstName" type="text" class="form-control input-md">
-            </div>
-          </div>
-  
-          <!-- Last Name -->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="txt_lname">Last Name</label>
-            <div class="col-md-6">
-              <input id="txt_lname" ng-model="c.data.userInfo.lastName" type="text" class="form-control input-md">
-            </div>
-          </div>
-  
-          <!-- Email ID -->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="txt_email">Mail ID</label>
-            <div class="col-md-6">
-              <input id="txt_email" ng-model="c.data.userInfo.mailID" type="email" class="form-control input-md">
-            </div>
-          </div>
-  
-          <!-- Roles -->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="txt_roles">Roles</label>
-            <div class="col-md-6">
-              <sn-record-picker id="txt_roles" table="data.rolesTable" field="c.data.roles"
-                                display-field="'name'" value-field="'sys_id'" search-fields="'name'" page-size="50"
-                                multiple="true"></sn-record-picker>
-            </div>
-          </div>
-          <!-- License -->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="txt_license">License</label>
-            <div class="col-md-6">
-              <sn-record-picker id="txt_license" table="data.licensesTable" field="licenses[$index]"
-                                display-field="'detail'" value-field="'sys_id'" search-fields="'name'" page-size="50"
-                                multiple="true"></sn-record-picker>
-            </div>
-          </div>
-        </fieldset>
-        <!-- Submit Button -->
-        <div class="customized">
-          <button class="btn btn-approve col-sm-6"
-                  ng-click="c.updateUserData()"><span class="glyphicon glyphicon-ok" />Update</button>
         </div>
-      </form>
-  
-    </div>
-    <div class="no-request" ng-if="!data.recordExists">
-      No data found for this user
-    </div>
-  </div>]]></template>
+
+        <!-- First Name -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="txt_fname">First Name</label>
+          <div class="col-md-6">
+            <input id="txt_fname" ng-model="c.data.iUserInfo.firstName" type="text" class="form-control input-md">
+          </div>
+        </div>
+
+        <!-- Last Name -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="txt_lname">Last Name</label>
+          <div class="col-md-6">
+            <input id="txt_lname" ng-model="c.data.iUserInfo.lastName" type="text" class="form-control input-md">
+          </div>
+        </div>
+
+        <!-- Email ID -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="txt_email">Mail ID</label>
+          <div class="col-md-6">
+            <input id="txt_email" ng-model="c.data.iUserInfo.mailID" type="email" class="form-control input-md">
+          </div>
+        </div>
+
+        <!-- Roles -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="txt_roles">Roles</label>
+          <div class="col-md-6">
+            <sn-record-picker id="txt_roles" table="data.iRolesTable" field="data.roles" display-field="'name'"
+              value-field="'sys_id'" search-fields="'name'" page-size="50" multiple="true"></sn-record-picker>
+          </div>
+        </div>
+        <!-- License -->
+        <div class="form-group" ng-if="c.data.iUserInfo.isDevice">
+          <label class="col-md-4 control-label" for="txt_license">License</label>
+          <div class="col-md-6">
+              <label ng-repeat="option in c.data.licenseOptions">
+                  <input type="radio" ng-model="c.data.licenseSelected" ng-value="option.id">{{ option.detail }}
+              </label>
+          </div>
+        </div>
+      </fieldset>
+      <!-- Submit Button -->
+      <div class="customized">
+        <button class="btn btn-approve col-sm-6" ng-click="c.updateUserData()"><span
+            class="glyphicon glyphicon-ok"/>Update</button>
+      </div>
+    </form>
+
+  </div>
+  <div class="no-request" ng-if="!data.isRecordExists">
+    No data found for this user
+  </div>
+</div>]]></template>
     </sp_widget>
 </record_update>
