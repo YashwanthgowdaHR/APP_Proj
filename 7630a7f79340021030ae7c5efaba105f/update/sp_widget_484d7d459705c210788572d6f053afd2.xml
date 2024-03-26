@@ -1,83 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
-        <client_script><![CDATA[api.controller=function(spModal, $scope) {
+        <client_script><![CDATA[api.controller=function(spModal, $scope, spUtil) {
 	/* widget controller */
 	var c = this;
-	
-	c.data.roles = {
-		displayValue: c.data.iTmpRoleNames,
-		value:c.data.iTmpRoleSysIDs
+
+	c.data.user = {
+		username: c.data.iUserInfo.username,
+		firstName: c.data.iUserInfo.firstName,
+		lastName: c.data.iUserInfo.lastName,
+		mailID: c.data.iUserInfo.mailID,
+		isDevice: c.data.iUserInfo.isDevice
 	}
+	
+	c.data.user.roles = {
+		displayValue: c.data.iTmpRoleNames,
+		value: c.data.iTmpRoleSysIDs
+	}
+
+	c.data.licenseOptions = c.data.iAvailableLicenses;
+	c.data.licenseOptions = c.data.licenseOptions.concat(c.data.iUserInfo.licenses[0]);
+
+
 	$scope.$on("field.change", function (evt, params) {
-		c.data.roles = {
+		c.data.user.roles = {
 			displayValue: params.displayValue,
 			value: params.newValue
 		};
 	});
-	
-	c.data.licenseOptions = c.data.iAvailableLicenses;
-	c.data.licenseOptions = c.data.licenseOptions.concat(c.data.iUserInfo.licenses[0]);
-	if(c.data.iUserInfo.isDevice)
-		c.data.licenseSelected = c.data.iUserInfo.licenses[0].detail;
-	
-	
-	console.log(c.data);
-	
-	// delete object property if exists
-	function deleteProp(obj, key) {
-		if (obj.hasOwnProperty(key))
-			delete obj[key];
-		return obj;
-	}
 
-	// Reset data properties
-	function resetData() {
-		deleteProp("inputData");
-		deleteProp("action");
-		deleteProp("rejectReason");
+function areSame(a,b){
+	return a == b;
+}
+
+	function anyChanges(previous, current){
+		if(!areSame(previous.firstName,current.firstName) || 
+		!areSame(previous.lastName,current.lastName) ||
+		!areSame(previous.mailID,current.mailID) ||
+		! areSame(previous.licenses[0].value, current.licenseSelected.value) ||
+		! areSame(c.data.iTmpRoleNames,current.roles.displayValue) ||
+		! areSame(c.data.iTmpRoleSysIDs,current.roles.value)){
+			return true;
+		}
+		return false;
 	}
 
 	function handleUpdateResponse(res) {
-		resetData();
 		c.server.refresh();
 	}
 
 	function handleError(error) {
 		// Handle or log the error as needed
 		console.error('An error occurred:', error);
-		resetData();
 	}
 
-	c.approveRequest = function () {
-		console.log(c);
-		// roles = roles==undefined ? "" : roles;
-		// licenses = licenses==undefined ? "" : licenses;
+	c.updateUserData = function () {
+		if(anyChanges(c.data.iUserInfo, c.data.user)){
 
-		// if (roles != "" && roles != undefined) {
-		// 	spModal.confirm("Are you sure to <b>approve</b> this request?").then(function (confirmed) {
-		// 		spUtil.addTrivialMessage("Approving the request...");
-		// 		c.data.inputData = {"roleIDs": roles, "recordSysID": c.data.recordSysID, licenses};
-		// 		c.data.action = "approve";
-		// 		c.server.update().then(handleUpdateResponse).catch(handleError);
-		// 	});
-		// }
-		// else
-		// 	spUtil.addErrorMessage("Please select the input for the role.");
+		}else{
+			spUtil.addInfoMessage("No Changes Made!");
+		}
+
 	};
 };]]></client_script>
         <controller_as>c</controller_as>
-        <css>.customized{
-	display: flex;
+        <css>.d-flex{
+  display: flex;
+}
+
+.disabled{
+  background-color: grey;
+  color: white;
+
+}
+
+div label{
+  font-weight: bold;
+}
+
+.justify-center{
   justify-content: center;
-  margin: 10px 0px;
 }
 
 .btn {
   background: transparent;
   border-radius: 0px;
   vertical-align: middle;
-  text-transform: upppercase;
+  text-transform: uppercase;
 }
 
 .btn:hover{
@@ -194,14 +203,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-03-18 09:11:38</sys_created_on>
         <sys_id>484d7d459705c210788572d6f053afd2</sys_id>
-        <sys_mod_count>61</sys_mod_count>
+        <sys_mod_count>153</sys_mod_count>
         <sys_name>Admin - View User Record</sys_name>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy/>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
         <sys_update_name>sp_widget_484d7d459705c210788572d6f053afd2</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-25 17:43:07</sys_updated_on>
+        <sys_updated_on>2024-03-26 16:54:50</sys_updated_on>
         <template><![CDATA[<div>
   <div ng-if="data.isRecordExists">
     <form class="form-horizontal">
@@ -211,58 +220,58 @@
 
         <!-- MUID/XUID -->
         <div class="form-group">
-          <label class="col-md-4 control-label" for="txt_uid">Username / UID</label>
-          <div class="col-md-6">
-            <input id="txt_uid" ng-model="c.data.iUserInfo.username" type="text" class="form-control input-md">
+          <label class="col-sm-2 col-md-4 control-label" for="txt_uid">Username / UID</label>
+          <div class="col-sm-10 col-md-5">
+            <p id="txt_uid" type="text" class="form-control input-md" style="background-color: grey;color: white;">
+              {{c.data.user.username}}</p>
           </div>
         </div>
 
         <!-- First Name -->
         <div class="form-group">
-          <label class="col-md-4 control-label" for="txt_fname">First Name</label>
-          <div class="col-md-6">
-            <input id="txt_fname" ng-model="c.data.iUserInfo.firstName" type="text" class="form-control input-md">
+          <label class="col-sm-2 col-md-4 control-label" for="txt_fname">First Name</label>
+          <div class="col-sm-10 col-md-5">
+            <input id="txt_fname" ng-model="c.data.user.firstName" type="text" class="form-control input-md">
           </div>
         </div>
 
         <!-- Last Name -->
         <div class="form-group">
-          <label class="col-md-4 control-label" for="txt_lname">Last Name</label>
-          <div class="col-md-6">
-            <input id="txt_lname" ng-model="c.data.iUserInfo.lastName" type="text" class="form-control input-md">
+          <label class="col-sm-2 col-md-4 control-label" for="txt_lname">Last Name</label>
+          <div class="col-sm-10 col-md-5">
+            <input id="txt_lname" ng-model="c.data.user.lastName" type="text" class="form-control input-md">
           </div>
         </div>
 
         <!-- Email ID -->
         <div class="form-group">
-          <label class="col-md-4 control-label" for="txt_email">Mail ID</label>
-          <div class="col-md-6">
-            <input id="txt_email" ng-model="c.data.iUserInfo.mailID" type="email" class="form-control input-md">
+          <label class="col-sm-2 col-md-4 control-label" for="txt_email">Mail ID</label>
+          <div class="col-sm-10 col-md-5">
+            <input id="txt_email" ng-model="c.data.user.mailID" type="email" class="form-control input-md">
           </div>
         </div>
 
         <!-- Roles -->
         <div class="form-group">
-          <label class="col-md-4 control-label" for="txt_roles">Roles</label>
-          <div class="col-md-6">
-            <sn-record-picker id="txt_roles" table="data.iRolesTable" field="data.roles" display-field="'name'"
+          <label class="col-sm-2 col-md-4 control-label" for="txt_roles">Roles</label>
+          <div class="col-sm-10 col-md-5">
+            <sn-record-picker id="txt_roles" table="data.iRolesTable" field="c.data.user.roles" display-field="'name'"
               value-field="'sys_id'" search-fields="'name'" page-size="50" multiple="true"></sn-record-picker>
           </div>
         </div>
         <!-- License -->
-        <div class="form-group" ng-if="c.data.iUserInfo.isDevice">
-          <label class="col-md-4 control-label" for="txt_license">License</label>
-          <div class="col-md-6">
-              <label ng-repeat="option in c.data.licenseOptions">
-                  <input type="radio" ng-model="c.data.licenseSelected" ng-value="option.id">{{ option.detail }}
-              </label>
+        <div class="form-group" ng-if="c.data.user.isDevice">
+          <label class="col-sm-2 col-md-4 control-label" for="txt_license">License</label>
+          <div class="col-sm-10 col-md-5">
+            <select id="txt_license" class="form-control" ng-model="c.data.user.licenseSelected"
+              ng-init="c.data.user.licenseSelected = c.data.iUserInfo.licenses[0]"
+              ng-options="option.detail for option in c.data.licenseOptions"></select>
           </div>
         </div>
       </fieldset>
       <!-- Submit Button -->
-      <div class="customized">
-        <button class="btn btn-approve col-sm-6" ng-click="c.updateUserData()"><span
-            class="glyphicon glyphicon-ok"/>Update</button>
+      <div class="justify-center d-flex">
+        <button class="btn btn-approve col-md-6 col-sm-12 col-xs-12" ng-click="c.updateUserData()">Update</button>
       </div>
     </form>
 
