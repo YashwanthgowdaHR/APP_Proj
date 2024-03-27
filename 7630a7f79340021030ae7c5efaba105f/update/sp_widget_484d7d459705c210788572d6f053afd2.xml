@@ -10,16 +10,21 @@
 		firstName: c.data.iUserInfo.firstName,
 		lastName: c.data.iUserInfo.lastName,
 		mailID: c.data.iUserInfo.mailID,
-		isDevice: c.data.iUserInfo.isDevice
-	}
-	
-	c.data.user.roles = {
-		displayValue: c.data.iTmpRoleNames,
-		value: c.data.iTmpRoleSysIDs
+		isDevice: c.data.iUserInfo.isDevice,
+		userID: c.data.iUserInfo.userID,
+		recordSysID: c.data.iUserInfo.recordSysID
 	}
 
-	c.data.licenseOptions = c.data.iAvailableLicenses;
-	c.data.licenseOptions = c.data.licenseOptions.concat(c.data.iUserInfo.licenses[0]);
+	c.data.user.roles = {
+		displayValue: c.data.iTmpRoleNames,
+		value: c.data.iTmpRoleIDs
+	}
+
+
+	if(c.data.user.isDevice){
+		c.data.licenseOptions = c.data.iAvailableLicenses;
+		c.data.licenseOptions = c.data.licenseOptions.concat(c.data.iUserInfo.licenses[0]);
+	}
 
 
 	$scope.$on("field.change", function (evt, params) {
@@ -29,17 +34,19 @@
 		};
 	});
 
-function areSame(a,b){
-	return a == b;
-}
+	console.log(c.data);
+
+	function areSame(a,b){
+		return a == b;
+	}
 
 	function anyChanges(previous, current){
 		if(!areSame(previous.firstName,current.firstName) || 
-		!areSame(previous.lastName,current.lastName) ||
-		!areSame(previous.mailID,current.mailID) ||
-		! areSame(previous.licenses[0].value, current.licenseSelected.value) ||
-		! areSame(c.data.iTmpRoleNames,current.roles.displayValue) ||
-		! areSame(c.data.iTmpRoleSysIDs,current.roles.value)){
+			 !areSame(previous.lastName,current.lastName) ||
+			 !areSame(previous.mailID,current.mailID) ||
+			 (current.isDevice && !areSame(previous.licenses[0].value, current.licenseSelected.value)) ||
+			 ! areSame(c.data.iTmpRoleNames,current.roles.displayValue) ||
+			 ! areSame(c.data.iTmpRoleIDs,current.roles.value)){
 			return true;
 		}
 		return false;
@@ -55,11 +62,18 @@ function areSame(a,b){
 	}
 
 	c.updateUserData = function () {
-		if(anyChanges(c.data.iUserInfo, c.data.user)){
-
+		console.log(c.data);
+		if(c.data.user.mailID != "" && c.data.user.firstName !="" && c.data.user.lastName !="" && c.data.user.roles.value !=""){
+			if(anyChanges(c.data.iUserInfo, c.data.user)){
+				c.data.action = "update";
+				c.server.update().then(handleUpdateResponse).catch(handleError);
+			}else{
+				spUtil.addInfoMessage("No Changes Made!");
+			}
 		}else{
-			spUtil.addInfoMessage("No Changes Made!");
+			spUtil.addErrorMessage("Please fill required fields.")
 		}
+
 
 	};
 };]]></client_script>
@@ -139,32 +153,32 @@ div label{
 	/* populate the 'data' object */
 	/* e.g., data.table = $sp.getValue('table'); */
 	data.isRecordExists = false;
-	
-	var requestSysID = '7ab0fa9f97054210788572d6f053afb7';//$sp.getParameter('requestID');
-	
+
+	var requestSysID = '3975bbbb97014210788572d6f053afb2';//$sp.getParameter('requestID');
+
 	var baseCls = new BaseClass();
 	data.iRolesTable = baseCls.getRolesTableName();
 	// data.licensesTable = baseCls.getLicenseTableName();
-	
+
 	var cls = new CommonClass();
 	data.iUserInfo = cls.getUserByID(requestSysID);
 	data.iAvailableLicenses = cls.getAvailableCRLicenses();
-	
-	if(data.iUserInfo){
+
+	if (data.iUserInfo) {
 		data.isRecordExists = true;
 	}
-	
+
 	// Roles
 	var tmpRoleNames = [];
-	var tmpRoleSysIDs = [];
-	data.iUserInfo.roles.forEach(function(role){
+	var tmpRoleIDs = [];
+	data.iUserInfo.roles.forEach(function (role) {
 		tmpRoleNames.push(role.name);
-		tmpRoleSysIDs.push(role.sysID);
+		tmpRoleIDs.push(role.id);
 	});
-	
+
 	data.iTmpRoleNames = tmpRoleNames.join('####');
-	data.iTmpRoleSysIDs = tmpRoleSysIDs.join(',');
-	
+	data.iTmpRoleIDs = tmpRoleIDs.join(',');
+
 	// // Licenses
 	// var tmpLicenseNames = [];
 	// var tmpLicenseIDs = [];
@@ -172,28 +186,30 @@ div label{
 	// 	tmpLicenseNames.push(license.name);
 	// 	tmpLicenseIDs.push(license.id);
 	// });
-	
+
 	// data.iTmpLicenseNames = tmpLicenseNames.join('####');
 	// data.iTmpLicenseIDs = tmpLicenseIDs.join(',');
-	
-	
+
+
 
 	if (input) {
 		// Update action
-		if (input.action === "approve") {
-			if (input.inputData.roleIDs != "" && input.inputData.roleIDs != undefined)
+		if (input.action === "update") {
+			if(input.user.mailID != "" && input.user.firstName !="" && input.user.lastName !="" && input.user.roles.value !=""){
 				try {
-					var output = cls.approveUser(input.inputData);
-					if (output.isCreated)
-						gs.addInfoMessage("User has been created")
+					var output = cls.updateUser(input.user);
+					if (output.isUpdated)
+						gs.addInfoMessage("User details has updated successfully")
 					else
-						gs.addErrorMessage('Error while creating user.\n<b>Reason:</b> ' + output.errorMsg);
+						gs.addErrorMessage('Error while updating user.\n<b>Reason:</b> ' + output.msg);
 				} catch (e) {
-					gs.error('Error approving request:', e);
-					gs.addErrorMessage('An error occurred while approving the request.');
+					gs.error('Error occurred while updating user info:', e);
+					gs.addErrorMessage('An error occurred while updating the data.');
 				}
-			else
-				gs.addErrorMessage("Please Fill the (*) fields which are mandatory.");
+			}else{
+				gs.addErrorMessage("Please fill the required fields.");
+			}
+				
 		}
 	}
 
@@ -203,14 +219,14 @@ div label{
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-03-18 09:11:38</sys_created_on>
         <sys_id>484d7d459705c210788572d6f053afd2</sys_id>
-        <sys_mod_count>153</sys_mod_count>
+        <sys_mod_count>172</sys_mod_count>
         <sys_name>Admin - View User Record</sys_name>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy/>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
         <sys_update_name>sp_widget_484d7d459705c210788572d6f053afd2</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-26 16:54:50</sys_updated_on>
+        <sys_updated_on>2024-03-27 12:20:34</sys_updated_on>
         <template><![CDATA[<div>
   <div ng-if="data.isRecordExists">
     <form class="form-horizontal">
@@ -229,7 +245,7 @@ div label{
 
         <!-- First Name -->
         <div class="form-group">
-          <label class="col-sm-2 col-md-4 control-label" for="txt_fname">First Name</label>
+          <label class="col-sm-2 col-md-4 control-label" for="txt_fname">First Name *</label>
           <div class="col-sm-10 col-md-5">
             <input id="txt_fname" ng-model="c.data.user.firstName" type="text" class="form-control input-md">
           </div>
@@ -237,7 +253,7 @@ div label{
 
         <!-- Last Name -->
         <div class="form-group">
-          <label class="col-sm-2 col-md-4 control-label" for="txt_lname">Last Name</label>
+          <label class="col-sm-2 col-md-4 control-label" for="txt_lname">Last Name *</label>
           <div class="col-sm-10 col-md-5">
             <input id="txt_lname" ng-model="c.data.user.lastName" type="text" class="form-control input-md">
           </div>
@@ -245,7 +261,7 @@ div label{
 
         <!-- Email ID -->
         <div class="form-group">
-          <label class="col-sm-2 col-md-4 control-label" for="txt_email">Mail ID</label>
+          <label class="col-sm-2 col-md-4 control-label" for="txt_email">Mail ID *</label>
           <div class="col-sm-10 col-md-5">
             <input id="txt_email" ng-model="c.data.user.mailID" type="email" class="form-control input-md">
           </div>
@@ -253,10 +269,10 @@ div label{
 
         <!-- Roles -->
         <div class="form-group">
-          <label class="col-sm-2 col-md-4 control-label" for="txt_roles">Roles</label>
+          <label class="col-sm-2 col-md-4 control-label" for="txt_roles">Roles *</label>
           <div class="col-sm-10 col-md-5">
             <sn-record-picker id="txt_roles" table="data.iRolesTable" field="c.data.user.roles" display-field="'name'"
-              value-field="'sys_id'" search-fields="'name'" page-size="50" multiple="true"></sn-record-picker>
+              value-field="'id'" search-fields="'name'" page-size="50" multiple="true"></sn-record-picker>
           </div>
         </div>
         <!-- License -->

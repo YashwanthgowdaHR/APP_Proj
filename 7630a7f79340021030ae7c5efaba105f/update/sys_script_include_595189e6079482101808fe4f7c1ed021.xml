@@ -221,21 +221,21 @@ CommonClass.prototype = {
     },
 
     getUserLicenses: function(licenseIDs) {
-        if (this.isEmpty(licenseIDs))
-            return;
-        var tmpLicenses = Array.isArray(licenseIDs) ? licenseIDs : licenseIDs.split(",");
         var licenses = [];
-
-        tmpLicenses.forEach(function(id) {
-            var table = new GlideRecord(new BaseClass().getLicenseTableName());
-            table.addQuery('id', id);
-            table.query();
-            table.next();
-            licenses.push({
-                detail: table.getValue('detail'),
-                'value': id
+        if (!this.isEmpty(licenseIDs)) {
+            var tmpLicenses = Array.isArray(licenseIDs) ? licenseIDs : licenseIDs.split(",");
+            tmpLicenses.forEach(function(id) {
+                var table = new GlideRecord(new BaseClass().getLicenseTableName());
+                table.addQuery('id', id);
+                table.query();
+                table.next();
+                licenses.push({
+                    detail: table.getValue('detail'),
+                    'value': id
+                });
             });
-        });
+        }
+
         return licenses;
     },
 
@@ -246,11 +246,11 @@ CommonClass.prototype = {
         var tmpRoles = Array.isArray(rolesIDs) ? rolesIDs : rolesIDs.split(",");
         var roles = [];
 
-        tmpRoles.forEach(function(id) {
-            table.get(id.toString());
+        tmpRoles.forEach(function(sysID) {
+            table.get(sysID.toString());
             roles.push({
                 name: table.getValue('name'),
-                sysID: table.getValue('sys_id')
+                id: table.getValue('id'),
             });
         });
         return roles;
@@ -391,18 +391,61 @@ CommonClass.prototype = {
             gs.error("Scheduled job '" + jobName + "' does not exist.");
         }
     },
+
+    updateUserRecord: function(userID, recordSysID) {
+        var user = this.apiClass.GetUserDetailsByID(userID);
+
+        data.first_name = user.firstName;
+        data.last_name = user.last_name;
+        data.mail_id = user.mailID
+        if (user.roles.length > 0) {
+            var tmpRoles = [];
+            user.roles.forEach((role) => {
+                tmpRoles.push(role.id);
+            });
+            data.roles = this.recordClass.fetchGivenField('x_1131046_aa_man_0_roles', 'sys_id', 'id', tmpRoles);
+        }
+        if (user.licenseFeatures.length > 0) {
+            var tmpLicenses = [];
+            user.licenseFeatures.forEach((license) => {
+                tmpLicenses.push(license);
+            });
+            data.licenses = this.recordClass.fetchGivenField('x_1131046_aa_man_0_licenses', 'id', 'name', tmpLicenses);
+        }
+        this.recordClass.updateRecord(new BaseClass().getUsersTableName(), recordSysID, data);
+    },
+
+    updateUser: function(input) {
+        var logName = this.log + "updateUser >> ";
+        var user = {
+            username: input.username,
+            userID: input.userID,
+            firstName: input.firstName,
+            lastName: input.lastName,
+            mailID: input.mailID,
+            roleIDs: this.isEmpty(input.roles.value) ? "" : input.roles.value,
+            licenses: input.isDevice ? this.getLicenseName(input.licenseSelected.value) : ""
+        }
+        gs.info(logName + "Request sent to Automation Anywhere to update the User details of " + input.userID);
+        var output = this.apiClass.updateUser(user);
+        if (output && output.isUpdated) {
+            gs.info(logName + "User details are updated successfully");
+            this.updateUserRecord(input.userID, input.recordSysID);
+        }
+        return output;
+    }
 };]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-02-14 13:55:03</sys_created_on>
         <sys_id>595189e6079482101808fe4f7c1ed021</sys_id>
-        <sys_mod_count>104</sys_mod_count>
+        <sys_mod_count>115</sys_mod_count>
         <sys_name>CommonClass</sys_name>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
         <sys_update_name>sys_script_include_595189e6079482101808fe4f7c1ed021</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-26 09:10:16</sys_updated_on>
+        <sys_updated_on>2024-03-27 12:17:13</sys_updated_on>
     </sys_script_include>
 </record_update>

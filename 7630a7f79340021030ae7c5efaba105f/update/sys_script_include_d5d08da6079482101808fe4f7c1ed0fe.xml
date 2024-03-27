@@ -30,6 +30,55 @@ RecordClass.prototype = {
         } else
             gs.info(logName + "given sys_id " + recordSysID + " is not exists. skipping the operation");
     },
+
+    /**
+     * Fetch the FieldValue of the each record from the given table where record is identified using the given column & value
+     * @param {string} tableName - table from which field will be extracted.
+     * @param {string} fieldName - field to be extracted
+     * @param {string} columnName - columnName in which filter will applied.
+     * @param {string} columnValue - columnValue
+     * @return {string/number} fieldValue - returns fieldValue if found, else 0.
+     */
+    fetchField: function(tableName, fieldName, columnName, columnValue) {
+        var gr = new GlideRecord(tableName);
+        gr.addQuery(columnName, columnValue);
+        gr.query();
+        if (gr.hasNext()) {
+            gr.next();
+            return gr.getValue(fieldName);
+        } else {
+            return 0;
+        }
+    },
+
+    /**
+     * Fetch the given field value of a record from the given table where record is identified using the given column and value present in the given list
+     * @param {string} tableName - table from which given field will be extracted.
+     * @param {string} fieldName - field to be extracted
+     * @param {string} columnName - column in which filter will applied.
+     * @param {list} valueList - list that contains the value (for role, it is id & for license, it is name) using which their respective field value will be extracted from the table
+     * @return {string} resultString - comma separated field value of respective values passed in list.
+     */
+    fetchGivenField: function(tableName, fieldName, columnName, valueList) {
+        var logName = this.log + "fetchGivenField >> ";
+        var resultString = "";
+
+        gs.info(logName + "Fetching the " + fieldName + " from table: " + tableName + " under the column: " + columnName);
+        valueList.forEach((value) => {
+            var result = this.fetchField(tableName, fieldName, columnName, value);
+            if (result) {
+                if (!resultString)
+                    resultString = resultString + "," + String(result);
+                else
+                    resultString = String(result);
+            } else {
+                gs.info(logName + "Given Field doesn't exists for the value:" + value + "under the column: " + columnName + " in table: " + tableName);
+            }
+        });
+
+        return resultString;
+    },
+
     /**
      * @param {string} tableName - Table Name.
      * @param {string} recordSysID - sys_id of record to filter and update its values .
@@ -132,13 +181,13 @@ RecordClass.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-02-14 13:52:54</sys_created_on>
         <sys_id>d5d08da6079482101808fe4f7c1ed0fe</sys_id>
-        <sys_mod_count>2</sys_mod_count>
+        <sys_mod_count>3</sys_mod_count>
         <sys_name>RecordClass</sys_name>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
         <sys_update_name>sys_script_include_d5d08da6079482101808fe4f7c1ed0fe</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-18 06:15:20</sys_updated_on>
+        <sys_updated_on>2024-03-27 10:57:47</sys_updated_on>
     </sys_script_include>
 </record_update>
