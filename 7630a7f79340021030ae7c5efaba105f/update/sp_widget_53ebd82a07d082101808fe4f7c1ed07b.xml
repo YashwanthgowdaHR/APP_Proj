@@ -5,6 +5,9 @@
 api.controller = function ($scope, spUtil, spModal) {
 	/* widget controller */
 	var c = this;
+	
+	c.data.licenseQuery = 'parentLIKEControlRoom&available_count>0';
+	
 	editRow = function (button) {
 		var row = button.closest('tr');
 		//row.find('sn-record-picker').attr('sn-disabled', 'false');
@@ -44,6 +47,7 @@ api.controller = function ($scope, spUtil, spModal) {
 		// Handle or log the error as needed
 		console.error('An error occurred:', error);
 		resetData();
+		c.server.refresh();
 	}
 
 	c.approveRequest = function (record, roles, licenses) {
@@ -170,9 +174,10 @@ background: #337ab7;
         <script><![CDATA[(function () {
 	/* populate the 'data' object */
 	var cls = new CommonClass();
+    var baseCls = new BaseClass();
 	data.requests = cls.getAllPendingReq();
-	data.rolesTable = cls.rolesTableName;
-	data.licensesTable = cls.licensesTableName;
+	data.rolesTable = baseCls.getRolesTableName();
+	data.licensesTable = baseCls.getLicenseTableName();
 
 	if (input) {
 		// APPROVE action
@@ -209,65 +214,67 @@ background: #337ab7;
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-02-14 11:16:41</sys_created_on>
         <sys_id>53ebd82a07d082101808fe4f7c1ed07b</sys_id>
-        <sys_mod_count>837</sys_mod_count>
+        <sys_mod_count>885</sys_mod_count>
         <sys_name>Admin - Approve or Reject</sys_name>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy/>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
         <sys_update_name>sp_widget_53ebd82a07d082101808fe4f7c1ed07b</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-02-22 10:31:58</sys_updated_on>
+        <sys_updated_on>2024-03-27 16:50:06</sys_updated_on>
         <template><![CDATA[<div class="container-fluid" id="main_section">
     <div ng-if="data.requests.length > 0" class="table-responsive" id="leftList">
-        <h2 class="text-center">Requests Details:-</h2><br>
-        <table class="table table-hover table-bordered">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Username *</th>
-                    <th scope="col">Name *</th>
-                    <th scope="col">Environment *</th>
-                    <th scope="col">Requested On</th>
-                    <th scope="col">Role *</th>
-                    <th scope="col">License</th>
-                    <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="info in data.requests track by $index" id="trows_{{info.no}}">
-                    <th scope="row">{{info.no}}</th>
-                    <td>{{info.username}}</td>
-                    <td>{{info.name}}</td>
-                    <td>{{info.environment}}</td>
-                    <td>{{info.requestedOn}}</td>
-                    <td>
-                        <sn-record-picker id="txt_roles" table="c.data.rolesTable" field="roles[$index]"
-                            display-field="'name'" value-field="'id'" search-fields="'name'" page-size="50"
-                            multiple="true" sn-disabled="true"></sn-record-picker>
-                    </td>
-                    <td>
-                        <sn-record-picker id="txt_license" table="data.licensesTable" field="licenses[$index]"
-                            display-field="'detail'" value-field="'name'" search-fields="'name'" page-size="50"
-                            multiple="true" sn-disabled="true"></sn-record-picker>
-                    </td>
-                    <td>
-                        <button class="btn btn-edit btn-default" onclick="editRow($(this));"><span
-                                class="glyphicon glyphicon-edit" /> Edit</button>
-                        <button class="btn btn-approve"
-                            ng-click="c.approveRequest(data.requests[$index],roles[$index].value,licenses[$index].value)" disabled><span
-                                class="glyphicon glyphicon-ok" /> Approve</button>
-                        <button class="btn btn-reject" ng-click="c.rejectRequest(info)" disabled><span
-                                class="glyphicon glyphicon-remove" /> Reject</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+      <h2 class="text-center">Requests Details:-</h2><br>
+      <table class="table table-hover table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Username *</th>
+            <th scope="col">Name *</th>
+            <th scope="col">Environment *</th>
+            <th scope="col">Requested On</th>
+            <th scope="col">Role *</th>
+            <th scope="col">License</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="info in data.requests track by $index" id="trows_{{info.no}}">
+            <th scope="row">{{info.no}}</th>
+            <td>{{info.username}}</td>
+            <td>{{info.name}}</td>
+            <td>{{info.environment}}</td>
+            <td>{{info.requestedOn}}</td>
+            <td>
+              <sn-record-picker id="txt_roles" table="c.data.rolesTable" field="c.data.roles[$index]"
+                placeholder="Search for role name" display-field="'name'" on-change='c.updateRoles($index)'
+                value-field="'id'" search-fields="'name'" page-size="50" multiple="true" sn-disabled='true'>
+              </sn-record-picker>
+            </td>
+            <td>
+              <sn-record-picker id="txt_license" table="data.licensesTable" field="c.data.licenses[$index]"
+                name="license" placeholder="Search for license name"
+                display-field="'detail'" value-field="'name'" search-fields="'name'" page-size="50"
+                sn-disabled='true' default-query='c.data.licenseQuery'></sn-record-picker>
+            </td>
+            <td>
+              <button class="btn btn-edit btn-default" onclick="editRow($(this));"><span
+                  class="glyphicon glyphicon-edit" /> Edit</button>
+              <button class="btn btn-approve"
+                ng-click="c.approveRequest(data.requests[$index],c.data.roles[$index].value,c.data.licenses[$index].value)"
+                disabled><span class="glyphicon glyphicon-ok" /> Approve</button>
+              <button class="btn btn-reject" ng-click="c.rejectRequest(info)" disabled><span
+                  class="glyphicon glyphicon-remove" /> Reject</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-
+  
     <div ng-if="data.requests.length <= 0" class="col-sm-12 no-request">
-        <h2>No Request Found.</h2>
+      <h2>No Request Found.</h2>
     </div>
-
-</div>]]></template>
+  
+  </div>]]></template>
     </sp_widget>
 </record_update>

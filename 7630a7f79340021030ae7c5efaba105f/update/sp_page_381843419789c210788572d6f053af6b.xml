@@ -16,15 +16,15 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-03-18 14:39:06</sys_created_on>
         <sys_id>381843419789c210788572d6f053af6b</sys_id>
-        <sys_mod_count>1</sys_mod_count>
+        <sys_mod_count>2</sys_mod_count>
         <sys_name>aam_admin_page_view_user_record</sys_name>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy/>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
         <sys_update_name>sp_page_381843419789c210788572d6f053af6b</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-18 14:39:28</sys_updated_on>
-        <title>Admin - View User Reqcord</title>
+        <sys_updated_on>2024-03-27 13:37:32</sys_updated_on>
+        <title>Admin - View User Record</title>
         <use_seo_script>false</use_seo_script>
     </sp_page>
     <sys_translated_text action="delete_multiple" query="documentkey=381843419789c210788572d6f053af6b"/>

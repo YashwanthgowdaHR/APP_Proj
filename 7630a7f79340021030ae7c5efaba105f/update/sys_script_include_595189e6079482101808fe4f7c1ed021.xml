@@ -43,26 +43,19 @@ CommonClass.prototype = {
             // Add Mail Notification when someone other than admin tried to access it.
             errorMsg = "You don't have access to perform this action.";
         } else {
-            var sts = "pending";
-
             gs.info(logName + "Creating the user.");
-
-            // approve the req and create the user in AA
             var result = this.createUser(input);
             if (result.isCreated) {
-                sts = "granted";
                 isCreated = true;
-            } else
-                errorMsg = result.msg;
-            gs.info(logName + " Status: " + sts);
-            // var details = {
-            //     sts: sts,
-            //     name: input.name,
-            //     pass: this.defaultPass,
-            //     reason: input.rejectReason || ""
-            // };
-            //this.addEvent(this.event1, this.reqAccessGR, input.mailID, JSON.stringify(details));
-
+                let status = "approved";
+                var sts = this.recordClass.updateRecord(new BaseClass().getUserRequestsTableName(), input.recordSysID, {
+                    status
+                });
+                gs.info(sts ? logName + "updated successfully" : logName + " Failed to update the ID and Status of the record.");
+            } else {
+                gs.info(logName + "Error occurred. Unable create user. Result is: " + JSON.stringify(result));
+            }
+            errorMsg = result.msg;
         }
         return {
             isCreated,
@@ -81,17 +74,7 @@ CommonClass.prototype = {
         };
         var logName = this.log + "createUser >> ";
         gs.info(logName + "Request sent to Automation Anywhere for the User creation.");
-        var output = this.apiClass.createUser(userInfo);
-        if (output.isCreated) {
-            //this.updateIDAndStatus(record.recordSysID, "approved");
-            let status = "approved";
-            var sts = this.recordClass.updateRecord(new BaseClass().getUserRequestsTableName(), recordSysID, {
-                status
-            });
-            //this.triggerScheduledJob("InsertUsers");
-            gs.info(sts ? logName + "updated successfully" : logName + " Failed to update the ID and Status of the record.");
-        }
-        return output;
+        return this.apiClass.createUser(userInfo);
     },
 
     getAllReq: function() {
@@ -137,7 +120,7 @@ CommonClass.prototype = {
             var reqData = [];
             var i = 0;
             var gd = new GlideDate();
-            let table = new BaseClass().getUserRequestsTableName();
+            let table = new GlideRecord(new BaseClass().getUserRequestsTableName());
             table.addQuery('status', 'pending');
             table.orderByDesc('sys_created_on');
             table.query();
@@ -348,23 +331,12 @@ CommonClass.prototype = {
             return;
         }
 
-        let status = "rejected",
-            reason_to_reject = record.reason;
-
-        var sts = this.recordClass.updateRecord(new BaseClass().getUserRequestsTableName(), recordSysID, {
-            status,
-            reason_to_reject
+        var sts = this.recordClass.updateRecord(new BaseClass().getUserRequestsTableName(), record.recordSysID, {
+            status: "rejected",
+            reason_to_reject: record.reason
         });
 
         gs.info(sts ? logName + "updated successfully" : logName + " Failed to update the status &  reason for rejection of the record.");
-        // var details = {
-        //     sts: sts,
-        //     name: record.name,
-        //     pass: this.defaultPass,
-        //     reason: record.rejectReason || ""
-        // };
-        // this.addEvent(this.event1, this.reqAccessGR, record.mailID, JSON.stringify(details));
-
     },
 
     updateIDAndStatus: function(recordSysID, status) {
@@ -393,11 +365,11 @@ CommonClass.prototype = {
     },
 
     updateUserRecord: function(userID, recordSysID) {
-        var user = this.apiClass.GetUserDetailsByID(userID);
+        var user = this.apiClass.getUserDetailsByID(userID);
 
         data.first_name = user.firstName;
-        data.last_name = user.last_name;
-        data.mail_id = user.mailID
+        data.last_name = user.lastName;
+        data.mail_id = user.email;
         if (user.roles.length > 0) {
             var tmpRoles = [];
             user.roles.forEach((role) => {
@@ -425,8 +397,9 @@ CommonClass.prototype = {
             mailID: input.mailID,
             roleIDs: this.isEmpty(input.roles.value) ? "" : input.roles.value,
             licenses: input.isDevice ? this.getLicenseName(input.licenseSelected.value) : ""
-        }
+        };
         gs.info(logName + "Request sent to Automation Anywhere to update the User details of " + input.userID);
+        gs.info(logName + " Details are: " + JSON.stringify(user));
         var output = this.apiClass.updateUser(user);
         if (output && output.isUpdated) {
             gs.info(logName + "User details are updated successfully");
@@ -439,13 +412,13 @@ CommonClass.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-02-14 13:55:03</sys_created_on>
         <sys_id>595189e6079482101808fe4f7c1ed021</sys_id>
-        <sys_mod_count>115</sys_mod_count>
+        <sys_mod_count>119</sys_mod_count>
         <sys_name>CommonClass</sys_name>
         <sys_package display_value="AA Management" source="x_1131046_aa_man_0">7630a7f79340021030ae7c5efaba105f</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="AA Management">7630a7f79340021030ae7c5efaba105f</sys_scope>
         <sys_update_name>sys_script_include_595189e6079482101808fe4f7c1ed021</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-03-27 12:17:13</sys_updated_on>
+        <sys_updated_on>2024-03-27 16:42:14</sys_updated_on>
     </sys_script_include>
 </record_update>
